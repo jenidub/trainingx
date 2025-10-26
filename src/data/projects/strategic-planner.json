@@ -1,0 +1,187 @@
+{
+  "slug": "strategic-planner",
+  "title": "Strategic Planner",
+  "category": "Strategy",
+  "level": 3,
+  "levelOrder": 3,
+  "estTime": "25m",
+  "difficulty": 3,
+  "badge": "strategy-guru",
+  "steps": 7,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Develop a comprehensive business growth strategy. Which demonstrates strategic mastery?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Create a growth strategy for a startup",
+          "explanation": "No company details, current state, market context, or specific goals. Cannot develop meaningful strategy."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a 12-month growth plan for a fitness app to grow from 5K to 100K users with a limited marketing budget",
+          "explanation": "Has timeline and growth target, but missing current metrics, competitive landscape, budget amount, and detailed execution plan."
+        },
+        {
+          "quality": "good",
+          "text": "Develop 12-month strategic growth plan for fitness tracking app. Current: 5K active users, $50K MRR, 8-person team (2 eng, 2 design, 2 marketing, 2 CS). Goal: 100K users, $500K MRR by Q4. Market: competitive with Strava, MyFitnessPal. Budget: $200K marketing, $100K product. Differentiator: AI-powered personalized workout plans. Strategy components: 1) Quarterly milestones and KPIs (users, MRR, retention, CAC), 2) User acquisition by channel (paid $120K, organic/SEO $40K, partnerships $30K, referral $10K), 3) Product roadmap (AI enhancement, social features, wearable integrations), 4) Resource allocation (hiring plan, budget breakdown), 5) Top 3 risk mitigation strategies (competition, tech execution, market shift), 6) Competitive positioning (why users switch from incumbents). Include: monthly execution timeline, decision checkpoints, pivot triggers (if user growth <50% of target by Q2).",
+          "explanation": "Perfect! Complete baseline, specific goals, competitive context, budget constraints, unique value proposition, comprehensive strategy across growth levers, resource planning, risk management, and adaptive execution framework."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a market entry strategy for a new geography. Which approach is most sophisticated?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design market entry strategy for e-commerce platform expanding to Brazil. Company profile: US-based, $50M ARR, 200K sellers, electronics/home goods focus. Brazil market: $30B e-commerce, 15% YoY growth, 60% mobile, top players (Mercado Livre 25% share, Amazon 15%). Entry approach evaluation: 1) Greenfield build (local entity, 12-month timeline, $5M investment), 2) Partnership (existing platform, 6-month timeline, rev share 30%), 3) Acquisition (local player, immediate, $10M+). Recommended: Phased partnership approach. Phase 1 (months 1-3): 50 local sellers, São Paulo only, test product-market fit. Phase 2 (months 4-8): 500 sellers, expand to Rio/Brasília, localize platform (Portuguese, local payment). Phase 3 (months 9-12): 2000 sellers, nationwide, build local team (10 people). Critical success factors: local payment methods (Pix, Boleto), logistics partners (Correios, private), regulatory compliance (e-commerce law, tax), currency (BRL pricing, forex hedging). Deliverables: market analysis, entry mode comparison, go-to-market plan, localization requirements, financial projections (3-year), risk register (political, economic, operational).",
+          "explanation": "Excellent! Thorough market analysis, strategic options evaluated, phased execution reducing risk, local market requirements, financial modeling, regulatory considerations, and comprehensive risk assessment for international expansion."
+        },
+        {
+          "quality": "almost",
+          "text": "Plan how our e-commerce platform can expand to Brazil. Research the market size, competition, and decide whether to build locally or partner with an existing player.",
+          "explanation": "Has geographic target and strategic questions, but missing company context, evaluation criteria, phased approach, local requirements, and financial implications."
+        },
+        {
+          "quality": "bad",
+          "text": "Expand our business to a new country",
+          "explanation": "No target market, company capabilities, entry strategy options, or market requirements. Cannot create expansion plan."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a digital transformation roadmap for a traditional business. Which is best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a digital transformation plan for a retail chain to add e-commerce, update their POS system, and use data analytics",
+          "explanation": "Has transformation initiatives, but missing current state assessment, change management, integration strategy, and success metrics."
+        },
+        {
+          "quality": "bad",
+          "text": "Modernize a traditional business with digital technology",
+          "explanation": "No industry, current systems, business objectives, or transformation scope. Cannot build roadmap."
+        },
+        {
+          "quality": "good",
+          "text": "Design 18-month digital transformation for regional retail chain (50 stores, $200M revenue). Current state: legacy POS, no e-commerce, spreadsheet inventory, manual reporting. Business drivers: competition from Amazon, declining foot traffic (-15% YoY), customer demand for online. Transformation pillars: 1) E-commerce platform (months 1-6: vendor selection, 7-12: build/test, 13: launch), 2) Cloud POS system (months 3-9: pilot 5 stores, 10-15: rollout all), 3) Data warehouse & analytics (months 6-12: infrastructure, 13-18: self-service BI), 4) Customer loyalty program (months 8-14: design, 15-18: launch). Change management: executive sponsorship, store manager training, employee upskilling program, communication plan. Integration architecture: POS ↔ inventory ↔ e-commerce ↔ warehouse (real-time sync). Success metrics: online revenue 25% by year 2, inventory accuracy 98%, customer data utilization 70%. Budget: $8M (breakdown by pillar). Risks: technical integration failures, employee resistance, vendor dependency. Deliverables: current state assessment, future state architecture, phased roadmap, business case, change plan, governance model.",
+          "explanation": "Perfect! Comprehensive current state, clear business drivers, multi-pillar strategy with sequencing, change management focus, technical integration, measurable outcomes, budget reality, risk mitigation, and governance for successful transformation."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a product diversification strategy to reduce business risk. Which demonstrates strategic depth?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create product diversification strategy for B2B software company (60% revenue from single product, industry concentration risk). Current: $10M ARR, 80% from healthcare vertical, main product (compliance software). Strategic options analysis: 1) Horizontal expansion (same product, new verticals: finance, manufacturing), 2) Vertical expansion (new products for healthcare: training, audit tools), 3) Adjacent markets (related compliance needs: privacy, security). Evaluation framework: market size, competitive intensity, core competency leverage, time-to-market, investment required. Recommended: Balanced portfolio approach. Year 1: Privacy compliance module for existing healthcare customers ($1M investment, $2M ARR potential, 70% close rate). Year 2: Expand compliance product to finance vertical ($1.5M investment, $4M ARR, 50% close rate). Year 3: Security compliance suite ($2M investment, $6M ARR, 40% close rate). Portfolio targets by end year 3: original product 40%, privacy 20%, finance expansion 25%, security 15%. Risk mitigation: phased investment, stage-gate decisions (kill if <50% revenue target), partnership options for new verticals. Deliverables: market opportunity analysis, build-vs-partner decision framework, 3-year financial model with NPV/IRR, product roadmap, go-to-market plan per segment, portfolio tracking dashboard.",
+          "explanation": "Excellent! Identifies concentration risk, evaluates strategic options with framework, recommends balanced approach with phased execution, includes financial modeling, risk management with kill criteria, and comprehensive tracking for portfolio optimization."
+        },
+        {
+          "quality": "almost",
+          "text": "Our software company relies too heavily on one product and one industry. Develop new products or enter new markets to diversify revenue.",
+          "explanation": "Recognizes risk and general directions, but missing current metrics, option evaluation, prioritization logic, and implementation roadmap."
+        },
+        {
+          "quality": "bad",
+          "text": "Diversify our business to reduce risk",
+          "explanation": "No current business context, revenue concentration details, diversification options, or strategic framework. Cannot develop strategy."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a competitive response strategy to a market disruptor. Which shows expert thinking?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "A new competitor is taking market share with lower prices and innovative features. Analyze their strategy and recommend how we should respond.",
+          "explanation": "Identifies threat, but missing detailed competitive intelligence, our capabilities assessment, response options evaluation, and execution plan."
+        },
+        {
+          "quality": "bad",
+          "text": "Respond to a new competitor entering our market",
+          "explanation": "No competitor details, market dynamics, our position, or response options. Cannot formulate strategy."
+        },
+        {
+          "quality": "good",
+          "text": "Develop response strategy to market disruptor. Context: We are incumbent CRM provider ($100M ARR, 5K customers, avg $20K/year, 15% market share). Disruptor: AI-native CRM (launched 6 months ago, $50M funding, $5M ARR, rapid growth +40% MoM, pricing $10K/year, AI features we lack). Their advantage: modern tech stack, AI email/lead scoring, 50% price, viral growth. Our advantages: customer relationships, integrations ecosystem, enterprise trust, superior support. Threat analysis: losing 15% of new deals to them, at-risk segment (SMB customers, 40% of base, price-sensitive). Response options: 1) Price war (match price, erodes margin), 2) Innovation sprint (build AI features, 9-month timeline, $5M investment), 3) Differentiate up-market (focus on enterprise, abandon SMB), 4) Acquisition (buy disruptor, $200M+). Recommended: Hybrid defend-and-differentiate. Immediate (months 1-3): AI roadmap announcement (buy time), SMB retention program (discount + lock-in), competitive FUD campaign (data security concerns). Medium-term (months 4-9): Launch AI features (email insights, predictive scoring), API platform (enable ecosystem advantage). Long-term (months 10-12): Strategic partnerships (integrate with AI leaders), M&A evaluation (if they grow to real threat). Success metrics: retention rate >90%, new deal win rate >60%, innovation perception score. Deliverables: competitive intelligence brief, war room organization, feature parity roadmap, marketing counter-narrative, customer communication plan, board strategy deck.",
+          "explanation": "Perfect! Deep competitive analysis, honest capability assessment, multiple response options evaluated, hybrid strategy balancing defense and differentiation, phased tactical execution, success metrics, and organizational mobilization for competitive battle."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a 3-year strategic plan for a growing tech startup. Which prompt demonstrates advanced strategic planning capabilities?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Create a strategic plan for a tech company",
+          "explanation": "No business context, growth stage, market conditions, or strategic objectives specified."
+        },
+        {
+          "quality": "almost",
+          "text": "Develop a 3-year strategic plan for a SaaS startup with revenue goals and market expansion",
+          "explanation": "Has basic structure, but missing market analysis, competitive positioning, resource requirements, and risk assessment."
+        },
+        {
+          "quality": "good",
+          "text": "Create a comprehensive 3-year strategic plan for a Series B B2B SaaS startup (current ARR $8M, 60 employees). Year 1 focus: product-market fit optimization (net revenue retention >120%), geographic expansion to Europe, team scaling to 100 employees. Year 2 focus: enterprise market penetration (average deal size >$50K), platform ecosystem development, IPO readiness preparation. Year 3 focus: market category leadership, international expansion to Asia Pacific, potential M&A opportunities. Include: quarterly OKRs, financial projections (P&L, cash flow, balance sheet), headcount planning, technology infrastructure roadmap, competitive differentiation strategy, risk mitigation plans, success metrics and KPIs, board reporting framework.",
+          "explanation": "Excellent! Multi-year strategic roadmap with specific milestones, financial projections, resource planning, and governance structure."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a market entry strategy for international expansion. Which prompt provides the most comprehensive global expansion planning?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Develop a market entry strategy for expanding a US consumer product to European markets",
+          "explanation": "Has basic expansion goal, but missing market selection criteria, regulatory considerations, localization strategy, and go-to-market approach."
+        },
+        {
+          "quality": "bad",
+          "text": "Plan international expansion",
+          "explanation": "No specific markets, product adaptation, regulatory compliance, or business model adjustments."
+        },
+        {
+          "quality": "good",
+          "text": "Develop a comprehensive market entry strategy for US-based direct-to-consumer wellness brand expanding to European markets (UK, Germany, France). Phase 1 (months 1-6): market research and regulatory compliance (EU cosmetics regulations, GDPR, import requirements), competitive analysis, pricing strategy (VAT, customs, currency conversion). Phase 2 (months 7-12): localization (website translation, cultural adaptation, influencer partnerships), supply chain setup (EU distribution center, local fulfillment), customer service infrastructure. Phase 3 (months 13-24): launch marketing strategy, performance monitoring, expansion to additional markets. Include: budget allocation ($2M total), risk assessment (regulatory, cultural, logistical), success metrics (market share targets, customer acquisition costs, brand awareness), organizational structure (EU team hiring).",
+          "explanation": "Perfect! Phased market entry approach with regulatory compliance, localization strategy, operational planning, and performance measurement."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "agentic_ai",
+    "planning",
+    "analysis"
+  ],
+  "description": "Develop comprehensive strategic plans that align goals, resources, and actions.",
+  "isAssessment": false,
+  "requiresCompletion": [
+    "level-2-assessment"
+  ],
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Make a business strategy",
+      "explanation": "No company info, market context, goals, or constraints. Impossible to create meaningful strategy."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Create a 12-month growth strategy for a fitness app startup that wants to reach 100K users",
+      "explanation": "Has timeline, business type, and growth goal - but missing current state, competition, budget, and go-to-market approach."
+    },
+    {
+      "quality": "good",
+      "prompt": "Develop a 12-month strategic growth plan for a fitness tracking mobile app. Current state: 5K active users, $50K MRR, 8-person team. Goal: reach 100K users and $500K MRR by Q4. Market: competitive with Strava, MyFitnessPal. Budget: $200K for marketing, $100K for product. Key differentiator: AI-powered personalized workout plans. Provide: 1) Quarterly milestones and KPIs 2) User acquisition strategy by channel (paid, organic, partnerships) 3) Product roadmap priorities 4) Resource allocation plan 5) Risk mitigation for top 3 challenges 6) Competitive positioning strategy. Include monthly budget breakdown and growth assumptions.",
+      "explanation": "Comprehensive - includes current baseline, specific goals, competitive context, budget constraints, unique value prop, detailed deliverables, and asks for assumptions."
+    }
+  ]
+}

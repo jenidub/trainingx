@@ -1,0 +1,175 @@
+{
+  "slug": "level-3-assessment",
+  "title": "Level 3 Assessment",
+  "category": "Assessment",
+  "level": 3,
+  "levelOrder": 4,
+  "estTime": "30m",
+  "difficulty": 3,
+  "badge": "level-3-complete",
+  "steps": 7,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Design an AI-powered business intelligence platform. Which demonstrates Level 3 mastery?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Build an AI dashboard that shows business metrics and provides insights",
+          "explanation": "No specific metrics, AI capabilities, user roles, or actionable intelligence framework. Too generic for enterprise BI."
+        },
+        {
+          "quality": "good",
+          "text": "Design AI-powered BI platform for mid-market SaaS companies (100-500 employees). User roles: C-suite (strategic), department heads (tactical), analysts (operational). Data sources: Salesforce, Stripe, Google Analytics, Zendesk, custom databases. AI capabilities: 1) Automated anomaly detection (revenue drops, churn spikes, usage patterns), 2) Natural language queries ('Why did MRR drop 5% in Q2?'), 3) Predictive forecasting (revenue, churn, hiring needs with 85% confidence), 4) Recommendation engine (cost optimization, growth opportunities), 5) Automated insight summaries (daily brief, weekly trends). Dashboards by role: C-suite (company KPIs, board-ready), department (functional metrics, team performance), analyst (drill-down exploration, custom reports). Features: real-time updates, collaborative annotations, scheduled reports, mobile app, data governance. Technical: cloud-native (AWS/GCP), LLM integration (GPT-4 for NL queries), security (SOC 2, RBAC), scalability (handle 10M+ records). Deliverables: system architecture, AI model specifications, UI wireframes by role, data model, API documentation, implementation roadmap (12 months), pricing model ($500-2000/month tiered).",
+          "explanation": "Perfect! Enterprise-grade solution with role-based intelligence, advanced AI capabilities, comprehensive data integration, technical architecture, security considerations, scalability planning, and business model for go-to-market."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a BI platform with AI that connects to common business tools, detects anomalies, and answers questions in natural language",
+          "explanation": "Has AI features and integration concept, but missing user personas, specific data sources, technical architecture, and enterprise requirements."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a comprehensive go-to-market strategy for an AI product. Which is most complete?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Launch an AI writing assistant for enterprises. Target marketing and sales teams, price at $20/user/month, use content marketing and partnerships to grow.",
+          "explanation": "Has product, target market, and basic tactics, but missing positioning, competitive differentiation, GTM phases, success metrics, and execution details."
+        },
+        {
+          "quality": "bad",
+          "text": "Create a go-to-market plan for our new AI product",
+          "explanation": "No product details, target market, competitive context, or GTM components. Cannot build strategy."
+        },
+        {
+          "quality": "good",
+          "text": "Develop GTM strategy for AI writing assistant (enterprise B2B). Product: AI content generation for marketing, sales, support teams. USP: brand voice training, compliance controls, enterprise security vs consumer tools (Jasper, Copy.ai). Target: companies 100-5000 employees, content-heavy industries (tech, finance, healthcare). ICP: CMO/CRO pain points (content velocity, brand consistency, cost). Positioning: 'Enterprise-grade AI writing with your brand DNA built-in'. Pricing: $25/user/month (minimum 20 seats), annual contracts, ROI messaging (3x content output, 50% cost reduction vs agencies). GTM phases: Phase 1 (months 1-3): 10 design partners (beta pricing, feedback), case studies, product-market fit validation. Phase 2 (months 4-6): Pilot program (50 customers, land-and-expand), sales playbook, marketing content machine. Phase 3 (months 7-12): Scale (500 customers, channel partnerships). Channels: outbound SDR (primary), content marketing (SEO), partner ecosystem (agencies, consultants), industry events. Sales motion: PLG for evaluation (14-day trial), sales-assist for enterprise (security review, MSA). Success metrics: 100 customers by month 12, $2M ARR, <$10K CAC, 90% retention. Deliverables: positioning doc, sales playbook, marketing campaign plan, partnership framework, customer success program, pricing/packaging options, financial model (unit economics).",
+          "explanation": "Excellent! Complete GTM covering positioning, pricing with ROI, phased execution, multi-channel strategy, sales motion, metrics, and all supporting materials for successful launch and scale."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a supply chain optimization strategy using AI and automation. Which demonstrates expertise?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design AI-powered supply chain optimization for e-commerce company (5K SKUs, 50K orders/month, 3 warehouses, $50M revenue). Current pain points: stockouts (15% of SKUs/month), overstock ($2M tied up), fulfillment delays (18% late shipments). AI/automation solutions: 1) Demand forecasting (ML model: sales history + seasonality + trends + external factors, 90% accuracy), 2) Inventory optimization (dynamic reorder points, safety stock calculation, ABC analysis automation), 3) Warehouse automation (pick path optimization, robot coordination, slotting algorithm), 4) Supplier management (lead time prediction, risk scoring, auto-reordering). Implementation roadmap: Phase 1 (months 1-3): demand forecasting pilot (top 500 SKUs), Phase 2 (months 4-6): inventory optimization rollout (all SKUs), Phase 3 (months 7-9): warehouse automation (1 facility pilot), Phase 4 (months 10-12): full deployment + supplier integration. Expected outcomes: reduce stockouts to 5%, cut overstock by 60% ($1.2M freed), improve on-time delivery to 95%, decrease fulfillment cost 20%. Technology: Python ML models, cloud infrastructure, WMS integration, IoT sensors, autonomous robots (pilot). Investment: $1.5M (software $500K, automation $800K, implementation $200K), payback 14 months. Deliverables: current state analysis, solution architecture, ML model specifications, automation design, financial model (NPV, IRR), risk assessment, change management plan.",
+          "explanation": "Perfect! Comprehensive problem analysis, AI/automation solutions addressing each pain point, phased implementation reducing risk, clear ROI with payback, technical details, investment breakdown, and change management for operational transformation."
+        },
+        {
+          "quality": "almost",
+          "text": "Use AI to predict demand and optimize inventory levels for our e-commerce business. Automate warehouse operations to reduce costs.",
+          "explanation": "Has AI application areas, but missing current metrics, solution details, implementation approach, financial justification, and integration strategy."
+        },
+        {
+          "quality": "bad",
+          "text": "Improve supply chain with AI and automation",
+          "explanation": "No business context, current challenges, specific solutions, or optimization metrics. Cannot create strategy."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a talent acquisition and retention strategy for hypergrowth. Which is most strategic?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "We need to hire 100 people in 12 months while keeping attrition below 10%. Create a hiring plan with sourcing channels and a retention program.",
+          "explanation": "Has hiring target and attrition goal, but missing current team analysis, role prioritization, competitive talent landscape, and integrated people strategy."
+        },
+        {
+          "quality": "bad",
+          "text": "Hire more people quickly while keeping employees happy",
+          "explanation": "No hiring targets, team composition, retention metrics, or strategic framework. Cannot build people strategy."
+        },
+        {
+          "quality": "good",
+          "text": "Design talent strategy for hypergrowth startup (50 to 150 employees in 12 months, Series B funded). Current: 50 people (20 eng, 15 sales, 8 ops, 7 other), 12% annual attrition (tech: 15%, others: 8%). Hiring plan: 100 new hires (40 eng, 30 sales, 20 ops, 10 other). Talent market: competitive tech hub, engineer shortage, 5 competing startups. Acquisition strategy: 1) Employer brand building (tech blog, open source, speaking), 2) Sourcing mix (referrals 40% target, recruiters 30%, inbound 20%, agencies 10%), 3) Hiring process optimization (reduce time-to-hire from 45 to 30 days, improve offer acceptance 60% to 75%), 4) Compensation strategy (60th percentile cash, 75th percentile equity, competitive analysis quarterly). Retention strategy: 1) Onboarding excellence (90-day plan, buddy system, early wins), 2) Career development (IDP for all, bi-annual promotions, skills training budget $2K/person), 3) Culture initiatives (remote-friendly, DE&I goals, quarterly offsites), 4) Retention risk monitoring (stay interviews, predictive model for flight risk). Metrics: time-to-fill by role, offer acceptance rate, quality of hire (90-day performance), retention rate by tenure/function, engagement score. Budget: $8M (salaries $6M, recruiting $1M, programs $1M). Deliverables: hiring funnel targets, sourcing playbook, interview training, compensation framework, retention playbook, talent dashboard, quarterly milestones.",
+          "explanation": "Excellent! Complete talent strategy balancing aggressive hiring with retention, data-driven approach, competitive intelligence, multi-pronged acquisition and retention tactics, budget reality, and comprehensive metrics for talent leadership."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a sustainability and ESG strategy for a corporation. Which shows comprehensive thinking?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create ESG strategy for manufacturing company ($500M revenue, 2000 employees, global operations). Current state: ESG score 45/100 (industry avg 60), carbon footprint 100K tons CO2/year, limited diversity metrics, basic governance. Stakeholder drivers: investors (ESG funds requirement), customers (sustainable sourcing preference), employees (purpose-driven culture), regulators (emissions reporting). ESG framework: Environmental: 1) Carbon neutrality roadmap (reduce 50% by 2030, offset remainder, renewable energy transition, supply chain emissions), 2) Circular economy (product design for recycling, waste reduction 80%, water conservation). Social: 1) Diversity targets (leadership 40% women/minorities by 2028, pay equity audit), 2) Supply chain ethics (audit 100% suppliers, living wage standards), 3) Community impact (1% profit to local programs). Governance: 1) Board diversity (add 2 ESG experts), 2) Executive compensation tied to ESG metrics (20% of variable pay), 3) Transparent reporting (annual ESG report, GRI standards). Implementation: Phase 1 (year 1): baseline measurement, quick wins (LED lighting, diversity hiring), ESG committee formation. Phase 2 (year 2-3): major initiatives (renewable energy 50%, supplier program rollout), reporting infrastructure. Phase 3 (year 4-5): full transformation, ESG leadership positioning. Investment: $50M (capex $30M for efficiency/renewables, opex $20M programs), savings $10M/year (energy efficiency). Metrics: ESG score to 75, carbon reduction %, diversity representation, supplier compliance %, investor ESG rating improvement. Deliverables: materiality assessment, ESG roadmap, carbon accounting system, diversity program, governance updates, investor communications plan.",
+          "explanation": "Perfect! Comprehensive ESG strategy across all dimensions, stakeholder-driven approach, measurable targets with timeline, realistic investment with ROI, phased implementation, robust metrics, and transparent reporting for corporate responsibility and value creation."
+        },
+        {
+          "quality": "almost",
+          "text": "Improve our company's ESG score by reducing carbon emissions, increasing diversity, and strengthening board oversight. Create a 5-year plan.",
+          "explanation": "Has ESG pillars and timeframe, but missing current state, stakeholder analysis, specific initiatives, investment requirements, and measurement framework."
+        },
+        {
+          "quality": "bad",
+          "text": "Make our company more sustainable and socially responsible",
+          "explanation": "No current ESG position, specific initiatives, stakeholders, metrics, or strategic framework. Cannot develop ESG strategy."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a comprehensive digital transformation strategy for a traditional manufacturing company. Which prompt demonstrates mastery-level strategic thinking?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Help a company with digital transformation",
+          "explanation": "No industry context, current state assessment, transformation scope, or business objectives."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a digital transformation plan for a manufacturing company to improve efficiency and reduce costs",
+          "explanation": "Has basic objective, but missing current state analysis, technology roadmap, change management, and ROI justification."
+        },
+        {
+          "quality": "good",
+          "text": "Develop a 5-year digital transformation strategy for a mid-size manufacturing company ($200M revenue, 800 employees) using legacy systems. Current challenges: manual inventory management, paper-based quality control, limited production visibility. Transformation roadmap: Year 1-2: foundational systems (ERP implementation, IoT sensor deployment, data infrastructure), Year 2-3: operational excellence (predictive maintenance, digital twin, automated quality control), Year 3-4: customer experience (e-commerce platform, real-time order tracking, personalized products), Year 4-5: business model innovation (servitization, data monetization, platform ecosystem). Include: change management strategy (training, communication, resistance mitigation), technology stack selection, vendor evaluation criteria, implementation timeline with milestones, ROI analysis (projected 25% cost reduction, 40% efficiency improvement), risk management (cybersecurity, data privacy, operational disruption), success metrics and KPI dashboard.",
+          "explanation": "Excellent! Comprehensive transformation scope with staged implementation, change management, technology planning, and measurable business outcomes."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create an AI implementation strategy for a healthcare organization. Which prompt shows advanced understanding of AI adoption in regulated industries?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Develop an AI strategy for a hospital to improve patient care and reduce costs",
+          "explanation": "Has basic goals, but missing regulatory compliance, ethical considerations, integration complexity, and stakeholder management."
+        },
+        {
+          "quality": "bad",
+          "text": "Implement AI in healthcare",
+          "explanation": "No specific healthcare context, use cases, regulatory requirements, or implementation approach."
+        },
+        {
+          "quality": "good",
+          "text": "Design a comprehensive AI implementation strategy for a regional hospital system (3 hospitals, 2,000 beds). Phase 1 (months 1-12): diagnostic AI (radiology image analysis, pathology assistance, early disease detection), Phase 2 (months 13-24): operational AI (staff scheduling optimization, supply chain management, predictive readmission risk), Phase 3 (months 25-36): patient experience AI (personalized treatment plans, virtual nursing assistants, remote monitoring). Include: HIPAA compliance framework, FDA regulatory pathway, ethical AI governance (bias detection, explainability, human oversight), integration with existing EMR systems, physician training and adoption programs, patient consent protocols, cybersecurity measures, ROI projections (15% reduction in diagnostic errors, 20% improvement in operational efficiency), stakeholder change management (physicians, nurses, administrators, patients). Budget: $12M over 3 years with expected ROI within 18 months.",
+          "explanation": "Perfect! Healthcare-specific AI strategy with regulatory compliance, ethical considerations, stakeholder management, and clinical workflow integration."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "agentic_ai",
+    "synthetic_ai",
+    "planning",
+    "analysis",
+    "logic",
+    "collaboration"
+  ],
+  "description": "Master-level assessment testing advanced prompting techniques and strategic thinking.",
+  "isAssessment": true,
+  "requiresCompletion": [
+    "financial-advisor",
+    "customer-success-specialist",
+    "strategic-planner"
+  ]
+}

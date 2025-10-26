@@ -1,0 +1,163 @@
+{
+  "slug": "social-media-content",
+  "title": "Social Media Content Creator",
+  "category": "Content Creation",
+  "level": 1,
+  "levelOrder": 1,
+  "estTime": "10m",
+  "difficulty": 1,
+  "badge": "content-creator",
+  "steps": 6,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "You need to create an Instagram post for a coffee shop's grand opening. Which prompt will work best?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Write a post about a coffee shop",
+          "explanation": "Too vague - missing platform specifics, audience, tone, key details about the opening, and call-to-action."
+        },
+        {
+          "quality": "almost",
+          "text": "Create an Instagram post for a local coffee shop opening next week. Make it engaging.",
+          "explanation": "Has platform and basic info, but lacks target audience, specific tone, opening details, and structured requirements."
+        },
+        {
+          "quality": "good",
+          "text": "Create an Instagram caption for a local artisan coffee shop's grand opening next Saturday. Target: young professionals aged 25-40. Tone: warm and inviting. Include: location, 20% off opening special, and CTA to follow. Use 2-3 emojis, under 150 characters.",
+          "explanation": "Perfect! Specifies platform, audience, tone, all key details, format requirements, and length constraint."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A fitness trainer wants a viral LinkedIn post for their mentorship program. Which prompt is best?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Write a LinkedIn post for a career coach's tech mentorship program. Target: mid-career professionals pivoting to tech. Start with a compelling story hook, include actionable career tips, end with program CTA. Keep under 1300 characters. Tone: inspiring and authentic.",
+          "explanation": "Excellent! Includes audience, structure (hook/tips/CTA), length limit, tone, and clear objective."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a LinkedIn post about a mentorship program for people changing careers to tech",
+          "explanation": "Has the basic topic and audience, but missing structure, tone guidance, length limits, and specific call-to-action."
+        },
+        {
+          "quality": "bad",
+          "text": "Write something about a mentorship program",
+          "explanation": "Extremely vague - no platform, audience, topic details, structure, or any specific requirements."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a TikTok script for home workout content. Which prompt will get the best result?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Write a TikTok script for a fitness trainer showing home workouts without equipment",
+          "explanation": "Has platform and general concept, but missing time length, hook strategy, specific exercises, and target audience."
+        },
+        {
+          "quality": "bad",
+          "text": "Make a fitness video script",
+          "explanation": "No platform, format, audience, exercises, or content structure specified. AI has no direction."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 30-60 second TikTok script for a fitness trainer. Target: busy professionals aged 25-40. Include: catchy 3-second hook, 3-4 no-equipment exercises with clear form cues, motivational messaging. Message: effective workouts don't need a gym.",
+          "explanation": "Perfect! Specifies platform, length, audience, structure with timing, exercise count, and key message."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A sustainable fashion brand wants to launch an educational campaign on Twitter. What's the most effective prompt?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Write tweets about sustainable fashion",
+          "explanation": "No campaign structure, educational goals, target audience, or tweet thread format specified."
+        },
+        {
+          "quality": "almost",
+          "text": "Create Twitter content for a sustainable fashion brand's educational campaign",
+          "explanation": "Has brand and campaign type, but missing specific topics, thread structure, educational objectives, and audience targeting."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 5-tweet educational thread for an eco-fashion brand. Topic: '5 ways to build a sustainable wardrobe'. Target: environmentally conscious consumers 18-35. Format: hook tweet, 3 educational tweets with statistics/tips, conclusion with brand CTA. Tone: informative but approachable. Include hashtags #SustainableFashion #EcoStyle.",
+          "explanation": "Perfect! Specifies thread length, topic breakdown, audience, tweet-by-tweet structure, tone, and relevant hashtags."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A local restaurant needs Pinterest content for their weekend brunch menu. Which prompt will deliver the best results?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make Pinterest posts for a restaurant",
+          "explanation": "Missing platform specifics, menu items, visual direction, target audience, and engagement goals."
+        },
+        {
+          "quality": "good",
+          "text": "Create 5 Pinterest pin descriptions for a farm-to-table restaurant's weekend brunch. Target: foodies and local diners 25-45. Include: SEO keywords (brunch recipes, local dining, fresh ingredients), seasonal highlights, call-to-action for reservations. Tone: appetizing and authentic. Format: compelling titles, detailed descriptions, relevant hashtags.",
+          "explanation": "Excellent! Covers pin count, target audience, SEO strategy, specific content focus, tone, and platform-optimized formatting."
+        },
+        {
+          "quality": "almost",
+          "text": "Write Pinterest content for a restaurant's brunch menu",
+          "explanation": "Has topic and platform, but lacks pin count, target audience, SEO keywords, tone guidance, and specific formatting requirements."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A tech startup wants to create a LinkedIn carousel post about their remote work solution. What's the optimal prompt?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a LinkedIn carousel post about a remote work tool",
+          "explanation": "Has topic and format, but missing slide structure, pain points to address, target audience, and business objectives."
+        },
+        {
+          "quality": "bad",
+          "text": "Write content for a tech company",
+          "explanation": "No specific topic, platform, format, audience, or business context provided."
+        },
+        {
+          "quality": "good",
+          "text": "Design a 10-slide LinkedIn carousel for a remote collaboration software. Target: HR managers and team leads at mid-size companies. Structure: Problem slide (2 statistics), Solution overview, 3 feature-benefit slides, Customer testimonial slide, Pricing/CTA slide, Contact info. Tone: professional but approachable. Include remote work pain points and productivity metrics.",
+          "explanation": "Perfect! Specifies exact slide count, detailed slide-by-slide structure, target audience, pain point focus, and professional tone guidelines."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "generative_ai",
+    "creativity",
+    "communication"
+  ],
+  "description": "Master the art of crafting engaging social media posts that capture attention and drive engagement.",
+  "isAssessment": false,
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Write a social media post",
+      "explanation": "Too vague - no context about the topic, platform, audience, or tone. The AI has no direction."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Write an Instagram post about a coffee shop opening next week",
+      "explanation": "Better - has topic and platform, but missing key details like target audience, tone, call-to-action, and post format."
+    },
+    {
+      "quality": "good",
+      "prompt": "Create an Instagram caption for a local artisan coffee shop's grand opening next Saturday. Target audience: young professionals and coffee enthusiasts aged 25-40. Tone: warm, inviting, community-focused. Include: location highlight, opening day special (20% off), call-to-action to follow for updates. Use 2-3 relevant emojis. Keep it under 150 characters.",
+      "explanation": "Excellent - specifies platform, topic, audience, tone, key information to include, format requirements, and length constraint. Gives AI everything needed."
+    }
+  ]
+}

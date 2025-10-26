@@ -1,0 +1,166 @@
+{
+  "slug": "website-builder",
+  "title": "Website Builder",
+  "category": "Development",
+  "level": 2,
+  "levelOrder": 3,
+  "estTime": "20m",
+  "difficulty": 2,
+  "badge": "site-starter",
+  "steps": 6,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Plan a complete business website. Which prompt provides the best foundation?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Build a website for a bakery",
+          "explanation": "No business goals, features, target users, or technical requirements. Cannot create effective plan."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a website for a local bakery with menu, contact form, and photo gallery. Make it mobile-friendly.",
+          "explanation": "Has basic features and responsive requirement, but missing business objectives, user flows, design direction, and technical stack."
+        },
+        {
+          "quality": "good",
+          "text": "Plan a complete website for local artisan bakery. Goal: increase online orders 40%. Target: local customers 25-55 who value quality. Features: 1) Homepage with hero and daily specials, 2) Interactive menu with dietary filters, 3) Online ordering with pickup time selection, 4) Photo gallery, 5) Contact/map. Tech: React, mobile-first. Design: warm, rustic, image-focused. Deliverables: sitemap, page wireframes, ordering user flow, component structure, SEO strategy.",
+          "explanation": "Perfect! Defines business goal, target users, detailed features, tech stack, design direction, and comprehensive deliverables for development."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a SaaS product landing page. Which approach is most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design a high-converting landing page for B2B project management SaaS. Target: IT directors and project managers at 50-500 person companies. Page sections: 1) Hero with value prop and demo CTA, 2) Problem/solution (3 pain points), 3) Key features (6 features with icons), 4) Social proof (logos + 2 testimonials), 5) Pricing comparison (3 tiers), 6) FAQ (8 questions), 7) Final CTA. Design: clean, modern, trust-building. Tech: Next.js, optimized for conversion. Include: A/B test variations for hero, heatmap placement strategy, loading speed optimization (<2s), conversion tracking pixels.",
+          "explanation": "Excellent! Conversion-focused structure, specific audience, detailed sections, technical performance requirements, testing strategy, and analytics implementation."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a landing page for our project management software with features, pricing, and a signup form",
+          "explanation": "Has basic components, but missing conversion strategy, audience targeting, social proof, testing plan, and technical optimization."
+        },
+        {
+          "quality": "bad",
+          "text": "Make a landing page for our product",
+          "explanation": "No product details, target audience, conversion goals, or page structure. Cannot create effective landing page."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build an e-commerce site architecture. Which prompt delivers complete requirements?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Plan an e-commerce site for handmade jewelry with product catalog, shopping cart, and checkout. Include user accounts and order tracking.",
+          "explanation": "Has core e-commerce features, but missing payment integration, search/filter requirements, mobile strategy, and security considerations."
+        },
+        {
+          "quality": "bad",
+          "text": "Create an online store",
+          "explanation": "No product type, required features, user experience goals, or technical specifications. Too vague for any e-commerce planning."
+        },
+        {
+          "quality": "good",
+          "text": "Architect e-commerce site for handmade jewelry brand. Features: 1) Product catalog (500+ items) with advanced filtering (material, price, occasion), 2) Visual search, 3) Shopping cart with save-for-later, 4) Checkout with guest option, 5) User accounts (order history, wishlist, saved addresses), 6) Order tracking with shipping integration. Tech: Shopify + custom React frontend, Stripe payments, mobile-first (60% traffic). Security: PCI compliance, SSL, fraud detection. Deliverables: system architecture diagram, database schema, API documentation, mobile/desktop wireframes, payment flow, admin dashboard requirements.",
+          "explanation": "Perfect! Comprehensive features with scale considerations, specific tech stack, security requirements, detailed deliverables covering all aspects of e-commerce implementation."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a portfolio website for a creative professional. Which prompt is best?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design portfolio website for freelance photographer. Goal: book 3 weddings/month. Target: engaged couples 25-35, budget $3-5K. Structure: 1) Hero (stunning photo + tagline), 2) Portfolio grid (20 weddings, filterable by season/venue), 3) About Me (story, process), 4) Services & pricing, 5) Testimonials (5 with photos), 6) Contact (inquiry form, calendar integration). Design: elegant, image-first, fast loading. Tech: Next.js, Cloudinary for images, mobile-optimized. Features: lightbox gallery, lazy loading, inquiry form with package selection, Google Analytics. Include: SEO for local wedding photography keywords, social share functionality.",
+          "explanation": "Excellent! Clear business objective, target client profile, conversion-focused structure, performance optimization, technical implementation details, and marketing considerations."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a portfolio website for a photographer with photo gallery, about page, and contact form. Make it look professional.",
+          "explanation": "Has basic structure, but missing business goals, target audience, showcase strategy, conversion elements, and technical requirements."
+        },
+        {
+          "quality": "bad",
+          "text": "Build a portfolio site",
+          "explanation": "No profession, content type, business objectives, or any specific requirements. Cannot create targeted portfolio."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create content structure for a restaurant website. Which prompt produces the most effective user journey?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Write content for a restaurant website",
+          "explanation": "No restaurant type, target audience, pages needed, or conversion goals specified."
+        },
+        {
+          "quality": "almost",
+          "text": "Create website content for a farm-to-table restaurant including menu, about us, and contact pages",
+          "explanation": "Has restaurant concept and basic pages, but missing user journey, SEO considerations, and conversion optimization."
+        },
+        {
+          "quality": "good",
+          "text": "Create website content structure for an upscale farm-to-table restaurant. Pages: Home (hero story, chef philosophy, 3 signature dishes), Menu (seasonal offerings with descriptions, wine pairings, dietary icons), About (farm partnerships, chef background, sustainability mission), Reservations (availability calendar, special requests, confirmation flow), Gallery (food photography, restaurant ambiance, events). SEO optimization for \"fine dining restaurant [city]\", \"seasonal menu\", \"farm-to-table\". Include: reservation CTA on each page, mobile-responsive design notes, loading speed optimization.",
+          "explanation": "Perfect! Complete website architecture with user flow, SEO strategy, conversion optimization, and technical considerations."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design an e-commerce product page for sustainable fashion. Which prompt creates the most compelling shopping experience?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a product page for eco-friendly clothing with product details and purchase options",
+          "explanation": "Has basic e-commerce elements, but missing storytelling, sustainability messaging, trust signals, and conversion optimization."
+        },
+        {
+          "quality": "bad",
+          "text": "Write about sustainable clothes",
+          "explanation": "No e-commerce context, product details, or customer purchase journey considerations."
+        },
+        {
+          "quality": "good",
+          "text": "Create an e-commerce product page for organic cotton t-shirts. Structure: hero section (lifestyle image + sustainability tagline), product gallery (6 angles + video), product details (materials, care instructions, sizing guide), sustainability story (farm-to-closet journey), social proof (customer reviews, Instagram mentions), cross-sells (matching items). Include: size recommendation engine, environmental impact calculator, free shipping threshold, easy returns policy, mobile-first design, page load speed under 2 seconds. SEO keywords: organic cotton clothing, sustainable fashion basics.",
+          "explanation": "Excellent! Complete e-commerce experience with sustainability storytelling, conversion elements, technical optimization, and trust-building features."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "agentic_ai",
+    "coding",
+    "planning"
+  ],
+  "description": "Plan and structure complete websites with clear requirements and functionality.",
+  "isAssessment": false,
+  "requiresCompletion": [
+    "level-1-assessment"
+  ],
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Build a website",
+      "explanation": "No purpose, features, audience, or technical requirements. Completely unusable."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Create a website for a bakery with an online menu, contact form, and photo gallery",
+      "explanation": "Has business type and basic features, but missing user flows, design preferences, technical stack, and success criteria."
+    },
+    {
+      "quality": "good",
+      "prompt": "Plan a complete website for a local artisan bakery. Primary goal: increase online orders by 40%. Target users: local customers aged 25-55 who value quality. Required features: 1) Homepage with hero image and daily specials 2) Interactive menu with filtering (dietary needs) 3) Online ordering with pickup time selection 4) Photo gallery of products 5) Contact form and location map. Tech stack: React frontend, mobile-responsive. Design: warm, rustic, image-focused. Provide: sitemap, page wireframes, user flow for ordering, and component structure.",
+      "explanation": "Comprehensive - defines business goal, target users, detailed features, technical requirements, design direction, and specific deliverables."
+    }
+  ]
+}

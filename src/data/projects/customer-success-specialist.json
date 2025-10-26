@@ -1,0 +1,166 @@
+{
+  "slug": "customer-success-specialist",
+  "title": "Customer Success Specialist",
+  "category": "Business",
+  "level": 3,
+  "levelOrder": 2,
+  "estTime": "20m",
+  "difficulty": 3,
+  "badge": "support-star",
+  "steps": 6,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Design an AI-powered customer success platform. Which prompt shows expert-level design thinking?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Create a customer support chatbot",
+          "explanation": "No business context, customer journey, escalation strategy, or success metrics. Too simplistic for enterprise needs."
+        },
+        {
+          "quality": "good",
+          "text": "Design AI customer success system for B2B SaaS (project management software). Customer profile: small business owners, non-technical, $99/month plans. Support tiers: chatbot (tier 1), email (tier 2), human (tier 3). Handle: onboarding (first 30 days), billing, feature requests, technical issues. System capabilities: 1) Auto-categorize inquiries (NLP), 2) Instant answers for 80% common questions (knowledge base), 3) Context-aware escalation (sentiment analysis, complexity scoring), 4) Proactive outreach (usage drop alerts, milestone celebrations), 5) Satisfaction tracking (CSAT, NPS). Deliverables: conversation flow diagrams, escalation decision tree, chatbot training data, tier 1-3 handoff protocol, performance KPIs (response time <5min, resolution rate 85%, CSAT >4.5). Include multilingual support (EN, ES) and integration with CRM.",
+          "explanation": "Perfect! Complete business context, multi-tier support structure with AI optimization, proactive engagement, measurable outcomes, technical implementation details, and customer experience considerations."
+        },
+        {
+          "quality": "almost",
+          "text": "Build a chatbot for a SaaS company to answer questions about billing, features, and setup. Escalate complex issues to humans.",
+          "explanation": "Has basic functionality and escalation, but missing customer journey mapping, proactive features, success metrics, and sophisticated AI capabilities."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a customer health scoring and intervention system. Which approach is most comprehensive?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Build a system to identify at-risk customers based on usage and engagement, then reach out to prevent churn",
+          "explanation": "Has risk detection and intervention concept, but missing specific health indicators, scoring methodology, intervention playbooks, and success tracking."
+        },
+        {
+          "quality": "bad",
+          "text": "Monitor customer health and prevent churn",
+          "explanation": "No health indicators, scoring model, intervention strategy, or business context. Cannot build functional system."
+        },
+        {
+          "quality": "good",
+          "text": "Design customer health scoring system for SaaS subscription ($199/month). Health signals: product usage (login frequency, feature adoption, API calls), engagement (support tickets, NPS, email opens), relationship (executive sponsor changes, payment issues, contract renewal date). Scoring model: 100-point scale weighted (product usage 50%, engagement 30%, relationship 20%). Health tiers: Green (80-100), Yellow (50-79), Red (0-49). Automated interventions by tier: Green (quarterly success review, upsell opportunities), Yellow (personalized tips, feature training, check-in call), Red (urgent CSM assignment, win-back campaign, executive outreach). Predictive ML: churn risk score 90 days out. Deliverables: scoring algorithm, intervention playbooks by tier and churn reason, CSM dashboard with prioritized accounts, ROI tracking (retention rate improvement, expansion revenue). Include early warning system (sudden score drops >20 points).",
+          "explanation": "Excellent! Multi-dimensional health signals, weighted scoring model, tiered intervention strategy with escalation, predictive analytics, clear playbooks, team dashboard, and business impact measurement."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build an onboarding experience optimization system. Which demonstrates mastery?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Optimize onboarding for mobile app (fitness tracking). Goal: 60% D7 retention, 40% feature activation in 48 hours. User segments: beginners (50%), intermediate (35%), advanced (15%). Onboarding flow: 1) Personalization quiz (fitness level, goals, available time), 2) Customized first workout, 3) Progress tracking setup, 4) Social connection prompts, 5) Habit formation triggers. Track: completion rate by step, time to value, activation metrics, retention cohorts. A/B test: onboarding length (3 steps vs 5 vs 7), personalization depth, motivational messaging. Interventions: abandoned onboarding recovery (email/push), in-app contextual tips, progress celebration. Analytics: funnel visualization, segment performance, drop-off analysis. Continuous optimization: weekly experiment velocity, statistical significance testing, winner rollout. Deliverables: optimized flow, segment-specific paths, messaging framework, experiment roadmap, success dashboard.",
+          "explanation": "Perfect! Clear success metrics, user segmentation, personalized flows, comprehensive tracking, systematic testing methodology, intervention strategies, and continuous improvement framework."
+        },
+        {
+          "quality": "almost",
+          "text": "Improve our app onboarding to increase activation. Test different onboarding flows and track completion rates.",
+          "explanation": "Has optimization goal and testing concept, but missing user segmentation, specific metrics, intervention strategies, and systematic improvement process."
+        },
+        {
+          "quality": "bad",
+          "text": "Make onboarding better for our app",
+          "explanation": "No current metrics, success criteria, testing approach, or optimization methodology. Cannot improve onboarding."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a customer feedback loop and product improvement system. Which is best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Collect customer feedback through surveys and support tickets, analyze it, and share insights with the product team to make improvements",
+          "explanation": "Has feedback collection and sharing, but missing systematic analysis, prioritization framework, closed-loop communication, and impact tracking."
+        },
+        {
+          "quality": "bad",
+          "text": "Get customer feedback and use it to improve the product",
+          "explanation": "No feedback mechanisms, analysis process, decision framework, or implementation tracking. Too vague for systematic improvement."
+        },
+        {
+          "quality": "good",
+          "text": "Build customer feedback system for SaaS platform. Collection methods: in-app surveys (NPS, feature satisfaction), support ticket mining (sentiment analysis, theme extraction), user interviews (monthly with power users), feature voting board, session recordings analysis. Data aggregation: central dashboard categorizing feedback by theme (bugs, features, UX, performance), urgency, user tier. Prioritization framework: RICE score (Reach, Impact, Confidence, Effort) combined with strategic alignment. Workflow: 1) Weekly synthesis report to product team, 2) Monthly roadmap review incorporating feedback, 3) Quarterly customer advisory board. Closed loop: notify customers when feedback implemented, track adoption of new features, measure satisfaction impact. Metrics: feedback response rate, time-to-implementation, feature adoption, NPS lift. Deliverables: feedback taxonomy, analysis dashboard, prioritization matrix, product team integration process, customer communication templates.",
+          "explanation": "Perfect! Multi-channel feedback collection, systematic analysis with AI, clear prioritization framework, product team integration, closed-loop communication, and measurable impact on satisfaction and product success."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a customer onboarding workflow for SaaS clients. Which prompt develops the most effective customer experience?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make a customer onboarding plan",
+          "explanation": "No product complexity, customer segments, timeline, or success metrics defined."
+        },
+        {
+          "quality": "almost",
+          "text": "Create an onboarding process for new software customers with training and check-ins",
+          "explanation": "Has basic structure, but missing customer segmentation, milestone tracking, risk identification, and value demonstration points."
+        },
+        {
+          "quality": "good",
+          "text": "Design a comprehensive 90-day customer onboarding workflow for enterprise SaaS clients. Customer segments: technical buyers (IT managers), business users (department heads), end users (staff). Week 1-2: technical setup (account configuration, integrations, user provisioning), success metrics: 100% users invited, 80% integrations complete. Week 3-4: basic training (core features, daily workflows), success metrics: 90% users complete basic training, 70% adoption of key features. Week 5-12: advanced optimization (custom workflows, reporting, power user features), success metrics: 50% power users identified, 3 value realization workshops completed. Include: risk signals (low login frequency, support tickets), escalation protocols, QBR schedule, customer health scoring, value demonstration templates.",
+          "explanation": "Excellent! Segmented onboarding with clear phases, specific success metrics, risk management, and value realization focus."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a customer health scoring system for a subscription business. Which prompt creates the most predictive retention model?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a health scoring system to identify customers at risk of churning",
+          "explanation": "Has basic objective, but missing specific metrics, weighting system, intervention triggers, and integration with customer success workflows."
+        },
+        {
+          "quality": "bad",
+          "text": "Track customer satisfaction",
+          "explanation": "No specific metrics, scoring methodology, or predictive indicators for customer retention."
+        },
+        {
+          "quality": "good",
+          "text": "Develop a predictive customer health scoring model for a B2B SaaS platform with monthly subscriptions. Scoring categories (0-100 points total): Product adoption (40 points) - feature usage frequency, login regularity, seat utilization; Customer engagement (25 points) - support ticket patterns, training participation, community involvement; Business value (20 points) - achievement of initial goals, ROI documentation, expansion opportunities); Relationship strength (15 points) - response rates, meeting attendance, NPS scores. Include: automated calculation triggers, color-coded health indicators (green 80-100, yellow 60-79, red 0-59), intervention playbooks for each health level, integration with CRM for account manager alerts, correlation with actual churn data to validate predictive accuracy, monthly health review process.",
+          "explanation": "Perfect! Comprehensive scoring framework with weighted categories, automation triggers, intervention protocols, and validation methodology."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "agentic_ai",
+    "communication",
+    "collaboration"
+  ],
+  "description": "Design intelligent customer support systems that solve problems and delight users.",
+  "isAssessment": false,
+  "requiresCompletion": [
+    "level-2-assessment"
+  ],
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Create a customer support system",
+      "explanation": "No business context, customer pain points, support channels, or desired outcomes."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Design a chatbot for a SaaS company to handle common customer questions about billing and account setup",
+      "explanation": "Has channel, business type, and basic topics - but missing customer journey, escalation paths, and success metrics."
+    },
+    {
+      "quality": "good",
+      "prompt": "Design an AI-powered customer success system for a B2B SaaS company (project management software). Handle: onboarding (first 30 days), billing questions, feature requests, and technical issues. Customer profile: small business owners, non-technical. Support channels: chatbot (tier 1), email (tier 2), human (tier 3). System should: 1) Categorize inquiries automatically 2) Provide instant answers for 80% of common questions 3) Escalate complex issues with full context 4) Proactively reach out when usage drops 5) Collect satisfaction scores. Include sample chatbot conversation flows, escalation decision tree, and key performance metrics (response time, resolution rate, CSAT).",
+      "explanation": "Complete - defines business context, customer profile, multi-tier support structure, specific capabilities, proactive features, and measurable outcomes."
+    }
+  ]
+}

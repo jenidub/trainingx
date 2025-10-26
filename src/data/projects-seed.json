@@ -1,0 +1,1433 @@
+[
+  {
+    "slug": "social-media-content",
+    "title": "Social Media Content Creator",
+    "category": "Content Creation",
+    "level": 1,
+    "levelOrder": 1,
+    "estTime": "10m",
+    "difficulty": 1,
+    "badge": "content-creator",
+    "steps": 3,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "You need to create an Instagram post for a coffee shop's grand opening. Which prompt will work best?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Write a post about a coffee shop",
+            "explanation": "Too vague - missing platform specifics, audience, tone, key details about the opening, and call-to-action."
+          },
+          {
+            "quality": "almost",
+            "text": "Create an Instagram post for a local coffee shop opening next week. Make it engaging.",
+            "explanation": "Has platform and basic info, but lacks target audience, specific tone, opening details, and structured requirements."
+          },
+          {
+            "quality": "good",
+            "text": "Create an Instagram caption for a local artisan coffee shop's grand opening next Saturday. Target: young professionals aged 25-40. Tone: warm and inviting. Include: location, 20% off opening special, and CTA to follow. Use 2-3 emojis, under 150 characters.",
+            "explanation": "Perfect! Specifies platform, audience, tone, all key details, format requirements, and length constraint."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "A fitness trainer wants a viral LinkedIn post for their mentorship program. Which prompt is best?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Write a LinkedIn post for a career coach's tech mentorship program. Target: mid-career professionals pivoting to tech. Start with a compelling story hook, include actionable career tips, end with program CTA. Keep under 1300 characters. Tone: inspiring and authentic.",
+            "explanation": "Excellent! Includes audience, structure (hook/tips/CTA), length limit, tone, and clear objective."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a LinkedIn post about a mentorship program for people changing careers to tech",
+            "explanation": "Has the basic topic and audience, but missing structure, tone guidance, length limits, and specific call-to-action."
+          },
+          {
+            "quality": "bad",
+            "text": "Write something about a mentorship program",
+            "explanation": "Extremely vague - no platform, audience, topic details, structure, or any specific requirements."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a TikTok script for home workout content. Which prompt will get the best result?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Write a TikTok script for a fitness trainer showing home workouts without equipment",
+            "explanation": "Has platform and general concept, but missing time length, hook strategy, specific exercises, and target audience."
+          },
+          {
+            "quality": "bad",
+            "text": "Make a fitness video script",
+            "explanation": "No platform, format, audience, exercises, or content structure specified. AI has no direction."
+          },
+          {
+            "quality": "good",
+            "text": "Create a 30-60 second TikTok script for a fitness trainer. Target: busy professionals aged 25-40. Include: catchy 3-second hook, 3-4 no-equipment exercises with clear form cues, motivational messaging. Message: effective workouts don't need a gym.",
+            "explanation": "Perfect! Specifies platform, length, audience, structure with timing, exercise count, and key message."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["generative_ai", "creativity", "communication"],
+    "description": "Master the art of crafting engaging social media posts that capture attention and drive engagement.",
+    "isAssessment": false,
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Write a social media post",
+        "explanation": "Too vague - no context about the topic, platform, audience, or tone. The AI has no direction."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Write an Instagram post about a coffee shop opening next week",
+        "explanation": "Better - has topic and platform, but missing key details like target audience, tone, call-to-action, and post format."
+      },
+      {
+        "quality": "good",
+        "prompt": "Create an Instagram caption for a local artisan coffee shop's grand opening next Saturday. Target audience: young professionals and coffee enthusiasts aged 25-40. Tone: warm, inviting, community-focused. Include: location highlight, opening day special (20% off), call-to-action to follow for updates. Use 2-3 relevant emojis. Keep it under 150 characters.",
+        "explanation": "Excellent - specifies platform, topic, audience, tone, key information to include, format requirements, and length constraint. Gives AI everything needed."
+      }
+    ]
+  },
+  {
+    "slug": "study-guide-builder",
+    "title": "Study Guide Builder",
+    "category": "Education",
+    "level": 1,
+    "levelOrder": 2,
+    "estTime": "12m",
+    "difficulty": 1,
+    "badge": "study-master",
+    "steps": 4,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Create a biology study guide for high school students. Which prompt is most effective?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Make a study guide about biology",
+            "explanation": "No specific topic, grade level, learning objectives, or format specified. Too general to be useful."
+          },
+          {
+            "quality": "good",
+            "text": "Create a comprehensive biology study guide for 10th grade students on cellular structure. Include: key vocabulary with definitions, comparison table of prokaryotic vs eukaryotic cells, organelle functions, 5 practice questions with answers, and real-world examples. Use clear headings and bullet points. Intermediate difficulty.",
+            "explanation": "Excellent! Specifies audience, topic, structured content sections, format requirements, assessment component, and difficulty level."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a biology study guide for high school students about cells with definitions and examples",
+            "explanation": "Has subject, audience, and basic content types, but lacks specific structure, depth requirements, and assessment components."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "A college student needs a study guide for a history exam. Which prompt works best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Make a World War 2 study guide for college students covering major events and outcomes",
+            "explanation": "Has topic and audience, but missing specific focus areas, time period structure, and study format preferences."
+          },
+          {
+            "quality": "bad",
+            "text": "Help me study for my history test",
+            "explanation": "No topic, time period, grade level, or content requirements. Impossible to create targeted study materials."
+          },
+          {
+            "quality": "good",
+            "text": "Create a World War 2 study guide for college students. Cover: causes (1918-1939), major battles (1939-1943), turning points (1943-1944), aftermath (1945-1950). For each period: timeline, key figures, strategic decisions, impact. Include: comparative analysis of Eastern vs Western fronts, 10 critical thinking questions, and connections to modern geopolitics. Advanced difficulty.",
+            "explanation": "Perfect! Organized by time periods, specifies content for each section, includes analysis and critical thinking, and sets appropriate difficulty."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a math study guide for algebra students. Which prompt is best?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create an Algebra 1 study guide for 9th graders on quadratic equations. Include: step-by-step solving methods (factoring, completing the square, quadratic formula), when to use each method, 3 worked examples per method showing all steps, common mistakes to avoid, 12 practice problems (4 per method) with solutions, and real-world applications. Use diagrams where helpful.",
+            "explanation": "Comprehensive! Covers multiple solving methods, includes worked examples, practice problems, error prevention, applications, and visual aids."
+          },
+          {
+            "quality": "almost",
+            "text": "Make a study guide about solving quadratic equations with examples and practice problems for 9th grade",
+            "explanation": "Has topic, audience, and basic components, but lacks specific solving methods, problem distribution, and detailed structure."
+          },
+          {
+            "quality": "bad",
+            "text": "Explain quadratic equations",
+            "explanation": "Too vague - no audience level, study format, practice component, or depth of coverage specified."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a chemistry study guide for an exam. Which approach is most effective?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a chemistry study guide for college students about organic chemistry with key concepts and formulas",
+            "explanation": "Has subject, audience, and general content types, but missing specific topics, depth level, and learning aids."
+          },
+          {
+            "quality": "good",
+            "text": "Create an organic chemistry study guide for college sophomores on functional groups. Include: structure and properties of 8 major functional groups (alcohols, aldehydes, ketones, carboxylic acids, esters, ethers, amines, amides), nomenclature rules for each, reaction mechanisms, 3D molecular models description, comparison table of reactivity, 15 practice problems identifying functional groups in complex molecules. Intermediate-advanced level.",
+            "explanation": "Excellent! Specific topic coverage, systematic organization, includes nomenclature and reactions, visual learning aids, assessment, and appropriate difficulty."
+          },
+          {
+            "quality": "bad",
+            "text": "Help me learn chemistry",
+            "explanation": "No specific topic, educational level, exam scope, or study materials format. Completely unhelpful."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["generative_ai", "communication", "analysis"],
+    "description": "Learn to create comprehensive study materials that help learners understand complex topics.",
+    "isAssessment": false,
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Make a study guide",
+        "explanation": "No subject, learning level, format, or learning objectives specified. AI can't create useful content."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Create a biology study guide for high school students about cells",
+        "explanation": "Has subject, audience, and topic - but missing structure, depth level, key concepts, and format preferences."
+      },
+      {
+        "quality": "good",
+        "prompt": "Create a comprehensive study guide for 10th grade biology students on cellular structure and function. Include: 1) Key vocabulary with definitions 2) Comparison table of prokaryotic vs eukaryotic cells 3) Main functions of cell organelles 4) 5 practice questions with answers 5) Real-world examples. Use clear headings and bullet points. Aim for intermediate difficulty level.",
+        "explanation": "Perfect - defines audience, topic, exact content structure, format requirements, difficulty level, and includes assessment component."
+      }
+    ]
+  },
+  {
+    "slug": "presentation-designer",
+    "title": "Presentation Designer",
+    "category": "Business",
+    "level": 1,
+    "levelOrder": 3,
+    "estTime": "15m",
+    "difficulty": 1,
+    "badge": "deck-builder",
+    "steps": 4,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Create a marketing presentation for executives. Which prompt will deliver the best results?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Make a presentation about marketing",
+            "explanation": "No topic, audience, objective, or format requirements. Completely directionless."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a presentation outline to increase social media engagement for our executive team",
+            "explanation": "Has topic and audience, but missing slide count, specific content requirements, data points, and format details."
+          },
+          {
+            "quality": "good",
+            "text": "Create a 10-slide presentation for C-suite executives on increasing social media engagement by 50% in Q2. Include: current state analysis, 3 strategic recommendations with ROI projections, implementation timeline, budget breakdown, and success metrics. Tone: data-driven and confident. Each slide: clear title and 3-5 bullet points. Non-technical language.",
+            "explanation": "Perfect! Specifies audience, slide count, detailed content structure, tone, format requirements, and accessibility for non-technical viewers."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a sales pitch deck for potential clients. Which prompt is most effective?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create a 15-slide sales deck for a B2B SaaS project management tool pitching to IT directors. Structure: problem statement (3 slides), our solution (4 slides), competitive advantages (2 slides), customer success stories (3 slides), pricing and ROI (2 slides), next steps (1 slide). Tone: professional but approachable. Include: specific pain points, feature demos, metrics, case studies with 30%+ efficiency gains. Visual suggestions for each section.",
+            "explanation": "Excellent! Complete structure with slide allocation, specific audience, content details for each section, proof points, and visual guidance."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a sales presentation for our project management software with features, pricing, and customer testimonials",
+            "explanation": "Has basic content components, but lacks audience definition, slide structure, competitive positioning, and persuasive flow."
+          },
+          {
+            "quality": "bad",
+            "text": "Help me create a sales pitch",
+            "explanation": "No product, audience, content structure, or business objectives specified. Cannot create effective pitch."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a training presentation for new employees. Which approach works best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a presentation to train new employees on our customer service process with steps and examples",
+            "explanation": "Has purpose and basic content, but missing learning objectives, slide structure, interactive elements, and assessment components."
+          },
+          {
+            "quality": "bad",
+            "text": "Make a training presentation",
+            "explanation": "No topic, audience, learning goals, or training approach specified. Too vague for any training context."
+          },
+          {
+            "quality": "good",
+            "text": "Create a 20-slide customer service training deck for new hires (week 1). Learning objectives: understand our 5-step support process, use tone guidelines, handle escalations. Content: company values (2 slides), process overview (4 slides), tone guide with do/don't examples (3 slides), common scenarios (6 slides), escalation protocols (3 slides), resources and Q&A (2 slides). Include: interactive quiz slides, real chat examples, decision trees. Friendly, engaging tone.",
+            "explanation": "Perfect! Clear learning objectives, detailed slide-by-slide structure, interactive elements, practical examples, and appropriate training tone."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a quarterly business review presentation. Which prompt is best?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create a Q3 business review presentation for the board of directors. 25 slides covering: executive summary (2 slides), financial performance vs targets (5 slides), operational metrics (4 slides), market share analysis (3 slides), product development progress (4 slides), team growth and culture (2 slides), Q4 priorities (3 slides), risks and mitigation (2 slides). Include: YoY comparisons, trend charts, traffic light indicators for KPIs, specific action items. Tone: transparent, forward-looking, data-driven.",
+            "explanation": "Comprehensive! Covers all business areas with appropriate depth, includes data visualization guidance, progress indicators, and board-appropriate tone."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a quarterly review presentation showing our financial results, achievements, and plans for next quarter",
+            "explanation": "Has general content areas, but lacks specific metrics, data presentation format, slide allocation, and stakeholder focus."
+          },
+          {
+            "quality": "bad",
+            "text": "Present our quarterly results",
+            "explanation": "No audience, content structure, data points, or presentation format specified. Insufficient for business reporting."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["generative_ai", "communication", "creativity"],
+    "description": "Create compelling presentation outlines that tell a story and persuade your audience.",
+    "isAssessment": false,
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Help me with a presentation",
+        "explanation": "No topic, audience, objective, or format specified. Completely directionless."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Create a presentation outline for a marketing proposal to increase social media engagement",
+        "explanation": "Has topic and general goal, but missing audience, time limit, key messages, and desired outcome."
+      },
+      {
+        "quality": "good",
+        "prompt": "Create a 10-slide presentation outline for a marketing proposal to the executive team. Topic: Increasing social media engagement by 50% in Q2. Audience: C-suite executives (non-technical). Include: current state analysis, 3 strategic recommendations with expected ROI, implementation timeline, budget breakdown, and success metrics. Tone: data-driven, confident, concise. Each slide should have a clear title and 3-5 key bullet points.",
+        "explanation": "Comprehensive - specifies audience, objective, slide count, content structure, tone, and format requirements for each slide."
+      }
+    ]
+  },
+  {
+    "slug": "level-1-assessment",
+    "title": "Level 1 Assessment",
+    "category": "Assessment",
+    "level": 1,
+    "levelOrder": 4,
+    "estTime": "20m",
+    "difficulty": 1,
+    "badge": "level-1-complete",
+    "steps": 3,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Create a product description for an e-commerce site. Which prompt demonstrates Level 1 mastery?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Write a product description for wireless headphones highlighting the main features like battery life and sound quality",
+            "explanation": "Has product and some features, but lacks target audience, tone, SEO requirements, and structured format for e-commerce."
+          },
+          {
+            "quality": "good",
+            "text": "Write a product description for wireless noise-cancelling headphones. Target: professionals working from home. Emphasize: 30-hour battery, active noise cancelling, comfortable for all-day wear. Include: 2-3 key benefits, 1 pain point it solves, call-to-action. Tone: professional yet friendly. Format: headline (10 words), 3 benefit bullets, 1 paragraph (50 words), CTA. Optimize for keywords: wireless headphones, noise cancelling, work from home.",
+            "explanation": "Excellent! Specifies audience, key features to highlight, structured format with length constraints, tone, SEO considerations, and conversion elements."
+          },
+          {
+            "quality": "bad",
+            "text": "Describe these headphones",
+            "explanation": "No product details, audience, tone, or e-commerce requirements. Missing all elements needed for effective product copy."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Generate email copy for a newsletter campaign. Which shows best prompting skills?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Write a promotional email for our June newsletter. Audience: existing customers who bought in last 90 days. Announce: Summer sale (20% off), new product line launch, customer spotlight. Structure: catchy subject line (under 50 chars), personalized greeting, 3 sections with subheads, 3 clear CTAs (shop sale, view new products, read story). Tone: excited but not pushy. Preview text included. Mobile-optimized, scannable format.",
+            "explanation": "Perfect! Defines audience, content sections, structure with specific requirements, multiple CTAs, tone guidance, and technical considerations for email."
+          },
+          {
+            "quality": "bad",
+            "text": "Write a promotional email for our newsletter",
+            "explanation": "No audience, content, structure, or email-specific requirements. Too generic for effective newsletter creation."
+          },
+          {
+            "quality": "almost",
+            "text": "Write a newsletter email to customers about our summer sale with a discount and new products",
+            "explanation": "Has basic content and audience, but missing subject line strategy, structure, CTAs, tone, and email best practices."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create social media content for a nonprofit fundraiser. Which prompt is best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create Facebook posts for a nonprofit animal shelter fundraiser to raise money and increase awareness",
+            "explanation": "Has platform, organization type, and goals, but lacks specific campaign details, posting strategy, and emotional appeal framework."
+          },
+          {
+            "quality": "bad",
+            "text": "Write social media posts for a fundraiser",
+            "explanation": "No organization, cause, platform, emotional hook, or campaign details. Cannot create compelling fundraising content."
+          },
+          {
+            "quality": "good",
+            "text": "Create a 7-day Facebook campaign for animal shelter fundraiser (goal: $25K in 30 days). Audience: local pet lovers, donors aged 30-55. Daily themes: Monday (impact story), Tuesday (urgent need), Wednesday (donor spotlight), Thursday (matching gift), Friday (success update), Saturday (volunteer feature), Sunday (weekend push). Each post: emotional hook, impact statement ($50 feeds a dog for a week), specific CTA, relevant image suggestion. Tone: heartfelt, urgent but hopeful. Include hashtag strategy.",
+            "explanation": "Excellent! Complete campaign structure, daily themes, audience targeting, specific impact messaging, varied content types, and comprehensive execution details."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": [
+      "generative_ai",
+      "creativity",
+      "communication",
+      "analysis"
+    ],
+    "description": "Demonstrate your Level 1 prompting skills across multiple real-world scenarios without guidance.",
+    "isAssessment": true,
+    "requiresCompletion": [
+      "social-media-content",
+      "study-guide-builder",
+      "presentation-designer"
+    ]
+  },
+  {
+    "slug": "quiz-master",
+    "title": "Interactive Quiz Master",
+    "category": "Education",
+    "level": 2,
+    "levelOrder": 1,
+    "estTime": "15m",
+    "difficulty": 2,
+    "badge": "quiz-crafter",
+    "steps": 4,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Design a multiple-choice quiz for history students. Which prompt is most effective?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Make a quiz about history",
+            "explanation": "No topic, difficulty, question count, or educational objectives. Cannot create targeted quiz."
+          },
+          {
+            "quality": "good",
+            "text": "Create a 10-question multiple choice quiz on World War 2 for college students (intermediate level). Focus: causes (3Q), major battles (4Q), aftermath (3Q). Each question: 4 options, 1 correct answer, brief explanations for correct AND incorrect answers. Difficulty mix: 3 easy, 5 medium, 2 challenging. Include: primary source quotes, map-based questions, cause-effect analysis.",
+            "explanation": "Perfect! Specifies format, topic distribution, answer structure with learning feedback, difficulty progression, and varied question types."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a 10-question multiple choice quiz about World War 2 for college students with explanations",
+            "explanation": "Has format, topic, and audience, but missing difficulty levels, topic distribution, and question variety."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a science quiz with practical applications. Which approach works best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a physics quiz for high school students about Newton's laws with real-world examples and explanations",
+            "explanation": "Has subject, audience, and learning enhancement, but lacks question structure, difficulty levels, and assessment objectives."
+          },
+          {
+            "quality": "bad",
+            "text": "Create a science quiz",
+            "explanation": "No topic, grade level, question types, or learning goals. Too vague for any educational use."
+          },
+          {
+            "quality": "good",
+            "text": "Create a 12-question physics quiz on Newton's Laws for 11th grade (honors level). Question types: 4 conceptual understanding, 4 calculation problems (show work), 4 real-world application scenarios. Each: 5 multiple choice options, step-by-step solutions, common misconceptions addressed. Real-world contexts: sports, vehicle safety, space exploration. Difficulty: gradually increasing. Include formula sheet at top.",
+            "explanation": "Excellent! Mixes question types, includes calculations with solutions, addresses misconceptions, uses relevant contexts, and provides necessary reference materials."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create an adaptive quiz that adjusts to student performance. Which prompt delivers this?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design a 15-question adaptive math quiz on fractions for 6th grade. Start with baseline questions (Q1-3, medium difficulty). If student scores 2+/3: advance to harder questions (Q4-9, operations with unlike denominators). If scores 0-1/3: provide foundational questions (Q4-9, like denominators only). Questions 10-15: word problems matching their level. Each question: immediate feedback, hint system (3 hints max), worked example if incorrect. Track: accuracy rate, time per question, hint usage. Final: personalized study recommendations based on weak areas.",
+            "explanation": "Perfect! Includes branching logic based on performance, differentiated difficulty paths, scaffolded support system, and data-driven personalized learning recommendations."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a math quiz on fractions that gets harder if students do well and easier if they struggle",
+            "explanation": "Has adaptive concept, but missing implementation details, branching logic, support systems, and assessment criteria."
+          },
+          {
+            "quality": "bad",
+            "text": "Make a quiz that adapts to student level",
+            "explanation": "No subject, grade, adaptation mechanism, or specific requirements. Cannot implement adaptive functionality."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a quiz for professional certification prep. Which prompt is best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a practice quiz for project management certification with scenario-based questions covering the main exam topics",
+            "explanation": "Has purpose and question type, but lacks specific topics, exam format alignment, difficulty calibration, and study features."
+          },
+          {
+            "quality": "bad",
+            "text": "Make a certification practice test",
+            "explanation": "No field, certification type, topic coverage, or exam simulation requirements specified."
+          },
+          {
+            "quality": "good",
+            "text": "Create a PMP certification practice quiz (50 questions, 90 minutes). Topic distribution matching actual exam: Initiating (10%), Planning (24%), Executing (30%), Monitoring (24%), Closing (12%). Question types: 35 scenario-based (multi-paragraph), 15 knowledge recall. Difficulty: 60% pass-level, 40% above. Each question: 4 options (2 clearly wrong, 2 plausible), detailed rationale referencing PMBOK 7th edition sections, time management tips. Include: performance dashboard, topic-wise scoring, flagging for review, simulated exam conditions.",
+            "explanation": "Excellent! Matches real exam format and distribution, includes scenario complexity, references source materials, provides exam strategies, and offers comprehensive performance tracking."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["generative_ai", "logic", "analysis"],
+    "description": "Design engaging quizzes that test knowledge and provide valuable learning feedback.",
+    "isAssessment": false,
+    "requiresCompletion": ["level-1-assessment"],
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Make a quiz",
+        "explanation": "No subject, difficulty, question count, or format. Impossible to create useful quiz."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Create a 10-question multiple choice quiz about World War 2 for college students",
+        "explanation": "Has format, count, topic, and audience - but missing difficulty level, specific focus areas, and feedback requirements."
+      },
+      {
+        "quality": "good",
+        "prompt": "Create a 10-question multiple choice quiz on World War 2 for college history students (intermediate level). Focus areas: causes of war (3 questions), major battles (4 questions), aftermath (3 questions). Each question should have 4 options with one correct answer. Include brief explanations for both correct and incorrect answers. Vary difficulty: 3 easy, 5 medium, 2 challenging.",
+        "explanation": "Excellent - specifies format, quantity, topic coverage, difficulty distribution, answer format, and educational feedback requirement."
+      }
+    ]
+  },
+  {
+    "slug": "business-analyst",
+    "title": "Business Analyst",
+    "category": "Analytics",
+    "level": 2,
+    "levelOrder": 2,
+    "estTime": "20m",
+    "difficulty": 2,
+    "badge": "data-detective",
+    "steps": 5,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Analyze sales data and provide actionable insights. Which prompt delivers the best analysis?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Analyze our sales data and tell me what you find",
+            "explanation": "No data provided, no specific questions, no output format, and no business context. Cannot produce insights."
+          },
+          {
+            "quality": "almost",
+            "text": "Analyze our Q3 sales: $500K total (+15% vs Q2), e-commerce $300K (+30%), retail $200K (+5%). Tell me what's working and what to focus on.",
+            "explanation": "Has data points and general request, but lacks industry benchmarks, specific analysis questions, and structured output format."
+          },
+          {
+            "quality": "good",
+            "text": "Analyze Q3 sales performance and provide strategic recommendations. Data: Total $500K (+15% vs Q2), E-commerce $300K (+30%), Retail $200K (+5%). Industry avg: 12% growth. Deliverables: 1) Key trends analysis, 2) Performance vs benchmarks, 3) Top 3 growth opportunities, 4) 2 risk areas, 5) Actionable recommendations with expected impact. Format: executive summary with data visualization suggestions (charts/graphs).",
+            "explanation": "Perfect! Provides data with context, benchmarks for comparison, specific analysis deliverables, structured output, and visualization guidance."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Conduct customer behavior analysis for an e-commerce site. Which prompt is most effective?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Analyze customer behavior for our e-commerce site. Data: 50K monthly visitors, 2.5% conversion, avg order $85, 35% cart abandonment, top traffic sources (organic 40%, paid 30%, social 20%, direct 10%). Customer segments: new (60%), returning (40%). Analyze: 1) Conversion funnel drop-off points, 2) High-value customer patterns, 3) Cart abandonment root causes, 4) Traffic source ROI. Provide: segment-specific strategies, A/B test recommendations, projected impact on conversion rate. Compare to e-commerce benchmarks (3% conversion, 28% abandonment).",
+            "explanation": "Excellent! Comprehensive data across metrics, clear analysis objectives, actionable output requirements, benchmark comparisons, and specific improvement recommendations."
+          },
+          {
+            "quality": "almost",
+            "text": "Analyze our website data: 50K visitors, 2.5% conversion, $85 average order. Find ways to increase sales.",
+            "explanation": "Has basic metrics and goal, but missing customer segments, funnel analysis, benchmarks, and specific strategic recommendations."
+          },
+          {
+            "quality": "bad",
+            "text": "Look at our customer data and suggest improvements",
+            "explanation": "No data provided, no metrics specified, no analysis scope defined. Cannot perform meaningful analysis."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Evaluate product performance and recommend portfolio changes. Which approach works best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Analyze our product line performance: Product A ($200K, 40% margin), Product B ($150K, 25% margin), Product C ($100K, 50% margin). Which should we focus on?",
+            "explanation": "Has revenue and margin data, but missing growth trends, market size, competition, customer feedback, and strategic considerations beyond current financials."
+          },
+          {
+            "quality": "bad",
+            "text": "Evaluate our products and tell me what to do",
+            "explanation": "No product data, performance metrics, business context, or decision criteria. Cannot make portfolio recommendations."
+          },
+          {
+            "quality": "good",
+            "text": "Analyze product portfolio and recommend strategy. Products: A ($200K revenue, 40% margin, +5% growth, mature market), B ($150K, 25% margin, +30% growth, expanding market), C ($100K, 50% margin, -10% growth, declining market). Additional context: A (70% customer satisfaction), B (85% satisfaction), C (60% satisfaction). Market share: A (15%), B (8%), C (20%). Analyze using BCG matrix framework. Deliver: 1) Portfolio classification, 2) Investment allocation strategy, 3) Sunset vs scale recommendations, 4) New product gap analysis, 5) 12-month action plan with expected outcomes.",
+            "explanation": "Perfect! Multi-dimensional data (financial, growth, satisfaction, market position), strategic framework, comprehensive deliverables, and timeline for execution."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a competitive analysis report. Which prompt provides the most valuable output?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create competitive analysis for our CRM software vs top 3 competitors. Our product: $50/user/month, features (contact mgmt, email, basic reporting), 500 customers, 2 years old. Competitors: Competitor A ($80/user, advanced analytics, 10K customers, 10 years), B ($40/user, limited features, 2K customers, 5 years), C ($100/user, AI features, 8K customers, 8 years). Analyze: 1) Feature comparison matrix, 2) Pricing positioning, 3) Target customer overlap, 4) Our competitive advantages/disadvantages, 5) Market gaps we can fill, 6) Positioning strategy. Include SWOT analysis and 3 differentiation recommendations.",
+            "explanation": "Excellent! Comprehensive competitor profiles, multi-dimensional comparison, strategic analysis frameworks (SWOT), and actionable differentiation strategies."
+          },
+          {
+            "quality": "almost",
+            "text": "Compare our CRM software ($50/month) to competitors who charge $40, $80, and $100. Tell me how to compete.",
+            "explanation": "Has pricing data, but missing feature comparison, customer base, market positioning, and detailed competitive strategy framework."
+          },
+          {
+            "quality": "bad",
+            "text": "Analyze our competitors",
+            "explanation": "No competitor information, comparison criteria, market context, or strategic objectives. Cannot create useful analysis."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Develop a data-driven customer retention strategy. Which prompt is best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Analyze our customer churn: 15% monthly rate, top reasons (price 40%, features 30%, support 30%). Create a retention plan.",
+            "explanation": "Has churn data and reasons, but missing customer segments, lifetime value analysis, retention economics, and prioritized intervention strategies."
+          },
+          {
+            "quality": "bad",
+            "text": "Help us reduce customer churn",
+            "explanation": "No churn data, customer segments, root causes, or business metrics. Cannot develop targeted retention strategy."
+          },
+          {
+            "quality": "good",
+            "text": "Create customer retention strategy based on analysis. Data: 15% monthly churn rate (industry avg 10%), customer LTV $1200, acquisition cost $300. Churn reasons: price sensitivity (40%), missing features (30%), poor support (30%). Customer segments: SMB (20% churn, $800 LTV), Mid-market (12% churn, $2000 LTV), Enterprise (5% churn, $5000 LTV). Provide: 1) Segment-specific churn risk models, 2) Early warning indicators, 3) Retention tactics by segment and churn reason, 4) Cost-benefit analysis of interventions, 5) 90-day implementation roadmap, 6) Success metrics and tracking. Target: reduce churn to 10% in 6 months.",
+            "explanation": "Perfect! Detailed data across segments, economic analysis (LTV/CAC), root causes, predictive modeling, prioritized interventions, implementation plan, and measurable goals."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["synthetic_ai", "analysis", "logic"],
+    "description": "Extract insights from data and create actionable business recommendations.",
+    "isAssessment": false,
+    "requiresCompletion": ["level-1-assessment"],
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Analyze this data",
+        "explanation": "No data provided, no analysis objectives, no output format. Can't produce useful insights."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Analyze our Q3 sales data and tell me what's working. Sales were $500K, up 15% from Q2. E-commerce grew 30%, retail grew 5%.",
+        "explanation": "Has data points and general request, but lacks specific questions, comparison context, and desired output format."
+      },
+      {
+        "quality": "good",
+        "prompt": "Analyze our Q3 sales performance and provide strategic recommendations. Data: Total sales $500K (+15% vs Q2), E-commerce $300K (+30% vs Q2), Retail $200K (+5% vs Q2). Industry average growth: 12%. Deliver: 1) Key trends analysis 2) Performance vs industry benchmarks 3) Top 3 growth opportunities 4) 2 risk areas to address 5) Actionable recommendations with expected impact. Format as executive summary with data visualizations suggestions.",
+        "explanation": "Complete - provides context data, benchmarks, specific analysis questions, structured output format, and actionable deliverables."
+      }
+    ]
+  },
+  {
+    "slug": "website-builder",
+    "title": "Website Builder",
+    "category": "Development",
+    "level": 2,
+    "levelOrder": 3,
+    "estTime": "20m",
+    "difficulty": 2,
+    "badge": "site-starter",
+    "steps": 4,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Plan a complete business website. Which prompt provides the best foundation?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Build a website for a bakery",
+            "explanation": "No business goals, features, target users, or technical requirements. Cannot create effective plan."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a website for a local bakery with menu, contact form, and photo gallery. Make it mobile-friendly.",
+            "explanation": "Has basic features and responsive requirement, but missing business objectives, user flows, design direction, and technical stack."
+          },
+          {
+            "quality": "good",
+            "text": "Plan a complete website for local artisan bakery. Goal: increase online orders 40%. Target: local customers 25-55 who value quality. Features: 1) Homepage with hero and daily specials, 2) Interactive menu with dietary filters, 3) Online ordering with pickup time selection, 4) Photo gallery, 5) Contact/map. Tech: React, mobile-first. Design: warm, rustic, image-focused. Deliverables: sitemap, page wireframes, ordering user flow, component structure, SEO strategy.",
+            "explanation": "Perfect! Defines business goal, target users, detailed features, tech stack, design direction, and comprehensive deliverables for development."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a SaaS product landing page. Which approach is most effective?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design a high-converting landing page for B2B project management SaaS. Target: IT directors and project managers at 50-500 person companies. Page sections: 1) Hero with value prop and demo CTA, 2) Problem/solution (3 pain points), 3) Key features (6 features with icons), 4) Social proof (logos + 2 testimonials), 5) Pricing comparison (3 tiers), 6) FAQ (8 questions), 7) Final CTA. Design: clean, modern, trust-building. Tech: Next.js, optimized for conversion. Include: A/B test variations for hero, heatmap placement strategy, loading speed optimization (<2s), conversion tracking pixels.",
+            "explanation": "Excellent! Conversion-focused structure, specific audience, detailed sections, technical performance requirements, testing strategy, and analytics implementation."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a landing page for our project management software with features, pricing, and a signup form",
+            "explanation": "Has basic components, but missing conversion strategy, audience targeting, social proof, testing plan, and technical optimization."
+          },
+          {
+            "quality": "bad",
+            "text": "Make a landing page for our product",
+            "explanation": "No product details, target audience, conversion goals, or page structure. Cannot create effective landing page."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build an e-commerce site architecture. Which prompt delivers complete requirements?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Plan an e-commerce site for handmade jewelry with product catalog, shopping cart, and checkout. Include user accounts and order tracking.",
+            "explanation": "Has core e-commerce features, but missing payment integration, search/filter requirements, mobile strategy, and security considerations."
+          },
+          {
+            "quality": "bad",
+            "text": "Create an online store",
+            "explanation": "No product type, required features, user experience goals, or technical specifications. Too vague for any e-commerce planning."
+          },
+          {
+            "quality": "good",
+            "text": "Architect e-commerce site for handmade jewelry brand. Features: 1) Product catalog (500+ items) with advanced filtering (material, price, occasion), 2) Visual search, 3) Shopping cart with save-for-later, 4) Checkout with guest option, 5) User accounts (order history, wishlist, saved addresses), 6) Order tracking with shipping integration. Tech: Shopify + custom React frontend, Stripe payments, mobile-first (60% traffic). Security: PCI compliance, SSL, fraud detection. Deliverables: system architecture diagram, database schema, API documentation, mobile/desktop wireframes, payment flow, admin dashboard requirements.",
+            "explanation": "Perfect! Comprehensive features with scale considerations, specific tech stack, security requirements, detailed deliverables covering all aspects of e-commerce implementation."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a portfolio website for a creative professional. Which prompt is best?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design portfolio website for freelance photographer. Goal: book 3 weddings/month. Target: engaged couples 25-35, budget $3-5K. Structure: 1) Hero (stunning photo + tagline), 2) Portfolio grid (20 weddings, filterable by season/venue), 3) About Me (story, process), 4) Services & pricing, 5) Testimonials (5 with photos), 6) Contact (inquiry form, calendar integration). Design: elegant, image-first, fast loading. Tech: Next.js, Cloudinary for images, mobile-optimized. Features: lightbox gallery, lazy loading, inquiry form with package selection, Google Analytics. Include: SEO for local wedding photography keywords, social share functionality.",
+            "explanation": "Excellent! Clear business objective, target client profile, conversion-focused structure, performance optimization, technical implementation details, and marketing considerations."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a portfolio website for a photographer with photo gallery, about page, and contact form. Make it look professional.",
+            "explanation": "Has basic structure, but missing business goals, target audience, showcase strategy, conversion elements, and technical requirements."
+          },
+          {
+            "quality": "bad",
+            "text": "Build a portfolio site",
+            "explanation": "No profession, content type, business objectives, or any specific requirements. Cannot create targeted portfolio."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["agentic_ai", "coding", "planning"],
+    "description": "Plan and structure complete websites with clear requirements and functionality.",
+    "isAssessment": false,
+    "requiresCompletion": ["level-1-assessment"],
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Build a website",
+        "explanation": "No purpose, features, audience, or technical requirements. Completely unusable."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Create a website for a bakery with an online menu, contact form, and photo gallery",
+        "explanation": "Has business type and basic features, but missing user flows, design preferences, technical stack, and success criteria."
+      },
+      {
+        "quality": "good",
+        "prompt": "Plan a complete website for a local artisan bakery. Primary goal: increase online orders by 40%. Target users: local customers aged 25-55 who value quality. Required features: 1) Homepage with hero image and daily specials 2) Interactive menu with filtering (dietary needs) 3) Online ordering with pickup time selection 4) Photo gallery of products 5) Contact form and location map. Tech stack: React frontend, mobile-responsive. Design: warm, rustic, image-focused. Provide: sitemap, page wireframes, user flow for ordering, and component structure.",
+        "explanation": "Comprehensive - defines business goal, target users, detailed features, technical requirements, design direction, and specific deliverables."
+      }
+    ]
+  },
+  {
+    "slug": "level-2-assessment",
+    "title": "Level 2 Assessment",
+    "category": "Assessment",
+    "level": 2,
+    "levelOrder": 4,
+    "estTime": "25m",
+    "difficulty": 2,
+    "badge": "level-2-complete",
+    "steps": 4,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Create an analytics dashboard for business KPIs. Which demonstrates Level 2 mastery?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Build a dashboard to track business metrics",
+            "explanation": "No specific metrics, stakeholders, data sources, or visualization requirements. Too vague for implementation."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a sales dashboard showing revenue, conversion rate, and customer acquisition cost with charts and filters",
+            "explanation": "Has key metrics and basic features, but missing user roles, data refresh requirements, drill-down capabilities, and actionable alerts."
+          },
+          {
+            "quality": "good",
+            "text": "Design executive sales dashboard for VP Sales. KPIs: revenue (actual vs target), conversion rate, CAC, pipeline value, win rate. Data sources: Salesforce CRM, Stripe, Google Analytics. Features: 1) Real-time updates (5min refresh), 2) Date range filters, 3) Team/region drill-down, 4) Trend analysis (MoM, YoY), 5) Automated alerts (pipeline drop >10%, win rate <30%). Visualizations: revenue waterfall, conversion funnel, CAC trend line, pipeline forecast. Tech: Tableau/PowerBI. Mobile-responsive. Include: data quality indicators, export to PDF, scheduled email reports.",
+            "explanation": "Perfect! Specific stakeholder, detailed KPIs with data sources, comprehensive interactive features, visualization types, technical implementation, and automated insights."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Develop a content management workflow with AI assistance. Which prompt is most effective?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design AI-assisted content workflow for marketing team (5 people). Content types: blog posts (8/month), social media (20/week), email (4/month). Workflow stages: 1) AI-generated draft (GPT-4 with brand voice), 2) Human editor review (track changes), 3) SEO optimization (keyword suggestions, readability), 4) Approval (manager), 5) Publishing (WordPress, Buffer). Features: collaborative editing, version history, approval workflows, content calendar, performance analytics. AI capabilities: topic suggestions based on trends, auto-generate social variations, A/B test subject lines. Deliverables: workflow diagram, tool stack, AI prompts library, team permissions matrix, success metrics (time saved, content quality score).",
+            "explanation": "Excellent! Complete workflow with AI integration points, team collaboration features, multi-channel publishing, quality control, and measurable outcomes with full implementation details."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a content creation process using AI to help write blog posts and social media, with approval steps before publishing",
+            "explanation": "Has AI assistance and approval concept, but missing specific workflow stages, collaboration tools, quality controls, and technical integration details."
+          },
+          {
+            "quality": "bad",
+            "text": "Use AI to help create content for marketing",
+            "explanation": "No workflow structure, content types, team roles, or implementation details. Cannot design functional system."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a customer segmentation model for targeted marketing. Which shows advanced thinking?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Segment our customers based on purchase history, demographics, and engagement to create targeted campaigns",
+            "explanation": "Has segmentation variables and purpose, but missing specific criteria, segment definitions, validation approach, and campaign mapping."
+          },
+          {
+            "quality": "bad",
+            "text": "Segment customers for marketing",
+            "explanation": "No segmentation criteria, data inputs, business objectives, or implementation framework. Cannot create model."
+          },
+          {
+            "quality": "good",
+            "text": "Build customer segmentation model for e-commerce brand. Data inputs: purchase frequency (6 months), average order value, product categories, email engagement (open/click rates), customer lifetime (months active). Segmentation framework: RFM analysis + behavioral clustering. Segments to identify: 1) VIP Champions (high value, frequent, recent), 2) At Risk (high value, declining), 3) New Enthusiasts (recent, engaged), 4) Hibernating (inactive 90+ days), 5) Price Sensitive (discount-driven). For each segment: size estimate, LTV projection, churn risk score. Deliverables: segment definitions, visualization (scatter plot), personalized campaign strategy per segment, A/B test plan, success KPIs (engagement lift, revenue impact). Tech: Python/R for clustering, SQL for data prep.",
+            "explanation": "Perfect! Comprehensive data inputs, proven framework (RFM), actionable segment definitions with business value, testing strategy, measurable outcomes, and technical implementation."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design an automated email sequence for user onboarding. Which prompt is best?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design 7-day automated onboarding sequence for SaaS project management tool. Goal: achieve 40% feature activation in week 1. User profile: team leads at small businesses, non-technical. Email flow: Day 1 (welcome, setup checklist), Day 2 (create first project walkthrough), Day 3 (invite team members), Day 4 (key feature showcase - time tracking), Day 5 (integration options), Day 6 (success stories, ROI), Day 7 (upgrade prompt or personal demo offer). Behavioral triggers: delay next email if user completes action, send encouragement if stuck, accelerate if power user. Each email: engaging subject line (A/B test 2 variants), personalized content (use name, company), clear CTA, mobile-optimized. Include: unsubscribe options, engagement tracking, conversion metrics, exit survey for dropouts.",
+            "explanation": "Excellent! Complete sequence with business goal, audience understanding, strategic email progression, behavioral automation, testing strategy, personalization, compliance, and comprehensive analytics."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a welcome email series for new users explaining product features and encouraging them to complete setup over the first week",
+            "explanation": "Has basic sequence idea and timing, but missing specific email content, behavioral triggers, personalization, testing approach, and success metrics."
+          },
+          {
+            "quality": "bad",
+            "text": "Set up automated onboarding emails",
+            "explanation": "No product context, user profile, email content, sequence logic, or business objectives. Cannot design effective automation."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": [
+      "generative_ai",
+      "agentic_ai",
+      "synthetic_ai",
+      "logic",
+      "analysis",
+      "planning"
+    ],
+    "description": "Test your intermediate prompting abilities with complex, multi-faceted challenges.",
+    "isAssessment": true,
+    "requiresCompletion": ["quiz-master", "business-analyst", "website-builder"]
+  },
+  {
+    "slug": "financial-advisor",
+    "title": "Financial Advisor",
+    "category": "Finance",
+    "level": 3,
+    "levelOrder": 1,
+    "estTime": "25m",
+    "difficulty": 3,
+    "badge": "money-master",
+    "steps": 5,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Create a comprehensive retirement planning system. Which prompt demonstrates expert-level thinking?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Help someone plan for retirement",
+            "explanation": "No user profile, financial situation, goals, or planning framework. Dangerously vague for financial advice."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a retirement plan for a 35-year-old earning $50K who wants to retire at 65 with current savings of $10K",
+            "explanation": "Has age, income, and basic goal, but missing risk tolerance, expenses, lifestyle expectations, and comprehensive planning components."
+          },
+          {
+            "quality": "good",
+            "text": "Design comprehensive retirement plan for: Age 35, annual income $50K, current savings $10K (401k: $8K, IRA: $2K), monthly expenses $3K, moderate risk tolerance, target retirement 65. Goals: maintain 70% current income, travel twice yearly ($4K/trip). Deliverables: 1) Recommended monthly savings (specify 401k vs IRA allocation), 2) Age-based asset allocation strategy (stocks/bonds/cash glide path), 3) Projected nest egg at 65 (Monte Carlo simulation, 80% confidence), 4) Alternative scenarios (retire at 62 or 68), 5) Key milestones with rebalancing triggers, 6) Tax optimization strategies, 7) Social Security strategy. Assumptions: inflation 2.5%, stock returns 7%, bonds 3%, employer 401k match 3%, Social Security estimate $2K/month. Include sensitivity analysis for market downturns.",
+            "explanation": "Perfect! Comprehensive financial profile, specific goals, multi-faceted deliverables, detailed assumptions for transparency, scenario analysis, tax considerations, and risk assessment."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a debt payoff and wealth-building strategy. Which approach is most effective?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create debt elimination and wealth plan for: Age 28, income $65K, debts (credit card $15K at 22% APR, student loans $40K at 5%, car loan $12K at 6%), monthly budget $4500 (rent $1200, minimum debt payments $800, other $2500), current savings $2K emergency fund. Risk tolerance: moderate. Goals: debt-free in 5 years, then build $500K net worth by 40. Provide: 1) Debt payoff strategy (avalanche vs snowball analysis with interest calculations), 2) Optimized monthly allocation (debt vs investing), 3) Emergency fund building timeline (3-6 months expenses), 4) Investment plan post-debt (IRA, brokerage, 401k priority), 5) Net worth projection with milestones, 6) Lifestyle trade-offs analysis. Compare: aggressive debt payoff vs balanced approach. Include psychological factors (motivation, behavioral economics).",
+            "explanation": "Excellent! Complete financial picture, competing priorities addressed, mathematical optimization, psychological considerations, milestone tracking, and strategic flexibility for life changes."
+          },
+          {
+            "quality": "almost",
+            "text": "Help pay off $67K in debts (credit card 22%, student loan 5%, car 6%) while starting to invest for the future. Income is $65K.",
+            "explanation": "Has debt details and dual goals, but missing budget context, time horizons, strategy comparison, and balanced allocation approach."
+          },
+          {
+            "quality": "bad",
+            "text": "Create a plan to get out of debt and build wealth",
+            "explanation": "No financial details, debt types, income, timeframe, or personal circumstances. Cannot create actionable plan."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a college savings strategy with investment recommendations. Which prompt delivers comprehensive guidance?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a 529 college savings plan for a newborn. Parents can save $300/month. Target is $200K for college in 18 years.",
+            "explanation": "Has vehicle type, contribution, and goal, but missing state tax considerations, alternative strategies, investment allocation, and what-if scenarios."
+          },
+          {
+            "quality": "bad",
+            "text": "Help save for a child's college education",
+            "explanation": "No child's age, savings capacity, college cost estimates, or investment timeframe. Cannot build meaningful strategy."
+          },
+          {
+            "quality": "good",
+            "text": "Develop college savings strategy for newborn (18 years to college). Parents: combined $120K income (NY state), can save $300/month, moderate risk. College goal: $250K (assuming 5% annual cost inflation from current $35K/year). Analysis: 1) Compare 529 plan (NY tax benefit) vs Roth IRA vs taxable account (tax implications, flexibility, financial aid impact), 2) Recommend age-based asset allocation (aggressive to conservative glide path), 3) Project outcomes at different contribution levels ($200, $300, $400/month), 4) Plan B if shortfall: federal loans, merit scholarships, community college start. Assumptions: 7% stock returns, 4% bonds, 1.5% cash. Deliverables: monthly contribution target, account selection rationale, rebalancing schedule, alternative funding sources, FAFSA optimization tips. Include grandparent gifting strategy (annual exclusion $18K).",
+            "explanation": "Perfect! Comprehensive strategy comparison with tax implications, risk-adjusted projections, flexible scenarios, alternative funding paths, financial aid considerations, and multi-generational planning."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a real estate investment analysis tool. Which prompt is most sophisticated?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design rental property investment analyzer. Inputs: purchase price, down payment %, interest rate, property taxes, insurance, HOA, maintenance estimate, vacancy rate, rent amount, rent appreciation, property appreciation, holding period. Calculations: 1) Monthly cash flow (rent - PITI - expenses), 2) Cap rate, 3) Cash-on-cash return, 4) Total ROI (including appreciation and equity), 5) Break-even analysis, 6) NPV and IRR, 7) Tax benefits (depreciation, mortgage interest). Scenario modeling: vary down payment (10-30%), interest rates (±2%), vacancy (5-15%), rent growth (2-5%). Compare to: stock market index (10-year avg), bonds, REITs. Deliverables: detailed cash flow projection (yearly for holding period), sensitivity analysis charts, recommendation (buy/pass), optimal holding period. Include market cycle indicators and exit strategy.",
+            "explanation": "Excellent! Comprehensive financial metrics, multiple return calculations, scenario planning, competitive analysis, tax considerations, and strategic timing guidance for full investment lifecycle."
+          },
+          {
+            "quality": "almost",
+            "text": "Calculate if a rental property is a good investment. Property costs $300K, rent is $2000/month, expenses are $800/month. Should I buy?",
+            "explanation": "Has basic numbers, but missing financing details, appreciation factors, tax benefits, holding period, and comparative analysis to other investments."
+          },
+          {
+            "quality": "bad",
+            "text": "Analyze a real estate investment opportunity",
+            "explanation": "No property details, financial metrics, investment criteria, or analysis framework. Cannot perform evaluation."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a tax optimization strategy for high-income earners. Which demonstrates mastery?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a tax reduction plan for someone earning $250K with investment income. Use retirement accounts and deductions to lower taxes.",
+            "explanation": "Has income level and general strategies, but missing income breakdown, specific tax situation, entity structure optimization, and coordinated multi-year planning."
+          },
+          {
+            "quality": "bad",
+            "text": "Reduce my taxes legally",
+            "explanation": "No income details, tax bracket, deduction eligibility, or financial situation. Cannot provide specific tax strategies."
+          },
+          {
+            "quality": "good",
+            "text": "Design tax optimization strategy for high earner. Profile: W-2 income $250K, investment income $50K (qualified dividends $30K, capital gains $20K), married filing jointly, no kids, homeowner (mortgage interest $18K, property tax $12K), CA resident. Current: 35% federal bracket, 9.3% CA, paying $95K total tax. Goals: minimize current tax, build tax-free retirement income. Strategies to evaluate: 1) Max 401k ($23K) + backdoor Roth IRA, 2) Mega backdoor Roth if available, 3) Health Savings Account ($8300), 4) Tax-loss harvesting (wash sale rules), 5) Charitable giving (bunching, DAF, QCD when eligible), 6) Timing capital gains/losses, 7) Side business formation (S-corp vs LLC, home office, equipment deductions). Deliverables: current vs optimized tax comparison, multi-year tax projection (considering bracket changes), entity structure recommendation, implementation timeline, estimated savings. Include audit risk assessment and documentation requirements.",
+            "explanation": "Perfect! Detailed tax situation, multiple income sources, comprehensive strategy evaluation, entity optimization, multi-year planning, practical implementation guidance, and risk management."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["agentic_ai", "logic", "planning"],
+    "description": "Create sophisticated financial guidance systems that help users make informed decisions.",
+    "isAssessment": false,
+    "requiresCompletion": ["level-2-assessment"],
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Give financial advice",
+        "explanation": "No user profile, financial goals, risk tolerance, or specific questions. Dangerous and unhelpful."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Create a retirement savings plan for a 35-year-old with $50K income who wants to retire at 65",
+        "explanation": "Has age, income, and goal, but missing current savings, risk tolerance, expenses, and desired retirement lifestyle."
+      },
+      {
+        "quality": "good",
+        "prompt": "Design a comprehensive retirement plan for: Age 35, annual income $50K, current savings $10K, monthly expenses $3K, moderate risk tolerance, target retirement age 65. Goals: maintain 70% of current income in retirement, travel twice yearly. Provide: 1) Recommended monthly savings amount 2) Asset allocation strategy (stocks/bonds/cash) 3) Projected retirement nest egg 4) Alternative scenarios if retiring at 62 or 68 5) Key milestones to track. Include assumptions for inflation (2.5%), returns (7% stocks, 3% bonds), and Social Security estimates.",
+        "explanation": "Excellent - comprehensive user profile, specific goals, multiple deliverables, scenario analysis, and key assumptions for calculations."
+      }
+    ]
+  },
+  {
+    "slug": "customer-success-specialist",
+    "title": "Customer Success Specialist",
+    "category": "Business",
+    "level": 3,
+    "levelOrder": 2,
+    "estTime": "20m",
+    "difficulty": 3,
+    "badge": "support-star",
+    "steps": 4,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Design an AI-powered customer success platform. Which prompt shows expert-level design thinking?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Create a customer support chatbot",
+            "explanation": "No business context, customer journey, escalation strategy, or success metrics. Too simplistic for enterprise needs."
+          },
+          {
+            "quality": "good",
+            "text": "Design AI customer success system for B2B SaaS (project management software). Customer profile: small business owners, non-technical, $99/month plans. Support tiers: chatbot (tier 1), email (tier 2), human (tier 3). Handle: onboarding (first 30 days), billing, feature requests, technical issues. System capabilities: 1) Auto-categorize inquiries (NLP), 2) Instant answers for 80% common questions (knowledge base), 3) Context-aware escalation (sentiment analysis, complexity scoring), 4) Proactive outreach (usage drop alerts, milestone celebrations), 5) Satisfaction tracking (CSAT, NPS). Deliverables: conversation flow diagrams, escalation decision tree, chatbot training data, tier 1-3 handoff protocol, performance KPIs (response time <5min, resolution rate 85%, CSAT >4.5). Include multilingual support (EN, ES) and integration with CRM.",
+            "explanation": "Perfect! Complete business context, multi-tier support structure with AI optimization, proactive engagement, measurable outcomes, technical implementation details, and customer experience considerations."
+          },
+          {
+            "quality": "almost",
+            "text": "Build a chatbot for a SaaS company to answer questions about billing, features, and setup. Escalate complex issues to humans.",
+            "explanation": "Has basic functionality and escalation, but missing customer journey mapping, proactive features, success metrics, and sophisticated AI capabilities."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a customer health scoring and intervention system. Which approach is most comprehensive?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Build a system to identify at-risk customers based on usage and engagement, then reach out to prevent churn",
+            "explanation": "Has risk detection and intervention concept, but missing specific health indicators, scoring methodology, intervention playbooks, and success tracking."
+          },
+          {
+            "quality": "bad",
+            "text": "Monitor customer health and prevent churn",
+            "explanation": "No health indicators, scoring model, intervention strategy, or business context. Cannot build functional system."
+          },
+          {
+            "quality": "good",
+            "text": "Design customer health scoring system for SaaS subscription ($199/month). Health signals: product usage (login frequency, feature adoption, API calls), engagement (support tickets, NPS, email opens), relationship (executive sponsor changes, payment issues, contract renewal date). Scoring model: 100-point scale weighted (product usage 50%, engagement 30%, relationship 20%). Health tiers: Green (80-100), Yellow (50-79), Red (0-49). Automated interventions by tier: Green (quarterly success review, upsell opportunities), Yellow (personalized tips, feature training, check-in call), Red (urgent CSM assignment, win-back campaign, executive outreach). Predictive ML: churn risk score 90 days out. Deliverables: scoring algorithm, intervention playbooks by tier and churn reason, CSM dashboard with prioritized accounts, ROI tracking (retention rate improvement, expansion revenue). Include early warning system (sudden score drops >20 points).",
+            "explanation": "Excellent! Multi-dimensional health signals, weighted scoring model, tiered intervention strategy with escalation, predictive analytics, clear playbooks, team dashboard, and business impact measurement."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build an onboarding experience optimization system. Which demonstrates mastery?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Optimize onboarding for mobile app (fitness tracking). Goal: 60% D7 retention, 40% feature activation in 48 hours. User segments: beginners (50%), intermediate (35%), advanced (15%). Onboarding flow: 1) Personalization quiz (fitness level, goals, available time), 2) Customized first workout, 3) Progress tracking setup, 4) Social connection prompts, 5) Habit formation triggers. Track: completion rate by step, time to value, activation metrics, retention cohorts. A/B test: onboarding length (3 steps vs 5 vs 7), personalization depth, motivational messaging. Interventions: abandoned onboarding recovery (email/push), in-app contextual tips, progress celebration. Analytics: funnel visualization, segment performance, drop-off analysis. Continuous optimization: weekly experiment velocity, statistical significance testing, winner rollout. Deliverables: optimized flow, segment-specific paths, messaging framework, experiment roadmap, success dashboard.",
+            "explanation": "Perfect! Clear success metrics, user segmentation, personalized flows, comprehensive tracking, systematic testing methodology, intervention strategies, and continuous improvement framework."
+          },
+          {
+            "quality": "almost",
+            "text": "Improve our app onboarding to increase activation. Test different onboarding flows and track completion rates.",
+            "explanation": "Has optimization goal and testing concept, but missing user segmentation, specific metrics, intervention strategies, and systematic improvement process."
+          },
+          {
+            "quality": "bad",
+            "text": "Make onboarding better for our app",
+            "explanation": "No current metrics, success criteria, testing approach, or optimization methodology. Cannot improve onboarding."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a customer feedback loop and product improvement system. Which is best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Collect customer feedback through surveys and support tickets, analyze it, and share insights with the product team to make improvements",
+            "explanation": "Has feedback collection and sharing, but missing systematic analysis, prioritization framework, closed-loop communication, and impact tracking."
+          },
+          {
+            "quality": "bad",
+            "text": "Get customer feedback and use it to improve the product",
+            "explanation": "No feedback mechanisms, analysis process, decision framework, or implementation tracking. Too vague for systematic improvement."
+          },
+          {
+            "quality": "good",
+            "text": "Build customer feedback system for SaaS platform. Collection methods: in-app surveys (NPS, feature satisfaction), support ticket mining (sentiment analysis, theme extraction), user interviews (monthly with power users), feature voting board, session recordings analysis. Data aggregation: central dashboard categorizing feedback by theme (bugs, features, UX, performance), urgency, user tier. Prioritization framework: RICE score (Reach, Impact, Confidence, Effort) combined with strategic alignment. Workflow: 1) Weekly synthesis report to product team, 2) Monthly roadmap review incorporating feedback, 3) Quarterly customer advisory board. Closed loop: notify customers when feedback implemented, track adoption of new features, measure satisfaction impact. Metrics: feedback response rate, time-to-implementation, feature adoption, NPS lift. Deliverables: feedback taxonomy, analysis dashboard, prioritization matrix, product team integration process, customer communication templates.",
+            "explanation": "Perfect! Multi-channel feedback collection, systematic analysis with AI, clear prioritization framework, product team integration, closed-loop communication, and measurable impact on satisfaction and product success."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["agentic_ai", "communication", "collaboration"],
+    "description": "Design intelligent customer support systems that solve problems and delight users.",
+    "isAssessment": false,
+    "requiresCompletion": ["level-2-assessment"],
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Create a customer support system",
+        "explanation": "No business context, customer pain points, support channels, or desired outcomes."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Design a chatbot for a SaaS company to handle common customer questions about billing and account setup",
+        "explanation": "Has channel, business type, and basic topics - but missing customer journey, escalation paths, and success metrics."
+      },
+      {
+        "quality": "good",
+        "prompt": "Design an AI-powered customer success system for a B2B SaaS company (project management software). Handle: onboarding (first 30 days), billing questions, feature requests, and technical issues. Customer profile: small business owners, non-technical. Support channels: chatbot (tier 1), email (tier 2), human (tier 3). System should: 1) Categorize inquiries automatically 2) Provide instant answers for 80% of common questions 3) Escalate complex issues with full context 4) Proactively reach out when usage drops 5) Collect satisfaction scores. Include sample chatbot conversation flows, escalation decision tree, and key performance metrics (response time, resolution rate, CSAT).",
+        "explanation": "Complete - defines business context, customer profile, multi-tier support structure, specific capabilities, proactive features, and measurable outcomes."
+      }
+    ]
+  },
+  {
+    "slug": "strategic-planner",
+    "title": "Strategic Planner",
+    "category": "Strategy",
+    "level": 3,
+    "levelOrder": 3,
+    "estTime": "25m",
+    "difficulty": 3,
+    "badge": "strategy-guru",
+    "steps": 5,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Develop a comprehensive business growth strategy. Which demonstrates strategic mastery?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Create a growth strategy for a startup",
+            "explanation": "No company details, current state, market context, or specific goals. Cannot develop meaningful strategy."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a 12-month growth plan for a fitness app to grow from 5K to 100K users with a limited marketing budget",
+            "explanation": "Has timeline and growth target, but missing current metrics, competitive landscape, budget amount, and detailed execution plan."
+          },
+          {
+            "quality": "good",
+            "text": "Develop 12-month strategic growth plan for fitness tracking app. Current: 5K active users, $50K MRR, 8-person team (2 eng, 2 design, 2 marketing, 2 CS). Goal: 100K users, $500K MRR by Q4. Market: competitive with Strava, MyFitnessPal. Budget: $200K marketing, $100K product. Differentiator: AI-powered personalized workout plans. Strategy components: 1) Quarterly milestones and KPIs (users, MRR, retention, CAC), 2) User acquisition by channel (paid $120K, organic/SEO $40K, partnerships $30K, referral $10K), 3) Product roadmap (AI enhancement, social features, wearable integrations), 4) Resource allocation (hiring plan, budget breakdown), 5) Top 3 risk mitigation strategies (competition, tech execution, market shift), 6) Competitive positioning (why users switch from incumbents). Include: monthly execution timeline, decision checkpoints, pivot triggers (if user growth <50% of target by Q2).",
+            "explanation": "Perfect! Complete baseline, specific goals, competitive context, budget constraints, unique value proposition, comprehensive strategy across growth levers, resource planning, risk management, and adaptive execution framework."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a market entry strategy for a new geography. Which approach is most sophisticated?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design market entry strategy for e-commerce platform expanding to Brazil. Company profile: US-based, $50M ARR, 200K sellers, electronics/home goods focus. Brazil market: $30B e-commerce, 15% YoY growth, 60% mobile, top players (Mercado Livre 25% share, Amazon 15%). Entry approach evaluation: 1) Greenfield build (local entity, 12-month timeline, $5M investment), 2) Partnership (existing platform, 6-month timeline, rev share 30%), 3) Acquisition (local player, immediate, $10M+). Recommended: Phased partnership approach. Phase 1 (months 1-3): 50 local sellers, São Paulo only, test product-market fit. Phase 2 (months 4-8): 500 sellers, expand to Rio/Brasília, localize platform (Portuguese, local payment). Phase 3 (months 9-12): 2000 sellers, nationwide, build local team (10 people). Critical success factors: local payment methods (Pix, Boleto), logistics partners (Correios, private), regulatory compliance (e-commerce law, tax), currency (BRL pricing, forex hedging). Deliverables: market analysis, entry mode comparison, go-to-market plan, localization requirements, financial projections (3-year), risk register (political, economic, operational).",
+            "explanation": "Excellent! Thorough market analysis, strategic options evaluated, phased execution reducing risk, local market requirements, financial modeling, regulatory considerations, and comprehensive risk assessment for international expansion."
+          },
+          {
+            "quality": "almost",
+            "text": "Plan how our e-commerce platform can expand to Brazil. Research the market size, competition, and decide whether to build locally or partner with an existing player.",
+            "explanation": "Has geographic target and strategic questions, but missing company context, evaluation criteria, phased approach, local requirements, and financial implications."
+          },
+          {
+            "quality": "bad",
+            "text": "Expand our business to a new country",
+            "explanation": "No target market, company capabilities, entry strategy options, or market requirements. Cannot create expansion plan."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a digital transformation roadmap for a traditional business. Which is best?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Create a digital transformation plan for a retail chain to add e-commerce, update their POS system, and use data analytics",
+            "explanation": "Has transformation initiatives, but missing current state assessment, change management, integration strategy, and success metrics."
+          },
+          {
+            "quality": "bad",
+            "text": "Modernize a traditional business with digital technology",
+            "explanation": "No industry, current systems, business objectives, or transformation scope. Cannot build roadmap."
+          },
+          {
+            "quality": "good",
+            "text": "Design 18-month digital transformation for regional retail chain (50 stores, $200M revenue). Current state: legacy POS, no e-commerce, spreadsheet inventory, manual reporting. Business drivers: competition from Amazon, declining foot traffic (-15% YoY), customer demand for online. Transformation pillars: 1) E-commerce platform (months 1-6: vendor selection, 7-12: build/test, 13: launch), 2) Cloud POS system (months 3-9: pilot 5 stores, 10-15: rollout all), 3) Data warehouse & analytics (months 6-12: infrastructure, 13-18: self-service BI), 4) Customer loyalty program (months 8-14: design, 15-18: launch). Change management: executive sponsorship, store manager training, employee upskilling program, communication plan. Integration architecture: POS ↔ inventory ↔ e-commerce ↔ warehouse (real-time sync). Success metrics: online revenue 25% by year 2, inventory accuracy 98%, customer data utilization 70%. Budget: $8M (breakdown by pillar). Risks: technical integration failures, employee resistance, vendor dependency. Deliverables: current state assessment, future state architecture, phased roadmap, business case, change plan, governance model.",
+            "explanation": "Perfect! Comprehensive current state, clear business drivers, multi-pillar strategy with sequencing, change management focus, technical integration, measurable outcomes, budget reality, risk mitigation, and governance for successful transformation."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a product diversification strategy to reduce business risk. Which demonstrates strategic depth?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create product diversification strategy for B2B software company (60% revenue from single product, industry concentration risk). Current: $10M ARR, 80% from healthcare vertical, main product (compliance software). Strategic options analysis: 1) Horizontal expansion (same product, new verticals: finance, manufacturing), 2) Vertical expansion (new products for healthcare: training, audit tools), 3) Adjacent markets (related compliance needs: privacy, security). Evaluation framework: market size, competitive intensity, core competency leverage, time-to-market, investment required. Recommended: Balanced portfolio approach. Year 1: Privacy compliance module for existing healthcare customers ($1M investment, $2M ARR potential, 70% close rate). Year 2: Expand compliance product to finance vertical ($1.5M investment, $4M ARR, 50% close rate). Year 3: Security compliance suite ($2M investment, $6M ARR, 40% close rate). Portfolio targets by end year 3: original product 40%, privacy 20%, finance expansion 25%, security 15%. Risk mitigation: phased investment, stage-gate decisions (kill if <50% revenue target), partnership options for new verticals. Deliverables: market opportunity analysis, build-vs-partner decision framework, 3-year financial model with NPV/IRR, product roadmap, go-to-market plan per segment, portfolio tracking dashboard.",
+            "explanation": "Excellent! Identifies concentration risk, evaluates strategic options with framework, recommends balanced approach with phased execution, includes financial modeling, risk management with kill criteria, and comprehensive tracking for portfolio optimization."
+          },
+          {
+            "quality": "almost",
+            "text": "Our software company relies too heavily on one product and one industry. Develop new products or enter new markets to diversify revenue.",
+            "explanation": "Recognizes risk and general directions, but missing current metrics, option evaluation, prioritization logic, and implementation roadmap."
+          },
+          {
+            "quality": "bad",
+            "text": "Diversify our business to reduce risk",
+            "explanation": "No current business context, revenue concentration details, diversification options, or strategic framework. Cannot develop strategy."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Develop a competitive response strategy to a market disruptor. Which shows expert thinking?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "A new competitor is taking market share with lower prices and innovative features. Analyze their strategy and recommend how we should respond.",
+            "explanation": "Identifies threat, but missing detailed competitive intelligence, our capabilities assessment, response options evaluation, and execution plan."
+          },
+          {
+            "quality": "bad",
+            "text": "Respond to a new competitor entering our market",
+            "explanation": "No competitor details, market dynamics, our position, or response options. Cannot formulate strategy."
+          },
+          {
+            "quality": "good",
+            "text": "Develop response strategy to market disruptor. Context: We are incumbent CRM provider ($100M ARR, 5K customers, avg $20K/year, 15% market share). Disruptor: AI-native CRM (launched 6 months ago, $50M funding, $5M ARR, rapid growth +40% MoM, pricing $10K/year, AI features we lack). Their advantage: modern tech stack, AI email/lead scoring, 50% price, viral growth. Our advantages: customer relationships, integrations ecosystem, enterprise trust, superior support. Threat analysis: losing 15% of new deals to them, at-risk segment (SMB customers, 40% of base, price-sensitive). Response options: 1) Price war (match price, erodes margin), 2) Innovation sprint (build AI features, 9-month timeline, $5M investment), 3) Differentiate up-market (focus on enterprise, abandon SMB), 4) Acquisition (buy disruptor, $200M+). Recommended: Hybrid defend-and-differentiate. Immediate (months 1-3): AI roadmap announcement (buy time), SMB retention program (discount + lock-in), competitive FUD campaign (data security concerns). Medium-term (months 4-9): Launch AI features (email insights, predictive scoring), API platform (enable ecosystem advantage). Long-term (months 10-12): Strategic partnerships (integrate with AI leaders), M&A evaluation (if they grow to real threat). Success metrics: retention rate >90%, new deal win rate >60%, innovation perception score. Deliverables: competitive intelligence brief, war room organization, feature parity roadmap, marketing counter-narrative, customer communication plan, board strategy deck.",
+            "explanation": "Perfect! Deep competitive analysis, honest capability assessment, multiple response options evaluated, hybrid strategy balancing defense and differentiation, phased tactical execution, success metrics, and organizational mobilization for competitive battle."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": ["agentic_ai", "planning", "analysis"],
+    "description": "Develop comprehensive strategic plans that align goals, resources, and actions.",
+    "isAssessment": false,
+    "requiresCompletion": ["level-2-assessment"],
+    "examplePrompts": [
+      {
+        "quality": "bad",
+        "prompt": "Make a business strategy",
+        "explanation": "No company info, market context, goals, or constraints. Impossible to create meaningful strategy."
+      },
+      {
+        "quality": "almost",
+        "prompt": "Create a 12-month growth strategy for a fitness app startup that wants to reach 100K users",
+        "explanation": "Has timeline, business type, and growth goal - but missing current state, competition, budget, and go-to-market approach."
+      },
+      {
+        "quality": "good",
+        "prompt": "Develop a 12-month strategic growth plan for a fitness tracking mobile app. Current state: 5K active users, $50K MRR, 8-person team. Goal: reach 100K users and $500K MRR by Q4. Market: competitive with Strava, MyFitnessPal. Budget: $200K for marketing, $100K for product. Key differentiator: AI-powered personalized workout plans. Provide: 1) Quarterly milestones and KPIs 2) User acquisition strategy by channel (paid, organic, partnerships) 3) Product roadmap priorities 4) Resource allocation plan 5) Risk mitigation for top 3 challenges 6) Competitive positioning strategy. Include monthly budget breakdown and growth assumptions.",
+        "explanation": "Comprehensive - includes current baseline, specific goals, competitive context, budget constraints, unique value prop, detailed deliverables, and asks for assumptions."
+      }
+    ]
+  },
+  {
+    "slug": "level-3-assessment",
+    "title": "Level 3 Assessment",
+    "category": "Assessment",
+    "level": 3,
+    "levelOrder": 4,
+    "estTime": "30m",
+    "difficulty": 3,
+    "badge": "level-3-complete",
+    "steps": 5,
+    "stepDetails": [
+      {
+        "type": "multiple-choice",
+        "question": "Design an AI-powered business intelligence platform. Which demonstrates Level 3 mastery?",
+        "options": [
+          {
+            "quality": "bad",
+            "text": "Build an AI dashboard that shows business metrics and provides insights",
+            "explanation": "No specific metrics, AI capabilities, user roles, or actionable intelligence framework. Too generic for enterprise BI."
+          },
+          {
+            "quality": "good",
+            "text": "Design AI-powered BI platform for mid-market SaaS companies (100-500 employees). User roles: C-suite (strategic), department heads (tactical), analysts (operational). Data sources: Salesforce, Stripe, Google Analytics, Zendesk, custom databases. AI capabilities: 1) Automated anomaly detection (revenue drops, churn spikes, usage patterns), 2) Natural language queries ('Why did MRR drop 5% in Q2?'), 3) Predictive forecasting (revenue, churn, hiring needs with 85% confidence), 4) Recommendation engine (cost optimization, growth opportunities), 5) Automated insight summaries (daily brief, weekly trends). Dashboards by role: C-suite (company KPIs, board-ready), department (functional metrics, team performance), analyst (drill-down exploration, custom reports). Features: real-time updates, collaborative annotations, scheduled reports, mobile app, data governance. Technical: cloud-native (AWS/GCP), LLM integration (GPT-4 for NL queries), security (SOC 2, RBAC), scalability (handle 10M+ records). Deliverables: system architecture, AI model specifications, UI wireframes by role, data model, API documentation, implementation roadmap (12 months), pricing model ($500-2000/month tiered).",
+            "explanation": "Perfect! Enterprise-grade solution with role-based intelligence, advanced AI capabilities, comprehensive data integration, technical architecture, security considerations, scalability planning, and business model for go-to-market."
+          },
+          {
+            "quality": "almost",
+            "text": "Create a BI platform with AI that connects to common business tools, detects anomalies, and answers questions in natural language",
+            "explanation": "Has AI features and integration concept, but missing user personas, specific data sources, technical architecture, and enterprise requirements."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Build a comprehensive go-to-market strategy for an AI product. Which is most complete?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "Launch an AI writing assistant for enterprises. Target marketing and sales teams, price at $20/user/month, use content marketing and partnerships to grow.",
+            "explanation": "Has product, target market, and basic tactics, but missing positioning, competitive differentiation, GTM phases, success metrics, and execution details."
+          },
+          {
+            "quality": "bad",
+            "text": "Create a go-to-market plan for our new AI product",
+            "explanation": "No product details, target market, competitive context, or GTM components. Cannot build strategy."
+          },
+          {
+            "quality": "good",
+            "text": "Develop GTM strategy for AI writing assistant (enterprise B2B). Product: AI content generation for marketing, sales, support teams. USP: brand voice training, compliance controls, enterprise security vs consumer tools (Jasper, Copy.ai). Target: companies 100-5000 employees, content-heavy industries (tech, finance, healthcare). ICP: CMO/CRO pain points (content velocity, brand consistency, cost). Positioning: 'Enterprise-grade AI writing with your brand DNA built-in'. Pricing: $25/user/month (minimum 20 seats), annual contracts, ROI messaging (3x content output, 50% cost reduction vs agencies). GTM phases: Phase 1 (months 1-3): 10 design partners (beta pricing, feedback), case studies, product-market fit validation. Phase 2 (months 4-6): Pilot program (50 customers, land-and-expand), sales playbook, marketing content machine. Phase 3 (months 7-12): Scale (500 customers, channel partnerships). Channels: outbound SDR (primary), content marketing (SEO), partner ecosystem (agencies, consultants), industry events. Sales motion: PLG for evaluation (14-day trial), sales-assist for enterprise (security review, MSA). Success metrics: 100 customers by month 12, $2M ARR, <$10K CAC, 90% retention. Deliverables: positioning doc, sales playbook, marketing campaign plan, partnership framework, customer success program, pricing/packaging options, financial model (unit economics).",
+            "explanation": "Excellent! Complete GTM covering positioning, pricing with ROI, phased execution, multi-channel strategy, sales motion, metrics, and all supporting materials for successful launch and scale."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Create a supply chain optimization strategy using AI and automation. Which demonstrates expertise?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Design AI-powered supply chain optimization for e-commerce company (5K SKUs, 50K orders/month, 3 warehouses, $50M revenue). Current pain points: stockouts (15% of SKUs/month), overstock ($2M tied up), fulfillment delays (18% late shipments). AI/automation solutions: 1) Demand forecasting (ML model: sales history + seasonality + trends + external factors, 90% accuracy), 2) Inventory optimization (dynamic reorder points, safety stock calculation, ABC analysis automation), 3) Warehouse automation (pick path optimization, robot coordination, slotting algorithm), 4) Supplier management (lead time prediction, risk scoring, auto-reordering). Implementation roadmap: Phase 1 (months 1-3): demand forecasting pilot (top 500 SKUs), Phase 2 (months 4-6): inventory optimization rollout (all SKUs), Phase 3 (months 7-9): warehouse automation (1 facility pilot), Phase 4 (months 10-12): full deployment + supplier integration. Expected outcomes: reduce stockouts to 5%, cut overstock by 60% ($1.2M freed), improve on-time delivery to 95%, decrease fulfillment cost 20%. Technology: Python ML models, cloud infrastructure, WMS integration, IoT sensors, autonomous robots (pilot). Investment: $1.5M (software $500K, automation $800K, implementation $200K), payback 14 months. Deliverables: current state analysis, solution architecture, ML model specifications, automation design, financial model (NPV, IRR), risk assessment, change management plan.",
+            "explanation": "Perfect! Comprehensive problem analysis, AI/automation solutions addressing each pain point, phased implementation reducing risk, clear ROI with payback, technical details, investment breakdown, and change management for operational transformation."
+          },
+          {
+            "quality": "almost",
+            "text": "Use AI to predict demand and optimize inventory levels for our e-commerce business. Automate warehouse operations to reduce costs.",
+            "explanation": "Has AI application areas, but missing current metrics, solution details, implementation approach, financial justification, and integration strategy."
+          },
+          {
+            "quality": "bad",
+            "text": "Improve supply chain with AI and automation",
+            "explanation": "No business context, current challenges, specific solutions, or optimization metrics. Cannot create strategy."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Develop a talent acquisition and retention strategy for hypergrowth. Which is most strategic?",
+        "options": [
+          {
+            "quality": "almost",
+            "text": "We need to hire 100 people in 12 months while keeping attrition below 10%. Create a hiring plan with sourcing channels and a retention program.",
+            "explanation": "Has hiring target and attrition goal, but missing current team analysis, role prioritization, competitive talent landscape, and integrated people strategy."
+          },
+          {
+            "quality": "bad",
+            "text": "Hire more people quickly while keeping employees happy",
+            "explanation": "No hiring targets, team composition, retention metrics, or strategic framework. Cannot build people strategy."
+          },
+          {
+            "quality": "good",
+            "text": "Design talent strategy for hypergrowth startup (50 to 150 employees in 12 months, Series B funded). Current: 50 people (20 eng, 15 sales, 8 ops, 7 other), 12% annual attrition (tech: 15%, others: 8%). Hiring plan: 100 new hires (40 eng, 30 sales, 20 ops, 10 other). Talent market: competitive tech hub, engineer shortage, 5 competing startups. Acquisition strategy: 1) Employer brand building (tech blog, open source, speaking), 2) Sourcing mix (referrals 40% target, recruiters 30%, inbound 20%, agencies 10%), 3) Hiring process optimization (reduce time-to-hire from 45 to 30 days, improve offer acceptance 60% to 75%), 4) Compensation strategy (60th percentile cash, 75th percentile equity, competitive analysis quarterly). Retention strategy: 1) Onboarding excellence (90-day plan, buddy system, early wins), 2) Career development (IDP for all, bi-annual promotions, skills training budget $2K/person), 3) Culture initiatives (remote-friendly, DE&I goals, quarterly offsites), 4) Retention risk monitoring (stay interviews, predictive model for flight risk). Metrics: time-to-fill by role, offer acceptance rate, quality of hire (90-day performance), retention rate by tenure/function, engagement score. Budget: $8M (salaries $6M, recruiting $1M, programs $1M). Deliverables: hiring funnel targets, sourcing playbook, interview training, compensation framework, retention playbook, talent dashboard, quarterly milestones.",
+            "explanation": "Excellent! Complete talent strategy balancing aggressive hiring with retention, data-driven approach, competitive intelligence, multi-pronged acquisition and retention tactics, budget reality, and comprehensive metrics for talent leadership."
+          }
+        ]
+      },
+      {
+        "type": "multiple-choice",
+        "question": "Design a sustainability and ESG strategy for a corporation. Which shows comprehensive thinking?",
+        "options": [
+          {
+            "quality": "good",
+            "text": "Create ESG strategy for manufacturing company ($500M revenue, 2000 employees, global operations). Current state: ESG score 45/100 (industry avg 60), carbon footprint 100K tons CO2/year, limited diversity metrics, basic governance. Stakeholder drivers: investors (ESG funds requirement), customers (sustainable sourcing preference), employees (purpose-driven culture), regulators (emissions reporting). ESG framework: Environmental: 1) Carbon neutrality roadmap (reduce 50% by 2030, offset remainder, renewable energy transition, supply chain emissions), 2) Circular economy (product design for recycling, waste reduction 80%, water conservation). Social: 1) Diversity targets (leadership 40% women/minorities by 2028, pay equity audit), 2) Supply chain ethics (audit 100% suppliers, living wage standards), 3) Community impact (1% profit to local programs). Governance: 1) Board diversity (add 2 ESG experts), 2) Executive compensation tied to ESG metrics (20% of variable pay), 3) Transparent reporting (annual ESG report, GRI standards). Implementation: Phase 1 (year 1): baseline measurement, quick wins (LED lighting, diversity hiring), ESG committee formation. Phase 2 (year 2-3): major initiatives (renewable energy 50%, supplier program rollout), reporting infrastructure. Phase 3 (year 4-5): full transformation, ESG leadership positioning. Investment: $50M (capex $30M for efficiency/renewables, opex $20M programs), savings $10M/year (energy efficiency). Metrics: ESG score to 75, carbon reduction %, diversity representation, supplier compliance %, investor ESG rating improvement. Deliverables: materiality assessment, ESG roadmap, carbon accounting system, diversity program, governance updates, investor communications plan.",
+            "explanation": "Perfect! Comprehensive ESG strategy across all dimensions, stakeholder-driven approach, measurable targets with timeline, realistic investment with ROI, phased implementation, robust metrics, and transparent reporting for corporate responsibility and value creation."
+          },
+          {
+            "quality": "almost",
+            "text": "Improve our company's ESG score by reducing carbon emissions, increasing diversity, and strengthening board oversight. Create a 5-year plan.",
+            "explanation": "Has ESG pillars and timeframe, but missing current state, stakeholder analysis, specific initiatives, investment requirements, and measurement framework."
+          },
+          {
+            "quality": "bad",
+            "text": "Make our company more sustainable and socially responsible",
+            "explanation": "No current ESG position, specific initiatives, stakeholders, metrics, or strategic framework. Cannot develop ESG strategy."
+          }
+        ]
+      }
+    ],
+    "buildsSkills": [
+      "agentic_ai",
+      "synthetic_ai",
+      "planning",
+      "analysis",
+      "logic",
+      "collaboration"
+    ],
+    "description": "Master-level assessment testing advanced prompting techniques and strategic thinking.",
+    "isAssessment": true,
+    "requiresCompletion": [
+      "financial-advisor",
+      "customer-success-specialist",
+      "strategic-planner"
+    ]
+  }
+]

@@ -1,0 +1,187 @@
+{
+  "slug": "financial-advisor",
+  "title": "Financial Advisor",
+  "category": "Finance",
+  "level": 3,
+  "levelOrder": 1,
+  "estTime": "25m",
+  "difficulty": 3,
+  "badge": "money-master",
+  "steps": 7,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Create a comprehensive retirement planning system. Which prompt demonstrates expert-level thinking?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Help someone plan for retirement",
+          "explanation": "No user profile, financial situation, goals, or planning framework. Dangerously vague for financial advice."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a retirement plan for a 35-year-old earning $50K who wants to retire at 65 with current savings of $10K",
+          "explanation": "Has age, income, and basic goal, but missing risk tolerance, expenses, lifestyle expectations, and comprehensive planning components."
+        },
+        {
+          "quality": "good",
+          "text": "Design comprehensive retirement plan for: Age 35, annual income $50K, current savings $10K (401k: $8K, IRA: $2K), monthly expenses $3K, moderate risk tolerance, target retirement 65. Goals: maintain 70% current income, travel twice yearly ($4K/trip). Deliverables: 1) Recommended monthly savings (specify 401k vs IRA allocation), 2) Age-based asset allocation strategy (stocks/bonds/cash glide path), 3) Projected nest egg at 65 (Monte Carlo simulation, 80% confidence), 4) Alternative scenarios (retire at 62 or 68), 5) Key milestones with rebalancing triggers, 6) Tax optimization strategies, 7) Social Security strategy. Assumptions: inflation 2.5%, stock returns 7%, bonds 3%, employer 401k match 3%, Social Security estimate $2K/month. Include sensitivity analysis for market downturns.",
+          "explanation": "Perfect! Comprehensive financial profile, specific goals, multi-faceted deliverables, detailed assumptions for transparency, scenario analysis, tax considerations, and risk assessment."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a debt payoff and wealth-building strategy. Which approach is most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create debt elimination and wealth plan for: Age 28, income $65K, debts (credit card $15K at 22% APR, student loans $40K at 5%, car loan $12K at 6%), monthly budget $4500 (rent $1200, minimum debt payments $800, other $2500), current savings $2K emergency fund. Risk tolerance: moderate. Goals: debt-free in 5 years, then build $500K net worth by 40. Provide: 1) Debt payoff strategy (avalanche vs snowball analysis with interest calculations), 2) Optimized monthly allocation (debt vs investing), 3) Emergency fund building timeline (3-6 months expenses), 4) Investment plan post-debt (IRA, brokerage, 401k priority), 5) Net worth projection with milestones, 6) Lifestyle trade-offs analysis. Compare: aggressive debt payoff vs balanced approach. Include psychological factors (motivation, behavioral economics).",
+          "explanation": "Excellent! Complete financial picture, competing priorities addressed, mathematical optimization, psychological considerations, milestone tracking, and strategic flexibility for life changes."
+        },
+        {
+          "quality": "almost",
+          "text": "Help pay off $67K in debts (credit card 22%, student loan 5%, car 6%) while starting to invest for the future. Income is $65K.",
+          "explanation": "Has debt details and dual goals, but missing budget context, time horizons, strategy comparison, and balanced allocation approach."
+        },
+        {
+          "quality": "bad",
+          "text": "Create a plan to get out of debt and build wealth",
+          "explanation": "No financial details, debt types, income, timeframe, or personal circumstances. Cannot create actionable plan."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a college savings strategy with investment recommendations. Which prompt delivers comprehensive guidance?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a 529 college savings plan for a newborn. Parents can save $300/month. Target is $200K for college in 18 years.",
+          "explanation": "Has vehicle type, contribution, and goal, but missing state tax considerations, alternative strategies, investment allocation, and what-if scenarios."
+        },
+        {
+          "quality": "bad",
+          "text": "Help save for a child's college education",
+          "explanation": "No child's age, savings capacity, college cost estimates, or investment timeframe. Cannot build meaningful strategy."
+        },
+        {
+          "quality": "good",
+          "text": "Develop college savings strategy for newborn (18 years to college). Parents: combined $120K income (NY state), can save $300/month, moderate risk. College goal: $250K (assuming 5% annual cost inflation from current $35K/year). Analysis: 1) Compare 529 plan (NY tax benefit) vs Roth IRA vs taxable account (tax implications, flexibility, financial aid impact), 2) Recommend age-based asset allocation (aggressive to conservative glide path), 3) Project outcomes at different contribution levels ($200, $300, $400/month), 4) Plan B if shortfall: federal loans, merit scholarships, community college start. Assumptions: 7% stock returns, 4% bonds, 1.5% cash. Deliverables: monthly contribution target, account selection rationale, rebalancing schedule, alternative funding sources, FAFSA optimization tips. Include grandparent gifting strategy (annual exclusion $18K).",
+          "explanation": "Perfect! Comprehensive strategy comparison with tax implications, risk-adjusted projections, flexible scenarios, alternative funding paths, financial aid considerations, and multi-generational planning."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a real estate investment analysis tool. Which prompt is most sophisticated?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design rental property investment analyzer. Inputs: purchase price, down payment %, interest rate, property taxes, insurance, HOA, maintenance estimate, vacancy rate, rent amount, rent appreciation, property appreciation, holding period. Calculations: 1) Monthly cash flow (rent - PITI - expenses), 2) Cap rate, 3) Cash-on-cash return, 4) Total ROI (including appreciation and equity), 5) Break-even analysis, 6) NPV and IRR, 7) Tax benefits (depreciation, mortgage interest). Scenario modeling: vary down payment (10-30%), interest rates (±2%), vacancy (5-15%), rent growth (2-5%). Compare to: stock market index (10-year avg), bonds, REITs. Deliverables: detailed cash flow projection (yearly for holding period), sensitivity analysis charts, recommendation (buy/pass), optimal holding period. Include market cycle indicators and exit strategy.",
+          "explanation": "Excellent! Comprehensive financial metrics, multiple return calculations, scenario planning, competitive analysis, tax considerations, and strategic timing guidance for full investment lifecycle."
+        },
+        {
+          "quality": "almost",
+          "text": "Calculate if a rental property is a good investment. Property costs $300K, rent is $2000/month, expenses are $800/month. Should I buy?",
+          "explanation": "Has basic numbers, but missing financing details, appreciation factors, tax benefits, holding period, and comparative analysis to other investments."
+        },
+        {
+          "quality": "bad",
+          "text": "Analyze a real estate investment opportunity",
+          "explanation": "No property details, financial metrics, investment criteria, or analysis framework. Cannot perform evaluation."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a tax optimization strategy for high-income earners. Which demonstrates mastery?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a tax reduction plan for someone earning $250K with investment income. Use retirement accounts and deductions to lower taxes.",
+          "explanation": "Has income level and general strategies, but missing income breakdown, specific tax situation, entity structure optimization, and coordinated multi-year planning."
+        },
+        {
+          "quality": "bad",
+          "text": "Reduce my taxes legally",
+          "explanation": "No income details, tax bracket, deduction eligibility, or financial situation. Cannot provide specific tax strategies."
+        },
+        {
+          "quality": "good",
+          "text": "Design tax optimization strategy for high earner. Profile: W-2 income $250K, investment income $50K (qualified dividends $30K, capital gains $20K), married filing jointly, no kids, homeowner (mortgage interest $18K, property tax $12K), CA resident. Current: 35% federal bracket, 9.3% CA, paying $95K total tax. Goals: minimize current tax, build tax-free retirement income. Strategies to evaluate: 1) Max 401k ($23K) + backdoor Roth IRA, 2) Mega backdoor Roth if available, 3) Health Savings Account ($8300), 4) Tax-loss harvesting (wash sale rules), 5) Charitable giving (bunching, DAF, QCD when eligible), 6) Timing capital gains/losses, 7) Side business formation (S-corp vs LLC, home office, equipment deductions). Deliverables: current vs optimized tax comparison, multi-year tax projection (considering bracket changes), entity structure recommendation, implementation timeline, estimated savings. Include audit risk assessment and documentation requirements.",
+          "explanation": "Perfect! Detailed tax situation, multiple income sources, comprehensive strategy evaluation, entity optimization, multi-year planning, practical implementation guidance, and risk management."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create investment recommendations for a retirement planning client. Which prompt provides the most comprehensive financial guidance?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Give investment advice for retirement",
+          "explanation": "No client profile, risk tolerance, timeline, or specific financial situation considerations."
+        },
+        {
+          "quality": "almost",
+          "text": "Create investment recommendations for a 45-year-old professional planning for retirement at 65",
+          "explanation": "Has basic client profile, but missing risk assessment, income needs, tax considerations, and portfolio diversification strategy."
+        },
+        {
+          "quality": "good",
+          "text": "Develop a comprehensive retirement investment plan for a 45-year-old marketing director ($120K annual income, $250K current savings). Goals: retire at 65 with $1.5M in today's dollars, maintain 80% pre-retirement income. Risk tolerance: moderate-high. Plan components: asset allocation recommendation (60% equities, 30% bonds, 10% alternatives), specific ETF/mutual fund suggestions with expense ratios, tax-optimized account strategy (401k max, backdoor Roth, taxable brokerage), projected growth scenarios at 6%, 7%, 8% returns, required monthly contributions ($1,800), Social Security optimization strategy, inflation protection measures, periodic rebalancing schedule. Include Monte Carlo analysis and withdrawal strategy.",
+          "explanation": "Excellent! Complete financial planning with specific numbers, risk-based allocation, tax optimization, multiple scenarios, and implementation timeline."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Analyze debt reduction strategies for a family with multiple loans. Which prompt offers the most actionable financial advice?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a debt payoff plan for a family with credit card debt, student loans, and a car loan",
+          "explanation": "Has debt types, but missing interest rates, payment amounts, cash flow analysis, and prioritization strategy."
+        },
+        {
+          "quality": "bad",
+          "text": "Help with debt problems",
+          "explanation": "No specific debt amounts, interest rates, income situation, or financial goals."
+        },
+        {
+          "quality": "good",
+          "text": "Analyze and optimize debt reduction strategy for a family with: $15K credit card debt (18.9% APR), $45K student loans (6.2% APR), $22K car loan (4.8% APR). Monthly net income $6,500, current minimum payments $850. Strategy comparison: avalanche method (highest interest first) vs snowball method (smallest balance first) with timeline projections for each. Include: consolidation loan analysis (personal loan at 9% APR vs current rates), cash flow optimization to increase payments to $1,200 monthly, tax deduction considerations for student loan interest, credit score impact timeline, emergency fund maintenance during payoff. Provide 3-year projection with total interest savings comparison.",
+          "explanation": "Perfect! Comprehensive debt analysis with multiple strategy comparison, cash flow optimization, tax considerations, and timeline projections."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "agentic_ai",
+    "logic",
+    "planning"
+  ],
+  "description": "Create sophisticated financial guidance systems that help users make informed decisions.",
+  "isAssessment": false,
+  "requiresCompletion": [
+    "level-2-assessment"
+  ],
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Give financial advice",
+      "explanation": "No user profile, financial goals, risk tolerance, or specific questions. Dangerous and unhelpful."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Create a retirement savings plan for a 35-year-old with $50K income who wants to retire at 65",
+      "explanation": "Has age, income, and goal, but missing current savings, risk tolerance, expenses, and desired retirement lifestyle."
+    },
+    {
+      "quality": "good",
+      "prompt": "Design a comprehensive retirement plan for: Age 35, annual income $50K, current savings $10K, monthly expenses $3K, moderate risk tolerance, target retirement age 65. Goals: maintain 70% of current income in retirement, travel twice yearly. Provide: 1) Recommended monthly savings amount 2) Asset allocation strategy (stocks/bonds/cash) 3) Projected retirement nest egg 4) Alternative scenarios if retiring at 62 or 68 5) Key milestones to track. Include assumptions for inflation (2.5%), returns (7% stocks, 3% bonds), and Social Security estimates.",
+      "explanation": "Excellent - comprehensive user profile, specific goals, multiple deliverables, scenario analysis, and key assumptions for calculations."
+    }
+  ]
+}

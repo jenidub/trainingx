@@ -1,0 +1,26 @@
+[
+  {
+    "id": "prompt-engineer-certified",
+    "name": "Certified Prompt Engineer",
+    "description": "Master-level certification for comprehensive prompt engineering skills",
+    "requiredPS": 70,
+    "requiredProjects": 5,
+    "requiredAssessment": true
+  },
+  {
+    "id": "ai-skills-foundation",
+    "name": "AI Skills Foundation",
+    "description": "Entry-level certification demonstrating core AI prompting competencies",
+    "requiredPS": 50,
+    "requiredProjects": 3,
+    "requiredAssessment": false
+  },
+  {
+    "id": "advanced-prompting-specialist",
+    "name": "Advanced Prompting Specialist",
+    "description": "Elite certification for advanced multi-modal prompting expertise",
+    "requiredPS": 85,
+    "requiredProjects": 7,
+    "requiredAssessment": true
+  }
+]

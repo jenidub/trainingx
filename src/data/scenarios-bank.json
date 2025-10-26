@@ -1,0 +1,554 @@
+{
+  "social-media-content": [
+    {
+      "id": "social-1",
+      "challenge": "Create a week of Instagram posts for a local coffee shop's grand opening",
+      "context": "The coffee shop is family-owned, focuses on artisan coffee and fresh pastries, and wants to build community",
+      "requirements": [
+        "Create 7 different post captions (one per day)",
+        "Use engaging hooks to stop scrolling",
+        "Include relevant hashtags for local discovery",
+        "Add clear calls-to-action (visit, share, tag friends)"
+      ],
+      "audience": "Local community members and coffee enthusiasts"
+    },
+    {
+      "id": "social-2",
+      "challenge": "Write a viral LinkedIn post for a career coach launching a new mentorship program",
+      "context": "The coach specializes in helping mid-career professionals pivot to tech roles",
+      "requirements": [
+        "Start with a compelling hook or story",
+        "Include actionable insights or tips",
+        "End with a clear program CTA",
+        "Keep it under 1300 characters"
+      ],
+      "audience": "Mid-career professionals interested in tech transitions"
+    },
+    {
+      "id": "social-3",
+      "challenge": "Create a TikTok video script for a fitness trainer promoting home workouts",
+      "context": "The trainer wants to show that effective workouts don't require expensive gym equipment",
+      "requirements": [
+        "Write a 30-60 second script",
+        "Include a catchy opening hook (first 3 seconds)",
+        "Demonstrate 3-4 exercises clearly",
+        "Add motivational messaging"
+      ],
+      "audience": "Busy professionals aged 25-40 who want to stay fit"
+    },
+    {
+      "id": "social-4",
+      "challenge": "Write Facebook posts for a non-profit's fundraising campaign",
+      "context": "The organization provides meals to homeless families and needs to raise $50,000 in 30 days",
+      "requirements": [
+        "Create 3 different emotional appeals",
+        "Include impact statements (e.g., '$25 feeds a family')",
+        "Strong donate button CTAs",
+        "Shareable and inspiring tone"
+      ],
+      "audience": "Compassionate community members with giving capacity"
+    },
+    {
+      "id": "social-5",
+      "challenge": "Create a Twitter thread for a tech startup announcing their new AI product",
+      "context": "The product uses AI to automate customer support, saving businesses time and money",
+      "requirements": [
+        "Write a 5-7 tweet thread",
+        "Start with a strong hook about the problem",
+        "Explain the solution simply (no jargon)",
+        "End with beta signup CTA"
+      ],
+      "audience": "Startup founders and customer success managers"
+    }
+  ],
+  "study-guide-builder": [
+    {
+      "id": "study-1",
+      "challenge": "Create a study guide for high school students learning about photosynthesis",
+      "context": "Students struggle to remember the difference between light-dependent and light-independent reactions",
+      "requirements": [
+        "Break down complex concepts into simple steps",
+        "Use analogies or memory tricks",
+        "Include quiz questions to test understanding",
+        "Keep explanations concise and visual"
+      ],
+      "audience": "High school biology students (ages 15-17)"
+    },
+    {
+      "id": "study-2",
+      "challenge": "Build a Spanish vocabulary study guide for beginners preparing for a test",
+      "context": "Learners need to memorize 50 new words related to food, travel, and daily activities in 5 days",
+      "requirements": [
+        "Organize words by themes",
+        "Include example sentences",
+        "Add pronunciation tips",
+        "Create practice exercises"
+      ],
+      "audience": "Adult language learners or college freshmen"
+    },
+    {
+      "id": "study-3",
+      "challenge": "Design study materials for nursing students learning medical terminology",
+      "context": "Students must memorize 100+ medical prefixes, suffixes, and root words for their exam",
+      "requirements": [
+        "Create mnemonic devices",
+        "Group terms by body systems",
+        "Include practice questions",
+        "Focus on accuracy and medical context"
+      ],
+      "audience": "Nursing students in their first year"
+    },
+    {
+      "id": "study-4",
+      "challenge": "Create a history study guide covering the American Revolution",
+      "context": "Students need to understand key events, causes, and outcomes for their final exam",
+      "requirements": [
+        "Create a timeline of major events",
+        "Explain cause-and-effect relationships",
+        "Include key figures and their roles",
+        "Add essay practice questions"
+      ],
+      "audience": "8th grade history students"
+    }
+  ],
+  "presentation-designer": [
+    {
+      "id": "presentation-1",
+      "challenge": "Design a pitch deck outline for a startup seeking seed funding",
+      "context": "The startup is a sustainable fashion marketplace connecting eco-conscious consumers with ethical brands",
+      "requirements": [
+        "Include problem, solution, market size, business model",
+        "Add team bios and traction metrics",
+        "Create a compelling ask (funding amount and use)",
+        "Limit to 10-12 slides"
+      ],
+      "audience": "Angel investors and early-stage VCs"
+    },
+    {
+      "id": "presentation-2",
+      "challenge": "Create a sales presentation for a SaaS product targeting enterprise clients",
+      "context": "The product helps companies automate their invoice processing and reduce errors by 90%",
+      "requirements": [
+        "Start with customer pain points",
+        "Demonstrate ROI and cost savings",
+        "Include case studies or testimonials",
+        "End with clear next steps and pricing"
+      ],
+      "audience": "CFOs and finance managers at mid-size companies"
+    },
+    {
+      "id": "presentation-3",
+      "challenge": "Design a quarterly business review presentation for executives",
+      "context": "You need to present Q3 results, highlight wins, address challenges, and outline Q4 strategy",
+      "requirements": [
+        "Include key metrics and KPIs",
+        "Use data visualizations (charts/graphs)",
+        "Highlight wins and challenges honestly",
+        "Provide actionable Q4 recommendations"
+      ],
+      "audience": "C-suite executives and board members"
+    },
+    {
+      "id": "presentation-4",
+      "challenge": "Create an employee onboarding presentation for new hires",
+      "context": "New team members need to learn company culture, values, tools, and their role expectations",
+      "requirements": [
+        "Welcome message and company story",
+        "Core values and culture",
+        "Tools, systems, and processes",
+        "30-60-90 day goals"
+      ],
+      "audience": "New employees on their first day"
+    }
+  ],
+  "quiz-master": [
+    {
+      "id": "quiz-1",
+      "challenge": "Create an interactive quiz to help people discover their ideal career path",
+      "context": "Users answer questions about their skills, interests, and values to get personalized career suggestions",
+      "requirements": [
+        "Write 10-12 multiple choice questions",
+        "Cover skills, work environment preferences, and values",
+        "Provide 4-5 different career outcome types",
+        "Include explanations for each result"
+      ],
+      "audience": "College students and career-changers"
+    },
+    {
+      "id": "quiz-2",
+      "challenge": "Design a product recommendation quiz for an online skincare store",
+      "context": "Customers with different skin types and concerns need personalized product recommendations",
+      "requirements": [
+        "Ask about skin type, concerns, and budget",
+        "Branch logic based on answers",
+        "Recommend 3-5 specific products",
+        "Explain why each product was recommended"
+      ],
+      "audience": "Skincare shoppers aged 20-45"
+    },
+    {
+      "id": "quiz-3",
+      "challenge": "Build a knowledge quiz for a cybersecurity training program",
+      "context": "Employees need to test their understanding of phishing, password security, and data protection",
+      "requirements": [
+        "15 questions covering key security topics",
+        "Mix question types (true/false, multiple choice)",
+        "Provide immediate feedback with explanations",
+        "Include a scoring system and pass/fail threshold"
+      ],
+      "audience": "Corporate employees (all levels)"
+    },
+    {
+      "id": "quiz-4",
+      "challenge": "Create a personality quiz for a wellness app to recommend meditation styles",
+      "context": "Users want to find the meditation practice that best fits their personality and lifestyle",
+      "requirements": [
+        "8-10 questions about stress, preferences, and goals",
+        "5-6 meditation style outcomes (mindfulness, guided, transcendental, etc.)",
+        "Include descriptions of each style",
+        "Add next steps (try this 5-min meditation)"
+      ],
+      "audience": "Adults interested in mental wellness"
+    }
+  ],
+  "business-analyst": [
+    {
+      "id": "business-1",
+      "challenge": "Analyze sales data for an e-commerce company experiencing declining revenue",
+      "context": "Revenue dropped 15% in Q3 despite increased traffic, and leadership needs to understand why",
+      "requirements": [
+        "Identify key metrics to investigate (conversion rate, AOV, cart abandonment)",
+        "Look for patterns in customer segments or product categories",
+        "Provide data-driven hypotheses",
+        "Recommend 3-5 actionable next steps"
+      ],
+      "audience": "Executive team and marketing leadership"
+    },
+    {
+      "id": "business-2",
+      "challenge": "Create a market opportunity analysis for a company entering a new geographic region",
+      "context": "A US-based SaaS company wants to expand to Southeast Asia",
+      "requirements": [
+        "Analyze market size and growth potential",
+        "Identify competitors and their positioning",
+        "Assess regulatory or cultural considerations",
+        "Provide go/no-go recommendation with rationale"
+      ],
+      "audience": "CEO and expansion strategy team"
+    },
+    {
+      "id": "business-3",
+      "challenge": "Analyze customer churn data to reduce cancellations",
+      "context": "A subscription service has 12% monthly churn and needs to identify at-risk customer patterns",
+      "requirements": [
+        "Identify common traits of churned customers",
+        "Find correlation with usage patterns or support tickets",
+        "Segment customers by churn risk",
+        "Recommend retention strategies for each segment"
+      ],
+      "audience": "Product and customer success teams"
+    },
+    {
+      "id": "business-4",
+      "challenge": "Conduct a profitability analysis for a multi-product company",
+      "context": "The company sells 5 product lines but isn't sure which are actually profitable after all costs",
+      "requirements": [
+        "Calculate gross margin and net profit per product",
+        "Factor in overhead allocation",
+        "Identify hidden costs or inefficiencies",
+        "Recommend portfolio optimization strategy"
+      ],
+      "audience": "CFO and product leadership"
+    },
+    {
+      "id": "business-5",
+      "challenge": "Analyze website analytics to improve user experience and conversions",
+      "context": "An online course platform has high bounce rates on their pricing page",
+      "requirements": [
+        "Examine user flow and drop-off points",
+        "Identify device, traffic source, or demographic patterns",
+        "Hypothesize UX issues",
+        "Propose A/B test ideas and success metrics"
+      ],
+      "audience": "Product and growth teams"
+    }
+  ],
+  "website-builder": [
+    {
+      "id": "website-1",
+      "challenge": "Plan a website for a local yoga studio attracting new members",
+      "context": "The studio offers beginner to advanced classes and wants to showcase their welcoming atmosphere",
+      "requirements": [
+        "Include class schedule, pricing, and instructor bios",
+        "Mobile-friendly design for on-the-go browsing",
+        "Online booking integration",
+        "Calming, accessible design"
+      ],
+      "audience": "Health-conscious adults aged 25-55"
+    },
+    {
+      "id": "website-2",
+      "challenge": "Design a portfolio website for a freelance UX designer",
+      "context": "The designer needs to showcase their best work and attract high-paying tech clients",
+      "requirements": [
+        "Display 8-10 case studies with process",
+        "Include client testimonials and results",
+        "Clear contact/hire process",
+        "Fast loading and modern design"
+      ],
+      "audience": "Startup founders and product managers"
+    },
+    {
+      "id": "website-3",
+      "challenge": "Build an e-commerce site for a sustainable fashion brand",
+      "context": "The brand sells eco-friendly clothing and wants to communicate their environmental values",
+      "requirements": [
+        "Product catalog with filtering",
+        "Highlight sustainability certifications",
+        "Size guides and easy returns",
+        "Fast, secure checkout"
+      ],
+      "audience": "Environmentally conscious shoppers aged 20-40"
+    },
+    {
+      "id": "website-4",
+      "challenge": "Create a SaaS landing page for a remote collaboration tool",
+      "context": "The product combines video conferencing, file sharing, and project management",
+      "requirements": [
+        "Clear value proposition above fold",
+        "Feature comparison table (plans)",
+        "Customer testimonials",
+        "Strong free trial CTA"
+      ],
+      "audience": "Remote team managers and founders"
+    }
+  ],
+  "financial-advisor": [
+    {
+      "id": "finance-1",
+      "challenge": "Create a budgeting system for a young couple buying their first home",
+      "context": "They earn $120K combined, have $40K saved, and need to balance mortgage, savings, and lifestyle",
+      "requirements": [
+        "Break down all housing costs (mortgage, insurance, maintenance)",
+        "Include emergency fund recommendations",
+        "Balance short-term and long-term goals",
+        "Provide actionable spending guidelines"
+      ],
+      "audience": "First-time homebuyers aged 28-35"
+    },
+    {
+      "id": "finance-2",
+      "challenge": "Design an investment strategy for a 35-year-old wanting to retire at 55",
+      "context": "They have $100K in retirement accounts and can save $2K/month",
+      "requirements": [
+        "Calculate required savings and returns",
+        "Recommend asset allocation (stocks, bonds, real estate)",
+        "Account for inflation and market volatility",
+        "Provide clear action steps"
+      ],
+      "audience": "Mid-career professional with aggressive retirement goals"
+    },
+    {
+      "id": "finance-3",
+      "challenge": "Create a debt payoff plan for someone with $45K in student loans and credit cards",
+      "context": "They earn $65K/year and want to be debt-free in 3 years",
+      "requirements": [
+        "Prioritize high-interest debt",
+        "Calculate monthly payment needs",
+        "Identify areas to cut expenses",
+        "Show progress milestones and timeline"
+      ],
+      "audience": "Young professional (25-30) with mixed debt"
+    },
+    {
+      "id": "finance-4",
+      "challenge": "Build a college savings plan for parents with a newborn",
+      "context": "Parents want to save for in-state public university (est. $150K in 18 years)",
+      "requirements": [
+        "Calculate monthly savings needed",
+        "Recommend 529 plan or alternatives",
+        "Account for investment growth",
+        "Balance with other financial goals"
+      ],
+      "audience": "New parents in their early 30s"
+    },
+    {
+      "id": "finance-5",
+      "challenge": "Design a financial independence plan for a freelancer with irregular income",
+      "context": "Monthly income varies from $4K-$12K and they want stable financial security",
+      "requirements": [
+        "Create a baseline budget for worst months",
+        "Build a larger emergency fund (6-12 months)",
+        "Set up systems for tax savings",
+        "Recommend income smoothing strategies"
+      ],
+      "audience": "Self-employed creative or consultant"
+    }
+  ],
+  "customer-success-specialist": [
+    {
+      "id": "customer-1",
+      "challenge": "Handle a frustrated customer whose order arrived damaged",
+      "context": "The customer ordered a $300 anniversary gift that arrived broken 2 days before their event",
+      "requirements": [
+        "Acknowledge the problem with empathy",
+        "Offer immediate solutions (refund, replacement, expedited shipping)",
+        "Go above and beyond to recover the relationship",
+        "Follow up proactively"
+      ],
+      "audience": "Upset customer with time-sensitive need"
+    },
+    {
+      "id": "customer-2",
+      "challenge": "Create an onboarding sequence for new SaaS customers",
+      "context": "Users sign up but only 40% complete setup, leading to high early churn",
+      "requirements": [
+        "Design a 7-day email sequence",
+        "Include quick wins and value demonstrations",
+        "Provide resources (videos, guides, webinars)",
+        "Identify and address common friction points"
+      ],
+      "audience": "New SaaS users (various technical levels)"
+    },
+    {
+      "id": "customer-3",
+      "challenge": "Build a knowledge base system for common customer questions",
+      "context": "Support team gets 500+ tickets/week with many repetitive questions",
+      "requirements": [
+        "Identify top 20 frequently asked questions",
+        "Write clear, searchable articles",
+        "Include screenshots or videos where helpful",
+        "Organize by category for easy navigation"
+      ],
+      "audience": "Self-service customers and support agents"
+    },
+    {
+      "id": "customer-4",
+      "challenge": "Design a customer feedback program to reduce churn",
+      "context": "Customers cancel without warning and the company doesn't understand why",
+      "requirements": [
+        "Create feedback touchpoints (30, 60, 90 days)",
+        "Design survey questions that uncover true pain points",
+        "Build escalation process for at-risk accounts",
+        "Close the loop with improvements"
+      ],
+      "audience": "Existing customers across all plan tiers"
+    }
+  ],
+  "strategic-planner": [
+    {
+      "id": "strategy-1",
+      "challenge": "Develop a 3-year growth strategy for a B2B SaaS company",
+      "context": "The company has product-market fit with $2M ARR and wants to reach $20M in 3 years",
+      "requirements": [
+        "Define growth levers (pricing, features, segments, channels)",
+        "Set realistic milestones and KPIs",
+        "Identify required resources and investments",
+        "Outline risks and mitigation strategies"
+      ],
+      "audience": "CEO, executive team, and board of directors"
+    },
+    {
+      "id": "strategy-2",
+      "challenge": "Create a market entry strategy for a new product category",
+      "context": "An established brand wants to launch in the pet care market (currently in baby products)",
+      "requirements": [
+        "Analyze market size, trends, and competition",
+        "Define positioning and differentiation",
+        "Recommend launch tactics and budget allocation",
+        "Set success metrics and timeline"
+      ],
+      "audience": "Product and marketing leadership"
+    },
+    {
+      "id": "strategy-3",
+      "challenge": "Design a digital transformation roadmap for a traditional retail company",
+      "context": "Brick-and-mortar retailer needs to compete with online giants while preserving in-store experience",
+      "requirements": [
+        "Assess current capabilities and gaps",
+        "Prioritize initiatives (e-commerce, mobile, inventory systems)",
+        "Create phased implementation plan",
+        "Balance online growth with store optimization"
+      ],
+      "audience": "C-suite and transformation steering committee"
+    },
+    {
+      "id": "strategy-4",
+      "challenge": "Build a competitive response strategy to a new market entrant",
+      "context": "A well-funded startup is undercutting your prices and stealing market share",
+      "requirements": [
+        "Analyze competitor's strengths and weaknesses",
+        "Identify your defensible advantages",
+        "Recommend strategic response (pricing, features, messaging)",
+        "Create action plan with clear owners and timelines"
+      ],
+      "audience": "Executive team and department heads"
+    },
+    {
+      "id": "strategy-5",
+      "challenge": "Develop a sustainability strategy that drives business value",
+      "context": "Consumers demand eco-friendly practices and investors want ESG commitments",
+      "requirements": [
+        "Set measurable environmental goals (carbon, waste, packaging)",
+        "Identify cost savings opportunities",
+        "Build stakeholder communication plan",
+        "Create implementation roadmap with accountability"
+      ],
+      "audience": "Board, executives, and sustainability committee"
+    }
+  ],
+  "level-1-assessment": [
+    {
+      "id": "assess-1-1",
+      "challenge": "Create an email marketing campaign for a new sustainable clothing brand launching their fall collection."
+    },
+    {
+      "id": "assess-1-2",
+      "challenge": "Design a learning module that teaches elementary students about the water cycle through interactive activities."
+    },
+    {
+      "id": "assess-1-3",
+      "challenge": "Build a content calendar for a food blogger who wants to grow their YouTube channel from 5K to 50K subscribers."
+    }
+  ],
+  "level-2-assessment": [
+    {
+      "id": "assess-2-1",
+      "challenge": "Analyze customer churn patterns for a subscription box service and recommend retention strategies."
+    },
+    {
+      "id": "assess-2-2",
+      "challenge": "Create a comprehensive onboarding program for remote employees joining a fast-growing tech startup."
+    },
+    {
+      "id": "assess-2-3",
+      "challenge": "Design a mobile app that helps parents track their children's developmental milestones and connects them with pediatric resources."
+    },
+    {
+      "id": "assess-2-4",
+      "challenge": "Develop a pricing strategy for a SaaS company transitioning from freemium to paid-only model without losing customers."
+    }
+  ],
+  "level-3-assessment": [
+    {
+      "id": "assess-3-1",
+      "challenge": "Build a crisis communication plan for a healthcare company facing a product recall that affects 100,000 patients."
+    },
+    {
+      "id": "assess-3-2",
+      "challenge": "Design a venture capital fund's investment thesis for climate tech startups, including screening criteria and portfolio strategy."
+    },
+    {
+      "id": "assess-3-3",
+      "challenge": "Create a market entry strategy for an Asian e-commerce platform expanding to Latin America."
+    },
+    {
+      "id": "assess-3-4",
+      "challenge": "Develop a complete rebranding strategy for a 50-year-old insurance company trying to appeal to millennials and Gen Z."
+    },
+    {
+      "id": "assess-3-5",
+      "challenge": "Build an AI governance framework for a Fortune 500 company implementing generative AI across all departments."
+    }
+  ]
+}

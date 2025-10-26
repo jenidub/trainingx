@@ -1,0 +1,166 @@
+{
+  "slug": "quiz-master",
+  "title": "Interactive Quiz Master",
+  "category": "Education",
+  "level": 2,
+  "levelOrder": 1,
+  "estTime": "15m",
+  "difficulty": 2,
+  "badge": "quiz-crafter",
+  "steps": 6,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Design a multiple-choice quiz for history students. Which prompt is most effective?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make a quiz about history",
+          "explanation": "No topic, difficulty, question count, or educational objectives. Cannot create targeted quiz."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 10-question multiple choice quiz on World War 2 for college students (intermediate level). Focus: causes (3Q), major battles (4Q), aftermath (3Q). Each question: 4 options, 1 correct answer, brief explanations for correct AND incorrect answers. Difficulty mix: 3 easy, 5 medium, 2 challenging. Include: primary source quotes, map-based questions, cause-effect analysis.",
+          "explanation": "Perfect! Specifies format, topic distribution, answer structure with learning feedback, difficulty progression, and varied question types."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a 10-question multiple choice quiz about World War 2 for college students with explanations",
+          "explanation": "Has format, topic, and audience, but missing difficulty levels, topic distribution, and question variety."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a science quiz with practical applications. Which approach works best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a physics quiz for high school students about Newton's laws with real-world examples and explanations",
+          "explanation": "Has subject, audience, and learning enhancement, but lacks question structure, difficulty levels, and assessment objectives."
+        },
+        {
+          "quality": "bad",
+          "text": "Create a science quiz",
+          "explanation": "No topic, grade level, question types, or learning goals. Too vague for any educational use."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 12-question physics quiz on Newton's Laws for 11th grade (honors level). Question types: 4 conceptual understanding, 4 calculation problems (show work), 4 real-world application scenarios. Each: 5 multiple choice options, step-by-step solutions, common misconceptions addressed. Real-world contexts: sports, vehicle safety, space exploration. Difficulty: gradually increasing. Include formula sheet at top.",
+          "explanation": "Excellent! Mixes question types, includes calculations with solutions, addresses misconceptions, uses relevant contexts, and provides necessary reference materials."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create an adaptive quiz that adjusts to student performance. Which prompt delivers this?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design a 15-question adaptive math quiz on fractions for 6th grade. Start with baseline questions (Q1-3, medium difficulty). If student scores 2+/3: advance to harder questions (Q4-9, operations with unlike denominators). If scores 0-1/3: provide foundational questions (Q4-9, like denominators only). Questions 10-15: word problems matching their level. Each question: immediate feedback, hint system (3 hints max), worked example if incorrect. Track: accuracy rate, time per question, hint usage. Final: personalized study recommendations based on weak areas.",
+          "explanation": "Perfect! Includes branching logic based on performance, differentiated difficulty paths, scaffolded support system, and data-driven personalized learning recommendations."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a math quiz on fractions that gets harder if students do well and easier if they struggle",
+          "explanation": "Has adaptive concept, but missing implementation details, branching logic, support systems, and assessment criteria."
+        },
+        {
+          "quality": "bad",
+          "text": "Make a quiz that adapts to student level",
+          "explanation": "No subject, grade, adaptation mechanism, or specific requirements. Cannot implement adaptive functionality."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a quiz for professional certification prep. Which prompt is best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a practice quiz for project management certification with scenario-based questions covering the main exam topics",
+          "explanation": "Has purpose and question type, but lacks specific topics, exam format alignment, difficulty calibration, and study features."
+        },
+        {
+          "quality": "bad",
+          "text": "Make a certification practice test",
+          "explanation": "No field, certification type, topic coverage, or exam simulation requirements specified."
+        },
+        {
+          "quality": "good",
+          "text": "Create a PMP certification practice quiz (50 questions, 90 minutes). Topic distribution matching actual exam: Initiating (10%), Planning (24%), Executing (30%), Monitoring (24%), Closing (12%). Question types: 35 scenario-based (multi-paragraph), 15 knowledge recall. Difficulty: 60% pass-level, 40% above. Each question: 4 options (2 clearly wrong, 2 plausible), detailed rationale referencing PMBOK 7th edition sections, time management tips. Include: performance dashboard, topic-wise scoring, flagging for review, simulated exam conditions.",
+          "explanation": "Excellent! Matches real exam format and distribution, includes scenario complexity, references source materials, provides exam strategies, and offers comprehensive performance tracking."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a science quiz about space exploration. Which prompt generates the best educational content?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make a space quiz",
+          "explanation": "No specific topics, difficulty level, target audience, or educational objectives."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a quiz about space exploration with questions and answers",
+          "explanation": "Has general topic, but missing specific space missions, question types, difficulty progression, and learning outcomes."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 15-question science quiz about space exploration for middle school students. Include: 5 multiple choice (Apollo missions, Mars rovers, ISS), 5 true/false (space facts, astronaut requirements), 5 short answer (planet characteristics, rocket physics). Mix difficulty: 5 easy, 7 medium, 3 challenging. Include answer key with explanations, fun facts for each question, and suggested follow-up activities. Focus on NASA missions and current exploration.",
+          "explanation": "Perfect! Specific question breakdown, targeted difficulty progression, comprehensive answer key, educational extensions, and clear learning focus."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a history quiz about ancient civilizations. Which prompt creates the most engaging assessment?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a history quiz about ancient Rome and Egypt with multiple choice questions",
+          "explanation": "Has civilizations and question type, but missing time periods, specific topics, question variety, and educational depth."
+        },
+        {
+          "quality": "bad",
+          "text": "Make a history quiz",
+          "explanation": "No civilizations, time periods, question formats, or educational level specified."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 20-question quiz on ancient civilizations for high school freshmen. Coverage: Ancient Egypt (pharaohs, pyramids, hieroglyphics), Ancient Greece (democracy, philosophy, Olympics), Ancient Rome (empire, engineering, legal system). Format: 10 multiple choice, 5 matching (terms to definitions), 5 timeline ordering. Include visual prompts (identify structures/maps), critical thinking questions, detailed answer key with historical context. Mix of factual recall and analytical questions.",
+          "explanation": "Excellent! Balanced coverage across civilizations, variety of question formats, visual elements, critical thinking components, and historical context."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "generative_ai",
+    "logic",
+    "analysis"
+  ],
+  "description": "Design engaging quizzes that test knowledge and provide valuable learning feedback.",
+  "isAssessment": false,
+  "requiresCompletion": [
+    "level-1-assessment"
+  ],
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Make a quiz",
+      "explanation": "No subject, difficulty, question count, or format. Impossible to create useful quiz."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Create a 10-question multiple choice quiz about World War 2 for college students",
+      "explanation": "Has format, count, topic, and audience - but missing difficulty level, specific focus areas, and feedback requirements."
+    },
+    {
+      "quality": "good",
+      "prompt": "Create a 10-question multiple choice quiz on World War 2 for college history students (intermediate level). Focus areas: causes of war (3 questions), major battles (4 questions), aftermath (3 questions). Each question should have 4 options with one correct answer. Include brief explanations for both correct and incorrect answers. Vary difficulty: 3 easy, 5 medium, 2 challenging.",
+      "explanation": "Excellent - specifies format, quantity, topic coverage, difficulty distribution, answer format, and educational feedback requirement."
+    }
+  ]
+}

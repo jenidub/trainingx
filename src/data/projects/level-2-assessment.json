@@ -1,0 +1,154 @@
+{
+  "slug": "level-2-assessment",
+  "title": "Level 2 Assessment",
+  "category": "Assessment",
+  "level": 2,
+  "levelOrder": 4,
+  "estTime": "25m",
+  "difficulty": 2,
+  "badge": "level-2-complete",
+  "steps": 6,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Create an analytics dashboard for business KPIs. Which demonstrates Level 2 mastery?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Build a dashboard to track business metrics",
+          "explanation": "No specific metrics, stakeholders, data sources, or visualization requirements. Too vague for implementation."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a sales dashboard showing revenue, conversion rate, and customer acquisition cost with charts and filters",
+          "explanation": "Has key metrics and basic features, but missing user roles, data refresh requirements, drill-down capabilities, and actionable alerts."
+        },
+        {
+          "quality": "good",
+          "text": "Design executive sales dashboard for VP Sales. KPIs: revenue (actual vs target), conversion rate, CAC, pipeline value, win rate. Data sources: Salesforce CRM, Stripe, Google Analytics. Features: 1) Real-time updates (5min refresh), 2) Date range filters, 3) Team/region drill-down, 4) Trend analysis (MoM, YoY), 5) Automated alerts (pipeline drop >10%, win rate <30%). Visualizations: revenue waterfall, conversion funnel, CAC trend line, pipeline forecast. Tech: Tableau/PowerBI. Mobile-responsive. Include: data quality indicators, export to PDF, scheduled email reports.",
+          "explanation": "Perfect! Specific stakeholder, detailed KPIs with data sources, comprehensive interactive features, visualization types, technical implementation, and automated insights."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a content management workflow with AI assistance. Which prompt is most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design AI-assisted content workflow for marketing team (5 people). Content types: blog posts (8/month), social media (20/week), email (4/month). Workflow stages: 1) AI-generated draft (GPT-4 with brand voice), 2) Human editor review (track changes), 3) SEO optimization (keyword suggestions, readability), 4) Approval (manager), 5) Publishing (WordPress, Buffer). Features: collaborative editing, version history, approval workflows, content calendar, performance analytics. AI capabilities: topic suggestions based on trends, auto-generate social variations, A/B test subject lines. Deliverables: workflow diagram, tool stack, AI prompts library, team permissions matrix, success metrics (time saved, content quality score).",
+          "explanation": "Excellent! Complete workflow with AI integration points, team collaboration features, multi-channel publishing, quality control, and measurable outcomes with full implementation details."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a content creation process using AI to help write blog posts and social media, with approval steps before publishing",
+          "explanation": "Has AI assistance and approval concept, but missing specific workflow stages, collaboration tools, quality controls, and technical integration details."
+        },
+        {
+          "quality": "bad",
+          "text": "Use AI to help create content for marketing",
+          "explanation": "No workflow structure, content types, team roles, or implementation details. Cannot design functional system."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a customer segmentation model for targeted marketing. Which shows advanced thinking?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Segment our customers based on purchase history, demographics, and engagement to create targeted campaigns",
+          "explanation": "Has segmentation variables and purpose, but missing specific criteria, segment definitions, validation approach, and campaign mapping."
+        },
+        {
+          "quality": "bad",
+          "text": "Segment customers for marketing",
+          "explanation": "No segmentation criteria, data inputs, business objectives, or implementation framework. Cannot create model."
+        },
+        {
+          "quality": "good",
+          "text": "Build customer segmentation model for e-commerce brand. Data inputs: purchase frequency (6 months), average order value, product categories, email engagement (open/click rates), customer lifetime (months active). Segmentation framework: RFM analysis + behavioral clustering. Segments to identify: 1) VIP Champions (high value, frequent, recent), 2) At Risk (high value, declining), 3) New Enthusiasts (recent, engaged), 4) Hibernating (inactive 90+ days), 5) Price Sensitive (discount-driven). For each segment: size estimate, LTV projection, churn risk score. Deliverables: segment definitions, visualization (scatter plot), personalized campaign strategy per segment, A/B test plan, success KPIs (engagement lift, revenue impact). Tech: Python/R for clustering, SQL for data prep.",
+          "explanation": "Perfect! Comprehensive data inputs, proven framework (RFM), actionable segment definitions with business value, testing strategy, measurable outcomes, and technical implementation."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design an automated email sequence for user onboarding. Which prompt is best?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Design 7-day automated onboarding sequence for SaaS project management tool. Goal: achieve 40% feature activation in week 1. User profile: team leads at small businesses, non-technical. Email flow: Day 1 (welcome, setup checklist), Day 2 (create first project walkthrough), Day 3 (invite team members), Day 4 (key feature showcase - time tracking), Day 5 (integration options), Day 6 (success stories, ROI), Day 7 (upgrade prompt or personal demo offer). Behavioral triggers: delay next email if user completes action, send encouragement if stuck, accelerate if power user. Each email: engaging subject line (A/B test 2 variants), personalized content (use name, company), clear CTA, mobile-optimized. Include: unsubscribe options, engagement tracking, conversion metrics, exit survey for dropouts.",
+          "explanation": "Excellent! Complete sequence with business goal, audience understanding, strategic email progression, behavioral automation, testing strategy, personalization, compliance, and comprehensive analytics."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a welcome email series for new users explaining product features and encouraging them to complete setup over the first week",
+          "explanation": "Has basic sequence idea and timing, but missing specific email content, behavioral triggers, personalization, testing approach, and success metrics."
+        },
+        {
+          "quality": "bad",
+          "text": "Set up automated onboarding emails",
+          "explanation": "No product context, user profile, email content, sequence logic, or business objectives. Cannot design effective automation."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a competitive analysis report for two competing products. Which prompt demonstrates Level 2 analytical skills?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Compare two competing project management tools with features and pricing",
+          "explanation": "Has basic comparison elements, but missing market positioning, user experience analysis, strategic insights, and recommendation framework."
+        },
+        {
+          "quality": "bad",
+          "text": "Analyze competitors",
+          "explanation": "No specific products, analysis criteria, business context, or strategic objectives."
+        },
+        {
+          "quality": "good",
+          "text": "Conduct a comprehensive competitive analysis between Asana vs Monday.com for enterprise clients. Analysis framework: feature comparison (task management, reporting, integrations), pricing structure (user tiers, enterprise discounts, hidden costs), user experience (interface design, learning curve, mobile app), customer support (response times, enterprise features), security/compliance (SOC2, GDPR, data residency). Include: SWOT analysis for each, market positioning assessment, G2/Capterra sentiment analysis, ideal customer profiles, implementation considerations, recommendation framework with scorecard. Provide strategic insights for enterprise decision-makers.",
+          "explanation": "Excellent! Multi-dimensional analysis framework with detailed criteria, market intelligence, strategic positioning, and actionable recommendation system."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a content strategy for a B2B software company. Which prompt shows Level 2 strategic thinking?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Create content marketing plan",
+          "explanation": "No business context, target audience, content types, or strategic objectives defined."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a content strategy for a CRM software company targeting small businesses with blog posts and case studies",
+          "explanation": "Has basic elements, but missing content pillars, distribution strategy, measurement framework, and competitive differentiation."
+        },
+        {
+          "quality": "good",
+          "text": "Develop a comprehensive 6-month content strategy for a B2B CRM software targeting mid-market companies (50-500 employees). Strategy components: 4 content pillars (productivity enhancement, sales optimization, customer retention, industry insights), content mix (40% educational, 30% thought leadership, 20% product-focused, 10% company culture). Distribution channels: LinkedIn (company page + employee advocacy), email newsletter (segmented by role), industry forums, guest posting. Include: editorial calendar with monthly themes, SEO keyword strategy, lead magnet development, repurposing framework, engagement metrics and KPIs, competitive content gap analysis. Budget allocation and resource requirements.",
+          "explanation": "Perfect! Strategic content framework with pillar strategy, distribution plan, measurement systems, and operational considerations."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "generative_ai",
+    "agentic_ai",
+    "synthetic_ai",
+    "logic",
+    "analysis",
+    "planning"
+  ],
+  "description": "Test your intermediate prompting abilities with complex, multi-faceted challenges.",
+  "isAssessment": true,
+  "requiresCompletion": [
+    "quiz-master",
+    "business-analyst",
+    "website-builder"
+  ]
+}

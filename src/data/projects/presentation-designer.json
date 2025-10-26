@@ -1,0 +1,184 @@
+{
+  "slug": "presentation-designer",
+  "title": "Presentation Designer",
+  "category": "Business",
+  "level": 1,
+  "levelOrder": 3,
+  "estTime": "15m",
+  "difficulty": 1,
+  "badge": "deck-builder",
+  "steps": 7,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Create a marketing presentation for executives. Which prompt will deliver the best results?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make a presentation about marketing",
+          "explanation": "No topic, audience, objective, or format requirements. Completely directionless."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a presentation outline to increase social media engagement for our executive team",
+          "explanation": "Has topic and audience, but missing slide count, specific content requirements, data points, and format details."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 10-slide presentation for C-suite executives on increasing social media engagement by 50% in Q2. Include: current state analysis, 3 strategic recommendations with ROI projections, implementation timeline, budget breakdown, and success metrics. Tone: data-driven and confident. Each slide: clear title and 3-5 bullet points. Non-technical language.",
+          "explanation": "Perfect! Specifies audience, slide count, detailed content structure, tone, format requirements, and accessibility for non-technical viewers."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a sales pitch deck for potential clients. Which prompt is most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create a 15-slide sales deck for a B2B SaaS project management tool pitching to IT directors. Structure: problem statement (3 slides), our solution (4 slides), competitive advantages (2 slides), customer success stories (3 slides), pricing and ROI (2 slides), next steps (1 slide). Tone: professional but approachable. Include: specific pain points, feature demos, metrics, case studies with 30%+ efficiency gains. Visual suggestions for each section.",
+          "explanation": "Excellent! Complete structure with slide allocation, specific audience, content details for each section, proof points, and visual guidance."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a sales presentation for our project management software with features, pricing, and customer testimonials",
+          "explanation": "Has basic content components, but lacks audience definition, slide structure, competitive positioning, and persuasive flow."
+        },
+        {
+          "quality": "bad",
+          "text": "Help me create a sales pitch",
+          "explanation": "No product, audience, content structure, or business objectives specified. Cannot create effective pitch."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a training presentation for new employees. Which approach works best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a presentation to train new employees on our customer service process with steps and examples",
+          "explanation": "Has purpose and basic content, but missing learning objectives, slide structure, interactive elements, and assessment components."
+        },
+        {
+          "quality": "bad",
+          "text": "Make a training presentation",
+          "explanation": "No topic, audience, learning goals, or training approach specified. Too vague for any training context."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 20-slide customer service training deck for new hires (week 1). Learning objectives: understand our 5-step support process, use tone guidelines, handle escalations. Content: company values (2 slides), process overview (4 slides), tone guide with do/don't examples (3 slides), common scenarios (6 slides), escalation protocols (3 slides), resources and Q&A (2 slides). Include: interactive quiz slides, real chat examples, decision trees. Friendly, engaging tone.",
+          "explanation": "Perfect! Clear learning objectives, detailed slide-by-slide structure, interactive elements, practical examples, and appropriate training tone."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Build a quarterly business review presentation. Which prompt is best?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create a Q3 business review presentation for the board of directors. 25 slides covering: executive summary (2 slides), financial performance vs targets (5 slides), operational metrics (4 slides), market share analysis (3 slides), product development progress (4 slides), team growth and culture (2 slides), Q4 priorities (3 slides), risks and mitigation (2 slides). Include: YoY comparisons, trend charts, traffic light indicators for KPIs, specific action items. Tone: transparent, forward-looking, data-driven.",
+          "explanation": "Comprehensive! Covers all business areas with appropriate depth, includes data visualization guidance, progress indicators, and board-appropriate tone."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a quarterly review presentation showing our financial results, achievements, and plans for next quarter",
+          "explanation": "Has general content areas, but lacks specific metrics, data presentation format, slide allocation, and stakeholder focus."
+        },
+        {
+          "quality": "bad",
+          "text": "Present our quarterly results",
+          "explanation": "No audience, content structure, data points, or presentation format specified. Insufficient for business reporting."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create an investor pitch presentation for a startup. Which prompt will generate the most compelling deck?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make an investor presentation",
+          "explanation": "No business model, funding amount, market context, or investor type specified. Cannot create targeted pitch."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a pitch deck for our food delivery startup seeking $500k in seed funding",
+          "explanation": "Has business and funding goal, but missing market opportunity, competitive advantages, financial projections, and investor-specific content."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 12-slide Series A pitch deck for an AI-powered healthtech startup seeking $2M. Target: venture capital firms specializing in healthcare. Structure: problem (1 slide), solution (2 slides), market size ($50B TAM) (1 slide), business model (1 slide), competitive moat (1 slide), traction (10 hospitals signed) (2 slides), team (1 slide), financial projections (3 years) (1 slide), funding use (1 slide), vision (1 slide). Include: key metrics, customer testimonials, revenue charts. Tone: ambitious yet credible.",
+          "explanation": "Excellent! Complete investor pitch structure with specific market data, traction proof, financial projections, and VC-appropriate content flow."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a conference presentation on industry trends. Which prompt will create the most engaging content?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a presentation about digital marketing trends for marketing professionals",
+          "explanation": "Has topic and audience, but missing specific trends, presentation structure, engagement strategies, and practical takeaways."
+        },
+        {
+          "quality": "bad",
+          "text": "Talk about marketing trends",
+          "explanation": "No specific trends, audience knowledge level, presentation format, or learning objectives."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 45-minute conference presentation for marketing managers on 'The Future of Digital Marketing 2025'. Format: 20 slides total. Structure: opening hook with startling statistic (2 slides), 5 key trends (AI personalization, voice search, social commerce, privacy-first marketing, immersive experiences) (10 slides), case studies for each trend (5 slides), actionable implementation plan (2 slides), Q&A prompts (1 slide). Include: data-backed predictions, interactive poll questions, downloadable framework. Tone: forward-thinking, practical, inspiring.",
+          "explanation": "Perfect! Time-appropriate length, specific trend coverage, case studies, interactive elements, and actionable takeaways for professionals."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a project status update presentation for stakeholders. Which prompt is most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create a project status presentation for senior stakeholders on our website redesign project. 12 slides: project overview (1), timeline and milestones (2), budget vs actual (1), key achievements (3), current challenges with solutions (2), next 30 days deliverables (2), risks and mitigations (1), support needed (1). Include: traffic light status indicators, progress charts, before/after mockups, specific dates and owners. Tone: transparent, proactive, solution-focused.",
+          "explanation": "Excellent! Stakeholder-focused structure with clear status indicators, progress tracking, challenges with solutions, and specific accountability measures."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a project update presentation showing our progress, timeline, and any issues with the website redesign",
+          "explanation": "Has basic project content, but missing stakeholder needs, status visualization, accountability elements, and problem-solving approach."
+        },
+        {
+          "quality": "bad",
+          "text": "Update on project",
+          "explanation": "No project context, audience requirements, or status components specified. Useless for stakeholder communication."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "generative_ai",
+    "communication",
+    "creativity"
+  ],
+  "description": "Create compelling presentation outlines that tell a story and persuade your audience.",
+  "isAssessment": false,
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Help me with a presentation",
+      "explanation": "No topic, audience, objective, or format specified. Completely directionless."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Create a presentation outline for a marketing proposal to increase social media engagement",
+      "explanation": "Has topic and general goal, but missing audience, time limit, key messages, and desired outcome."
+    },
+    {
+      "quality": "good",
+      "prompt": "Create a 10-slide presentation outline for a marketing proposal to the executive team. Topic: Increasing social media engagement by 50% in Q2. Audience: C-suite executives (non-technical). Include: current state analysis, 3 strategic recommendations with expected ROI, implementation timeline, budget breakdown, and success metrics. Tone: data-driven, confident, concise. Each slide should have a clear title and 3-5 key bullet points.",
+      "explanation": "Comprehensive - specifies audience, objective, slide count, content structure, tone, and format requirements for each slide."
+    }
+  ]
+}

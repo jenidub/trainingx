@@ -1,0 +1,62 @@
+{
+  "content-creator": {
+    "minPS": 60,
+    "project": "social-media-content",
+    "name": "Content Creator"
+  },
+  "study-master": {
+    "minPS": 65,
+    "project": "study-guide-builder",
+    "name": "Study Master"
+  },
+  "deck-builder": {
+    "minPS": 65,
+    "project": "presentation-designer",
+    "name": "Deck Builder"
+  },
+  "level-1-complete": {
+    "minPS": 70,
+    "project": "level-1-assessment",
+    "name": "Level 1 Champion"
+  },
+  "quiz-crafter": {
+    "minPS": 70,
+    "project": "quiz-master",
+    "name": "Quiz Crafter"
+  },
+  "data-detective": {
+    "minPS": 75,
+    "project": "business-analyst",
+    "name": "Data Detective"
+  },
+  "site-starter": {
+    "minPS": 70,
+    "project": "website-builder",
+    "name": "Site Starter"
+  },
+  "level-2-complete": {
+    "minPS": 75,
+    "project": "level-2-assessment",
+    "name": "Level 2 Expert"
+  },
+  "money-master": {
+    "minPS": 80,
+    "project": "financial-advisor",
+    "name": "Money Master"
+  },
+  "support-star": {
+    "minPS": 75,
+    "project": "customer-success-specialist",
+    "name": "Support Star"
+  },
+  "strategy-guru": {
+    "minPS": 80,
+    "project": "strategic-planner",
+    "name": "Strategy Guru"
+  },
+  "level-3-complete": {
+    "minPS": 85,
+    "project": "level-3-assessment",
+    "name": "Master Prompter"
+  }
+}

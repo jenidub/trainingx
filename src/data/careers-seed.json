@@ -1,0 +1,1156 @@
+[
+  {
+    "id": "senior-ai-prompt-engineer",
+    "title": "Senior AI Prompt Engineer",
+    "location": "San Francisco, CA",
+    "salaryRange": "$180k - $280k",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Design, test, and refine prompts that push the boundaries of AI capabilities. Work directly with cutting-edge models to create prompt patterns that unlock new use cases.",
+    "impactHighlights": [
+      "Shape how millions interact with AI daily",
+      "Collaborate with research scientists on frontier models",
+      "Define industry standards for prompt engineering",
+      "Build tools that make AI accessible to everyone"
+    ],
+    "keyTechnologies": ["GPT-4/5", "Claude", "Prompt Design", "RAG Systems", "LangChain"],
+    "requiredSkills": ["generative_ai", "communication", "creativity", "iteration"],
+    "preferredSkills": ["coding", "analysis", "planning"],
+    "promptScoreMin": 75,
+    "skillThresholds": {
+      "generative_ai": 80,
+      "communication": 75,
+      "creativity": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Explosive - prompt engineering is becoming foundational to AI development",
+    "remotePolicy": "Hybrid (3 days/week in office)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-content-strategist",
+    "title": "AI Content Strategist",
+    "location": "New York, NY / Remote",
+    "salaryRange": "$150k - $220k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Design content strategies that leverage AI for enterprise clients. Create training materials, best practices guides, and prompt libraries that help businesses maximize AI value.",
+    "impactHighlights": [
+      "Enable Fortune 500 companies to adopt AI safely",
+      "Create frameworks used by thousands of developers",
+      "Work on constitutional AI and alignment research",
+      "Shape responsible AI deployment practices"
+    ],
+    "keyTechnologies": ["Claude", "Constitutional AI", "Content Strategy", "Technical Writing", "API Integration"],
+    "requiredSkills": ["generative_ai", "communication", "creativity"],
+    "preferredSkills": ["analysis", "planning"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "communication": 75,
+      "creativity": 65
+    },
+    "portfolioProjects": ["social-media-content", "presentation-designer"],
+    "growthOutlook": "Strong - enterprises investing heavily in AI content infrastructure",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-education-specialist",
+    "title": "AI Education Specialist",
+    "location": "London, UK / Remote EU",
+    "salaryRange": "£90k - £140k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Build educational content and curricula that teach AI literacy to students, educators, and professionals worldwide. Design interactive learning experiences using modern AI tools.",
+    "impactHighlights": [
+      "Educate millions through digital learning platforms",
+      "Partner with universities to shape AI curriculum",
+      "Create hands-on AI learning experiences",
+      "Democratize AI knowledge globally"
+    ],
+    "keyTechnologies": ["Gemini", "AI Studio", "Educational Technology", "Curriculum Design", "Assessment Tools"],
+    "requiredSkills": ["generative_ai", "communication", "creativity"],
+    "preferredSkills": ["analysis", "planning"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "communication": 70,
+      "creativity": 60
+    },
+    "portfolioProjects": ["study-guide-builder"],
+    "growthOutlook": "Very Strong - AI education is a top priority across industries",
+    "remotePolicy": "Hybrid or Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-product-manager-copilot",
+    "title": "AI Product Manager - Copilot",
+    "location": "Redmond, WA",
+    "salaryRange": "$170k - $260k",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Lead product strategy for AI copilot features, defining capabilities that help millions of users work smarter. Bridge technical possibilities with user needs to create delightful AI experiences.",
+    "impactHighlights": [
+      "Shape the future of productivity AI",
+      "Work with Azure OpenAI and GPT-4 integrations",
+      "Define features used by hundreds of millions of users",
+      "Lead cross-functional teams across the organization"
+    ],
+    "keyTechnologies": ["Azure OpenAI", "Microsoft 365", "Product Strategy", "User Research", "A/B Testing"],
+    "requiredSkills": ["agentic_ai", "planning", "communication", "analysis"],
+    "preferredSkills": ["logic", "coding"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "agentic_ai": 75,
+      "planning": 70,
+      "communication": 70,
+      "analysis": 65
+    },
+    "portfolioProjects": ["level-1-assessment", "quiz-master"],
+    "growthOutlook": "Explosive - AI copilots are transforming productivity software",
+    "remotePolicy": "Hybrid",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-research-analyst",
+    "title": "AI Research Analyst",
+    "location": "Menlo Park, CA",
+    "salaryRange": "$140k - $200k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Conduct research on AI model performance, analyze prompt effectiveness, and identify patterns in AI-human interactions. Support AI development teams with data-driven insights.",
+    "impactHighlights": [
+      "Contribute to cutting-edge model improvements",
+      "Publish research on AI effectiveness",
+      "Analyze billions of AI interactions",
+      "Shape open-source AI development"
+    ],
+    "keyTechnologies": ["LLaMA", "PyTorch", "Data Analysis", "Statistical Modeling", "Prompt Analytics"],
+    "requiredSkills": ["synthetic_ai", "analysis", "logic"],
+    "preferredSkills": ["coding", "communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "synthetic_ai": 75,
+      "analysis": 75,
+      "logic": 70
+    },
+    "portfolioProjects": ["business-analyst"],
+    "growthOutlook": "Strong - AI research is core to technology advancement",
+    "remotePolicy": "Hybrid (3 days/week in office)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-automation-engineer",
+    "title": "AI Automation Engineer",
+    "location": "San Francisco, CA / Remote US",
+    "salaryRange": "$160k - $240k",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Build AI-powered automation systems that handle customer inquiries, fraud detection, and complex workflows. Design agentic systems that operate autonomously at scale.",
+    "impactHighlights": [
+      "Automate operations for millions of users",
+      "Build AI agents that work 24/7",
+      "Design systems processing billions of events",
+      "Pioneer agentic AI applications"
+    ],
+    "keyTechnologies": ["GPT-4", "LangChain", "Python", "API Design", "Agent Frameworks"],
+    "requiredSkills": ["agentic_ai", "coding", "logic", "planning"],
+    "preferredSkills": ["analysis", "iteration"],
+    "promptScoreMin": 75,
+    "skillThresholds": {
+      "agentic_ai": 80,
+      "coding": 75,
+      "logic": 70,
+      "planning": 70
+    },
+    "portfolioProjects": ["website-builder", "level-2-assessment"],
+    "growthOutlook": "Explosive - AI automation is transforming every industry",
+    "remotePolicy": "Hybrid or Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-strategy-consultant",
+    "title": "AI Strategy Consultant",
+    "location": "Multiple Locations",
+    "salaryRange": "$130k - $210k",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Advise Fortune 500 clients on AI adoption strategies, ROI optimization, and organizational transformation. Lead engagements that integrate AI into business operations.",
+    "impactHighlights": [
+      "Guide C-suite executives on AI strategy",
+      "Design AI transformation roadmaps",
+      "Deliver multi-million dollar value to enterprise clients",
+      "Build industry-leading AI practices"
+    ],
+    "keyTechnologies": ["Enterprise AI", "Strategy Consulting", "Change Management", "ROI Analysis", "Multi-model AI"],
+    "requiredSkills": ["generative_ai", "synthetic_ai", "communication", "planning", "analysis"],
+    "preferredSkills": ["logic", "iteration"],
+    "promptScoreMin": 80,
+    "skillThresholds": {
+      "generative_ai": 75,
+      "communication": 80,
+      "planning": 75,
+      "analysis": 75
+    },
+    "portfolioProjects": ["level-2-assessment", "business-analyst"],
+    "growthOutlook": "Very Strong - consulting firms scaling AI practices rapidly",
+    "remotePolicy": "Hybrid (client sites + home office)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-financial-advisor",
+    "title": "AI-Powered Financial Advisor",
+    "location": "New York, NY",
+    "salaryRange": "$150k - $250k + bonus",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Use AI tools to provide data-driven investment advice to high-net-worth clients. Build custom AI models for portfolio optimization and risk analysis.",
+    "impactHighlights": [
+      "Manage hundreds of millions in client assets with AI insights",
+      "Pioneer AI-driven wealth management",
+      "Create custom financial AI agents",
+      "Achieve top-tier client satisfaction"
+    ],
+    "keyTechnologies": ["Financial AI", "Portfolio Analytics", "Risk Modeling", "Market Prediction", "Wealth Management Platforms"],
+    "requiredSkills": ["synthetic_ai", "analysis", "communication", "logic"],
+    "preferredSkills": ["planning", "iteration"],
+    "promptScoreMin": 85,
+    "skillThresholds": {
+      "synthetic_ai": 85,
+      "analysis": 85,
+      "logic": 80,
+      "communication": 75
+    },
+    "portfolioProjects": ["financial-advisor", "level-3-assessment"],
+    "growthOutlook": "Strong - AI is revolutionizing wealth management",
+    "remotePolicy": "Hybrid",
+    "visaSupport": false
+  },
+  {
+    "id": "ai-legal-analyst",
+    "title": "AI Legal Analyst",
+    "location": "San Francisco, CA / Remote",
+    "salaryRange": "$140k - $210k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Work with legal teams to leverage AI for contract analysis, legal research, and document generation. Train models on legal datasets and refine prompts for accuracy.",
+    "impactHighlights": [
+      "Transform how law firms operate with AI",
+      "Support multi-million dollar contract negotiations",
+      "Build AI that serves top law firms globally",
+      "Pioneer legal AI applications"
+    ],
+    "keyTechnologies": ["Legal AI", "Contract Analysis", "NLP", "Document Understanding", "RAG Systems"],
+    "requiredSkills": ["synthetic_ai", "analysis", "communication", "logic"],
+    "preferredSkills": ["planning", "iteration"],
+    "promptScoreMin": 80,
+    "skillThresholds": {
+      "synthetic_ai": 80,
+      "analysis": 80,
+      "logic": 75,
+      "communication": 70
+    },
+    "portfolioProjects": ["legal-document-analyzer", "level-3-assessment"],
+    "growthOutlook": "Explosive - legal AI is a multi-billion dollar market",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-creative-director",
+    "title": "AI Creative Director",
+    "location": "San Jose, CA / Remote US",
+    "salaryRange": "$160k - $240k",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Lead creative teams using generative AI tools. Design innovative campaigns, train creative professionals, and push the boundaries of AI-assisted creativity.",
+    "impactHighlights": [
+      "Shape how creatives use AI tools",
+      "Work on campaigns for global brands",
+      "Train AI creative communities",
+      "Define the future of digital creativity"
+    ],
+    "keyTechnologies": ["Adobe Firefly", "Generative AI", "Creative Direction", "Design Systems", "Prompt-to-Image"],
+    "requiredSkills": ["generative_ai", "creativity", "communication", "iteration"],
+    "preferredSkills": ["planning", "analysis"],
+    "promptScoreMin": 75,
+    "skillThresholds": {
+      "generative_ai": 80,
+      "creativity": 85,
+      "communication": 70
+    },
+    "portfolioProjects": ["presentation-designer", "creative-campaign"],
+    "growthOutlook": "Very Strong - generative AI transforming creative industries",
+    "remotePolicy": "Hybrid or Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-healthcare-specialist",
+    "title": "AI Healthcare Specialist",
+    "location": "Chicago, IL / Remote",
+    "salaryRange": "$130k - $200k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Apply AI to personalized medicine, helping doctors make better treatment decisions. Work with medical data, train clinical AI models, and improve patient outcomes.",
+    "impactHighlights": [
+      "Save lives with AI-driven diagnostics",
+      "Work with leading medical research centers",
+      "Build AI for precision medicine",
+      "Impact thousands of patients monthly"
+    ],
+    "keyTechnologies": ["Medical AI", "Clinical NLP", "Genomics", "Healthcare Analytics", "HIPAA-Compliant Systems"],
+    "requiredSkills": ["synthetic_ai", "analysis", "communication", "logic"],
+    "preferredSkills": ["planning", "coding"],
+    "promptScoreMin": 75,
+    "skillThresholds": {
+      "synthetic_ai": 80,
+      "analysis": 75,
+      "logic": 70,
+      "communication": 70
+    },
+    "portfolioProjects": ["level-2-assessment", "business-analyst"],
+    "growthOutlook": "Explosive - AI in healthcare growing 40%+ annually",
+    "remotePolicy": "Hybrid or Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-game-designer",
+    "title": "AI Game Designer",
+    "location": "Austin, TX / Remote",
+    "salaryRange": "$120k - $180k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Design AI-powered NPCs, dynamic storylines, and procedural content for next-gen games. Use LLMs to create immersive, adaptive gaming experiences.",
+    "impactHighlights": [
+      "Create AI NPCs with personality and memory",
+      "Build tools used by millions of game developers",
+      "Pioneer narrative AI in gaming",
+      "Work on AAA titles and indie hits"
+    ],
+    "keyTechnologies": ["Unity AI", "LLM Integration", "Game Design", "Procedural Generation", "Behavior Trees"],
+    "requiredSkills": ["agentic_ai", "creativity", "logic", "planning"],
+    "preferredSkills": ["coding", "iteration"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "agentic_ai": 75,
+      "creativity": 75,
+      "logic": 65,
+      "planning": 65
+    },
+    "portfolioProjects": ["quiz-master", "website-builder"],
+    "growthOutlook": "Strong - AI transforming game development",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-customer-success-manager",
+    "title": "AI Customer Success Manager",
+    "location": "Boston, MA / Remote",
+    "salaryRange": "$110k - $160k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Help enterprise customers successfully adopt and scale AI solutions. Use AI tools to optimize workflows, track metrics, and ensure customer satisfaction.",
+    "impactHighlights": [
+      "Drive AI adoption at Fortune 1000 companies",
+      "Manage multi-million dollar customer relationships",
+      "Build AI-powered customer success workflows",
+      "Achieve industry-leading retention rates"
+    ],
+    "keyTechnologies": ["Customer Success Platforms", "AI Analytics", "ChatGPT", "Automation Tools", "Data Visualization"],
+    "requiredSkills": ["generative_ai", "communication", "analysis", "planning"],
+    "preferredSkills": ["iteration", "coding"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "communication": 75,
+      "analysis": 65,
+      "planning": 60
+    },
+    "portfolioProjects": ["level-1-assessment"],
+    "growthOutlook": "Very Strong - AI customer success is critical for SaaS companies",
+    "remotePolicy": "Hybrid or Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-sales-engineer",
+    "title": "AI Sales Engineer",
+    "location": "Seattle, WA / Remote",
+    "salaryRange": "$140k - $220k + commission",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Demonstrate AI solutions to enterprise clients, design proof-of-concepts, and close technical sales. Bridge the gap between sales and engineering with deep AI expertise.",
+    "impactHighlights": [
+      "Close 7-figure AI deals",
+      "Build custom demos that wow C-suite executives",
+      "Influence product roadmap with customer insights",
+      "Earn top-tier commissions"
+    ],
+    "keyTechnologies": ["AI Platform APIs", "Solution Architecture", "Proof-of-Concept Development", "Sales Tools", "Technical Presentations"],
+    "requiredSkills": ["generative_ai", "communication", "planning", "creativity"],
+    "preferredSkills": ["coding", "analysis"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "generative_ai": 75,
+      "communication": 80,
+      "planning": 70,
+      "creativity": 65
+    },
+    "portfolioProjects": ["level-1-assessment", "presentation-designer"],
+    "growthOutlook": "Explosive - enterprise AI sales booming",
+    "remotePolicy": "Hybrid (frequent travel)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-data-scientist",
+    "title": "AI Data Scientist",
+    "location": "Mountain View, CA",
+    "salaryRange": "$170k - $250k",
+    "employmentType": "Full-time",
+    "seniority": "Senior",
+    "description": "Apply machine learning and AI to extract insights from massive datasets. Build predictive models, design experiments, and drive data-driven decision making.",
+    "impactHighlights": [
+      "Analyze petabytes of data daily",
+      "Build ML models that serve billions of users",
+      "Publish research at top AI conferences",
+      "Work with world-class data infrastructure"
+    ],
+    "keyTechnologies": ["Python", "TensorFlow", "PyTorch", "SQL", "LLM Fine-tuning", "Statistical Analysis"],
+    "requiredSkills": ["synthetic_ai", "analysis", "logic", "coding"],
+    "preferredSkills": ["iteration", "planning"],
+    "promptScoreMin": 80,
+    "skillThresholds": {
+      "synthetic_ai": 85,
+      "analysis": 85,
+      "logic": 80,
+      "coding": 75
+    },
+    "portfolioProjects": ["business-analyst", "level-3-assessment"],
+    "growthOutlook": "Very Strong - data science core to AI advancement",
+    "remotePolicy": "Hybrid",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-technical-writer",
+    "title": "AI Technical Writer",
+    "location": "Remote US",
+    "salaryRange": "$100k - $150k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Create comprehensive documentation for AI products and APIs. Write tutorials, guides, and reference materials that help developers build with AI.",
+    "impactHighlights": [
+      "Your docs help millions of developers",
+      "Define documentation standards for AI industry",
+      "Work closely with AI product teams",
+      "Make complex AI concepts accessible"
+    ],
+    "keyTechnologies": ["Documentation Platforms", "API Documentation", "Markdown", "AI Tools", "Content Management Systems"],
+    "requiredSkills": ["generative_ai", "communication", "creativity"],
+    "preferredSkills": ["coding", "analysis"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "communication": 80,
+      "creativity": 65
+    },
+    "portfolioProjects": ["study-guide-builder", "presentation-designer"],
+    "growthOutlook": "Strong - great documentation drives AI adoption",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-ux-researcher",
+    "title": "AI UX Researcher",
+    "location": "San Francisco, CA",
+    "salaryRange": "$130k - $190k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Research how users interact with AI products. Conduct studies, analyze behavior patterns, and inform AI product design with user insights.",
+    "impactHighlights": [
+      "Shape AI experiences for millions",
+      "Pioneer AI-human interaction research",
+      "Influence product strategy with data",
+      "Publish UX research on AI"
+    ],
+    "keyTechnologies": ["User Research Tools", "Data Analysis", "Prototyping", "A/B Testing", "Interview Techniques"],
+    "requiredSkills": ["generative_ai", "analysis", "communication", "iteration"],
+    "preferredSkills": ["planning", "creativity"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "analysis": 75,
+      "communication": 75
+    },
+    "portfolioProjects": ["level-1-assessment", "quiz-master"],
+    "growthOutlook": "Very Strong - AI UX critical to product success",
+    "remotePolicy": "Hybrid",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-ethics-researcher",
+    "title": "AI Ethics Researcher",
+    "location": "Remote Global",
+    "salaryRange": "$110k - $170k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Research responsible AI practices, develop ethical frameworks, and guide organizations in safe AI deployment. Work at the intersection of technology and society.",
+    "impactHighlights": [
+      "Shape global AI governance policies",
+      "Publish influential research papers",
+      "Advise major organizations on ethics",
+      "Make AI safer for humanity"
+    ],
+    "keyTechnologies": ["AI Safety", "Ethics Frameworks", "Policy Research", "Stakeholder Engagement", "Risk Assessment"],
+    "requiredSkills": ["generative_ai", "communication", "analysis", "iteration"],
+    "preferredSkills": ["logic", "planning"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "communication": 80,
+      "analysis": 75
+    },
+    "portfolioProjects": ["level-2-assessment"],
+    "growthOutlook": "Very Strong - AI ethics critical to industry",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-marketing-specialist",
+    "title": "AI Marketing Specialist",
+    "location": "Los Angeles, CA / Remote",
+    "salaryRange": "$90k - $140k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to create marketing campaigns, generate content at scale, and optimize marketing performance. Drive growth with AI-powered marketing strategies.",
+    "impactHighlights": [
+      "10x content output with AI tools",
+      "Optimize campaigns with AI insights",
+      "Pioneer AI-native marketing",
+      "Drive significant revenue growth"
+    ],
+    "keyTechnologies": ["Marketing Automation", "AI Content Tools", "SEO", "Analytics Platforms", "Social Media AI"],
+    "requiredSkills": ["generative_ai", "creativity", "communication", "analysis"],
+    "preferredSkills": ["planning", "iteration"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "creativity": 70,
+      "communication": 70,
+      "analysis": 60
+    },
+    "portfolioProjects": ["social-media-content", "presentation-designer"],
+    "growthOutlook": "Explosive - AI transforming marketing completely",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": false
+  },
+  {
+    "id": "ai-recruitment-specialist",
+    "title": "AI Recruitment Specialist",
+    "location": "Denver, CO / Remote",
+    "salaryRange": "$80k - $120k",
+    "employmentType": "Full-time",
+    "seniority": "Entry to Mid-Level",
+    "description": "Use AI to source candidates, screen resumes, and match talent to roles. Transform recruiting with AI-powered efficiency and insights.",
+    "impactHighlights": [
+      "Fill roles 3x faster with AI tools",
+      "Build diverse, high-quality talent pipelines",
+      "Pioneer AI-assisted recruiting",
+      "Improve candidate experience"
+    ],
+    "keyTechnologies": ["AI Recruiting Tools", "ATS Systems", "LinkedIn", "Candidate Screening AI", "Interview Tools"],
+    "requiredSkills": ["generative_ai", "communication", "analysis"],
+    "preferredSkills": ["planning", "iteration"],
+    "promptScoreMin": 50,
+    "skillThresholds": {
+      "generative_ai": 60,
+      "communication": 75,
+      "analysis": 60
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Strong - AI recruiting becoming standard",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": false
+  },
+  {
+    "id": "freelance-ai-consultant",
+    "title": "Freelance AI Consultant",
+    "location": "Remote Worldwide",
+    "salaryRange": "$100 - $300/hour",
+    "employmentType": "Freelance",
+    "seniority": "Mid-Level",
+    "description": "Help businesses implement AI solutions as an independent consultant. Work on diverse projects from startups to enterprises, setting your own schedule and rates.",
+    "impactHighlights": [
+      "Work with clients globally",
+      "Choose projects that excite you",
+      "Build a personal brand in AI",
+      "Scale to 6-figure annual income"
+    ],
+    "keyTechnologies": ["Multi-model AI", "Consulting Skills", "Business Development", "Project Management", "Client Relations"],
+    "requiredSkills": ["generative_ai", "communication", "planning", "iteration"],
+    "preferredSkills": ["analysis", "coding"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "communication": 75,
+      "planning": 65
+    },
+    "portfolioProjects": ["level-1-assessment"],
+    "growthOutlook": "Very Strong - demand for AI consultants exceeds supply",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "freelance-ai-content-creator",
+    "title": "Freelance AI Content Creator",
+    "location": "Remote Worldwide",
+    "salaryRange": "$50 - $150/hour",
+    "employmentType": "Freelance",
+    "seniority": "Entry to Mid-Level",
+    "description": "Create blog posts, social media content, and marketing materials using AI. Help businesses scale their content production efficiently.",
+    "impactHighlights": [
+      "Create content 10x faster with AI",
+      "Work with diverse clients across industries",
+      "Build passive income through retainers",
+      "Scale to multiple clients simultaneously"
+    ],
+    "keyTechnologies": ["ChatGPT", "Claude", "Content AI Tools", "SEO Tools", "Social Media Platforms"],
+    "requiredSkills": ["generative_ai", "creativity", "communication"],
+    "preferredSkills": ["iteration", "analysis"],
+    "promptScoreMin": 50,
+    "skillThresholds": {
+      "generative_ai": 60,
+      "creativity": 70,
+      "communication": 65
+    },
+    "portfolioProjects": ["social-media-content"],
+    "growthOutlook": "Very Strong - businesses need AI content at scale",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "freelance-chatbot-builder",
+    "title": "Freelance Chatbot Builder",
+    "location": "Remote Worldwide",
+    "salaryRange": "$75 - $200/hour",
+    "employmentType": "Freelance",
+    "seniority": "Mid-Level",
+    "description": "Build custom chatbots and AI assistants for businesses. Design conversational experiences, train models, and integrate with existing systems.",
+    "impactHighlights": [
+      "Build chatbots that serve thousands daily",
+      "Help businesses automate customer service",
+      "Earn $3k-$10k per project",
+      "Create recurring revenue through maintenance"
+    ],
+    "keyTechnologies": ["ChatGPT API", "Chatbot Platforms", "No-Code Tools", "API Integration", "Conversation Design"],
+    "requiredSkills": ["agentic_ai", "logic", "planning", "iteration"],
+    "preferredSkills": ["coding", "communication"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "agentic_ai": 70,
+      "logic": 65,
+      "planning": 65
+    },
+    "portfolioProjects": ["quiz-master", "level-1-assessment"],
+    "growthOutlook": "Explosive - every business wants a chatbot",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "freelance-ai-tutor",
+    "title": "Freelance AI Tutor",
+    "location": "Remote Worldwide",
+    "salaryRange": "$40 - $120/hour",
+    "employmentType": "Freelance",
+    "seniority": "Entry to Mid-Level",
+    "description": "Teach individuals and teams how to use AI tools effectively. Offer one-on-one coaching, group workshops, and corporate training.",
+    "impactHighlights": [
+      "Empower professionals with AI skills",
+      "Build a community of learners",
+      "Create online courses for passive income",
+      "Set your own schedule and rates"
+    ],
+    "keyTechnologies": ["AI Tools", "Teaching Platforms", "Course Creation", "Video Tools", "Communication Platforms"],
+    "requiredSkills": ["generative_ai", "communication", "creativity"],
+    "preferredSkills": ["planning", "iteration"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "communication": 75,
+      "creativity": 60
+    },
+    "portfolioProjects": ["study-guide-builder"],
+    "growthOutlook": "Strong - AI skills training in high demand",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "freelance-prompt-engineer",
+    "title": "Freelance Prompt Engineer",
+    "location": "Remote Worldwide",
+    "salaryRange": "$60 - $180/hour",
+    "employmentType": "Freelance",
+    "seniority": "Mid-Level",
+    "description": "Create custom prompts and prompt libraries for businesses. Optimize AI outputs, build reusable templates, and train teams on prompting.",
+    "impactHighlights": [
+      "Build prompt systems that save companies thousands",
+      "Work on diverse interesting projects",
+      "Create prompt libraries sold as products",
+      "Establish yourself as a prompting expert"
+    ],
+    "keyTechnologies": ["GPT-4", "Claude", "Gemini", "Prompt Frameworks", "Template Systems"],
+    "requiredSkills": ["generative_ai", "creativity", "iteration", "communication"],
+    "preferredSkills": ["analysis", "planning"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "generative_ai": 75,
+      "creativity": 70,
+      "communication": 65
+    },
+    "portfolioProjects": ["level-1-assessment"],
+    "growthOutlook": "Very Strong - prompting expertise highly valued",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "freelance-ai-workflow-designer",
+    "title": "Freelance AI Workflow Designer",
+    "location": "Remote Worldwide",
+    "salaryRange": "$80 - $200/hour",
+    "employmentType": "Freelance",
+    "seniority": "Mid-Level",
+    "description": "Design and implement AI-powered workflows for businesses. Automate processes, integrate AI tools, and optimize operations.",
+    "impactHighlights": [
+      "Save companies hundreds of hours monthly",
+      "Build automation that runs 24/7",
+      "Charge $5k-$15k per workflow project",
+      "Create ongoing maintenance contracts"
+    ],
+    "keyTechnologies": ["Zapier", "Make", "AI APIs", "Automation Tools", "Process Design"],
+    "requiredSkills": ["agentic_ai", "planning", "logic", "iteration"],
+    "preferredSkills": ["coding", "analysis"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "agentic_ai": 70,
+      "planning": 70,
+      "logic": 65
+    },
+    "portfolioProjects": ["level-1-assessment", "website-builder"],
+    "growthOutlook": "Explosive - workflow automation critical for efficiency",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "freelance-ai-researcher",
+    "title": "Freelance AI Research Assistant",
+    "location": "Remote Worldwide",
+    "salaryRange": "$50 - $120/hour",
+    "employmentType": "Freelance",
+    "seniority": "Entry to Mid-Level",
+    "description": "Conduct research using AI tools for clients. Gather insights, analyze data, create reports, and synthesize information at scale.",
+    "impactHighlights": [
+      "Research 10x faster with AI assistance",
+      "Work with startups, VCs, and consultancies",
+      "Build expertise across multiple industries",
+      "Create recurring research projects"
+    ],
+    "keyTechnologies": ["Research AI Tools", "Data Analysis", "Report Writing", "Information Synthesis", "AI Search"],
+    "requiredSkills": ["synthetic_ai", "analysis", "communication"],
+    "preferredSkills": ["iteration", "logic"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "synthetic_ai": 65,
+      "analysis": 70,
+      "communication": 65
+    },
+    "portfolioProjects": ["business-analyst"],
+    "growthOutlook": "Strong - AI-powered research gaining traction",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-startup-founder",
+    "title": "AI Startup Founder",
+    "location": "Anywhere",
+    "salaryRange": "Equity + Variable",
+    "employmentType": "Founder",
+    "seniority": "Founder",
+    "description": "Launch your own AI-powered business. Use your prompting skills to build products, automate operations, and compete with minimal resources. Join the AI startup revolution.",
+    "impactHighlights": [
+      "Build the company you envision",
+      "Solve problems you're passionate about",
+      "Potential for massive returns",
+      "Join accelerators or bootstrap to success"
+    ],
+    "keyTechnologies": ["All AI Models", "No-Code Tools", "Business Strategy", "Growth Hacking", "Product Development"],
+    "requiredSkills": ["generative_ai", "agentic_ai", "creativity", "planning", "iteration"],
+    "preferredSkills": ["coding", "communication", "analysis"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "generative_ai": 75,
+      "agentic_ai": 70,
+      "creativity": 75,
+      "planning": 75
+    },
+    "portfolioProjects": ["level-2-assessment", "website-builder"],
+    "growthOutlook": "Explosive - AI startups raising billions in funding",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-saas-founder",
+    "title": "AI SaaS Founder",
+    "location": "Anywhere",
+    "salaryRange": "MRR-based income",
+    "employmentType": "Founder",
+    "seniority": "Founder",
+    "description": "Build and launch an AI-powered SaaS product. Create recurring revenue solving specific problems with AI automation and intelligence.",
+    "impactHighlights": [
+      "Build products used by thousands",
+      "Generate passive monthly recurring revenue",
+      "Scale to 6-7 figures in revenue",
+      "Exit opportunities or build for life"
+    ],
+    "keyTechnologies": ["AI APIs", "No-Code SaaS Tools", "Payment Processing", "User Analytics", "Growth Marketing"],
+    "requiredSkills": ["generative_ai", "agentic_ai", "planning", "iteration", "creativity"],
+    "preferredSkills": ["coding", "communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "generative_ai": 75,
+      "agentic_ai": 75,
+      "planning": 75,
+      "creativity": 70
+    },
+    "portfolioProjects": ["level-2-assessment", "website-builder"],
+    "growthOutlook": "Explosive - AI SaaS market growing rapidly",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-agency-founder",
+    "title": "AI Services Agency Founder",
+    "location": "Anywhere",
+    "salaryRange": "Project-based income",
+    "employmentType": "Founder",
+    "seniority": "Founder",
+    "description": "Start an agency offering AI consulting, implementation, and training services. Build a team and scale to serve enterprise clients.",
+    "impactHighlights": [
+      "Build a 7-figure agency",
+      "Hire and manage remote AI talent",
+      "Serve Fortune 500 clients",
+      "Create a valuable, sellable business"
+    ],
+    "keyTechnologies": ["AI Solutions", "Project Management", "Team Management", "Sales", "Client Relations"],
+    "requiredSkills": ["generative_ai", "communication", "planning", "iteration"],
+    "preferredSkills": ["analysis", "coding"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "communication": 80,
+      "planning": 75
+    },
+    "portfolioProjects": ["level-1-assessment", "level-2-assessment"],
+    "growthOutlook": "Very Strong - agencies scaling AI practices quickly",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-content-business-founder",
+    "title": "AI Content Business Founder",
+    "location": "Anywhere",
+    "salaryRange": "Revenue share + retainers",
+    "employmentType": "Founder",
+    "seniority": "Founder",
+    "description": "Build a content creation business powered by AI. Offer blogs, newsletters, social media, and video content at scale.",
+    "impactHighlights": [
+      "Create content for dozens of clients",
+      "Build recurring retainer revenue",
+      "Scale with AI-powered workflows",
+      "Expand to full content agency"
+    ],
+    "keyTechnologies": ["Content AI", "SEO Tools", "Social Media", "Video AI", "Content Management"],
+    "requiredSkills": ["generative_ai", "creativity", "communication", "iteration"],
+    "preferredSkills": ["planning", "analysis"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "creativity": 75,
+      "communication": 70
+    },
+    "portfolioProjects": ["social-media-content", "presentation-designer"],
+    "growthOutlook": "Strong - content demand infinite with AI efficiency",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-course-creator",
+    "title": "AI Course Creator & Educator",
+    "location": "Anywhere",
+    "salaryRange": "Course sales + coaching",
+    "employmentType": "Founder",
+    "seniority": "Founder",
+    "description": "Create and sell online courses teaching AI skills. Build a learning platform, community, and coaching business around AI education.",
+    "impactHighlights": [
+      "Teach thousands of students globally",
+      "Generate passive income from course sales",
+      "Build a recognized personal brand",
+      "Create community and coaching tiers"
+    ],
+    "keyTechnologies": ["Course Platforms", "AI Tools", "Video Production", "Community Platforms", "Marketing"],
+    "requiredSkills": ["generative_ai", "communication", "creativity", "iteration"],
+    "preferredSkills": ["planning", "analysis"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "generative_ai": 70,
+      "communication": 80,
+      "creativity": 70
+    },
+    "portfolioProjects": ["study-guide-builder", "presentation-designer"],
+    "growthOutlook": "Very Strong - AI education market massive",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-automation-business",
+    "title": "AI Automation Business Owner",
+    "location": "Anywhere",
+    "salaryRange": "Project fees + retainers",
+    "employmentType": "Founder",
+    "seniority": "Founder",
+    "description": "Build a business creating AI automation solutions for companies. Design workflows, build agents, and create systems that save businesses time and money.",
+    "impactHighlights": [
+      "Charge $10k-$50k per automation project",
+      "Build recurring maintenance revenue",
+      "Help businesses scale with AI",
+      "Create valuable IP and templates"
+    ],
+    "keyTechnologies": ["Automation Platforms", "AI APIs", "Workflow Design", "Integration Tools", "Custom AI Solutions"],
+    "requiredSkills": ["agentic_ai", "planning", "logic", "iteration"],
+    "preferredSkills": ["coding", "communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "agentic_ai": 80,
+      "planning": 75,
+      "logic": 70
+    },
+    "portfolioProjects": ["level-2-assessment", "website-builder"],
+    "growthOutlook": "Explosive - automation critical for business efficiency",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-prompt-writer-trade",
+    "title": "AI Prompt Writer",
+    "location": "Remote Worldwide",
+    "salaryRange": "$30 - $80/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry to Mid-Level",
+    "description": "Write high-quality prompts as a skilled trade. Create prompts for specific use cases, test outputs, and deliver consistent results for clients on-demand.",
+    "impactHighlights": [
+      "Quick project turnarounds",
+      "Build portfolio of prompt templates",
+      "Work with diverse clients",
+      "Steady stream of small projects"
+    ],
+    "keyTechnologies": ["GPT-4", "Claude", "Gemini", "Prompt Patterns", "Testing Methods"],
+    "requiredSkills": ["generative_ai", "creativity", "iteration"],
+    "preferredSkills": ["communication", "analysis"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "creativity": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Strong - prompt writing becoming specialized skill",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-data-annotator",
+    "title": "AI Data Annotator",
+    "location": "Remote Worldwide",
+    "salaryRange": "$25 - $60/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry-Level",
+    "description": "Label and annotate data to train AI models. Provide high-quality human feedback that improves AI performance.",
+    "impactHighlights": [
+      "Help train cutting-edge AI models",
+      "Flexible hours and workload",
+      "Improve AI accuracy and safety",
+      "Entry point into AI industry"
+    ],
+    "keyTechnologies": ["Annotation Platforms", "Quality Assessment", "Data Labeling", "RLHF", "Classification"],
+    "requiredSkills": ["generative_ai", "analysis"],
+    "preferredSkills": ["iteration", "communication"],
+    "promptScoreMin": 40,
+    "skillThresholds": {
+      "generative_ai": 50,
+      "analysis": 55
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Strong - data annotation essential for AI training",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-content-editor",
+    "title": "AI Content Editor",
+    "location": "Remote Worldwide",
+    "salaryRange": "$35 - $90/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry to Mid-Level",
+    "description": "Edit and refine AI-generated content. Polish outputs, ensure accuracy, maintain brand voice, and deliver publication-ready content.",
+    "impactHighlights": [
+      "Make AI content human and engaging",
+      "Work on diverse content types",
+      "Build expertise in AI content quality",
+      "High demand for quality editors"
+    ],
+    "keyTechnologies": ["Editing Tools", "AI Content Platforms", "Grammar Tools", "Style Guides", "Fact-Checking"],
+    "requiredSkills": ["generative_ai", "communication", "creativity"],
+    "preferredSkills": ["analysis", "iteration"],
+    "promptScoreMin": 50,
+    "skillThresholds": {
+      "generative_ai": 60,
+      "communication": 70,
+      "creativity": 60
+    },
+    "portfolioProjects": ["social-media-content"],
+    "growthOutlook": "Very Strong - AI content needs human polish",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-image-prompt-specialist",
+    "title": "AI Image Prompt Specialist",
+    "location": "Remote Worldwide",
+    "salaryRange": "$40 - $100/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry to Mid-Level",
+    "description": "Create prompts for AI image generation. Master Midjourney, DALL-E, Stable Diffusion to produce specific visual outputs for clients.",
+    "impactHighlights": [
+      "Create stunning AI artwork on demand",
+      "Work with designers and marketers",
+      "Build visual prompt libraries",
+      "Fast turnaround projects"
+    ],
+    "keyTechnologies": ["Midjourney", "DALL-E", "Stable Diffusion", "Image Editing", "Visual Design Principles"],
+    "requiredSkills": ["generative_ai", "creativity", "iteration"],
+    "preferredSkills": ["communication", "analysis"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "creativity": 75
+    },
+    "portfolioProjects": ["presentation-designer"],
+    "growthOutlook": "Very Strong - visual AI content in huge demand",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-qa-tester",
+    "title": "AI Quality Assurance Tester",
+    "location": "Remote Worldwide",
+    "salaryRange": "$30 - $75/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry to Mid-Level",
+    "description": "Test AI products and features. Identify bugs, edge cases, and quality issues. Provide detailed feedback to improve AI systems.",
+    "impactHighlights": [
+      "Ensure AI products work correctly",
+      "Find critical issues before release",
+      "Work with leading AI companies",
+      "Improve AI reliability"
+    ],
+    "keyTechnologies": ["Testing Tools", "Bug Tracking", "AI Products", "Documentation", "Quality Standards"],
+    "requiredSkills": ["generative_ai", "analysis", "iteration"],
+    "preferredSkills": ["logic", "communication"],
+    "promptScoreMin": 45,
+    "skillThresholds": {
+      "generative_ai": 55,
+      "analysis": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Strong - AI QA critical for product quality",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-transcription-specialist",
+    "title": "AI-Assisted Transcription Specialist",
+    "location": "Remote Worldwide",
+    "salaryRange": "$25 - $60/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry-Level",
+    "description": "Use AI to transcribe audio and video content. Clean up transcriptions, add formatting, and ensure accuracy for clients.",
+    "impactHighlights": [
+      "Transcribe 10x faster with AI",
+      "Work on podcasts, meetings, interviews",
+      "Build steady client base",
+      "Flexible hours and location"
+    ],
+    "keyTechnologies": ["Whisper AI", "Transcription Software", "Audio Tools", "Text Editing", "Time-coding"],
+    "requiredSkills": ["generative_ai", "communication"],
+    "preferredSkills": ["iteration", "analysis"],
+    "promptScoreMin": 40,
+    "skillThresholds": {
+      "generative_ai": 50,
+      "communication": 60
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Moderate - AI transcription becoming commoditized but still needed",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-translation-specialist",
+    "title": "AI Translation Specialist",
+    "location": "Remote Worldwide",
+    "salaryRange": "$35 - $90/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry to Mid-Level",
+    "description": "Use AI to translate content between languages. Refine machine translations, ensure cultural accuracy, and deliver professional translations.",
+    "impactHighlights": [
+      "Translate 5x faster with AI assistance",
+      "Work across multiple language pairs",
+      "Help businesses reach global audiences",
+      "Maintain cultural nuance"
+    ],
+    "keyTechnologies": ["AI Translation Tools", "CAT Tools", "Language Models", "Cultural Knowledge", "Editing Software"],
+    "requiredSkills": ["generative_ai", "communication", "iteration"],
+    "preferredSkills": ["analysis", "creativity"],
+    "promptScoreMin": 50,
+    "skillThresholds": {
+      "generative_ai": 60,
+      "communication": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Strong - global content needs professional translation",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-customer-support-specialist",
+    "title": "AI-Assisted Customer Support Specialist",
+    "location": "Remote Worldwide",
+    "salaryRange": "$20 - $50/hour",
+    "employmentType": "Trade",
+    "seniority": "Entry-Level",
+    "description": "Provide customer support using AI tools. Use AI to draft responses, find solutions quickly, and handle more tickets efficiently.",
+    "impactHighlights": [
+      "Respond to customers 3x faster",
+      "Solve complex issues with AI assistance",
+      "Improve customer satisfaction scores",
+      "Work for growing tech companies"
+    ],
+    "keyTechnologies": ["Support Platforms", "AI Response Tools", "Knowledge Bases", "CRM Systems", "Chat Tools"],
+    "requiredSkills": ["generative_ai", "communication"],
+    "preferredSkills": ["analysis", "iteration"],
+    "promptScoreMin": 40,
+    "skillThresholds": {
+      "generative_ai": 50,
+      "communication": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Strong - AI enhancing support efficiency",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  }
+]

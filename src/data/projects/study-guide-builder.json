@@ -1,0 +1,184 @@
+{
+  "slug": "study-guide-builder",
+  "title": "Study Guide Builder",
+  "category": "Education",
+  "level": 1,
+  "levelOrder": 2,
+  "estTime": "12m",
+  "difficulty": 1,
+  "badge": "study-master",
+  "steps": 7,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Create a biology study guide for high school students. Which prompt is most effective?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Make a study guide about biology",
+          "explanation": "No specific topic, grade level, learning objectives, or format specified. Too general to be useful."
+        },
+        {
+          "quality": "good",
+          "text": "Create a comprehensive biology study guide for 10th grade students on cellular structure. Include: key vocabulary with definitions, comparison table of prokaryotic vs eukaryotic cells, organelle functions, 5 practice questions with answers, and real-world examples. Use clear headings and bullet points. Intermediate difficulty.",
+          "explanation": "Excellent! Specifies audience, topic, structured content sections, format requirements, assessment component, and difficulty level."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a biology study guide for high school students about cells with definitions and examples",
+          "explanation": "Has subject, audience, and basic content types, but lacks specific structure, depth requirements, and assessment components."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A college student needs a study guide for a history exam. Which prompt works best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Make a World War 2 study guide for college students covering major events and outcomes",
+          "explanation": "Has topic and audience, but missing specific focus areas, time period structure, and study format preferences."
+        },
+        {
+          "quality": "bad",
+          "text": "Help me study for my history test",
+          "explanation": "No topic, time period, grade level, or content requirements. Impossible to create targeted study materials."
+        },
+        {
+          "quality": "good",
+          "text": "Create a World War 2 study guide for college students. Cover: causes (1918-1939), major battles (1939-1943), turning points (1943-1944), aftermath (1945-1950). For each period: timeline, key figures, strategic decisions, impact. Include: comparative analysis of Eastern vs Western fronts, 10 critical thinking questions, and connections to modern geopolitics. Advanced difficulty.",
+          "explanation": "Perfect! Organized by time periods, specifies content for each section, includes analysis and critical thinking, and sets appropriate difficulty."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a math study guide for algebra students. Which prompt is best?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create an Algebra 1 study guide for 9th graders on quadratic equations. Include: step-by-step solving methods (factoring, completing the square, quadratic formula), when to use each method, 3 worked examples per method showing all steps, common mistakes to avoid, 12 practice problems (4 per method) with solutions, and real-world applications. Use diagrams where helpful.",
+          "explanation": "Comprehensive! Covers multiple solving methods, includes worked examples, practice problems, error prevention, applications, and visual aids."
+        },
+        {
+          "quality": "almost",
+          "text": "Make a study guide about solving quadratic equations with examples and practice problems for 9th grade",
+          "explanation": "Has topic, audience, and basic components, but lacks specific solving methods, problem distribution, and detailed structure."
+        },
+        {
+          "quality": "bad",
+          "text": "Explain quadratic equations",
+          "explanation": "Too vague - no audience level, study format, practice component, or depth of coverage specified."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Design a chemistry study guide for an exam. Which approach is most effective?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create a chemistry study guide for college students about organic chemistry with key concepts and formulas",
+          "explanation": "Has subject, audience, and general content types, but missing specific topics, depth level, and learning aids."
+        },
+        {
+          "quality": "good",
+          "text": "Create an organic chemistry study guide for college sophomores on functional groups. Include: structure and properties of 8 major functional groups (alcohols, aldehydes, ketones, carboxylic acids, esters, ethers, amines, amides), nomenclature rules for each, reaction mechanisms, 3D molecular models description, comparison table of reactivity, 15 practice problems identifying functional groups in complex molecules. Intermediate-advanced level.",
+          "explanation": "Excellent! Specific topic coverage, systematic organization, includes nomenclature and reactions, visual learning aids, assessment, and appropriate difficulty."
+        },
+        {
+          "quality": "bad",
+          "text": "Help me learn chemistry",
+          "explanation": "No specific topic, educational level, exam scope, or study materials format. Completely unhelpful."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A literature student needs help analyzing Shakespeare. Which prompt will produce the best study materials?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Explain Shakespeare",
+          "explanation": "No specific play, analysis type, educational level, or study format provided."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a study guide for Romeo and Juliet for high school students",
+          "explanation": "Has play and audience, but missing specific analysis focus, literary devices, themes, and assessment components."
+        },
+        {
+          "quality": "good",
+          "text": "Create a comprehensive study guide for high school students analyzing 'Romeo and Juliet'. Include: character analysis (main 6 characters with motivations), major themes (love vs hate, fate, impulsiveness), literary devices (metaphors, foreshadowing, dramatic irony), key quotes with analysis, plot structure breakdown, 8 essay questions with grading rubric. Focus on tragic elements and Elizabethan context.",
+          "explanation": "Excellent! Covers character analysis, themes, literary devices, quotes, plot structure, assessment tools, and historical context."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a psychology study guide for learning theories. Which prompt is most comprehensive?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Make a psychology study guide about learning theories for college students",
+          "explanation": "Has topic and audience, but lacks specific theories, comparison framework, and practical applications."
+        },
+        {
+          "quality": "bad",
+          "text": "Help me understand psychology",
+          "explanation": "No specific topic, educational level, or learning objectives provided."
+        },
+        {
+          "quality": "good",
+          "text": "Create a psychology study guide on learning theories for college freshmen. Cover: Classical Conditioning (Pavlov), Operant Conditioning (Skinner), Social Learning Theory (Bandura), Cognitive Learning (Piaget). For each: key concepts, famous experiments, real-world examples, classroom applications. Include: comparison table of theories, 10 scenario-based questions, modern educational implications. Intermediate difficulty.",
+          "explanation": "Perfect! Specific theories covered, systematic structure, experiments, applications, comparison tools, and practical scenarios."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "A student needs a physics study guide for mechanics. Which prompt will be most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create a mechanics study guide for 11th grade physics students. Topics: Newton's 3 laws, friction, circular motion, energy conservation. For each: formula derivation, step-by-step problem-solving method, 2 worked examples with units, common misconceptions, real-world applications. Include: formula reference sheet, 15 practice problems (mixed difficulty), lab activity suggestions. Use diagrams to illustrate concepts.",
+          "explanation": "Comprehensive! Covers specific topics, problem-solving methodology, worked examples, error prevention, applications, and visual learning aids."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a physics study guide about mechanics with formulas and problems",
+          "explanation": "Has general topic and content types, but missing specific topics, grade level, depth requirements, and teaching approach."
+        },
+        {
+          "quality": "bad",
+          "text": "Explain physics",
+          "explanation": "No specific branch, educational level, or learning objectives. Too broad to be useful."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "generative_ai",
+    "communication",
+    "analysis"
+  ],
+  "description": "Learn to create comprehensive study materials that help learners understand complex topics.",
+  "isAssessment": false,
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Make a study guide",
+      "explanation": "No subject, learning level, format, or learning objectives specified. AI can't create useful content."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Create a biology study guide for high school students about cells",
+      "explanation": "Has subject, audience, and topic - but missing structure, depth level, key concepts, and format preferences."
+    },
+    {
+      "quality": "good",
+      "prompt": "Create a comprehensive study guide for 10th grade biology students on cellular structure and function. Include: 1) Key vocabulary with definitions 2) Comparison table of prokaryotic vs eukaryotic cells 3) Main functions of cell organelles 4) 5 practice questions with answers 5) Real-world examples. Use clear headings and bullet points. Aim for intermediate difficulty level.",
+      "explanation": "Perfect - defines audience, topic, exact content structure, format requirements, difficulty level, and includes assessment component."
+    }
+  ]
+}

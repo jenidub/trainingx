@@ -1,0 +1,131 @@
+{
+  "slug": "level-1-assessment",
+  "title": "Level 1 Assessment",
+  "category": "Assessment",
+  "level": 1,
+  "levelOrder": 4,
+  "estTime": "20m",
+  "difficulty": 1,
+  "badge": "level-1-complete",
+  "steps": 5,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Create a product description for an e-commerce site. Which prompt demonstrates Level 1 mastery?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Write a product description for wireless headphones highlighting the main features like battery life and sound quality",
+          "explanation": "Has product and some features, but lacks target audience, tone, SEO requirements, and structured format for e-commerce."
+        },
+        {
+          "quality": "good",
+          "text": "Write a product description for wireless noise-cancelling headphones. Target: professionals working from home. Emphasize: 30-hour battery, active noise cancelling, comfortable for all-day wear. Include: 2-3 key benefits, 1 pain point it solves, call-to-action. Tone: professional yet friendly. Format: headline (10 words), 3 benefit bullets, 1 paragraph (50 words), CTA. Optimize for keywords: wireless headphones, noise cancelling, work from home.",
+          "explanation": "Excellent! Specifies audience, key features to highlight, structured format with length constraints, tone, SEO considerations, and conversion elements."
+        },
+        {
+          "quality": "bad",
+          "text": "Describe these headphones",
+          "explanation": "No product details, audience, tone, or e-commerce requirements. Missing all elements needed for effective product copy."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Generate email copy for a newsletter campaign. Which shows best prompting skills?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Write a promotional email for our June newsletter. Audience: existing customers who bought in last 90 days. Announce: Summer sale (20% off), new product line launch, customer spotlight. Structure: catchy subject line (under 50 chars), personalized greeting, 3 sections with subheads, 3 clear CTAs (shop sale, view new products, read story). Tone: excited but not pushy. Preview text included. Mobile-optimized, scannable format.",
+          "explanation": "Perfect! Defines audience, content sections, structure with specific requirements, multiple CTAs, tone guidance, and technical considerations for email."
+        },
+        {
+          "quality": "bad",
+          "text": "Write a promotional email for our newsletter",
+          "explanation": "No audience, content, structure, or email-specific requirements. Too generic for effective newsletter creation."
+        },
+        {
+          "quality": "almost",
+          "text": "Write a newsletter email to customers about our summer sale with a discount and new products",
+          "explanation": "Has basic content and audience, but missing subject line strategy, structure, CTAs, tone, and email best practices."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create social media content for a nonprofit fundraiser. Which prompt is best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Create Facebook posts for a nonprofit animal shelter fundraiser to raise money and increase awareness",
+          "explanation": "Has platform, organization type, and goals, but lacks specific campaign details, posting strategy, and emotional appeal framework."
+        },
+        {
+          "quality": "bad",
+          "text": "Write social media posts for a fundraiser",
+          "explanation": "No organization, cause, platform, emotional hook, or campaign details. Cannot create compelling fundraising content."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 7-day Facebook campaign for animal shelter fundraiser (goal: $25K in 30 days). Audience: local pet lovers, donors aged 30-55. Daily themes: Monday (impact story), Tuesday (urgent need), Wednesday (donor spotlight), Thursday (matching gift), Friday (success update), Saturday (volunteer feature), Sunday (weekend push). Each post: emotional hook, impact statement ($50 feeds a dog for a week), specific CTA, relevant image suggestion. Tone: heartfelt, urgent but hopeful. Include hashtag strategy.",
+          "explanation": "Excellent! Complete campaign structure, daily themes, audience targeting, specific impact messaging, varied content types, and comprehensive execution details."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Write a technical support email for a software outage. Which prompt shows Level 1 proficiency?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Write an email about system problems",
+          "explanation": "No context about the issue, affected users, timeline, resolution steps, or communication strategy."
+        },
+        {
+          "quality": "almost",
+          "text": "Create a support email about our CRM system being down",
+          "explanation": "Has basic issue information, but missing impact details, timeline, communication structure, and user guidance."
+        },
+        {
+          "quality": "good",
+          "text": "Draft a technical support email about CRM system outage affecting 200 users. Structure: clear subject line (CRM System Outage - Estimated 2-hour fix), problem description, user impact summary, current status, alternative work steps, ETA for resolution, contact for urgent issues. Tone: transparent, calm, professional. Include: specific error messages, what data is safe, backup access options, update frequency schedule.",
+          "explanation": "Perfect! Crisis communication structure with clear subject, impact scope, alternative solutions, timeline, and professional tone."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create an onboarding checklist for new remote employees. Which prompt demonstrates Level 1 mastery?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Make an onboarding checklist for remote workers with tasks and deadlines",
+          "explanation": "Has purpose and basic structure, but missing week-by-week breakdown, specific tools, integration activities, and success metrics."
+        },
+        {
+          "quality": "bad",
+          "text": "Create onboarding materials",
+          "explanation": "No specific role, timeline, format, or onboarding objectives. Too vague for practical use."
+        },
+        {
+          "quality": "good",
+          "text": "Create a 4-week onboarding checklist for remote software engineers. Week 1: tech setup, team introductions, project overview (8 tasks). Week 2: code environment, documentation review, first bug fix (6 tasks). Week 3: first feature assignment, code review process, team processes (7 tasks). Week 4: independent work, cross-team collaboration, 30-day goal setting (5 tasks). Include: specific tools, meeting schedules, success criteria, buddy system assignments, feedback checkpoints.",
+          "explanation": "Excellent! Structured timeline with specific weekly themes, clear task counts, tools and processes, success metrics, and support systems."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "generative_ai",
+    "creativity",
+    "communication",
+    "analysis"
+  ],
+  "description": "Demonstrate your Level 1 prompting skills across multiple real-world scenarios without guidance.",
+  "isAssessment": true,
+  "requiresCompletion": [
+    "social-media-content",
+    "study-guide-builder",
+    "presentation-designer"
+  ]
+}

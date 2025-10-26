@@ -1,0 +1,187 @@
+{
+  "slug": "business-analyst",
+  "title": "Business Analyst",
+  "category": "Analytics",
+  "level": 2,
+  "levelOrder": 2,
+  "estTime": "20m",
+  "difficulty": 2,
+  "badge": "data-detective",
+  "steps": 7,
+  "stepDetails": [
+    {
+      "type": "multiple-choice",
+      "question": "Analyze sales data and provide actionable insights. Which prompt delivers the best analysis?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Analyze our sales data and tell me what you find",
+          "explanation": "No data provided, no specific questions, no output format, and no business context. Cannot produce insights."
+        },
+        {
+          "quality": "almost",
+          "text": "Analyze our Q3 sales: $500K total (+15% vs Q2), e-commerce $300K (+30%), retail $200K (+5%). Tell me what's working and what to focus on.",
+          "explanation": "Has data points and general request, but lacks industry benchmarks, specific analysis questions, and structured output format."
+        },
+        {
+          "quality": "good",
+          "text": "Analyze Q3 sales performance and provide strategic recommendations. Data: Total $500K (+15% vs Q2), E-commerce $300K (+30%), Retail $200K (+5%). Industry avg: 12% growth. Deliverables: 1) Key trends analysis, 2) Performance vs benchmarks, 3) Top 3 growth opportunities, 4) 2 risk areas, 5) Actionable recommendations with expected impact. Format: executive summary with data visualization suggestions (charts/graphs).",
+          "explanation": "Perfect! Provides data with context, benchmarks for comparison, specific analysis deliverables, structured output, and visualization guidance."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Conduct customer behavior analysis for an e-commerce site. Which prompt is most effective?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Analyze customer behavior for our e-commerce site. Data: 50K monthly visitors, 2.5% conversion, avg order $85, 35% cart abandonment, top traffic sources (organic 40%, paid 30%, social 20%, direct 10%). Customer segments: new (60%), returning (40%). Analyze: 1) Conversion funnel drop-off points, 2) High-value customer patterns, 3) Cart abandonment root causes, 4) Traffic source ROI. Provide: segment-specific strategies, A/B test recommendations, projected impact on conversion rate. Compare to e-commerce benchmarks (3% conversion, 28% abandonment).",
+          "explanation": "Excellent! Comprehensive data across metrics, clear analysis objectives, actionable output requirements, benchmark comparisons, and specific improvement recommendations."
+        },
+        {
+          "quality": "almost",
+          "text": "Analyze our website data: 50K visitors, 2.5% conversion, $85 average order. Find ways to increase sales.",
+          "explanation": "Has basic metrics and goal, but missing customer segments, funnel analysis, benchmarks, and specific strategic recommendations."
+        },
+        {
+          "quality": "bad",
+          "text": "Look at our customer data and suggest improvements",
+          "explanation": "No data provided, no metrics specified, no analysis scope defined. Cannot perform meaningful analysis."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Evaluate product performance and recommend portfolio changes. Which approach works best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Analyze our product line performance: Product A ($200K, 40% margin), Product B ($150K, 25% margin), Product C ($100K, 50% margin). Which should we focus on?",
+          "explanation": "Has revenue and margin data, but missing growth trends, market size, competition, customer feedback, and strategic considerations beyond current financials."
+        },
+        {
+          "quality": "bad",
+          "text": "Evaluate our products and tell me what to do",
+          "explanation": "No product data, performance metrics, business context, or decision criteria. Cannot make portfolio recommendations."
+        },
+        {
+          "quality": "good",
+          "text": "Analyze product portfolio and recommend strategy. Products: A ($200K revenue, 40% margin, +5% growth, mature market), B ($150K, 25% margin, +30% growth, expanding market), C ($100K, 50% margin, -10% growth, declining market). Additional context: A (70% customer satisfaction), B (85% satisfaction), C (60% satisfaction). Market share: A (15%), B (8%), C (20%). Analyze using BCG matrix framework. Deliver: 1) Portfolio classification, 2) Investment allocation strategy, 3) Sunset vs scale recommendations, 4) New product gap analysis, 5) 12-month action plan with expected outcomes.",
+          "explanation": "Perfect! Multi-dimensional data (financial, growth, satisfaction, market position), strategic framework, comprehensive deliverables, and timeline for execution."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a competitive analysis report. Which prompt provides the most valuable output?",
+      "options": [
+        {
+          "quality": "good",
+          "text": "Create competitive analysis for our CRM software vs top 3 competitors. Our product: $50/user/month, features (contact mgmt, email, basic reporting), 500 customers, 2 years old. Competitors: Competitor A ($80/user, advanced analytics, 10K customers, 10 years), B ($40/user, limited features, 2K customers, 5 years), C ($100/user, AI features, 8K customers, 8 years). Analyze: 1) Feature comparison matrix, 2) Pricing positioning, 3) Target customer overlap, 4) Our competitive advantages/disadvantages, 5) Market gaps we can fill, 6) Positioning strategy. Include SWOT analysis and 3 differentiation recommendations.",
+          "explanation": "Excellent! Comprehensive competitor profiles, multi-dimensional comparison, strategic analysis frameworks (SWOT), and actionable differentiation strategies."
+        },
+        {
+          "quality": "almost",
+          "text": "Compare our CRM software ($50/month) to competitors who charge $40, $80, and $100. Tell me how to compete.",
+          "explanation": "Has pricing data, but missing feature comparison, customer base, market positioning, and detailed competitive strategy framework."
+        },
+        {
+          "quality": "bad",
+          "text": "Analyze our competitors",
+          "explanation": "No competitor information, comparison criteria, market context, or strategic objectives. Cannot create useful analysis."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Develop a data-driven customer retention strategy. Which prompt is best?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Analyze our customer churn: 15% monthly rate, top reasons (price 40%, features 30%, support 30%). Create a retention plan.",
+          "explanation": "Has churn data and reasons, but missing customer segments, lifetime value analysis, retention economics, and prioritized intervention strategies."
+        },
+        {
+          "quality": "bad",
+          "text": "Help us reduce customer churn",
+          "explanation": "No churn data, customer segments, root causes, or business metrics. Cannot develop targeted retention strategy."
+        },
+        {
+          "quality": "good",
+          "text": "Create customer retention strategy based on analysis. Data: 15% monthly churn rate (industry avg 10%), customer LTV $1200, acquisition cost $300. Churn reasons: price sensitivity (40%), missing features (30%), poor support (30%). Customer segments: SMB (20% churn, $800 LTV), Mid-market (12% churn, $2000 LTV), Enterprise (5% churn, $5000 LTV). Provide: 1) Segment-specific churn risk models, 2) Early warning indicators, 3) Retention tactics by segment and churn reason, 4) Cost-benefit analysis of interventions, 5) 90-day implementation roadmap, 6) Success metrics and tracking. Target: reduce churn to 10% in 6 months.",
+          "explanation": "Perfect! Detailed data across segments, economic analysis (LTV/CAC), root causes, predictive modeling, prioritized interventions, implementation plan, and measurable goals."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Analyze customer churn data for a subscription service. Which prompt provides the most comprehensive business analysis?",
+      "options": [
+        {
+          "quality": "bad",
+          "text": "Analyze why customers are leaving",
+          "explanation": "No business context, data types, analysis methods, or actionable insights required."
+        },
+        {
+          "quality": "almost",
+          "text": "Analyze customer churn data to identify key reasons customers cancel subscriptions",
+          "explanation": "Has objective, but missing specific metrics, segmentation, analysis framework, and business recommendations."
+        },
+        {
+          "quality": "good",
+          "text": "Analyze quarterly customer churn data for a SaaS subscription service (5,000 customers). Examine: churn rate by customer segment (SMB vs enterprise), by subscription tier, by usage frequency, by onboarding completion. Identify: top 5 churn reasons from exit surveys, patterns in customer lifecycle (most churn occurs in months 2-3), correlation with support tickets. Provide: 3 actionable retention strategies with potential impact, early warning indicators, recommended monitoring metrics. Include charts and statistical significance testing.",
+          "explanation": "Perfect! Comprehensive analysis framework with specific segments, statistical methods, actionable recommendations, and ongoing monitoring strategy."
+        }
+      ]
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Create a market analysis for a new product launch. Which prompt delivers the most strategic insights?",
+      "options": [
+        {
+          "quality": "almost",
+          "text": "Analyze the market for a new fitness app with competitors and opportunities",
+          "explanation": "Has product and general analysis scope, but missing market sizing, target demographics, competitive positioning, and go-to-market insights."
+        },
+        {
+          "quality": "bad",
+          "text": "Research the fitness app market",
+          "explanation": "No specific product angle, analysis framework, competitive landscape, or strategic objectives."
+        },
+        {
+          "quality": "good",
+          "text": "Conduct a comprehensive market analysis for a personalized AI fitness app launching in North America. Include: total addressable market ($15B健身 app market), target demographic (health-conscious millennials 25-40), competitive landscape (top 10 competitors with features/pricing), market trends (AI personalization, home fitness growth). SWOT analysis, PESTLE factors, pricing strategy research, distribution channels, regulatory considerations. Provide: market entry recommendations, differentiation strategy, 3-year market penetration projections with key assumptions.",
+          "explanation": "Excellent! Complete market assessment with sizing, segmentation, competitive intelligence, strategic frameworks, and actionable launch strategy."
+        }
+      ]
+    }
+  ],
+  "buildsSkills": [
+    "synthetic_ai",
+    "analysis",
+    "logic"
+  ],
+  "description": "Extract insights from data and create actionable business recommendations.",
+  "isAssessment": false,
+  "requiresCompletion": [
+    "level-1-assessment"
+  ],
+  "examplePrompts": [
+    {
+      "quality": "bad",
+      "prompt": "Analyze this data",
+      "explanation": "No data provided, no analysis objectives, no output format. Can't produce useful insights."
+    },
+    {
+      "quality": "almost",
+      "prompt": "Analyze our Q3 sales data and tell me what's working. Sales were $500K, up 15% from Q2. E-commerce grew 30%, retail grew 5%.",
+      "explanation": "Has data points and general request, but lacks specific questions, comparison context, and desired output format."
+    },
+    {
+      "quality": "good",
+      "prompt": "Analyze our Q3 sales performance and provide strategic recommendations. Data: Total sales $500K (+15% vs Q2), E-commerce $300K (+30% vs Q2), Retail $200K (+5% vs Q2). Industry average growth: 12%. Deliver: 1) Key trends analysis 2) Performance vs industry benchmarks 3) Top 3 growth opportunities 4) 2 risk areas to address 5) Actionable recommendations with expected impact. Format as executive summary with data visualizations suggestions.",
+      "explanation": "Complete - provides context data, benchmarks, specific analysis questions, structured output format, and actionable deliverables."
+    }
+  ]
+}
