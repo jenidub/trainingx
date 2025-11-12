@@ -8,15 +8,25 @@
  * @module
  */
 
+import type * as adaptiveEngine from "../adaptiveEngine.js";
+import type * as aiEvaluation from "../aiEvaluation.js";
 import type * as aiMatching from "../aiMatching.js";
+import type * as analytics from "../analytics.js";
 import type * as assessments from "../assessments.js";
 import type * as auth from "../auth.js";
+import type * as creatorStudio from "../creatorStudio.js";
 import type * as customGPTs from "../customGPTs.js";
+import type * as dailyDrills from "../dailyDrills.js";
+import type * as debug from "../debug.js";
+import type * as duels from "../duels.js";
 import type * as errors from "../errors.js";
 import type * as helpers from "../helpers.js";
 import type * as http from "../http.js";
+import type * as itemTemplates from "../itemTemplates.js";
 import type * as leaderboard from "../leaderboard.js";
 import type * as messages from "../messages.js";
+import type * as migrations from "../migrations.js";
+import type * as moderation from "../moderation.js";
 import type * as otp_ResendOTP from "../otp/ResendOTP.js";
 import type * as otp_TwilioOTP from "../otp/TwilioOTP.js";
 import type * as otp_TwilioSDK from "../otp/TwilioSDK.js";
@@ -24,11 +34,17 @@ import type * as otp_TwilioVerify from "../otp/TwilioVerify.js";
 import type * as otp_VerificationCodeEmail from "../otp/VerificationCodeEmail.js";
 import type * as passwordReset_PasswordResetEmail from "../passwordReset/PasswordResetEmail.js";
 import type * as passwordReset_ResendOTPPasswordReset from "../passwordReset/ResendOTPPasswordReset.js";
+import type * as placementTest from "../placementTest.js";
 import type * as posts from "../posts.js";
 import type * as practiceProjects from "../practiceProjects.js";
+import type * as practiceUserSkills from "../practiceUserSkills.js";
 import type * as projects from "../projects.js";
+import type * as quests from "../quests.js";
 import type * as quizResults from "../quizResults.js";
 import type * as quizzes from "../quizzes.js";
+import type * as seedPhase3 from "../seedPhase3.js";
+import type * as sharing from "../sharing.js";
+import type * as spacedRepetition from "../spacedRepetition.js";
 import type * as users from "../users.js";
 
 import type {
@@ -46,15 +62,25 @@ import type {
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  adaptiveEngine: typeof adaptiveEngine;
+  aiEvaluation: typeof aiEvaluation;
   aiMatching: typeof aiMatching;
+  analytics: typeof analytics;
   assessments: typeof assessments;
   auth: typeof auth;
+  creatorStudio: typeof creatorStudio;
   customGPTs: typeof customGPTs;
+  dailyDrills: typeof dailyDrills;
+  debug: typeof debug;
+  duels: typeof duels;
   errors: typeof errors;
   helpers: typeof helpers;
   http: typeof http;
+  itemTemplates: typeof itemTemplates;
   leaderboard: typeof leaderboard;
   messages: typeof messages;
+  migrations: typeof migrations;
+  moderation: typeof moderation;
   "otp/ResendOTP": typeof otp_ResendOTP;
   "otp/TwilioOTP": typeof otp_TwilioOTP;
   "otp/TwilioSDK": typeof otp_TwilioSDK;
@@ -62,11 +88,17 @@ declare const fullApi: ApiFromModules<{
   "otp/VerificationCodeEmail": typeof otp_VerificationCodeEmail;
   "passwordReset/PasswordResetEmail": typeof passwordReset_PasswordResetEmail;
   "passwordReset/ResendOTPPasswordReset": typeof passwordReset_ResendOTPPasswordReset;
+  placementTest: typeof placementTest;
   posts: typeof posts;
   practiceProjects: typeof practiceProjects;
+  practiceUserSkills: typeof practiceUserSkills;
   projects: typeof projects;
+  quests: typeof quests;
   quizResults: typeof quizResults;
   quizzes: typeof quizzes;
+  seedPhase3: typeof seedPhase3;
+  sharing: typeof sharing;
+  spacedRepetition: typeof spacedRepetition;
   users: typeof users;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

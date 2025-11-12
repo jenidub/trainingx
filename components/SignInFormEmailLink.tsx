@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 import { SignInMethodDivider } from "@/components/SignInMethodDivider";
 import { SignInWithOAuth } from "@/components/SignInWithOAuth";
 import { useAuthActions } from "@convex-dev/auth/react";
@@ -36,7 +35,6 @@ export function SignInFormEmailLink() {
           </Button>
         </>
       )}
-      <Toaster />
     </div>
   );
 }
@@ -47,7 +45,6 @@ function SignInWithMagicLink({
   handleLinkSent: () => void;
 }) {
   const { signIn } = useAuthActions();
-  const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   return (
     <form
@@ -60,10 +57,31 @@ function SignInWithMagicLink({
           .then(handleLinkSent)
           .catch((error) => {
             console.error(error);
-            toast({
-              title: "Could not send sign-in link",
-              variant: "destructive",
-            });
+            const errorMessage = error?.message || error?.toString() || "";
+            const errorName = error?.name || "";
+            
+            let toastTitle = "Could not send sign-in link";
+            let toastDescription: string | undefined;
+            
+            if (
+              errorMessage.includes("InvalidAccountId") ||
+              errorName === "InvalidAccountId" ||
+              (error instanceof Error && error.message.includes("InvalidAccountId"))
+            ) {
+              toastTitle = "Account not found";
+              toastDescription = "This account doesn't exist. Please sign up first.";
+            } else if (
+              errorMessage.includes("Invalid") ||
+              errorMessage.includes("not found") ||
+              errorMessage.includes("does not exist")
+            ) {
+              toastTitle = "Could not send sign-in link";
+              toastDescription = "Please check your email address and try again.";
+            } else {
+              toastDescription = "Please try again later.";
+            }
+            
+            toast.error(toastDescription || "Could not send sign-in link");
             setSubmitting(false);
           });
       }}

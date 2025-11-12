@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 import { CodeInput } from "@/components/CodeInput";
 import { SignInWithEmailCode } from "@/components/SignInWithEmailCode";
 import { useAuthActions } from "@convex-dev/auth/react";
@@ -14,7 +14,6 @@ export function ResetPasswordWithEmailCode({
   provider: string;
 }) {
   const { signIn } = useAuthActions();
-  const { toast } = useToast();
   const [step, setStep] = useState<"forgot" | { email: string }>("forgot");
   const [submitting, setSubmitting] = useState(false);
   return step === "forgot" ? (
@@ -49,11 +48,39 @@ export function ResetPasswordWithEmailCode({
           const formData = new FormData(event.currentTarget);
           signIn(provider, formData).catch((error) => {
             console.error(error);
-            toast({
-              title:
-                "Code could not be verified or new password is too short, try again",
-              variant: "destructive",
-            });
+            const errorMessage = error?.message || error?.toString() || "";
+            const errorName = error?.name || "";
+            
+            let toastTitle = "Code could not be verified";
+            let toastDescription: string | undefined;
+            
+            if (
+              errorMessage.includes("InvalidAccountId") ||
+              errorName === "InvalidAccountId" ||
+              (error instanceof Error && error.message.includes("InvalidAccountId"))
+            ) {
+              toastTitle = "Verification failed";
+              toastDescription = "This account doesn't exist. Please sign up first.";
+            } else if (
+              errorMessage.includes("Invalid") ||
+              errorMessage.includes("incorrect") ||
+              errorMessage.includes("wrong")
+            ) {
+              toastTitle = "Invalid code";
+              toastDescription = "The code you entered is incorrect. Please try again.";
+            } else if (
+              errorMessage.includes("password") ||
+              errorMessage.includes("too short") ||
+              errorMessage.includes("requirements")
+            ) {
+              toastTitle = "Password error";
+              toastDescription = "The new password doesn't meet the requirements. Please try again.";
+            } else {
+              toastTitle = "Reset failed";
+              toastDescription = "Code could not be verified or new password is too short. Please try again.";
+            }
+            
+            toast.error(toastDescription || "Reset failed");
             setSubmitting(false);
           });
         }}

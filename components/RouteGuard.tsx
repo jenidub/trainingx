@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useAuth } from '../contexts/AuthContextProvider';

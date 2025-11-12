@@ -62,23 +62,23 @@ export default function PracticeZone() {
 
   const features = [
     {
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <CheckCircle className="h-7 w-7" />,
       text: "Live Skill Tracking Across 11 Competencies",
     },
     {
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <CheckCircle className="h-7 w-7" />,
       text: "Real-Time Career & Opportunity Matching",
     },
     {
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <CheckCircle className="h-7 w-7" />,
       text: "Earn Badges & Professional Certificates",
     },
     {
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <CheckCircle className="h-7 w-7" />,
       text: "Build Your AI Project Portfolio",
     },
     {
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <CheckCircle className="h-7 w-7" />,
       text: "Track Daily Streaks & Progress",
     },
   ];
@@ -112,7 +112,7 @@ export default function PracticeZone() {
   ];
 
   return (
-    <AnimatedSection id="practice-zone" className="py-20 bg-white">
+    <AnimatedSection id="practice-zone" className="py-4 bg-white">
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
@@ -196,7 +196,7 @@ export default function PracticeZone() {
             <div className="mt-6 p-6 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10 rounded-lg border border-gradient-from/20">
               <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                 <Trophy className="h-5 w-5 text-gradient-from" />
-                What You'll Achieve
+                {`What You'll Achieve`}
               </h3>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-start gap-2">
@@ -222,19 +222,19 @@ export default function PracticeZone() {
             {projects.map((project, index) => (
               <AnimatedCard key={index} index={index} delay={0.2}>
                 <Card className="hover-elevate">
-                  <CardContent className="px-5 py-3">
+                  <CardContent className="px-4 py-0">
                     <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-3">
                         <div
                           className={`bg-gradient-to-r ${project.color} text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg`}
                         >
                           {project.number}
                         </div>
                         <div>
-                          <h3 className="text-xl font-semibold">
+                          <h3 className="text-lg font-semibold">
                             {project.title}
                           </h3>
-                          <p className="text-gray-600">
+                          <p className="text-sm text-gray-600">
                             {project.category} • {project.estTime}
                           </p>
                         </div>
@@ -267,7 +267,7 @@ export default function PracticeZone() {
                 <div className="text-green-500 mb-3 flex justify-center">
                   {feature.icon}
                 </div>
-                <p className="text-sm font-medium text-gray-700">
+                <p className="font-medium text-gray-700">
                   {feature.text}
                 </p>
               </CardContent>
@@ -284,7 +284,7 @@ export default function PracticeZone() {
             {platformFeatures.map((feature, index) => (
               <AnimatedCard key={index} index={index} delay={0.1}>
                 <Card className="hover-elevate h-full">
-                  <CardContent className="p-6">
+                  <CardContent className="px-4 py-0">
                     <div
                       className={`bg-gradient-to-r ${feature.color} text-white w-12 h-12 rounded-lg flex items-center justify-center mb-4`}
                     >
@@ -315,8 +315,8 @@ export default function PracticeZone() {
             Many More Practice Agents
           </h3>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            We're constantly adding new AI agents and practice scenarios to
-            expand your learning journey. Stay tuned for exciting updates!
+            {`We're constantly adding new AI agents and practice scenarios to
+            expand your learning journey. Stay tuned for exciting updates!`}
           </p>
         </div>
 

@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth } from "@/contexts/AuthContextProvider";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isLoggedIn = false; // Temporarily hardcoded
+  const { isAuthenticated } = useAuth();
+  const isLoggedIn = isAuthenticated;
 
   const navItems = isLoggedIn
     ? [
@@ -36,15 +38,15 @@ export default function Navigation() {
               data-testid="link-logo"
             >
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="TrainingX.Ai Logo"
-                width={32}
-                height={32}
-                className="h-8 w-auto"
+                width={48}
+                height={48}
+                className="h-12 w-auto"
               />
-              <span className="text-2xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
+              {/* <span className="text-2xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
                 TrainingX.Ai
-              </span>
+              </span> */}
             </div>
           </Link>
 
@@ -55,7 +57,7 @@ export default function Navigation() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-gray-100 hover:text-primary transition-colors"
+                  className="text-gray-100 hover:text-gray-50 transition-colors"
                   data-testid={`link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                 >
                   {item.label}
@@ -63,7 +65,7 @@ export default function Navigation() {
               ) : (
                 <Link key={item.label} href={item.href}>
                   <span
-                    className="text-gray-100 hover:text-primary transition-colors cursor-pointer"
+                    className="text-gray-100 hover:text-gray-50 transition-colors cursor-pointer"
                     data-testid={`link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                   >
                     {item.label}
@@ -76,7 +78,7 @@ export default function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             {!isLoggedIn && (
-              <Link href="/assessment-lite">
+              <Link href="/auth">
                 <Button
                   className="bg-gradient-to-r from-gradient-from to-gradient-to"
                   data-testid="button-get-started"
@@ -94,9 +96,9 @@ export default function Navigation() {
             data-testid="button-mobile-menu"
           >
             {isMenuOpen ? (
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 stroke-white" />
             ) : (
-              <Menu className="h-6 w-6" />
+              <Menu className="h-6 w-6 stroke-white" />
             )}
           </button>
         </div>
@@ -110,7 +112,7 @@ export default function Navigation() {
                   <a
                     key={item.label}
                     href={item.href}
-                    className="text-gray-100 hover:text-primary transition-colors px-2 py-1"
+                    className="text-gray-100 hover:text-gray-50 transition-colors px-2 py-1"
                     onClick={() => setIsMenuOpen(false)}
                     data-testid={`mobile-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                   >
@@ -119,7 +121,7 @@ export default function Navigation() {
                 ) : (
                   <Link key={item.label} href={item.href}>
                     <span
-                      className="text-gray-100 hover:text-primary transition-colors px-2 py-1 cursor-pointer block"
+                      className="text-gray-100 hover:text-gray-50 transition-colors px-2 py-1 cursor-pointer block"
                       onClick={() => setIsMenuOpen(false)}
                       data-testid={`mobile-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
                     >
@@ -130,7 +132,7 @@ export default function Navigation() {
               )}
               {!isLoggedIn && (
                 <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                  <Link href="/assessment-lite">
+                  <Link href="/auth">
                     <Button
                       className="bg-gradient-to-r from-gradient-from to-gradient-to w-full"
                       data-testid="mobile-button-get-started"

@@ -1,5 +1,7 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation, query, action } from "./_generated/server";
+import { api } from "./_generated/api";
+import OpenAI from "openai";
 
 export const getCustomGPTs = query({
   args: {
@@ -99,5 +101,70 @@ export const deleteCustomGPT = mutation({
 
     await ctx.db.delete(gptId);
     return true;
+  },
+});
+
+export const chatWithCustomGPT = action({
+  args: {
+    gptId: v.id("customAssistants"),
+    messages: v.array(v.object({
+      role: v.union(v.literal("user"), v.literal("assistant")),
+      content: v.string(),
+    })),
+  },
+  handler: async (ctx, { gptId, messages }): Promise<{ message: string }> => {
+    const gpt = await ctx.runQuery(api.customGPTs.getCustomGPT, { gptId });
+    if (!gpt) {
+      throw new Error("Custom GPT not found");
+    }
+
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
+    const systemMessage: { role: "system"; content: string } = {
+      role: "system",
+      content: gpt.systemPrompt || gpt.description,
+    };
+
+    const formattedMessages: Array<{
+      role: "system" | "user" | "assistant";
+      content: string;
+    }> = [
+      systemMessage,
+      ...messages.map((msg) => ({
+        role: msg.role as "user" | "assistant",
+        content: msg.content,
+      })),
+    ];
+
+    const response: OpenAI.Chat.Completions.ChatCompletion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: formattedMessages,
+    });
+
+    const assistantMessage: string | null | undefined = response.choices[0]?.message?.content;
+    if (!assistantMessage) {
+      throw new Error("No response from AI");
+    }
+
+    // Update usage count
+    await ctx.runMutation(api.customGPTs.updateUsageCount, { gptId });
+
+    return { message: assistantMessage };
+  },
+});
+
+export const updateUsageCount = mutation({
+  args: { gptId: v.id("customAssistants") },
+  handler: async (ctx, { gptId }) => {
+    const gpt = await ctx.db.get(gptId);
+    if (!gpt) {
+      throw new Error("Custom GPT not found");
+    }
+
+    await ctx.db.patch(gptId, {
+      usageCount: (gpt.usageCount || 0) + 1,
+    });
   },
 });

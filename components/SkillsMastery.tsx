@@ -132,7 +132,7 @@ export default function SkillsMastery() {
             {coreSkills.map((skill, index) => (
               <Card
                 key={index}
-                className={`cursor-pointer transition-all hover-elevate ${
+                className={`py-2 cursor-pointer transition-all hover-elevate ${
                   selectedSkill === index ? "ring-2 ring-primary" : ""
                 }`}
                 onClick={() => setSelectedSkill(index)}

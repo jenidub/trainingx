@@ -137,7 +137,7 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/hero-bg.png"
+          src="/hero-bg.webp"
           alt="Hero background"
           fill
           className="object-cover"
@@ -158,13 +158,13 @@ export default function Hero() {
             <Sparkles className="h-4 w-4" />
             <span className="text-sm font-medium">
               {/* AI Skills Training Platform */}
-              Built in 2015. Proven for a decade. Now it's your turn.
+              {`Built in 2015. Proven for a decade. Now it's your turn.`}
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-15 tracking-tight">
             Universal Prompting for{" "}
-            <span className="bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent tracking-tight inline-block pb-2">
               the 21st Century
             </span>
           </h1>
@@ -187,7 +187,7 @@ export default function Hero() {
             />
             <AnimatedStatCard
               icon={DollarSign}
-              value="$95K–$375K"
+              value="95K-375K"
               label="prompt engineer salaries"
               delay={200}
             />
@@ -206,11 +206,11 @@ export default function Hero() {
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Link href="/assessment-lite" className={"w-full md:w-auto"}>
+          <div className="flex flex-col lg:flex-row gap-4 justify-center items-center pt-4">
+            <Link href="/assessment-lite" className={"w-full lg:w-auto"}>
               <Button
                 size="lg"
-                className="bg-white text-black border border-white font-semibold py-6 w-full md:w-[300px] hover:bg-white/90"
+                className="bg-white text-black border border-white font-semibold py-6 w-full lg:w-[300px] hover:bg-white/90"
                 data-testid="button-take-assessment"
               >
                 Take Free Assessment
@@ -220,7 +220,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="border border-white text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full md:w-[300px]"
+              className="border border-slate-500 text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full lg:w-[300px]"
               data-testid="button-watch-walkthrough"
             >
               Watch 60-Second Walkthrough
@@ -228,7 +228,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="border border-white text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full md:w-[300px]"
+              className="border border-slate-500 text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full lg:w-[300px]"
               data-testid="button-book-call"
             >
               Book Discovery Call

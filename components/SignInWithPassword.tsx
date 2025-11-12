@@ -1,7 +1,9 @@
+"use client";
+
 import { useAuthActions } from "@convex-dev/auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import toast from 'react-hot-toast';
 import { useState } from "react";
 import { ConvexError } from "convex/values";
 import { INVALID_PASSWORD } from "convex/errors";
@@ -22,7 +24,6 @@ export function SignInWithPassword({
 }) {
   const { signIn } = useAuthActions();
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
-  const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   const [, setLocation] = useLocation();
   return (
@@ -36,7 +37,7 @@ export function SignInWithPassword({
           .then(() => {
             handleSent?.(formData.get("email") as string);
             // Redirect to saved location or dashboard after successful sign-in
-            toast({ title: "Success!", description: "You're signed in!" });
+            toast.success("You're signed in!");
             const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/dashboard';
             sessionStorage.removeItem('redirectAfterLogin');
             setTimeout(() => setLocation(redirectTo), 500);
@@ -44,19 +45,47 @@ export function SignInWithPassword({
           .catch((error) => {
             console.error(error);
             let toastTitle: string;
+            let toastDescription: string | undefined;
+            
+            const errorMessage = error?.message || error?.toString() || "";
+            const errorName = error?.name || "";
+            
             if (
               error instanceof ConvexError &&
               error.data === INVALID_PASSWORD
             ) {
-              toastTitle =
-                "Invalid password - check the requirements and try again.";
+              toastTitle = "Invalid password";
+              toastDescription = "Check the requirements and try again.";
+            } else if (
+              errorMessage.includes("InvalidAccountId") ||
+              errorName === "InvalidAccountId" ||
+              (error instanceof Error && error.message.includes("InvalidAccountId"))
+            ) {
+              toastTitle = "Account not found";
+              toastDescription = flow === "signIn"
+                ? "This account doesn't exist. Did you mean to sign up?"
+                : "Could not create account. Please try again.";
+            } else if (
+              errorMessage.includes("Invalid") ||
+              errorMessage.includes("not found") ||
+              errorMessage.includes("does not exist")
+            ) {
+              toastTitle = flow === "signIn"
+                ? "Could not sign in"
+                : "Could not sign up";
+              toastDescription = flow === "signIn"
+                ? "This account doesn't exist. Did you mean to sign up?"
+                : "Could not create account. Please try again.";
             } else {
-              toastTitle =
-                flow === "signIn"
-                  ? "Could not sign in, did you mean to sign up?"
-                  : "Could not sign up, did you mean to sign in?";
+              toastTitle = flow === "signIn"
+                ? "Could not sign in"
+                : "Could not sign up";
+              toastDescription = flow === "signIn"
+                ? "Please check your credentials and try again."
+                : "Could not create account. Please try again.";
             }
-            toast({ title: toastTitle, variant: "destructive" });
+            
+            toast.error(toastDescription || "Could not sign in");
             setSubmitting(false);
           });
       }}

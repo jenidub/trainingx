@@ -13,6 +13,9 @@ import {
   Users,
   Medal,
   Database,
+  Swords,
+  Target,
+  Palette,
 } from "lucide-react";
 import {
   Sidebar,
@@ -25,7 +28,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-const logoImage = "/logo.png";
+const logoImage = "/logo.webp";
 
 const mainItems = [
   {
@@ -52,6 +55,24 @@ const mainItems = [
     title: "Portfolio",
     url: "/portfolio",
     icon: FolderKanban,
+  },
+];
+
+const engagementItems = [
+  {
+    title: "Duels",
+    url: "/duels",
+    icon: Swords,
+  },
+  {
+    title: "Quests",
+    url: "/quests",
+    icon: Target,
+  },
+  {
+    title: "Creator Studio",
+    url: "/creator",
+    icon: Palette,
   },
 ];
 
@@ -89,7 +110,11 @@ export function AppSidebar() {
       <SidebarHeader>
         <Link href="/" data-testid="sidebar-logo">
           <div className="flex items-center gap-2 py-3 hover-elevate active-elevate-2 rounded-md cursor-pointer">
-            <img src={logoImage} alt="TrainingX.Ai Logo" className="h-8 w-auto" />
+            <img
+              src={logoImage}
+              alt="TrainingX.Ai Logo"
+              className="h-8 w-auto"
+            />
             <div className="flex flex-col">
               <span className="text-xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
                 TrainingX.Ai
@@ -104,6 +129,28 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {mainItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={location === item.url}
+                    data-testid={`sidebar-link-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+                  >
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Engagement</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {engagementItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
@@ -165,9 +212,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <div className="p-4 border-t">
-        <SpiralTheStudyBuddy />
-      </div>
     </Sidebar>
   );
 }

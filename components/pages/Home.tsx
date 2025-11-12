@@ -29,17 +29,17 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
-      <main className="flex flex-col gap-24 pb-24">
+      <main className="flex flex-col gap-24">
         <Hero />
         <HowItWorks />
         <PracticeZone />
-        <SkillsMastery />
-        <LiveMatchPreview
+        {/* <SkillsMastery /> */}
+        {/* <LiveMatchPreview
           currentPS={0}
           currentSkills={defaultSkills}
           completedProjects={0}
           completedProjectSlugs={[]}
-        />
+        /> */}
         <CareerHub />
         <FinalCTA />
       </main>

@@ -2,13 +2,27 @@
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AuthContextProvider } from "@/contexts/AuthContextProvider";
 import { WizardContextProvider } from "@/contexts/WizardContextProvider";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
+import { Router, useLocationProperty, navigate } from "wouter";
+import { usePathname, useRouter } from "next/navigation";
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+
+// Custom hook for wouter to work with Next.js App Router
+const useNextjsLocation = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  
+  const setLocation = useCallback((to: string) => {
+    router.push(to);
+  }, [router]);
+  
+  return [pathname, setLocation] as const;
+};
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -25,11 +39,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ConvexAuthProvider client={convex}>
-        <AuthContextProvider>
-          <WizardContextProvider>
-            {children}
-          </WizardContextProvider>
-        </AuthContextProvider>
+        <Router hook={useNextjsLocation}>
+          <AuthContextProvider>
+            <WizardContextProvider>
+              {children}
+            </WizardContextProvider>
+          </AuthContextProvider>
+        </Router>
       </ConvexAuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

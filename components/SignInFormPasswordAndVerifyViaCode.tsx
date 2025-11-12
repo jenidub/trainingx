@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 import { CodeInput } from "@/components/CodeInput";
 import { ResetPasswordWithEmailCode } from "@/components/ResetPasswordWithEmailCode";
 import { SignInMethodDivider } from "@/components/SignInMethodDivider";
@@ -15,7 +14,6 @@ import { useState } from "react";
  */
 export function SignInFormPasswordAndVerifyViaCode() {
   const { signIn } = useAuthActions();
-  const { toast } = useToast();
   const [step, setStep] = useState<"signIn" | { email: string } | "forgot">(
     "signIn",
   );
@@ -56,10 +54,7 @@ export function SignInFormPasswordAndVerifyViaCode() {
               const formData = new FormData(event.currentTarget);
               signIn("password-code", formData).catch((error) => {
                 console.error(error);
-                toast({
-                  title: "Code could not be verified, try again",
-                  variant: "destructive",
-                });
+                toast.error("Code could not be verified, try again");
                 setSubmitting(false);
               });
             }}
@@ -81,7 +76,6 @@ export function SignInFormPasswordAndVerifyViaCode() {
           </form>
         </>
       )}
-      <Toaster />
     </div>
   );
 }

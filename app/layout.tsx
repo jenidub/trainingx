@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
+import { Bricolage_Grotesque } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Providers } from "@/components/providers";
+import { Toaster } from 'react-hot-toast';
 import "./globals.css";
+
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage-grotesque",
+  display: "swap",
+});
 
 export const dynamic = 'force-dynamic';
 
@@ -16,11 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={bricolageGrotesque.variable}>
       <body className="font-sans antialiased">
         <Providers>
           <TooltipProvider>
             {children}
+            <Toaster />
           </TooltipProvider>
         </Providers>
       </body>

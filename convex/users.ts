@@ -1,6 +1,7 @@
 import { query, mutation } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
+import { api } from "./_generated/api";
 
 export const viewer = query({
   args: {},
@@ -270,6 +271,34 @@ export const completeProject = mutation({
     }
 
     await ctx.db.patch(stats._id, updates);
+
+    // Update quest progress
+    try {
+      await ctx.runMutation(api.quests.updateQuestProgress, {
+        userId,
+        eventType: "item_completed",
+        eventData: { score: finalScore },
+      });
+
+      // Track skill practice for each skill gained
+      for (const skill of skillsGained) {
+        await ctx.runMutation(api.quests.updateQuestProgress, {
+          userId,
+          eventType: "skill_practiced",
+          eventData: { skill },
+        });
+      }
+
+      // Track score earned
+      await ctx.runMutation(api.quests.updateQuestProgress, {
+        userId,
+        eventType: "score_earned",
+        eventData: { score: finalScore },
+      });
+    } catch (error) {
+      // Don't fail the completion if quest update fails
+      console.error("Failed to update quest progress:", error);
+    }
 
     return stats._id;
   },

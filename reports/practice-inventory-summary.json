@@ -1,0 +1,399 @@
+{
+  "generatedAt": "2025-11-06T10:00:02.637Z",
+  "totals": {
+    "projectCount": 12,
+    "scenarioDeficit": 25
+  },
+  "byLevel": {
+    "level_1": {
+      "projects": 3,
+      "assessments": 1,
+      "totalSteps": 25,
+      "scenarioGap": 9
+    },
+    "level_2": {
+      "projects": 3,
+      "assessments": 1,
+      "totalSteps": 25,
+      "scenarioGap": 8
+    },
+    "level_3": {
+      "projects": 3,
+      "assessments": 1,
+      "totalSteps": 27,
+      "scenarioGap": 8
+    }
+  },
+  "projects": [
+    {
+      "slug": "social-media-content",
+      "title": "Social Media Content Creator",
+      "level": 1,
+      "difficulty": 1,
+      "levelOrder": 1,
+      "category": "Content Creation",
+      "isAssessment": false,
+      "stepsDeclared": 6,
+      "stepsActual": 6,
+      "scenarioCount": 5,
+      "scenarioGap": 1,
+      "skills": [
+        "generative_ai",
+        "creativity",
+        "communication"
+      ],
+      "requiresCompletion": [],
+      "uniqueQuestionCount": 6
+    },
+    {
+      "slug": "study-guide-builder",
+      "title": "Study Guide Builder",
+      "level": 1,
+      "difficulty": 1,
+      "levelOrder": 2,
+      "category": "Education",
+      "isAssessment": false,
+      "stepsDeclared": 7,
+      "stepsActual": 7,
+      "scenarioCount": 4,
+      "scenarioGap": 3,
+      "skills": [
+        "generative_ai",
+        "communication",
+        "analysis"
+      ],
+      "requiresCompletion": [],
+      "uniqueQuestionCount": 7
+    },
+    {
+      "slug": "presentation-designer",
+      "title": "Presentation Designer",
+      "level": 1,
+      "difficulty": 1,
+      "levelOrder": 3,
+      "category": "Business",
+      "isAssessment": false,
+      "stepsDeclared": 7,
+      "stepsActual": 7,
+      "scenarioCount": 4,
+      "scenarioGap": 3,
+      "skills": [
+        "generative_ai",
+        "communication",
+        "creativity"
+      ],
+      "requiresCompletion": [],
+      "uniqueQuestionCount": 7
+    },
+    {
+      "slug": "level-1-assessment",
+      "title": "Level 1 Assessment",
+      "level": 1,
+      "difficulty": 1,
+      "levelOrder": 4,
+      "category": "Assessment",
+      "isAssessment": true,
+      "stepsDeclared": 5,
+      "stepsActual": 5,
+      "scenarioCount": 3,
+      "scenarioGap": 2,
+      "skills": [
+        "generative_ai",
+        "creativity",
+        "communication",
+        "analysis"
+      ],
+      "requiresCompletion": [
+        "social-media-content",
+        "study-guide-builder",
+        "presentation-designer"
+      ],
+      "uniqueQuestionCount": 5
+    },
+    {
+      "slug": "quiz-master",
+      "title": "Interactive Quiz Master",
+      "level": 2,
+      "difficulty": 2,
+      "levelOrder": 1,
+      "category": "Education",
+      "isAssessment": false,
+      "stepsDeclared": 6,
+      "stepsActual": 6,
+      "scenarioCount": 4,
+      "scenarioGap": 2,
+      "skills": [
+        "generative_ai",
+        "logic",
+        "analysis"
+      ],
+      "requiresCompletion": [
+        "level-1-assessment"
+      ],
+      "uniqueQuestionCount": 6
+    },
+    {
+      "slug": "business-analyst",
+      "title": "Business Analyst",
+      "level": 2,
+      "difficulty": 2,
+      "levelOrder": 2,
+      "category": "Analytics",
+      "isAssessment": false,
+      "stepsDeclared": 7,
+      "stepsActual": 7,
+      "scenarioCount": 5,
+      "scenarioGap": 2,
+      "skills": [
+        "synthetic_ai",
+        "analysis",
+        "logic"
+      ],
+      "requiresCompletion": [
+        "level-1-assessment"
+      ],
+      "uniqueQuestionCount": 7
+    },
+    {
+      "slug": "website-builder",
+      "title": "Website Builder",
+      "level": 2,
+      "difficulty": 2,
+      "levelOrder": 3,
+      "category": "Development",
+      "isAssessment": false,
+      "stepsDeclared": 6,
+      "stepsActual": 6,
+      "scenarioCount": 4,
+      "scenarioGap": 2,
+      "skills": [
+        "agentic_ai",
+        "coding",
+        "planning"
+      ],
+      "requiresCompletion": [
+        "level-1-assessment"
+      ],
+      "uniqueQuestionCount": 6
+    },
+    {
+      "slug": "level-2-assessment",
+      "title": "Level 2 Assessment",
+      "level": 2,
+      "difficulty": 2,
+      "levelOrder": 4,
+      "category": "Assessment",
+      "isAssessment": true,
+      "stepsDeclared": 6,
+      "stepsActual": 6,
+      "scenarioCount": 4,
+      "scenarioGap": 2,
+      "skills": [
+        "generative_ai",
+        "agentic_ai",
+        "synthetic_ai",
+        "logic",
+        "analysis",
+        "planning"
+      ],
+      "requiresCompletion": [
+        "quiz-master",
+        "business-analyst",
+        "website-builder"
+      ],
+      "uniqueQuestionCount": 6
+    },
+    {
+      "slug": "financial-advisor",
+      "title": "Financial Advisor",
+      "level": 3,
+      "difficulty": 3,
+      "levelOrder": 1,
+      "category": "Finance",
+      "isAssessment": false,
+      "stepsDeclared": 7,
+      "stepsActual": 7,
+      "scenarioCount": 5,
+      "scenarioGap": 2,
+      "skills": [
+        "agentic_ai",
+        "logic",
+        "planning"
+      ],
+      "requiresCompletion": [
+        "level-2-assessment"
+      ],
+      "uniqueQuestionCount": 7
+    },
+    {
+      "slug": "customer-success-specialist",
+      "title": "Customer Success Specialist",
+      "level": 3,
+      "difficulty": 3,
+      "levelOrder": 2,
+      "category": "Business",
+      "isAssessment": false,
+      "stepsDeclared": 6,
+      "stepsActual": 6,
+      "scenarioCount": 4,
+      "scenarioGap": 2,
+      "skills": [
+        "agentic_ai",
+        "communication",
+        "collaboration"
+      ],
+      "requiresCompletion": [
+        "level-2-assessment"
+      ],
+      "uniqueQuestionCount": 6
+    },
+    {
+      "slug": "strategic-planner",
+      "title": "Strategic Planner",
+      "level": 3,
+      "difficulty": 3,
+      "levelOrder": 3,
+      "category": "Strategy",
+      "isAssessment": false,
+      "stepsDeclared": 7,
+      "stepsActual": 7,
+      "scenarioCount": 5,
+      "scenarioGap": 2,
+      "skills": [
+        "agentic_ai",
+        "planning",
+        "analysis"
+      ],
+      "requiresCompletion": [
+        "level-2-assessment"
+      ],
+      "uniqueQuestionCount": 7
+    },
+    {
+      "slug": "level-3-assessment",
+      "title": "Level 3 Assessment",
+      "level": 3,
+      "difficulty": 3,
+      "levelOrder": 4,
+      "category": "Assessment",
+      "isAssessment": true,
+      "stepsDeclared": 7,
+      "stepsActual": 7,
+      "scenarioCount": 5,
+      "scenarioGap": 2,
+      "skills": [
+        "agentic_ai",
+        "synthetic_ai",
+        "planning",
+        "analysis",
+        "logic",
+        "collaboration"
+      ],
+      "requiresCompletion": [
+        "financial-advisor",
+        "customer-success-specialist",
+        "strategic-planner"
+      ],
+      "uniqueQuestionCount": 7
+    }
+  ],
+  "skillUsage": {
+    "generative_ai": {
+      "count": 6,
+      "projects": [
+        "social-media-content",
+        "study-guide-builder",
+        "presentation-designer",
+        "level-1-assessment",
+        "quiz-master",
+        "level-2-assessment"
+      ]
+    },
+    "agentic_ai": {
+      "count": 6,
+      "projects": [
+        "website-builder",
+        "level-2-assessment",
+        "financial-advisor",
+        "customer-success-specialist",
+        "strategic-planner",
+        "level-3-assessment"
+      ]
+    },
+    "synthetic_ai": {
+      "count": 3,
+      "projects": [
+        "business-analyst",
+        "level-2-assessment",
+        "level-3-assessment"
+      ]
+    },
+    "coding": {
+      "count": 1,
+      "projects": [
+        "website-builder"
+      ]
+    },
+    "agi_readiness": {
+      "count": 0,
+      "projects": []
+    },
+    "communication": {
+      "count": 5,
+      "projects": [
+        "social-media-content",
+        "study-guide-builder",
+        "presentation-designer",
+        "level-1-assessment",
+        "customer-success-specialist"
+      ]
+    },
+    "logic": {
+      "count": 5,
+      "projects": [
+        "quiz-master",
+        "business-analyst",
+        "level-2-assessment",
+        "financial-advisor",
+        "level-3-assessment"
+      ]
+    },
+    "planning": {
+      "count": 5,
+      "projects": [
+        "website-builder",
+        "level-2-assessment",
+        "financial-advisor",
+        "strategic-planner",
+        "level-3-assessment"
+      ]
+    },
+    "analysis": {
+      "count": 7,
+      "projects": [
+        "study-guide-builder",
+        "level-1-assessment",
+        "quiz-master",
+        "business-analyst",
+        "level-2-assessment",
+        "strategic-planner",
+        "level-3-assessment"
+      ]
+    },
+    "creativity": {
+      "count": 3,
+      "projects": [
+        "social-media-content",
+        "presentation-designer",
+        "level-1-assessment"
+      ]
+    },
+    "collaboration": {
+      "count": 2,
+      "projects": [
+        "customer-success-specialist",
+        "level-3-assessment"
+      ]
+    }
+  }
+}

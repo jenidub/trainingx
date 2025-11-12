@@ -3,15 +3,13 @@ import { SignInMethodDivider } from "@/components/SignInMethodDivider";
 import { SignInWithEmailCode } from "@/components/SignInWithEmailCode";
 import { SignInWithOAuth } from "@/components/SignInWithOAuth";
 import { Button } from "@/components/ui/button";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 
 export function SignInFormEmailCode() {
   const { signIn } = useAuthActions();
   const [step, setStep] = useState<"signIn" | { email: string }>("signIn");
-  const { toast } = useToast();
   const [submitting, setSubmitting] = useState(false);
   return (
     <div className="max-w-[384px] mx-auto flex flex-col gap-4">
@@ -38,11 +36,30 @@ export function SignInFormEmailCode() {
               event.preventDefault();
               setSubmitting(true);
               const formData = new FormData(event.currentTarget);
-              signIn("resend-otp", formData).catch(() => {
-                toast({
-                  title: "Code could not be verified, try again",
-                  variant: "destructive",
-                });
+              signIn("resend-otp", formData).catch((error) => {
+                console.error(error);
+                const errorMessage = error?.message || error?.toString() || "";
+                const errorName = error?.name || "";
+
+                let toastMessage = "Code could not be verified";
+
+                if (
+                  errorMessage.includes("InvalidAccountId") ||
+                  errorName === "InvalidAccountId" ||
+                  (error instanceof Error && error.message.includes("InvalidAccountId"))
+                ) {
+                  toastMessage = "Verification failed: This account doesn't exist. Please sign up first.";
+                } else if (
+                  errorMessage.includes("Invalid") ||
+                  errorMessage.includes("incorrect") ||
+                  errorMessage.includes("wrong")
+                ) {
+                  toastMessage = "Invalid code: The code you entered is incorrect. Please try again.";
+                } else {
+                  toastMessage = "Verification failed: Please try again.";
+                }
+
+                toast.error(toastMessage);
                 setSubmitting(false);
               });
             }}
@@ -63,7 +80,6 @@ export function SignInFormEmailCode() {
           </form>
         </>
       )}
-      <Toaster />
     </div>
   );
 }

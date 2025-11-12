@@ -57,7 +57,7 @@ export const ToastViewport = React.forwardRef<
     <div
       ref={composedRef}
       className={cn(
-        "pointer-events-none fixed inset-0 z-[100] flex flex-col items-end gap-3 p-4 sm:inset-auto sm:bottom-0 sm:right-0 sm:top-auto",
+        "pointer-events-none fixed inset-0 z-[9999] flex flex-col items-end gap-3 p-4 sm:inset-auto sm:bottom-0 sm:right-0 sm:top-auto",
         className,
       )}
       {...props}

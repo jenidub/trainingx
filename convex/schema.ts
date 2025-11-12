@@ -408,5 +408,515 @@ export default defineSchema({
     completedAt: v.number(),
   }).index("by_user", ["userId"])
     .index("by_type", ["quizType"])
-    .index("by_user_type", ["userId", "quizType"])
+    .index("by_user_type", ["userId", "quizType"]),
+
+  // ===== PHASE 1: NEW NORMALIZED SCHEMA (FEATURE FLAGGED) =====
+  
+  // Practice Tracks (replaces category grouping)
+  practiceTracks: defineTable({
+    slug: v.string(),
+    title: v.string(),
+    description: v.string(),
+    level: v.number(),
+    icon: v.optional(v.string()),
+    order: v.number(),
+    tags: v.array(v.string()),
+    status: v.string(), // "draft" | "live" | "archived"
+  })
+    .index("by_slug", ["slug"])
+    .index("by_level", ["level"])
+    .index("by_status", ["status"]),
+
+  // Practice Scenarios (reusable context shells)
+  practiceScenarios: defineTable({
+    trackId: v.id("practiceTracks"),
+    slug: v.string(),
+    title: v.string(),
+    narrative: v.string(),
+    variables: v.object({
+      industry: v.optional(v.string()),
+      audience: v.optional(v.string()),
+      goal: v.optional(v.string()),
+      hooks: v.optional(v.array(v.string())),
+    }),
+    difficultyHint: v.optional(v.number()),
+    tags: v.array(v.string()),
+    createdBy: v.id("users"),
+    createdAt: v.number(),
+    status: v.string(), // "draft" | "live" | "retired"
+  })
+    .index("by_slug", ["slug"])
+    .index("by_track", ["trackId"])
+    .index("by_status", ["status"]),
+
+  // Practice Item Templates (for parametric content generation)
+  practiceItemTemplates: defineTable({
+    type: v.string(), // "multiple-choice" | "prompt-draft" | "prompt-surgery" | "tool-selection"
+    title: v.string(),
+    description: v.string(),
+    schema: v.any(), // JSON schema of params
+    rubric: v.object({
+      rubricId: v.string(),
+      weights: v.any(),
+      maxScore: v.number(),
+    }),
+    aiEvaluation: v.object({
+      enabled: v.boolean(),
+      modelHints: v.optional(v.object({ 
+        provider: v.string(), 
+        model: v.string() 
+      })),
+    }),
+    recommendedTime: v.number(),
+    skills: v.array(v.string()),
+    authorId: v.id("users"),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    status: v.string(), // "draft" | "live" | "deprecated"
+  })
+    .index("by_type", ["type"])
+    .index("by_status", ["status"]),
+
+  // Practice Items (calibrated question instances)
+  practiceItems: defineTable({
+    templateId: v.id("practiceItemTemplates"),
+    scenarioId: v.optional(v.id("practiceScenarios")),
+    params: v.any(),
+    version: v.string(),
+    elo: v.number(),
+    eloDeviation: v.number(),
+    difficultyBand: v.string(), // "foundation" | "core" | "challenge"
+    tags: v.array(v.string()),
+    createdBy: v.id("users"),
+    createdAt: v.number(),
+    status: v.string(), // "live" | "retired" | "experimental"
+  })
+    .index("by_template", ["templateId"])
+    .index("by_scenario", ["scenarioId"])
+    .index("by_status", ["status"])
+    .index("by_difficulty", ["difficultyBand"]),
+
+  // Practice Activities (project step definitions)
+  practiceActivities: defineTable({
+    projectId: v.id("practiceProjects"),
+    order: v.number(),
+    templateId: v.id("practiceItemTemplates"),
+    scenarioId: v.optional(v.id("practiceScenarios")),
+    params: v.any(),
+    required: v.boolean(),
+    timeEstimate: v.number(),
+    difficultyOverride: v.optional(v.number()),
+    skills: v.array(v.string()),
+    version: v.string(),
+  })
+    .index("by_project", ["projectId"])
+    .index("by_template", ["templateId"]),
+
+  // Practice Attempts (learner responses with AI feedback)
+  practiceAttempts: defineTable({
+    userId: v.id("users"),
+    itemId: v.id("practiceItems"),
+    projectId: v.optional(v.id("practiceProjects")),
+    response: v.any(),
+    rubricScores: v.optional(v.object({ 
+      clarity: v.number(), 
+      constraints: v.number(), 
+      iteration: v.number(), 
+      tool: v.number() 
+    })),
+    score: v.number(),
+    correct: v.boolean(),
+    timeMs: v.number(),
+    startedAt: v.number(),
+    completedAt: v.number(),
+    feedback: v.optional(v.string()),
+    aiFeedback: v.optional(v.object({ 
+      summary: v.string(), 
+      suggestions: v.array(v.string()) 
+    })),
+    metadata: v.optional(v.object({ 
+      mode: v.string(), 
+      difficultyBand: v.string() 
+    })),
+  })
+    .index("by_user", ["userId"])
+    .index("by_item", ["itemId"])
+    .index("by_project", ["projectId"]),
+
+  // Practice User Skills (Elo-based skill ratings)
+  practiceUserSkills: defineTable({
+    userId: v.id("users"),
+    skillId: v.string(),
+    rating: v.number(), // Elo value
+    deviation: v.number(), // measurement error
+    lastUpdated: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_skill", ["skillId"])
+    .index("by_user_skill", ["userId", "skillId"]),
+
+  // Practice Review Deck (spaced repetition)
+  practiceReviewDeck: defineTable({
+    userId: v.id("users"),
+    itemId: v.id("practiceItems"),
+    dueAt: v.number(),
+    stability: v.number(),
+    difficulty: v.number(),
+    lapseCount: v.number(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_due", ["dueAt"])
+    .index("by_user_due", ["userId", "dueAt"]),
+
+  // Practice User Preferences
+  practiceUserPreferences: defineTable({
+    userId: v.id("users"),
+    interests: v.array(v.string()),
+    goals: v.array(v.string()),
+    timeBudget: v.string(), // "short" | "standard" | "deep"
+    challengeMode: v.boolean(),
+    notifications: v.optional(v.boolean()),
+    coachNotes: v.optional(v.string()),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"]),
+
+  // Daily Drills & Streaks
+  practiceStreaks: defineTable({
+    userId: v.id("users"),
+    currentStreak: v.number(),
+    longestStreak: v.number(),
+    lastPracticeDate: v.number(),
+    repairTokens: v.number(),
+    totalDrillsCompleted: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"]),
+
+  practiceDailyDrills: defineTable({
+    userId: v.id("users"),
+    date: v.string(), // YYYY-MM-DD
+    itemIds: v.array(v.id("practiceItems")),
+    completedItemIds: v.array(v.id("practiceItems")),
+    status: v.string(), // "pending" | "in_progress" | "completed"
+    completedAt: v.optional(v.number()),
+    timeSpentMs: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_date", ["date"])
+    .index("by_user_date", ["userId", "date"]),
+
+  // Placement Test
+  placementTests: defineTable({
+    userId: v.id("users"),
+    items: v.array(v.object({
+      itemId: v.id("practiceItems"),
+      response: v.any(),
+      correct: v.boolean(),
+      timeMs: v.number(),
+    })),
+    initialSkillRatings: v.object({
+      generative_ai: v.number(),
+      agentic_ai: v.number(),
+      synthetic_ai: v.number(),
+      communication: v.number(),
+      logic: v.number(),
+      planning: v.number(),
+      analysis: v.number(),
+      creativity: v.number(),
+      collaboration: v.number(),
+    }),
+    recommendedTrack: v.string(),
+    completedAt: v.number(),
+  })
+    .index("by_user", ["userId"]),
+
+  // AI Evaluation Logs (for cost tracking and debugging)
+  aiEvaluationLogs: defineTable({
+    attemptId: v.id("practiceAttempts"),
+    provider: v.string(), // "openai" | "anthropic"
+    model: v.string(),
+    promptTokens: v.number(),
+    completionTokens: v.number(),
+    totalTokens: v.number(),
+    cost: v.number(),
+    latencyMs: v.number(),
+    success: v.boolean(),
+    errorMessage: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_attempt", ["attemptId"])
+    .index("by_provider", ["provider"])
+    .index("by_date", ["createdAt"]),
+
+  // Feature Flags
+  featureFlags: defineTable({
+    key: v.string(),
+    enabled: v.boolean(),
+    description: v.string(),
+    updatedAt: v.number(),
+    updatedBy: v.id("users"),
+  })
+    .index("by_key", ["key"]),
+
+  // ===== PHASE 3: CREATOR STUDIO & ENGAGEMENT =====
+
+  // Creator Drafts (UGC content in progress)
+  creatorDrafts: defineTable({
+    creatorId: v.id("users"),
+    type: v.string(), // "project" | "item" | "scenario"
+    title: v.string(),
+    description: v.string(),
+    content: v.any(), // Draft content structure
+    sourceId: v.optional(v.union(
+      v.id("practiceProjects"),
+      v.id("practiceItems"),
+      v.id("practiceScenarios")
+    )), // For remixes
+    status: v.string(), // "draft" | "pending" | "calibrating" | "published" | "rejected" | "archived"
+    validationErrors: v.optional(v.array(v.object({
+      field: v.string(),
+      message: v.string(),
+      severity: v.string(), // "error" | "warning"
+    }))),
+    metadata: v.object({
+      skills: v.array(v.string()),
+      difficulty: v.optional(v.string()),
+      estimatedTime: v.optional(v.number()),
+      tags: v.array(v.string()),
+    }),
+    generationConfig: v.optional(v.object({
+      difficulty: v.string(),
+      topics: v.array(v.string()),
+      questionCount: v.number(),
+      style: v.optional(v.string()),
+      targetAudience: v.optional(v.string()),
+      aiModel: v.string(),
+      generatedAt: v.number(),
+    })),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    submittedAt: v.optional(v.number()),
+    publishedAt: v.optional(v.number()),
+  })
+    .index("by_creator", ["creatorId"])
+    .index("by_status", ["status"])
+    .index("by_creator_status", ["creatorId", "status"]),
+
+  // Calibration Runs (testing UGC before public release)
+  practiceCalibrationRuns: defineTable({
+    draftId: v.id("creatorDrafts"),
+    itemId: v.optional(v.id("practiceItems")),
+    userId: v.id("users"),
+    response: v.any(),
+    score: v.number(),
+    correct: v.boolean(),
+    timeMs: v.number(),
+    completedAt: v.number(),
+    feedback: v.optional(v.string()),
+  })
+    .index("by_draft", ["draftId"])
+    .index("by_item", ["itemId"])
+    .index("by_user", ["userId"]),
+
+  // Moderation Flags
+  practiceModerationFlags: defineTable({
+    contentId: v.union(
+      v.id("creatorDrafts"),
+      v.id("practiceItems"),
+      v.id("practiceProjects")
+    ),
+    contentType: v.string(), // "draft" | "item" | "project"
+    reporterId: v.id("users"),
+    reason: v.string(),
+    description: v.string(),
+    status: v.string(), // "pending" | "reviewing" | "resolved" | "dismissed"
+    resolution: v.optional(v.string()),
+    resolvedBy: v.optional(v.id("users")),
+    resolvedAt: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_content", ["contentId"])
+    .index("by_reporter", ["reporterId"]),
+
+  // Creator Profiles
+  creatorProfiles: defineTable({
+    userId: v.id("users"),
+    displayName: v.string(),
+    bio: v.optional(v.string()),
+    stats: v.object({
+      publishedItems: v.number(),
+      totalPlays: v.number(),
+      averageRating: v.number(),
+      remixCount: v.number(),
+      adoptionRate: v.number(), // % of published items that get played
+    }),
+    badges: v.array(v.string()),
+    level: v.number(),
+    experience: v.number(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_level", ["level"]),
+
+  // Duels (multi-player competitive rooms)
+  practiceDuels: defineTable({
+    hostId: v.id("users"), // Room creator
+    participants: v.array(v.id("users")), // All players in room
+    itemIds: v.array(v.id("practiceItems")),
+    status: v.string(), // "lobby" | "open" | "active" | "completed" | "expired"
+    scores: v.object({}), // Map of userId -> score (stored as strings)
+    rankings: v.optional(v.array(v.object({
+      userId: v.id("users"),
+      score: v.number(),
+      rank: v.number(),
+      correct: v.number(),
+      avgTimeMs: v.number(),
+    }))),
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    expiresAt: v.number(),
+    // Room settings
+    minPlayers: v.number(),
+    maxPlayers: v.number(),
+    // Ready system
+    readyPlayers: v.array(v.id("users")),
+    // Legacy fields for backward compatibility
+    challengerId: v.optional(v.id("users")),
+    opponentId: v.optional(v.id("users")),
+    challengerScore: v.optional(v.number()),
+    opponentScore: v.optional(v.number()),
+    winnerId: v.optional(v.id("users")),
+    challengerReady: v.optional(v.boolean()),
+    opponentReady: v.optional(v.boolean()),
+    wager: v.optional(v.object({
+      type: v.string(),
+      amount: v.number(),
+    })),
+  })
+    .index("by_host", ["hostId"])
+    .index("by_status", ["status"])
+    // Legacy indexes
+    .index("by_challenger", ["challengerId"])
+    .index("by_opponent", ["opponentId"]),
+
+  // Duel Attempts (individual item completions in duels)
+  practiceDuelAttempts: defineTable({
+    duelId: v.id("practiceDuels"),
+    userId: v.id("users"),
+    itemId: v.id("practiceItems"),
+    response: v.any(),
+    score: v.number(),
+    correct: v.boolean(),
+    timeMs: v.number(),
+    completedAt: v.number(),
+  })
+    .index("by_duel", ["duelId"])
+    .index("by_user", ["userId"]),
+
+  // Quests (weekly challenges)
+  practiceQuests: defineTable({
+    title: v.string(),
+    description: v.string(),
+    type: v.string(), // "daily" | "weekly" | "seasonal"
+    requirements: v.array(v.object({
+      type: v.string(), // "complete_items" | "win_duels" | "earn_score" | "practice_skill"
+      target: v.any(),
+      progress: v.number(),
+      goal: v.number(),
+    })),
+    rewards: v.object({
+      xp: v.number(),
+      badges: v.array(v.string()),
+      unlocks: v.optional(v.array(v.string())),
+    }),
+    startDate: v.number(),
+    endDate: v.number(),
+    status: v.string(), // "active" | "completed" | "expired"
+    participantCount: v.number(),
+    completionCount: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_type", ["type"])
+    .index("by_dates", ["startDate", "endDate"]),
+
+  // User Quest Progress
+  practiceUserQuests: defineTable({
+    userId: v.id("users"),
+    questId: v.id("practiceQuests"),
+    progress: v.array(v.object({
+      requirementIndex: v.number(),
+      current: v.number(),
+      goal: v.number(),
+      completed: v.boolean(),
+    })),
+    status: v.string(), // "in_progress" | "completed" | "claimed"
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    claimedAt: v.optional(v.number()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_quest", ["questId"])
+    .index("by_user_quest", ["userId", "questId"])
+    .index("by_status", ["status"]),
+
+  // Seasons (themed content periods)
+  practiceSeasons: defineTable({
+    seasonNumber: v.number(),
+    title: v.string(),
+    description: v.string(),
+    theme: v.string(),
+    startDate: v.number(),
+    endDate: v.number(),
+    rewards: v.object({
+      badges: v.array(v.string()),
+      exclusiveContent: v.array(v.string()),
+      leaderboardPrizes: v.array(v.object({
+        rank: v.number(),
+        reward: v.string(),
+      })),
+    }),
+    questIds: v.array(v.id("practiceQuests")),
+    status: v.string(), // "upcoming" | "active" | "completed"
+    participantCount: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_season_number", ["seasonNumber"]),
+
+  // Share Cards (social sharing)
+  practiceShareCards: defineTable({
+    userId: v.id("users"),
+    type: v.string(), // "achievement" | "duel_win" | "quest_complete" | "skill_milestone"
+    title: v.string(),
+    description: v.string(),
+    imageUrl: v.optional(v.string()),
+    stats: v.any(), // Relevant stats to display
+    shareUrl: v.string(),
+    viewCount: v.number(),
+    createdAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_type", ["type"]),
+
+  // Referrals
+  practiceReferrals: defineTable({
+    referrerId: v.id("users"),
+    referredUserId: v.optional(v.id("users")),
+    referralCode: v.string(),
+    status: v.string(), // "pending" | "completed" | "rewarded"
+    rewards: v.optional(v.object({
+      referrerXp: v.number(),
+      referredXp: v.number(),
+      unlocks: v.array(v.string()),
+    })),
+    createdAt: v.number(),
+    completedAt: v.optional(v.number()),
+  })
+    .index("by_referrer", ["referrerId"])
+    .index("by_code", ["referralCode"])
+    .index("by_status", ["status"]),
 });

@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 import { CodeInput } from "@/components/CodeInput";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
@@ -9,7 +8,6 @@ import { useState } from "react";
 export function SignInFormPhoneCode() {
   const { signIn } = useAuthActions();
   const [step, setStep] = useState<"signIn" | { phone: string }>("signIn");
-  const { toast } = useToast();
 
   return (
     <div className="max-w-[384px] mx-auto flex flex-col gap-4">
@@ -27,10 +25,31 @@ export function SignInFormPhoneCode() {
                 .then(() => setStep({ phone: formData.get("phone") as string }))
                 .catch((error) => {
                   console.error(error);
-                  toast({
-                    title: "Could not send code",
-                    variant: "destructive",
-                  });
+                  const errorMessage = error?.message || error?.toString() || "";
+                  const errorName = error?.name || "";
+                  
+                  let toastTitle = "Could not send code";
+                  let toastDescription: string | undefined;
+                  
+                  if (
+                    errorMessage.includes("InvalidAccountId") ||
+                    errorName === "InvalidAccountId" ||
+                    (error instanceof Error && error.message.includes("InvalidAccountId"))
+                  ) {
+                    toastTitle = "Account not found";
+                    toastDescription = "This account doesn't exist. Please sign up first.";
+                  } else if (
+                    errorMessage.includes("Invalid") ||
+                    errorMessage.includes("not found") ||
+                    errorMessage.includes("does not exist")
+                  ) {
+                    toastTitle = "Could not send code";
+                    toastDescription = "Please check your phone number and try again.";
+                  } else {
+                    toastDescription = "Please try again later.";
+                  }
+                  
+                  toast.error(toastDescription || "Could not send code");
                 });
             }}
           >
@@ -57,11 +76,33 @@ export function SignInFormPhoneCode() {
             onSubmit={(event) => {
               event.preventDefault();
               const formData = new FormData(event.currentTarget);
-              signIn("twilio", formData).catch(() => {
-                toast({
-                  title: "Code could not be verified, try again",
-                  variant: "destructive",
-                });
+              signIn("twilio", formData).catch((error) => {
+                console.error(error);
+                const errorMessage = error?.message || error?.toString() || "";
+                const errorName = error?.name || "";
+                
+                let toastTitle = "Code could not be verified";
+                let toastDescription: string | undefined;
+                
+                if (
+                  errorMessage.includes("InvalidAccountId") ||
+                  errorName === "InvalidAccountId" ||
+                  (error instanceof Error && error.message.includes("InvalidAccountId"))
+                ) {
+                  toastTitle = "Verification failed";
+                  toastDescription = "This account doesn't exist. Please sign up first.";
+                } else if (
+                  errorMessage.includes("Invalid") ||
+                  errorMessage.includes("incorrect") ||
+                  errorMessage.includes("wrong")
+                ) {
+                  toastTitle = "Invalid code";
+                  toastDescription = "The code you entered is incorrect. Please try again.";
+                } else {
+                  toastDescription = "Please try again.";
+                }
+                
+                toast.error(toastDescription || "Code could not be verified");
               });
             }}
           >
@@ -79,7 +120,6 @@ export function SignInFormPhoneCode() {
           </form>
         </>
       )}
-      <Toaster />
     </div>
   );
 }

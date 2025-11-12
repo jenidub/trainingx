@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
-// Query to list all practice projects
+// Query to list all practice projects (LEGACY - use listSummary for better performance)
 export const list = query({
   args: {
     level: v.optional(v.number()),
@@ -25,6 +25,107 @@ export const list = query({
     });
 
     return projects;
+  },
+});
+
+// Optimized query for practice list page - returns only summary data (85% smaller payload)
+export const listSummary = query({
+  args: {
+    level: v.optional(v.number()),
+    category: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    let projects = await ctx.db.query("practiceProjects").collect();
+
+    // Apply filters
+    if (args.level !== undefined) {
+      projects = projects.filter(p => p.level === args.level);
+    }
+    if (args.category) {
+      projects = projects.filter(p => p.category === args.category);
+    }
+
+    // Return only what the list page needs (no stepDetails, no examplePrompts)
+    const summary = projects.map(p => ({
+      _id: p._id,
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      level: p.level,
+      levelOrder: p.levelOrder,
+      estTime: p.estTime,
+      difficulty: p.difficulty,
+      badge: p.badge,
+      steps: p.steps,
+      buildsSkills: p.buildsSkills,
+      isAssessment: p.isAssessment,
+      requiresCompletion: p.requiresCompletion,
+      category: p.category,
+    }));
+
+    // Sort by level and levelOrder
+    summary.sort((a, b) => {
+      if (a.level !== b.level) return a.level - b.level;
+      return a.levelOrder - b.levelOrder;
+    });
+
+    return summary;
+  },
+});
+
+// Combined query for practice page - single round trip for projects + user stats
+export const getPageData = query({
+  args: { 
+    userId: v.optional(v.id("users")),
+    level: v.optional(v.number()),
+    category: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    // Fetch projects
+    let projects = await ctx.db.query("practiceProjects").collect();
+
+    // Apply filters
+    if (args.level !== undefined) {
+      projects = projects.filter(p => p.level === args.level);
+    }
+    if (args.category) {
+      projects = projects.filter(p => p.category === args.category);
+    }
+
+    // Return lightweight project data
+    const projectsSummary = projects.map(p => ({
+      _id: p._id,
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      level: p.level,
+      levelOrder: p.levelOrder,
+      estTime: p.estTime,
+      difficulty: p.difficulty,
+      badge: p.badge,
+      steps: p.steps,
+      buildsSkills: p.buildsSkills,
+      isAssessment: p.isAssessment,
+      requiresCompletion: p.requiresCompletion,
+      category: p.category,
+    })).sort((a, b) => {
+      if (a.level !== b.level) return a.level - b.level;
+      return a.levelOrder - b.levelOrder;
+    });
+
+    // Fetch user stats if userId provided
+    let userStats = null;
+    if (args.userId) {
+      userStats = await ctx.db
+        .query("userStats")
+        .withIndex("by_user", (q: any) => q.eq("userId", args.userId))
+        .first();
+    }
+
+    return {
+      projects: projectsSummary,
+      userStats,
+    };
   },
 });
 
