@@ -48,7 +48,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   // Fetch duel details
-  const duelDetails = useQuery(api.duels.getDuelDetails, { duelId });
+  const duelDetails = useQuery(api.duels.getDuelDetails, { roomId: duelId });
   const submitAttempt = useMutation(api.duels.submitDuelAttempt);
 
   // Reset timer when moving to next item
@@ -95,7 +95,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
     );
   }
 
-  if (!duelDetails || !duelDetails.duel) {
+  if (!duelDetails || !duelDetails.room) {
     return (
       <Card>
         <CardContent className="p-12 text-center">
@@ -109,7 +109,11 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
     );
   }
 
-  const { duel, attempts, items, challenger, opponent } = duelDetails;
+  const { room: duel, attempts, items, participants } = duelDetails;
+
+  // Derive challenger and opponent from participants
+  const challenger = participants.find(p => p._id === duel.challengerId);
+  const opponent = participants.find(p => p._id === duel.opponentId);
 
   // Check if user is participant
   const isChallenger = duel.challengerId === user._id;
@@ -174,7 +178,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
 
       await submitAttempt({
         userId: user._id as any,
-        duelId,
+        roomId: duelId,
         itemId: currentItem._id,
         response: { optionIndex: answerIndex },
         score,

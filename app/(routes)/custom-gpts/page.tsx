@@ -32,9 +32,12 @@ interface ChatMessage {
 export default function CustomGPTsPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [editingGPT, setEditingGPT] = useState<{ _id: string; name: string; systemPrompt: string } | null>(null);
-  const [chatGPT, setChatGPT] = useState<{ _id: string; name: string; systemPrompt: string } | null>(null);
+  const [chatGPT, setChatGPT] = useState<{ _id: string; name: string; systemPrompt: string; description?: string } | null>(null);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState("");
+  const [isChatPending, setIsChatPending] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
   const userId = user?._id as Id<"users"> | undefined;
@@ -67,6 +70,7 @@ export default function CustomGPTsPage() {
       return;
     }
 
+    setIsCreating(true);
     try {
       await createMutation({
         name: data.name,
@@ -82,10 +86,13 @@ export default function CustomGPTsPage() {
       form.reset();
     } catch (error) {
       toast({ title: "Error", description: "Failed to create GPT", variant: "destructive" });
+    } finally {
+      setIsCreating(false);
     }
   };
 
   const handleUpdate = async (gptId: Id<"customAssistants">, data: z.infer<typeof insertCustomGPTSchema>) => {
+    setIsUpdating(true);
     try {
       await updateMutation({
         gptId,
@@ -98,6 +105,8 @@ export default function CustomGPTsPage() {
       form.reset();
     } catch (error) {
       toast({ title: "Error", description: "Failed to update GPT", variant: "destructive" });
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -128,12 +137,13 @@ export default function CustomGPTsPage() {
   };
 
   const handleSendMessage = async () => {
-    if (!chatInput.trim() || !chatGPT || chatAction.isPending) return;
+    if (!chatInput.trim() || !chatGPT || isChatPending) return;
 
     const userMessage: ChatMessage = { role: "user", content: chatInput };
     const newMessages = [...chatMessages, userMessage];
     setChatMessages(newMessages);
     setChatInput("");
+    setIsChatPending(true);
 
     try {
       const result = await chatAction({
@@ -147,6 +157,8 @@ export default function CustomGPTsPage() {
         description: "Failed to get response",
         variant: "destructive",
       });
+    } finally {
+      setIsChatPending(false);
     }
   };
 
@@ -217,9 +229,9 @@ export default function CustomGPTsPage() {
                       <DialogFooter>
                         <Button
                           type="submit"
-                          disabled={createMutation.isPending}
+                          disabled={isCreating}
                         >
-                          {createMutation.isPending ? "Creating..." : "Create"}
+                          {isCreating ? "Creating..." : "Create"}
                         </Button>
                       </DialogFooter>
                     </form>
@@ -337,9 +349,9 @@ export default function CustomGPTsPage() {
                   <DialogFooter>
                     <Button
                       type="submit"
-                      disabled={updateMutation.isPending}
+                      disabled={isUpdating}
                     >
-                      {updateMutation.isPending ? "Updating..." : "Update"}
+                      {isUpdating ? "Updating..." : "Update"}
                     </Button>
                   </DialogFooter>
                 </form>
@@ -374,7 +386,7 @@ export default function CustomGPTsPage() {
                       </div>
                     </div>
                   ))}
-                  {chatAction.isPending && (
+                  {isChatPending && (
                     <div className="flex justify-start">
                       <div className="bg-muted rounded-lg px-4 py-2">
                         <div className="flex gap-1">
@@ -396,7 +408,7 @@ export default function CustomGPTsPage() {
                 />
                 <Button
                   onClick={handleSendMessage}
-                  disabled={!chatInput.trim() || chatAction.isPending}
+                  disabled={!chatInput.trim() || isChatPending}
                 >
                   Send
                 </Button>

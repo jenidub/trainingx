@@ -7,7 +7,7 @@ import { AuthContextProvider } from "@/contexts/AuthContextProvider";
 import { WizardContextProvider } from "@/contexts/WizardContextProvider";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
-import { Router, useLocationProperty, navigate } from "wouter";
+import { Router } from "wouter";
 import { usePathname, useRouter } from "next/navigation";
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
@@ -21,7 +21,7 @@ const useNextjsLocation = () => {
     router.push(to);
   }, [router]);
   
-  return [pathname, setLocation] as const;
+  return [pathname, setLocation] as [string, (path: string) => void];
 };
 
 export function Providers({ children }: { children: React.ReactNode }) {

@@ -137,7 +137,7 @@ export function DuelArena() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm text-gray-600 mb-1">Total Duels</div>
-                <div className="text-2xl font-bold">{duelStats.totalDuels}</div>
+                <div className="text-2xl font-bold">{duelStats.totalRooms}</div>
               </div>
               <Swords className="h-8 w-8 text-gray-400" />
             </div>
@@ -176,7 +176,7 @@ export function DuelArena() {
               <div>
                 <div className="text-sm text-gray-600 mb-1">Active</div>
                 <div className="text-2xl font-bold">
-                  {duelStats.activeDuels}
+                  {duelStats.activeRooms}
                 </div>
               </div>
               <Clock className="h-8 w-8 text-orange-500" />
