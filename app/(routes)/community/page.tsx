@@ -19,7 +19,7 @@ import {
 import { useMutation, useQuery } from "convex/react";
 import { Id } from "convex/_generated/dataModel";
 
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

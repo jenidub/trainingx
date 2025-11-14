@@ -2,9 +2,9 @@
 
 import { useQuery, useMutation } from "convex/react";
 import { api } from "convex/_generated/api";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Sparkles, Zap, Target, TrendingUp } from "lucide-react";
 import { Id } from "convex/_generated/dataModel";
 import { useState } from "react";

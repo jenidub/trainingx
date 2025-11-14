@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useQuery } from "convex/react";
 import { useLocation } from "wouter";
 
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import {
   LevelSection,
   StatsCards,

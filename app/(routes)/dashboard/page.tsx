@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "convex/_generated/api";
 import { getLiveMatchPreview } from "@/lib/live-matching";
@@ -12,7 +12,7 @@ import { StatsCards } from "@/components/dashboard/StatsCards";
 import { NextBestActionCard } from "@/components/dashboard/NextBestActionCard";
 import { TopSkillsCard } from "@/components/dashboard/TopSkillsCard";
 import { CareerOpportunitiesCard } from "@/components/dashboard/CareerOpportunitiesCard";
-import { CoachPanel } from "@/components/CoachPanel";
+import { CoachPanel } from "@/components/common/CoachPanel";
 import { getNextBestAction } from "@/components/dashboard/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";

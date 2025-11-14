@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Providers } from "@/components/providers";
+import { Providers } from "@/components/layout/providers";
 import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 

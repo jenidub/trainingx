@@ -25,6 +25,7 @@ import type * as http from "../http.js";
 import type * as itemTemplates from "../itemTemplates.js";
 import type * as leaderboard from "../leaderboard.js";
 import type * as messages from "../messages.js";
+import type * as migrations_cleanOldDuels from "../migrations/cleanOldDuels.js";
 import type * as migrations from "../migrations.js";
 import type * as moderation from "../moderation.js";
 import type * as otp_ResendOTP from "../otp/ResendOTP.js";
@@ -79,6 +80,7 @@ declare const fullApi: ApiFromModules<{
   itemTemplates: typeof itemTemplates;
   leaderboard: typeof leaderboard;
   messages: typeof messages;
+  "migrations/cleanOldDuels": typeof migrations_cleanOldDuels;
   migrations: typeof migrations;
   moderation: typeof moderation;
   "otp/ResendOTP": typeof otp_ResendOTP;

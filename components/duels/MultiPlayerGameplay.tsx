@@ -11,11 +11,11 @@ import {
   Card,
   CardContent,
   CardHeader,
-} from "../ui/card";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
-import { Progress } from "../ui/progress";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Swords,
   Trophy,

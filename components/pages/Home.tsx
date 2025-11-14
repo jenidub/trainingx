@@ -1,29 +1,19 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import HowItWorks from "@/components/HowItWorks";
-import PracticeZone from "@/components/PracticeZone";
-import SkillsMastery from "@/components/SkillsMastery";
-import LiveMatchPreview from "@/components/LiveMatchPreview";
-import CareerHub from "@/components/CareerHub";
-import FinalCTA from "@/components/FinalCTA";
-import Footer from "@/components/Footer";
-
-// Default skill values for homepage preview
-const defaultSkills = {
-  generative_ai: 0,
-  agentic_ai: 0,
-  synthetic_ai: 0,
-  coding: 0,
-  agi_readiness: 0,
-  communication: 0,
-  logic: 0,
-  planning: 0,
-  analysis: 0,
-  creativity: 0,
-  collaboration: 0,
-};
+import Navigation from "@/components/landing/Navigation";
+import Hero from "@/components/landing/Hero";
+import HowItWorks from "@/components/landing/HowItWorks";
+import WhyThisMatters from "@/components/landing/WhyThisMatters";
+import PracticeZone from "@/components/landing/PracticeZone";
+import AnalyticsCertificates from "@/components/landing/AnalyticsCertificates";
+import CareerHub from "@/components/landing/CareerHub";
+import SkillsMatchingDemo from "@/components/landing/SkillsMatchingDemo";
+import YouthPath from "@/components/landing/YouthPath";
+import TrainersOrganizations from "@/components/landing/TrainersOrganizations";
+import ComparisonTable from "@/components/landing/ComparisonTable";
+import TrackRecord from "@/components/landing/TrackRecord";
+import FinalCTA from "@/components/landing/FinalCTA";
+import Footer from "@/components/landing/Footer";
 
 export default function HomePage() {
   return (
@@ -32,15 +22,17 @@ export default function HomePage() {
       <main className="flex flex-col gap-24">
         <Hero />
         <HowItWorks />
+        <WhyThisMatters />
+        <TrackRecord />
         <PracticeZone />
         {/* <SkillsMastery /> */}
-        {/* <LiveMatchPreview
-          currentPS={0}
-          currentSkills={defaultSkills}
-          completedProjects={0}
-          completedProjectSlugs={[]}
-        /> */}
+        <AnalyticsCertificates />
+        {/* <AppStudio /> */}
         <CareerHub />
+        <SkillsMatchingDemo />
+        <YouthPath />
+        <TrainersOrganizations />
+        <ComparisonTable />
         <FinalCTA />
       </main>
       <Footer />

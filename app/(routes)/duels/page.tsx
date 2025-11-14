@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { DuelArena } from "@/components/duels/DuelArena";
 
 export default function DuelsPage() {

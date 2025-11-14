@@ -1,6 +1,6 @@
 "use client";
 
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { CreatorStudioEntry } from "@/components/creator/CreatorStudioEntry";
 
 export default function CreatorPage() {

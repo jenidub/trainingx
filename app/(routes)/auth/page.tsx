@@ -1,9 +1,9 @@
 "use client";
 
-import { ResetPasswordWithEmailCode } from "@/components/ResetPasswordWithEmailCode";
-import { SignInMethodDivider } from "@/components/SignInMethodDivider";
-import { SignInWithGoogle } from "@/components/oauth/SignInWithGoogle";
-import { SignInWithPassword } from "@/components/SignInWithPassword";
+import { ResetPasswordWithEmailCode } from "@/components/auth/ResetPasswordWithEmailCode";
+import { SignInMethodDivider } from "@/components/auth/SignInMethodDivider";
+import { SignInWithGoogle } from "@/components/auth/oauth/SignInWithGoogle";
+import { SignInWithPassword } from "@/components/auth/SignInWithPassword";
 import { Toaster } from "@/components/ui/toaster";
 import { useState } from "react";
 

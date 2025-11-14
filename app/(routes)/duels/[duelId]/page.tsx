@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { useParams, useSearchParams } from "next/navigation";
 import { api } from "convex/_generated/api";
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { DuelLobby } from "@/components/duels/DuelLobby";
 import { MultiPlayerGameplay } from "@/components/duels/MultiPlayerGameplay";
 import { Id } from "convex/_generated/dataModel";

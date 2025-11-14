@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useQuery } from "convex/react";
 import { api } from "convex/_generated/api";
 
-import { SidebarLayout } from "@/components/SidebarLayout";
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import {
   Card,
   CardContent,

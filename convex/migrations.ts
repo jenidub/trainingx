@@ -481,3 +481,48 @@ export const runAllMigrations = internalMutation({
     return results;
   },
 });
+
+// Clean up old duel records that don't match the new schema
+export const cleanOldDuels = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    // Get all practiceDuels
+    const allDuels = await ctx.db.query("practiceDuels").collect();
+    
+    let deletedCount = 0;
+    let updatedCount = 0;
+    
+    for (const duel of allDuels) {
+      // If the duel doesn't have hostId, delete it (old format)
+      if (!duel.hostId) {
+        await ctx.db.delete(duel._id);
+        deletedCount++;
+      }
+      // If it has missing required fields, try to fix them
+      else if (!duel.participants || !duel.readyPlayers || !duel.scores) {
+        const participants = [duel.hostId];
+        if (duel.challengerId && duel.challengerId !== duel.hostId) {
+          participants.push(duel.challengerId);
+        }
+        if (duel.opponentId && duel.opponentId !== duel.hostId) {
+          participants.push(duel.opponentId);
+        }
+        
+        await ctx.db.patch(duel._id, {
+          participants: duel.participants || participants,
+          readyPlayers: duel.readyPlayers || [],
+          scores: duel.scores || {},
+          minPlayers: duel.minPlayers || 2,
+          maxPlayers: duel.maxPlayers || 2,
+        });
+        updatedCount++;
+      }
+    }
+    
+    return {
+      deletedCount,
+      updatedCount,
+      message: `Cleaned up ${deletedCount} old duels and updated ${updatedCount} duels`,
+    };
+  },
+});
