@@ -8,7 +8,7 @@ export default function ComingSoon() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
       <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-12 px-6 py-10 text-center">
-        <div className="relative w-[220px] h-[220px] sm:w-[320px] sm:h-[320px]">
+        <div className="relative w-[220px] h-[220px]">
           <Image
             src={logoSrc}
             alt={logoAlt}
