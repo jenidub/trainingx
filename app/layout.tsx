@@ -26,8 +26,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isComingSoon = true
-  // const isComingSoon = comingSoonConfig.enabled;
+  // const isComingSoon = true
+  const isComingSoon = comingSoonConfig.enabled;
 
   return (
     <html lang="en" className={bricolageGrotesque.variable}>
