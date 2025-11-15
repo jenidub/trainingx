@@ -49,7 +49,7 @@ export default function ComparisonTable() {
   ];
 
   const platforms = [
-    { name: "TrainingX.ai", key: "trainingX", highlight: true },
+    { name: "TrainingX.Ai", key: "trainingX", highlight: true },
     { name: "Coursera", key: "coursera" },
     { name: "Udemy", key: "udemy" },
     { name: "Others", key: "others" }
@@ -69,7 +69,7 @@ export default function ComparisonTable() {
 
         {/* Comparison Table */}
         <div className="max-w-6xl mx-auto mb-12">
-          <Card className="overflow-hidden">
+          <Card className="overflow-hidden pt-0 ">
             <CardContent className="p-0">
               {/* Header */}
               <div className="grid grid-cols-5 bg-gray-50 border-b">
@@ -77,7 +77,7 @@ export default function ComparisonTable() {
                 {platforms.map((platform) => (
                   <div 
                     key={platform.key} 
-                    className={`p-4 text-center font-semibold ${
+                    className={`px-2 py-4 md:p-4 text-center font-semibold text-sm md:text-base ${
                       platform.highlight ? 'bg-gradient-to-r from-gradient-from to-gradient-to text-white' : ''
                     }`}
                   >
@@ -89,19 +89,19 @@ export default function ComparisonTable() {
               {/* Rows */}
               {features.map((row, index) => (
                 <div key={index} className="grid grid-cols-5 border-b hover:bg-gray-50 transition-colors">
-                  <div className="p-4 font-medium">{row.feature}</div>
+                  <div className="px-2 py-4 md:p-4 font-medium text-sm md:text-base">{row.feature}</div>
                   {platforms.map((platform) => {
                     const data = row[platform.key as keyof typeof row] as { value: string; icon: React.ReactNode };
                     return (
                       <div 
                         key={platform.key} 
-                        className={`p-4 text-center ${
+                        className={`px-2 py-4 md:p-4 text-center ${
                           platform.highlight ? 'bg-gradient-to-r from-gradient-from/5 to-gradient-to/5' : ''
                         }`}
                       >
                         <div className="flex items-center justify-center space-x-2">
                           {data.icon}
-                          <span className="text-sm">{data.value}</span>
+                          <span className="text-sm md:text-base">{data.value}</span>
                         </div>
                       </div>
                     );

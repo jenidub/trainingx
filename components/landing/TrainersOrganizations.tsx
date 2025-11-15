@@ -85,13 +85,13 @@ export default function TrainersOrganizations() {
         </div>
 
         {/* Pricing Tiers */}
-        <div className="max-w-5xl mx-auto mb-12">
+        {/* <div className="max-w-5xl mx-auto mb-12">
           <h3 className="text-2xl font-bold text-center mb-8">Licensing Tiers</h3>
           <div className="grid md:grid-cols-3 gap-6">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
-                className={`relative hover-elevate ${tier.popular ? 'ring-2 ring-primary scale-105' : ''}`}
+                className={`mx-4 relative hover-elevate ${tier.popular ? 'ring-2 ring-primary scale-105' : ''}`}
               >
                 {tier.popular && (
                   <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gradient-from to-gradient-to text-white">
@@ -123,7 +123,7 @@ export default function TrainersOrganizations() {
               </Card>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* CTA */}
         {/* <div className="text-center">
