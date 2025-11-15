@@ -24,7 +24,7 @@ export default function HomePage() {
         <HowItWorks />
         <WhyThisMatters />
         <TrackRecord />
-        <PracticeZone />
+        {/* <PracticeZone /> */}
         {/* <SkillsMastery /> */}
         {/* <AnalyticsCertificates /> */}
         {/* <AppStudio /> */}
