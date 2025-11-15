@@ -26,7 +26,7 @@ export default function HomePage() {
         <TrackRecord />
         <PracticeZone />
         {/* <SkillsMastery /> */}
-        <AnalyticsCertificates />
+        {/* <AnalyticsCertificates /> */}
         {/* <AppStudio /> */}
         <CareerHub />
         <SkillsMatchingDemo />

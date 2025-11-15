@@ -53,7 +53,7 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div
             key={index}
-            className="mx-auto relative w-full flex justify-center pt-6 md:pt-20 md:gap-4"
+            className="mx-auto relative w-full flex justify-center pt-6 md:pt-14 pb-4 md:gap-4"
           >
             <div className="absolute top-0 left-3 md:left-11 lg:left-20 z-40 flex items-center gap-2 md:gap-4 justify-items-center justify-center mx-auto">
               <div className="h-10 w-10 rounded-full bg-background flex items-center justify-center border-2 border-gradient-from/30">
@@ -68,7 +68,7 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
                 {item.year}
               </h3>
               <Card className="w-full border-2 border-border/50 bg-card backdrop-blur-sm hover:border-gradient-from/50 hover:shadow-lg transition-all duration-300">
-                <CardContent className="p-6 md:p-8">
+                <CardContent className="px-6 py-0 md:px-8">
                   <h4 className="text-xl md:text-2xl font-bold text-foreground mb-3 md:mb-4">
                     {item.title}
                   </h4>

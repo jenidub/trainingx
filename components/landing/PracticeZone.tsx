@@ -1,9 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { useQuery } from "convex/react";
 import Link from "next/link";
-import { api } from "convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,22 +18,46 @@ import {
   Loader2,
 } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
-import { ProjectCard } from "@/components/practice/ProjectCard";
-import { usePracticeData, useUnlockLogic } from "@/components/practice";
-import type { PracticeProject } from "@/components/practice/types";
+import {
+  ProjectCard,
+  usePracticeData,
+  useUnlockLogic,
+} from "@/components/practice";
+import type { PracticeProject, UserStats } from "@/components/practice/types";
+import practiceSeedProjects from "@/data/projects-seed.json";
+
+const landingPracticeSlugs = [
+  "social-media-content",
+  "business-analyst",
+  "financial-advisor",
+];
+
+const landingPracticeProjectsData = landingPracticeSlugs
+  .map((slug) =>
+    practiceSeedProjects.find((project) => project.slug === slug)
+  )
+  .filter(Boolean) as typeof practiceSeedProjects;
+
+const landingPracticeStats: UserStats = {
+  promptScore: 92,
+  completedProjects: [
+    { slug: "social-media-content" },
+    { slug: "level-1-assessment" },
+    { slug: "level-2-assessment" },
+  ],
+  badges: ["content-creator", "level-2-complete"],
+  weeklyPracticeMinutes: 180,
+};
 
 export default function PracticeZone() {
-  // Fetch real practice projects
-  const pageData = useQuery(api.practiceProjects.getPageData, {});
-  
-  const { projects, stats } = usePracticeData(
-    pageData?.projects,
-    pageData?.userStats
+  const { projects, stats, completedSlugs } = usePracticeData(
+    landingPracticeProjectsData,
+    landingPracticeStats
   );
 
   const { isLevelUnlocked, isProjectUnlocked } = useUnlockLogic(
     projects,
-    new Set<string>(),
+    completedSlugs,
     stats.promptScore
   );
 
