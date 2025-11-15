@@ -51,21 +51,29 @@ export const listTemplates = query({
   args: {
     type: v.optional(v.string()),
     status: v.optional(v.string()),
+    limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    if (args.type) {
-      return await ctx.db
-        .query("practiceItemTemplates")
-        .withIndex("by_type", (q) => q.eq("type", args.type!))
-        .collect();
-    } else if (args.status) {
-      return await ctx.db
-        .query("practiceItemTemplates")
-        .withIndex("by_status", (q) => q.eq("status", args.status!))
-        .collect();
+    const limit = Math.min(Math.max(args.limit ?? 100, 1), 500);
+    const baseQuery = args.type
+      ? ctx.db
+          .query("practiceItemTemplates")
+          .withIndex("by_type", (q) => q.eq("type", args.type!))
+      : args.status
+        ? ctx.db
+            .query("practiceItemTemplates")
+            .withIndex("by_status", (q) => q.eq("status", args.status!))
+        : ctx.db.query("practiceItemTemplates");
+
+    let templates = await baseQuery.order("desc").take(limit * 2);
+
+    if (args.type && args.status) {
+      templates = templates.filter((template) => template.status === args.status);
     }
 
-    return await ctx.db.query("practiceItemTemplates").collect();
+    return templates
+      .sort((a, b) => b.updatedAt - a.updatedAt)
+      .slice(0, limit);
   },
 });
 

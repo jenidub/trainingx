@@ -380,6 +380,8 @@ export default defineSchema({
     assessmentComplete: v.boolean(),
     unlockedCareers: v.optional(v.array(v.string())),
     weeklyPracticeMinutes: v.optional(v.number()),
+    communityScore: v.optional(v.number()),
+    totalScore: v.optional(v.number()),
     communityActivity: v.object({
       postsCreated: v.number(),
       upvotesReceived: v.number(),
@@ -387,7 +389,11 @@ export default defineSchema({
       helpfulAnswers: v.number(),
       communityScore: v.number(),
     }),
-  }).index("by_user", ["userId"]),
+  })
+    .index("by_user", ["userId"])
+    .index("by_totalScore", ["totalScore"])
+    .index("by_promptScore", ["promptScore"])
+    .index("by_communityScore", ["communityScore"]),
 
   // Post votes tracking for community
   postVotes: defineTable({
@@ -803,6 +809,17 @@ export default defineSchema({
     // Legacy indexes
     .index("by_challenger", ["challengerId"])
     .index("by_opponent", ["opponentId"]),
+
+  practiceDuelMembers: defineTable({
+    duelId: v.id("practiceDuels"),
+    userId: v.id("users"),
+    status: v.string(),
+    joinedAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_duel", ["duelId"])
+    .index("by_user_status", ["userId", "status"]),
 
   // Duel Attempts (individual item completions in duels)
   practiceDuelAttempts: defineTable({

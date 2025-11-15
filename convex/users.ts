@@ -2,6 +2,7 @@ import { query, mutation } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { v } from "convex/values";
 import { api } from "./_generated/api";
+import { nextLeaderboardFields } from "./userStatsUtils";
 
 export const viewer = query({
   args: {},
@@ -28,6 +29,8 @@ export const initializeUserStats = mutation({
       userId,
       promptScore: 0,
       previousPromptScore: 0,
+      communityScore: 0,
+      totalScore: 0,
       rubric: { clarity: 0, constraints: 0, iteration: 0, tool: 0 },
       skills: {
         generative_ai: 0,
@@ -88,21 +91,32 @@ export const updateStreak = mutation({
     if (!stats) throw new Error("User stats not found");
 
     const now = Date.now();
-    const lastActive = stats.lastActiveDate;
     const oneDayMs = 24 * 60 * 60 * 1000;
-    const timeDiff = now - lastActive;
+    const lastActive = stats.lastActiveDate ?? 0;
+    const lastActiveDay = new Date(lastActive).toDateString();
+    const currentDay = new Date(now).toDateString();
+
+    if (lastActiveDay === currentDay) {
+      return stats.streak;
+    }
+
+    const startOfDay = (timestamp: number) => {
+      const d = new Date(timestamp);
+      d.setHours(0, 0, 0, 0);
+      return d.getTime();
+    };
+
+    const dayDiff = Math.floor(
+      (startOfDay(now) - startOfDay(lastActive)) / oneDayMs
+    );
 
     let newStreak = stats.streak;
 
-    // If last active was yesterday, increment streak
-    if (timeDiff >= oneDayMs && timeDiff < 2 * oneDayMs) {
+    if (dayDiff === 1) {
       newStreak = stats.streak + 1;
-    }
-    // If last active was more than 1 day ago, reset streak
-    else if (timeDiff >= 2 * oneDayMs) {
+    } else if (dayDiff > 1) {
       newStreak = 1;
     }
-    // If last active was today, keep streak
 
     await ctx.db.patch(stats._id, {
       streak: newStreak,
@@ -154,6 +168,8 @@ export const updateAssessmentResults = mutation({
       rubric,
     };
 
+    const leaderboardFields = nextLeaderboardFields(stats, { promptScore });
+
     await ctx.db.patch(stats._id, {
       previousPromptScore: stats.promptScore,
       promptScore,
@@ -162,6 +178,7 @@ export const updateAssessmentResults = mutation({
       rubric,
       assessmentComplete: true,
       assessmentHistory: [...(stats.assessmentHistory || []), newHistoryEntry],
+      ...leaderboardFields,
     });
 
     return stats._id;
@@ -337,12 +354,15 @@ export const updateSkills = mutation({
 
     if (!stats) throw new Error("User stats not found");
 
+    const leaderboardFields = nextLeaderboardFields(stats, { promptScore });
+
     await ctx.db.patch(stats._id, {
       previousSkills: stats.skills,
       skills,
       previousPromptScore: stats.promptScore,
       promptScore,
       rubric,
+      ...leaderboardFields,
     });
 
     return stats._id;

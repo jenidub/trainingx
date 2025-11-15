@@ -31,6 +31,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContextProvider";
 import { useToast } from "@/hooks/use-toast";
+import { useUserStats } from "@/contexts/UserStatsContext";
 import { api } from "convex/_generated/api";
 
 interface CommunityPost {
@@ -233,10 +234,7 @@ export default function Community() {
     limit: 50,
   });
 
-  const userStats = useQuery(
-    api.users.getUserStats,
-    user?._id ? { userId: user._id as Id<"users"> } : "skip",
-  );
+  const { userStats } = useUserStats();
 
   const createPostMutation = useMutation(api.posts.createPost);
   const votePostMutation = useMutation(api.posts.votePost);

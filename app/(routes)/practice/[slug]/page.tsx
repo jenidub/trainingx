@@ -15,6 +15,7 @@ import { trackEvent } from "@/lib/analytics";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "convex/_generated/api";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { useUserStats } from "@/contexts/UserStatsContext";
 import scenariosBank from "@/data/scenarios-bank.json";
 import badgeRules from "@/data/badge-rules.json";
 import { ArrowRight, Lightbulb, Award, ChevronLeft, Target, Sparkles, CheckCircle2, AlertCircle, XCircle } from "lucide-react";
@@ -61,11 +62,8 @@ export default function PracticeProjectPage() {
   const updateSkillsMutation = useMutation(api.users.updateSkills);
   const updateMultipleSkillsMutation = useMutation(api.practiceUserSkills.updateMultipleSkills);
 
-  // Fetch user stats from Convex
-  const convexUserStats = useQuery(
-    api.users.getUserStats,
-    user?._id ? { userId: user._id as any } : "skip"
-  );
+  // Fetch user stats from shared context
+  const { userStats: convexUserStats } = useUserStats();
 
   // Load user state once and memoize it - use Convex data or localStorage or default
   const [userState] = useState(() => {

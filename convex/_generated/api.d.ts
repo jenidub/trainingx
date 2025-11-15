@@ -25,6 +25,7 @@ import type * as http from "../http.js";
 import type * as itemTemplates from "../itemTemplates.js";
 import type * as leaderboard from "../leaderboard.js";
 import type * as messages from "../messages.js";
+import type * as migrations_backfillDuelMembers from "../migrations/backfillDuelMembers.js";
 import type * as migrations_cleanOldDuels from "../migrations/cleanOldDuels.js";
 import type * as migrations from "../migrations.js";
 import type * as moderation from "../moderation.js";
@@ -46,6 +47,7 @@ import type * as quizzes from "../quizzes.js";
 import type * as seedPhase3 from "../seedPhase3.js";
 import type * as sharing from "../sharing.js";
 import type * as spacedRepetition from "../spacedRepetition.js";
+import type * as userStatsUtils from "../userStatsUtils.js";
 import type * as users from "../users.js";
 
 import type {
@@ -80,6 +82,7 @@ declare const fullApi: ApiFromModules<{
   itemTemplates: typeof itemTemplates;
   leaderboard: typeof leaderboard;
   messages: typeof messages;
+  "migrations/backfillDuelMembers": typeof migrations_backfillDuelMembers;
   "migrations/cleanOldDuels": typeof migrations_cleanOldDuels;
   migrations: typeof migrations;
   moderation: typeof moderation;
@@ -101,6 +104,7 @@ declare const fullApi: ApiFromModules<{
   seedPhase3: typeof seedPhase3;
   sharing: typeof sharing;
   spacedRepetition: typeof spacedRepetition;
+  userStatsUtils: typeof userStatsUtils;
   users: typeof users;
 }>;
 declare const fullApiWithMounts: typeof fullApi;

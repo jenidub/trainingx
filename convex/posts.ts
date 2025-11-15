@@ -1,5 +1,6 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { nextLeaderboardFields } from "./userStatsUtils";
 
 // Get posts with optional filtering
 export const getPosts = query({
@@ -70,12 +71,15 @@ export const createPost = mutation({
       .first();
 
     if (userStats) {
+      const communityActivity = {
+        ...userStats.communityActivity,
+        postsCreated: userStats.communityActivity.postsCreated + 1,
+        communityScore: userStats.communityActivity.communityScore + 5, // +5 points for creating a post
+      };
+
       await ctx.db.patch(userStats._id, {
-        communityActivity: {
-          ...userStats.communityActivity,
-          postsCreated: userStats.communityActivity.postsCreated + 1,
-          communityScore: userStats.communityActivity.communityScore + 5, // +5 points for creating a post
-        },
+        communityActivity,
+        ...nextLeaderboardFields(userStats, { communityActivity }),
       });
     }
 
@@ -143,17 +147,20 @@ export const votePost = mutation({
 
     if (authorStats) {
       const scoreChange = voteType === "up" ? 1 : -1;
+      const communityActivity = {
+        ...authorStats.communityActivity,
+        upvotesReceived: voteType === "up"
+          ? authorStats.communityActivity.upvotesReceived + 1
+          : authorStats.communityActivity.upvotesReceived,
+        downvotesReceived: voteType === "down"
+          ? authorStats.communityActivity.downvotesReceived + 1
+          : authorStats.communityActivity.downvotesReceived,
+        communityScore: authorStats.communityActivity.communityScore + scoreChange,
+      };
+
       await ctx.db.patch(authorStats._id, {
-        communityActivity: {
-          ...authorStats.communityActivity,
-          upvotesReceived: voteType === "up" 
-            ? authorStats.communityActivity.upvotesReceived + 1 
-            : authorStats.communityActivity.upvotesReceived,
-          downvotesReceived: voteType === "down" 
-            ? authorStats.communityActivity.downvotesReceived + 1 
-            : authorStats.communityActivity.downvotesReceived,
-          communityScore: authorStats.communityActivity.communityScore + scoreChange,
-        },
+        communityActivity,
+        ...nextLeaderboardFields(authorStats, { communityActivity }),
       });
     }
 

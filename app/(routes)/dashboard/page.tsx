@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { useQuery, useMutation } from "convex/react";
@@ -8,6 +8,7 @@ import { api } from "convex/_generated/api";
 import { getLiveMatchPreview } from "@/lib/live-matching";
 import { useWizardContext } from "@/contexts/WizardContextProvider";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { useUserStats } from "@/contexts/UserStatsContext";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { NextBestActionCard } from "@/components/dashboard/NextBestActionCard";
 import { TopSkillsCard } from "@/components/dashboard/TopSkillsCard";
@@ -33,12 +34,8 @@ export default function DashboardPage() {
     user?._id ? { userId: user._id as any } : "skip"
   );
 
-  // Fetch real user stats from Convex
-  const userStatsData = useQuery(
-    api.users.getUserStats,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    user?._id ? { userId: user._id as any } : "skip"
-  );
+  // Fetch real user stats from shared context
+  const { userStats: userStatsData } = useUserStats();
 
   // Fetch skills from Elo system (converted to 0-100 display)
   const skillsDisplay = useQuery(
@@ -59,11 +56,14 @@ export default function DashboardPage() {
     }
   }, [user?._id, userStatsData, initStats]);
 
-  // Update streak on dashboard load
+  const hasUpdatedStreak = useRef(false);
+  // Update streak once per session when stats load
   useEffect(() => {
+    if (hasUpdatedStreak.current) return;
     if (user?._id && userStatsData) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       updateStreakMutation({ userId: user._id as any });
+      hasUpdatedStreak.current = true;
     }
   }, [user?._id, userStatsData, updateStreakMutation]);
 

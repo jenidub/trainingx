@@ -1,5 +1,11 @@
 import { query } from "./_generated/server";
 import { v } from "convex/values";
+import type { Doc } from "./_generated/dataModel";
+
+const MAX_LIMIT = 200;
+
+type SortBy = "promptScore" | "totalScore" | "communityScore";
+type LeaderboardIndex = "by_promptScore" | "by_totalScore" | "by_communityScore";
 
 // Get leaderboard with sorting options
 export const getLeaderboard = query({
@@ -14,44 +20,40 @@ export const getLeaderboard = query({
     ),
   },
   handler: async (ctx, { limit = 50, sortBy = "totalScore" }) => {
-    // Get all user stats
-    const allStats = await ctx.db.query("userStats").collect();
+    const safeLimit = Math.min(Math.max(limit, 1), MAX_LIMIT);
+    const indexName = getIndexName(sortBy);
+    const stats = await ctx.db
+      .query("userStats")
+      .withIndex(indexName)
+      .order("desc")
+      .take(safeLimit * 2);
 
-    // Calculate total scores and prepare leaderboard data
     const leaderboardData = await Promise.all(
-      allStats.map(async (stats) => {
-        const user = await ctx.db.get(stats.userId);
-        const totalScore = stats.promptScore + stats.communityActivity.communityScore;
-        
+      stats.slice(0, safeLimit).map(async (record, index) => {
+        const user = await ctx.db.get(record.userId);
+        const communityScore =
+          record.communityScore ??
+          record.communityActivity?.communityScore ??
+          0;
+        const totalScore = record.totalScore ?? record.promptScore + communityScore;
+
         return {
-          userId: stats.userId,
+          userId: record.userId,
           userName: user?.name || "Anonymous",
           userImage: user?.image,
-          promptScore: stats.promptScore,
-          communityScore: stats.communityActivity.communityScore,
+          promptScore: record.promptScore,
+          communityScore,
           totalScore,
-          streak: stats.streak,
-          badges: (stats.badges || []).length,
-          upvotes: stats.communityActivity.upvotesReceived,
-          assessmentComplete: stats.assessmentComplete,
-          rank: 0, // Will be calculated after sorting
+          streak: record.streak,
+          badges: (record.badges || []).length,
+          upvotes: record.communityActivity.upvotesReceived,
+          assessmentComplete: record.assessmentComplete,
+          rank: index + 1,
         };
       })
     );
 
-    // Sort by selected criteria
-    leaderboardData.sort((a, b) => {
-      if (sortBy === "promptScore") return b.promptScore - a.promptScore;
-      if (sortBy === "communityScore") return b.communityScore - a.communityScore;
-      return b.totalScore - a.totalScore;
-    });
-
-    // Assign ranks
-    leaderboardData.forEach((user, index) => {
-      user.rank = index + 1;
-    });
-
-    return leaderboardData.slice(0, limit);
+    return leaderboardData;
   },
 });
 
@@ -68,44 +70,62 @@ export const getUserRank = query({
     ),
   },
   handler: async (ctx, { userId, sortBy = "totalScore" }) => {
-    // Get all user stats
-    const allStats = await ctx.db.query("userStats").collect();
+    const userStats = await ctx.db
+      .query("userStats")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .first();
 
-    // Calculate total scores
-    const scores = allStats.map((stats) => {
-      const totalScore = stats.promptScore + stats.communityActivity.communityScore;
-      return {
-        userId: stats.userId,
-        promptScore: stats.promptScore,
-        communityScore: stats.communityActivity.communityScore,
-        totalScore,
-      };
-    });
-
-    // Sort by selected criteria
-    scores.sort((a, b) => {
-      if (sortBy === "promptScore") return b.promptScore - a.promptScore;
-      if (sortBy === "communityScore") return b.communityScore - a.communityScore;
-      return b.totalScore - a.totalScore;
-    });
-
-    // Find user's rank and score
-    const userIndex = scores.findIndex((s) => s.userId === userId);
-    
-    if (userIndex === -1) {
-      return null;
-    }
-
-    const userStats = allStats.find((s) => s.userId === userId);
     if (!userStats) {
       return null;
     }
 
-    const totalScore = userStats.promptScore + userStats.communityActivity.communityScore;
+    const comparisonScore = getScoreForSort(userStats, sortBy);
+    const indexName = getIndexName(sortBy);
+    const higherScores = await ctx.db
+      .query("userStats")
+      .withIndex(indexName, (q) =>
+        q.gt(getFieldName(sortBy), comparisonScore)
+      )
+      .collect();
 
     return {
-      rank: userIndex + 1,
-      totalScore,
+      rank: higherScores.length + 1,
+      totalScore: getScoreForSort(userStats, "totalScore"),
     };
   },
 });
+
+function getIndexName(sortBy: SortBy): LeaderboardIndex {
+  if (sortBy === "promptScore") return "by_promptScore";
+  if (sortBy === "communityScore") return "by_communityScore";
+  return "by_totalScore";
+}
+
+function getFieldName(sortBy: SortBy) {
+  if (sortBy === "promptScore") {
+    return "promptScore";
+  }
+  if (sortBy === "communityScore") {
+    return "communityScore";
+  }
+  return "totalScore";
+}
+
+function getScoreForSort(
+  stats: Doc<"userStats">,
+  sortBy: SortBy
+) {
+  if (sortBy === "promptScore") {
+    return stats.promptScore ?? 0;
+  }
+  if (sortBy === "communityScore") {
+    return stats.communityScore ??
+      stats.communityActivity?.communityScore ??
+      0;
+  }
+  const communityScore =
+    stats.communityScore ??
+    stats.communityActivity?.communityScore ??
+    0;
+  return stats.totalScore ?? stats.promptScore + communityScore;
+}

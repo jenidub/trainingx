@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState, useCallback, useEffect } from "react";
 import { AuthContextProvider } from "@/contexts/AuthContextProvider";
+import { UserStatsProvider } from "@/contexts/UserStatsContext";
 import { WizardContextProvider } from "@/contexts/WizardContextProvider";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
@@ -41,9 +42,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <ConvexAuthProvider client={convex}>
         <Router hook={useNextjsLocation}>
           <AuthContextProvider>
-            <WizardContextProvider>
-              {children}
-            </WizardContextProvider>
+            <UserStatsProvider>
+              <WizardContextProvider>
+                {children}
+              </WizardContextProvider>
+            </UserStatsProvider>
           </AuthContextProvider>
         </Router>
       </ConvexAuthProvider>

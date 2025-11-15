@@ -1,6 +1,8 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import type { MutationCtx } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import type { Doc } from "./_generated/dataModel";
 
 // Create a new multi-player room
 export const createRoom = mutation({
@@ -59,6 +61,8 @@ export const createRoom = mutation({
       readyPlayers: [],
     });
 
+    await upsertDuelMember(ctx, roomId, userId, "lobby");
+
     return { roomId, itemIds: selectedItems };
   },
 });
@@ -88,6 +92,8 @@ export const joinRoom = mutation({
     await ctx.db.patch(args.roomId, {
       participants: [...room.participants, args.userId],
     });
+
+    await upsertDuelMember(ctx, args.roomId, args.userId, room.status);
 
     return { success: true };
   },
@@ -119,6 +125,7 @@ export const leaveRoom = mutation({
     // If no one left, delete room
     if (newParticipants.length === 0) {
       await ctx.db.delete(args.roomId);
+      await removeAllDuelMembers(ctx, args.roomId);
       return { success: true, roomDeleted: true };
     }
 
@@ -127,6 +134,8 @@ export const leaveRoom = mutation({
       participants: newParticipants,
       readyPlayers: newReadyPlayers,
     });
+
+    await removeDuelMember(ctx, args.roomId, args.userId);
 
     return { success: true };
   },
@@ -162,6 +171,8 @@ export const kickPlayer = mutation({
       participants: newParticipants,
       readyPlayers: newReadyPlayers,
     });
+
+    await removeDuelMember(ctx, args.roomId, args.playerId);
 
     return { success: true };
   },
@@ -213,6 +224,7 @@ export const markReady = mutation({
         status: "active",
         startedAt: Date.now(),
       });
+      await updateDuelMemberStatuses(ctx, args.roomId, "active");
     }
 
     return { success: true };
@@ -245,6 +257,8 @@ export const forceStart = mutation({
       status: "active",
       startedAt: Date.now(),
     });
+
+    await updateDuelMemberStatuses(ctx, args.roomId, "active");
 
     return { success: true };
   },
@@ -368,6 +382,7 @@ export const submitAttempt = mutation({
         completedAt: Date.now(),
         rankings,
       });
+      await updateDuelMemberStatuses(ctx, args.roomId, "completed");
     }
 
     return { success: true, totalScore };
@@ -410,19 +425,31 @@ export const getUserRooms = query({
     status: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    const allRooms = await ctx.db
-      .query("practiceDuels")
-      .collect();
+    const membershipQuery = args.status
+      ? ctx.db
+          .query("practiceDuelMembers")
+          .withIndex("by_user_status", (q) =>
+            q.eq("userId", args.userId).eq("status", args.status!)
+          )
+      : ctx.db
+          .query("practiceDuelMembers")
+          .withIndex("by_user", (q) => q.eq("userId", args.userId));
 
-    let userRooms = allRooms.filter(room => 
-      room.participants && room.participants.includes(args.userId)
-    );
+    const memberships = await membershipQuery.collect();
+    const rooms = (
+      await Promise.all(
+        memberships.map((member) => ctx.db.get(member.duelId))
+      )
+    ).filter((room): room is Doc<"practiceDuels"> => room !== null);
 
-    if (args.status) {
-      userRooms = userRooms.filter(r => r.status === args.status);
-    }
-
-    return userRooms.sort((a, b) => b.startedAt - a.startedAt);
+    return rooms
+      .filter(
+        (room) =>
+          room.participants &&
+          room.participants.includes(args.userId) &&
+          (!args.status || room.status === args.status)
+      )
+      .sort((a, b) => b.startedAt - a.startedAt);
   },
 });
 
@@ -449,12 +476,20 @@ export const getOpenRooms = query({
 export const getRoomStats = query({
   args: { userId: v.id("users") },
   handler: async (ctx, args) => {
-    const allRooms = await ctx.db
-      .query("practiceDuels")
+    const memberships = await ctx.db
+      .query("practiceDuelMembers")
+      .withIndex("by_user", (q) => q.eq("userId", args.userId))
       .collect();
 
-    const userRooms = allRooms.filter(room => 
-      room.participants && room.participants.includes(args.userId)
+    const rooms = (
+      await Promise.all(
+        memberships.map((member) => ctx.db.get(member.duelId))
+      )
+    ).filter((room): room is Doc<"practiceDuels"> => room !== null);
+
+    const userRooms = rooms.filter(
+      (room) =>
+        room.participants && room.participants.includes(args.userId)
     );
 
     const completedRooms = userRooms.filter(r => r.status === "completed");
@@ -490,3 +525,77 @@ export const getUserDuels = getUserRooms;
 export const getOpenDuels = getOpenRooms;
 export const getDuelStats = getRoomStats;
 export const submitDuelAttempt = submitAttempt;
+
+async function upsertDuelMember(
+  ctx: MutationCtx,
+  duelId: Id<"practiceDuels">,
+  userId: Id<"users">,
+  status: string
+) {
+  const existing = await ctx.db
+    .query("practiceDuelMembers")
+    .withIndex("by_user", (q) => q.eq("userId", userId))
+    .filter((q) => q.eq(q.field("duelId"), duelId))
+    .first();
+
+  if (existing) {
+    await ctx.db.patch(existing._id, {
+      status,
+      updatedAt: Date.now(),
+    });
+    return;
+  }
+
+  await ctx.db.insert("practiceDuelMembers", {
+    duelId,
+    userId,
+    status,
+    joinedAt: Date.now(),
+    updatedAt: Date.now(),
+  });
+}
+
+async function removeDuelMember(
+  ctx: MutationCtx,
+  duelId: Id<"practiceDuels">,
+  userId: Id<"users">
+) {
+  const existing = await ctx.db
+    .query("practiceDuelMembers")
+    .withIndex("by_user", (q) => q.eq("userId", userId))
+    .filter((q) => q.eq(q.field("duelId"), duelId))
+    .first();
+
+  if (existing) {
+    await ctx.db.delete(existing._id);
+  }
+}
+
+async function removeAllDuelMembers(ctx: MutationCtx, duelId: Id<"practiceDuels">) {
+  const members = await ctx.db
+    .query("practiceDuelMembers")
+    .withIndex("by_duel", (q) => q.eq("duelId", duelId))
+    .collect();
+
+  for (const member of members) {
+    await ctx.db.delete(member._id);
+  }
+}
+
+async function updateDuelMemberStatuses(
+  ctx: MutationCtx,
+  duelId: Id<"practiceDuels">,
+  status: string
+) {
+  const members = await ctx.db
+    .query("practiceDuelMembers")
+    .withIndex("by_duel", (q) => q.eq("duelId", duelId))
+    .collect();
+
+  for (const member of members) {
+    await ctx.db.patch(member._id, {
+      status,
+      updatedAt: Date.now(),
+    });
+  }
+}

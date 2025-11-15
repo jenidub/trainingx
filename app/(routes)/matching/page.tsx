@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { useUserStats } from "@/contexts/UserStatsContext";
 import { api } from "convex/_generated/api";
 
 const categoryIcons = {
@@ -167,10 +168,7 @@ export default function MatchingPage() {
   const { user } = useAuth();
   const userId = user?._id as any;
 
-  const userStats = useQuery(
-    api.users.getUserStats,
-    userId ? { userId } : "skip",
-  );
+  const { userStats } = useUserStats();
 
   const quizResults = useQuery(
     api.quizResults.getLatestQuizResult,

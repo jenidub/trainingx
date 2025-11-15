@@ -1,12 +1,12 @@
 export const comingSoonConfig = {
-  enabled: false,
+  enabled: true,
   logoSrc: "/logo.webp",
   logoAlt: "TrainingX.Ai logo",
   headline: "Coming soon",
   message:
-    "We are building a faster, more powerful TrainingX experience. Check back soon for the relaunch.",
+    "Tomorrow will be putting massive updates will be back soon",
 };
 
 export const landingOnlyMode = {
-  enabled: true,
+  enabled: false,
 };

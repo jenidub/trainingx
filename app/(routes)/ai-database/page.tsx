@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import { useQuery } from "convex/react";
-import { api } from "convex/_generated/api";
 
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import {
@@ -16,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { useUserStats } from "@/contexts/UserStatsContext";
 import { computeMatches, meetsRequirements } from "@/lib/matching";
 import {
   ArrowRight,
@@ -54,12 +53,7 @@ const categoryLabels = {
 
 export default function AIDatabase() {
   const { user } = useAuth();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const userId = user?._id as any;
-  const userStats = useQuery(
-    api.users.getUserStats,
-    userId ? { userId } : "skip"
-  );
+  const { userStats } = useUserStats();
 
   const completedProjects = useMemo(
     () => userStats?.completedProjects ?? [],

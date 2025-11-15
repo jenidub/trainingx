@@ -12,14 +12,12 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
-import { useQuery } from "convex/react";
-
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContextProvider";
-import { api } from "convex/_generated/api";
+import { useUserStats } from "@/contexts/UserStatsContext";
 
 const formatSkillName = (skill: string): string => {
   const formatted = skill.replace(/_/g, " ");
@@ -57,10 +55,7 @@ const getSkillTier = (
 export default function PortfolioPage() {
   const { user } = useAuth();
 
-  const userStats = useQuery(
-    api.users.getUserStats,
-    user?._id ? { userId: user._id as any } : "skip",
-  );
+  const { userStats } = useUserStats();
 
   if (!user) {
     return (

@@ -11,25 +11,32 @@ export const getCustomGPTs = query({
     limit: v.optional(v.number())
   },
   handler: async (ctx, args) => {
-    const allGpts = await ctx.db.query("customAssistants").collect();
+    const limit = Math.min(Math.max(args.limit ?? 50, 1), 200);
+    const baseQuery = args.userId
+      ? ctx.db
+          .query("customAssistants")
+          .withIndex("by_creator", (q) => q.eq("creatorId", args.userId!))
+      : args.isPublic !== undefined
+        ? ctx.db
+            .query("customAssistants")
+            .withIndex("public", (q) => q.eq("isPublic", args.isPublic!))
+        : ctx.db.query("customAssistants");
 
-    // Filter by userId, category and limit
-    let filtered = allGpts;
+    // Grab extra rows to account for local filtering
+    const initial = await baseQuery.order("desc").take(limit * 2);
+
+    let filtered = initial;
+    if (args.userId === undefined && args.isPublic !== undefined) {
+      filtered = filtered.filter((gpt) => gpt.isPublic === args.isPublic);
+    }
     if (args.userId) {
-      filtered = filtered.filter(gpt => gpt.creatorId === args.userId);
+      filtered = filtered.filter((gpt) => gpt.creatorId === args.userId);
     }
     if (args.category) {
-      filtered = filtered.filter(gpt => gpt.category === args.category);
-    }
-    if (args.isPublic !== undefined) {
-      filtered = filtered.filter(gpt => gpt.isPublic === args.isPublic);
-    }
-    if (args.limit && args.limit > 0) {
-      filtered = filtered.slice(0, args.limit);
+      filtered = filtered.filter((gpt) => gpt.category === args.category);
     }
 
-    // Sort by creation date (newest first)
-    return filtered.sort((a, b) => b._creationTime - a._creationTime);
+    return filtered.sort((a, b) => b._creationTime - a._creationTime).slice(0, limit);
   },
 });
 

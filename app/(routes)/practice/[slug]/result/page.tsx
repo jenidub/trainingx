@@ -10,6 +10,7 @@ import { loadState } from "@/lib/storage";
 import { useQuery } from "convex/react";
 import { api } from "convex/_generated/api";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { useUserStats } from "@/contexts/UserStatsContext";
 import badgeRules from "@/data/badge-rules.json";
 import {
   Trophy,
@@ -33,11 +34,8 @@ export default function PracticeResultPage() {
     params.slug ? { slug: params.slug as string } : "skip"
   );
 
-  // Fetch user stats from Convex
-  const convexUserStats = useQuery(
-    api.users.getUserStats,
-    user?._id ? { userId: user._id as any } : "skip"
-  );
+  // Fetch user stats from shared context
+  const { userStats: convexUserStats } = useUserStats();
 
   useEffect(() => {
     const state = loadState();
