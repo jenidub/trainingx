@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+import { useRouter } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
 import {
   getFeedbackByScore,
@@ -16,7 +16,7 @@ import { calculateAssessmentResults } from "@/lib/assessmentUtils";
 type AssessmentStep = "welcome" | "questions" | "results";
 
 export default function AssessmentLite() {
-  const [, setLocation] = useLocation();
+  const router = useRouter();
   const { user, isAuthenticated } = useAuth();
   const [step, setStep] = useState<AssessmentStep>("welcome");
   const [userName, setUserName] = useState("");
@@ -80,7 +80,7 @@ export default function AssessmentLite() {
         completedAt: new Date().toISOString(),
       }),
     );
-    setLocation("/enter");
+    router.push("/enter");
   };
 
   // Welcome Screen
@@ -102,7 +102,7 @@ export default function AssessmentLite() {
         feedback={feedback}
         motivationalMsg={motivationalMsg}
         onGetStarted={handleGetStarted}
-        onMatchingQuiz={() => setLocation("/matching-quiz")}
+        onMatchingQuiz={() => router.push("/matching-quiz")}
       />
     );
   }

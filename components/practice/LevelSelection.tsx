@@ -33,8 +33,8 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
 
   if (!trackDetails) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading levels...</div>
+      <div className="min-h-screen bg-gradient-to-br from-[#DDF3FE] via-[#E8F5FE] to-[#F0F9FF] flex items-center justify-center">
+        <div className="text-gray-700 text-xl font-semibold">Loading levels...</div>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
   const getLevelStatus = () => "unlocked";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#DDF3FE] via-[#E8F5FE] to-[#F0F9FF] p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -55,7 +55,7 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
           <Button
             variant="ghost"
             onClick={onBack}
-            className="text-emerald-300 hover:text-emerald-200 mb-6"
+            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 mb-6 rounded-xl"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Tracks
@@ -65,10 +65,10 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
             <div className="flex items-center gap-3 mb-3">
               <span className="text-4xl">{trackDetails.icon}</span>
               <div>
-                <h1 className="text-3xl font-bold text-white">
+                <h1 className="text-3xl font-bold text-gray-900">
                   {trackDetails.title}
                 </h1>
-                <p className="text-emerald-200/80">
+                <p className="text-gray-700 font-medium">
                   {trackDetails.description}
                 </p>
               </div>
@@ -118,8 +118,8 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
                   className={cn(
                     "transition-all",
                     isLocked
-                      ? "bg-gradient-to-br from-slate-800/30 to-slate-900/30 border-slate-700/50 opacity-60"
-                      : "bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700 hover:border-emerald-400 cursor-pointer group"
+                      ? "bg-white/40 backdrop-blur-sm border-2 border-gray-200 opacity-60"
+                      : "bg-white/80 backdrop-blur-sm border-2 border-gray-200 hover:border-blue-400 hover:shadow-xl cursor-pointer group"
                   )}
                   onClick={() => !isLocked && onSelectLevel(level._id)}
                 >
@@ -130,12 +130,12 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
                         className={cn(
                           "flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold",
                           isCompleted
-                            ? "bg-green-500/20 text-green-300 border-2 border-green-500"
+                            ? "bg-green-100 text-green-700 border-2 border-green-500"
                             : isInProgress
-                              ? "bg-blue-500/20 text-blue-300 border-2 border-blue-500"
+                              ? "bg-blue-100 text-blue-700 border-2 border-blue-500"
                               : isLocked
-                                ? "bg-slate-700/50 text-slate-500 border-2 border-slate-600"
-                                : "bg-emerald-500/20 text-emerald-300 border-2 border-emerald-500"
+                                ? "bg-gray-100 text-gray-400 border-2 border-gray-300"
+                                : "bg-purple-100 text-purple-700 border-2 border-purple-500"
                         )}
                       >
                         {isLocked ? (
@@ -151,10 +151,10 @@ export function LevelSelection({ userId, trackId, onBack, onSelectLevel }: Level
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h3 className="text-xl font-bold text-white mb-1">
+                            <h3 className="text-xl font-bold text-gray-900 mb-1">
                               Level {level.levelNumber}: {level.title}
                             </h3>
-                            <p className="text-slate-400 text-sm">
+                            <p className="text-gray-700 text-sm font-medium">
                               {level.description}
                             </p>
                           </div>

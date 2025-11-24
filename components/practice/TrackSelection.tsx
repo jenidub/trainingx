@@ -27,8 +27,8 @@ export function TrackSelection({ userId, domainId, onBack, onSelectTrack }: Trac
 
   if (!tracks) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Loading tracks...</div>
+      <div className="min-h-screen bg-gradient-to-br from-[#DDF3FE] via-[#E8F5FE] to-[#F0F9FF] flex items-center justify-center">
+        <div className="text-gray-700 text-xl font-semibold">Loading tracks...</div>
       </div>
     );
   }
@@ -47,7 +47,7 @@ export function TrackSelection({ userId, domainId, onBack, onSelectTrack }: Trac
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#DDF3FE] via-[#E8F5FE] to-[#F0F9FF] p-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -57,17 +57,17 @@ export function TrackSelection({ userId, domainId, onBack, onSelectTrack }: Trac
           <Button
             variant="ghost"
             onClick={onBack}
-            className="text-emerald-300 hover:text-emerald-200 mb-6"
+            className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 mb-6 rounded-xl"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Domains
           </Button>
 
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-white mb-2">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
               Choose Your Track
             </h1>
-            <p className="text-emerald-200/80">
+            <p className="text-gray-700 font-medium">
               Select a learning path to begin your journey
             </p>
           </div>
@@ -87,7 +87,7 @@ export function TrackSelection({ userId, domainId, onBack, onSelectTrack }: Trac
                 transition={{ delay: index * 0.1 }}
               >
                 <Card
-                  className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700 hover:border-emerald-400 transition-all cursor-pointer group"
+                  className="bg-white/80 backdrop-blur-sm border-2 border-gray-200 hover:border-blue-400 hover:shadow-xl transition-all cursor-pointer group"
                   onClick={() => onSelectTrack(track._id, track.slug)}
                 >
                   <CardContent className="p-6">
@@ -99,14 +99,14 @@ export function TrackSelection({ userId, domainId, onBack, onSelectTrack }: Trac
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h3 className="text-2xl font-bold text-white mb-1">
+                            <h3 className="text-2xl font-bold text-gray-900 mb-1">
                               {track.title}
                             </h3>
-                            <p className="text-slate-400">
+                            <p className="text-gray-700 font-medium">
                               {track.description}
                             </p>
                           </div>
-                          <ArrowRight className="w-6 h-6 text-emerald-300 group-hover:translate-x-2 transition-transform flex-shrink-0" />
+                          <ArrowRight className="w-6 h-6 text-blue-600 group-hover:translate-x-2 transition-transform flex-shrink-0" />
                         </div>
 
                         {/* Meta Info */}
