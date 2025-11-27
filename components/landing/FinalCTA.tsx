@@ -6,7 +6,7 @@ import AnimatedCard from "./AnimatedCard";
 import Image from "next/image";
 export default function FinalCTA() {
   return (
-    <AnimatedSection className="py-20 bg-gradient-to-br from-gradient-from to-gradient-to text-white relative overflow-hidden">
+    <AnimatedSection className="py-20 bg-black text-white relative overflow-hidden">
       {/* Background Pattern */}
       {/* <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
@@ -14,7 +14,7 @@ export default function FinalCTA() {
           backgroundSize: '20px 20px'
         }}></div>
       </div> */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 opacity-70">
         <Image
           src="/hero-bg.webp"
           alt="Hero background"
@@ -62,7 +62,7 @@ export default function FinalCTA() {
           </div>
 
           {/* Stats Reminder */}
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               { value: "10 Years", label: "Proven Track Record" },
               { value: "2.5B", label: "Daily AI Prompts" },
@@ -80,7 +80,7 @@ export default function FinalCTA() {
                 </Card>
               </AnimatedCard>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </AnimatedSection>

@@ -101,7 +101,7 @@ export const TweetSlider = () => {
               {duplicatedImages.map((image, index) => (
                 <div
                   key={index}
-                  className="image-item flex-shrink-0 w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl "
+                  className="image-item flex-shrink-0 w-120 h-120 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] rounded-xl overflow-hidden shadow-2xl "
                 >
                   <Image
                     src={image}

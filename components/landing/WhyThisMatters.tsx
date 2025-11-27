@@ -21,7 +21,7 @@ export default function ProblemOpportunitySection() {
           >
             Market Reality
           </Badge>
-          <h2 className="text-balance text-4xl md:text-[68px]/15 font-heading font-bold text-slate-900 mb-6 tracking-tight">
+          <h2 className="text-balance text-5xl md:text-[68px]/15 font-heading font-bold text-slate-900 mb-6 tracking-tight">
             The AI Skills Gap is{" "}
             <span className="bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
               Costing Billions
