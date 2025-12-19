@@ -52,11 +52,16 @@ export function DuelLobby({ roomId, onStart }: DuelLobbyProps) {
   const isReady = room?.readyPlayers?.includes(user?._id as any) || false;
   const readyCount = room?.readyPlayers?.length || 0;
   const totalPlayers = room?.participants?.length || 0;
-  const allReady = readyCount === totalPlayers && totalPlayers >= (room?.minPlayers || 2);
+  const allReady =
+    readyCount === totalPlayers && totalPlayers >= (room?.minPlayers || 2);
 
   // Handle countdown when all ready
   useEffect(() => {
-    if (allReady && countdown === null && totalPlayers >= (room?.minPlayers || 2)) {
+    if (
+      allReady &&
+      countdown === null &&
+      totalPlayers >= (room?.minPlayers || 2)
+    ) {
       setCountdown(3);
     }
   }, [allReady, countdown, totalPlayers, room?.minPlayers]);
@@ -215,7 +220,8 @@ export function DuelLobby({ roomId, onStart }: DuelLobbyProps) {
               <div className="w-24" /> {/* Spacer */}
             </div>
             <CardDescription className="text-lg">
-              {readyCount}/{totalPlayers} players ready · {room.minPlayers} minimum to start
+              {readyCount}/{totalPlayers} players ready · {room.minPlayers}{" "}
+              minimum to start
             </CardDescription>
           </CardHeader>
 
@@ -233,7 +239,8 @@ export function DuelLobby({ roomId, onStart }: DuelLobbyProps) {
                       <Users className="h-5 w-5 text-blue-600" />
                       <div className="flex-1">
                         <h3 className="font-bold text-blue-900 text-sm mb-2">
-                          Invite Friends ({totalPlayers}/{room.maxPlayers} players)
+                          Invite Friends ({totalPlayers}/{room.maxPlayers}{" "}
+                          players)
                         </h3>
                         <div className="flex gap-2">
                           <input
@@ -287,7 +294,9 @@ export function DuelLobby({ roomId, onStart }: DuelLobbyProps) {
                     <Card className="border-2 border-dashed border-gray-300 bg-gray-50">
                       <CardContent className="p-6 text-center">
                         <Users className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                        <p className="text-gray-500 text-sm">Waiting for player...</p>
+                        <p className="text-gray-500 text-sm">
+                          Waiting for player...
+                        </p>
                       </CardContent>
                     </Card>
                   )}
@@ -346,14 +355,24 @@ export function DuelLobby({ roomId, onStart }: DuelLobbyProps) {
             {/* Room Info */}
             <Card className="bg-gray-50 mb-6">
               <CardContent className="p-4">
-                <div className="grid grid-cols-3 gap-4 text-center text-sm">
+                <div className="grid grid-cols-4 gap-4 text-center text-sm">
+                  <div>
+                    <Swords className="h-5 w-5 mx-auto mb-1 text-emerald-600" />
+                    <p className="text-gray-600">Topic</p>
+                    <p
+                      className="font-bold text-xs truncate"
+                      title={room.trackId ? "Selected Track" : "Random Mix"}
+                    >
+                      {room.trackId ? "Selected" : "Random Mix"}
+                    </p>
+                  </div>
                   <div>
                     <Clock className="h-5 w-5 mx-auto mb-1 text-gray-600" />
                     <p className="text-gray-600">Items</p>
                     <p className="font-bold">{room.itemIds.length}</p>
                   </div>
                   <div>
-                    <Swords className="h-5 w-5 mx-auto mb-1 text-gray-600" />
+                    <Users className="h-5 w-5 mx-auto mb-1 text-gray-600" />
                     <p className="text-gray-600">Mode</p>
                     <p className="font-bold">Multi-Player</p>
                   </div>
@@ -411,7 +430,14 @@ export function DuelLobby({ roomId, onStart }: DuelLobbyProps) {
 }
 
 // Player Card Components
-function PlayerCard({ participant, isHost, isReady, isYou, canKick, onKick }: any) {
+function PlayerCard({
+  participant,
+  isHost,
+  isReady,
+  isYou,
+  canKick,
+  onKick,
+}: any) {
   return (
     <Card
       className={`text-center relative ${
@@ -432,7 +458,9 @@ function PlayerCard({ participant, isHost, isReady, isYou, canKick, onKick }: an
           </Button>
         )}
         <Avatar className="h-24 w-24 mx-auto mb-4">
-          <AvatarFallback className={`${isYou ? 'bg-purple-500' : 'bg-blue-500'} text-white text-3xl`}>
+          <AvatarFallback
+            className={`${isYou ? "bg-purple-500" : "bg-blue-500"} text-white text-3xl`}
+          >
             {(participant.name || "P")[0].toUpperCase()}
           </AvatarFallback>
         </Avatar>
@@ -456,11 +484,20 @@ function PlayerCard({ participant, isHost, isReady, isYou, canKick, onKick }: an
   );
 }
 
-function PlayerCardCompact({ participant, isHost, isReady, isYou, canKick, onKick }: any) {
+function PlayerCardCompact({
+  participant,
+  isHost,
+  isReady,
+  isYou,
+  canKick,
+  onKick,
+}: any) {
   return (
     <Card
       className={`text-center relative ${
-        isReady ? "border-2 border-green-500 bg-green-50" : "border-2 border-gray-300"
+        isReady
+          ? "border-2 border-green-500 bg-green-50"
+          : "border-2 border-gray-300"
       }`}
     >
       <CardContent className="p-3">
@@ -475,7 +512,9 @@ function PlayerCardCompact({ participant, isHost, isReady, isYou, canKick, onKic
           </Button>
         )}
         <Avatar className="h-12 w-12 mx-auto mb-2">
-          <AvatarFallback className={`${isYou ? 'bg-purple-500' : 'bg-blue-500'} text-white text-sm`}>
+          <AvatarFallback
+            className={`${isYou ? "bg-purple-500" : "bg-blue-500"} text-white text-sm`}
+          >
             {(participant.name || "P")[0].toUpperCase()}
           </AvatarFallback>
         </Avatar>
@@ -495,13 +534,22 @@ function PlayerCardCompact({ participant, isHost, isReady, isYou, canKick, onKic
   );
 }
 
-function PlayerCardList({ participant, isHost, isReady, isYou, canKick, onKick }: any) {
+function PlayerCardList({
+  participant,
+  isHost,
+  isReady,
+  isYou,
+  canKick,
+  onKick,
+}: any) {
   return (
     <Card className={`${isReady ? "bg-green-50 border-green-300" : ""}`}>
       <CardContent className="p-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10">
-            <AvatarFallback className={`${isYou ? 'bg-purple-500' : 'bg-blue-500'} text-white`}>
+            <AvatarFallback
+              className={`${isYou ? "bg-purple-500" : "bg-blue-500"} text-white`}
+            >
               {(participant.name || "P")[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
@@ -519,7 +567,9 @@ function PlayerCardList({ participant, isHost, isReady, isYou, canKick, onKick }
           {isReady ? (
             <Badge className="bg-green-500 text-white text-xs">Ready</Badge>
           ) : (
-            <Badge variant="outline" className="text-xs">Waiting</Badge>
+            <Badge variant="outline" className="text-xs">
+              Waiting
+            </Badge>
           )}
           {canKick && (
             <Button

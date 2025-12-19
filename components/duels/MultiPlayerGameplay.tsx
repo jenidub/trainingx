@@ -7,11 +7,7 @@ import { Id } from "convex/_generated/dataModel";
 import { useAuth } from "@/contexts/AuthContextProvider";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -77,6 +73,17 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
     return () => clearInterval(timer);
   }, [timeLeft, showFeedback]);
 
+  // Auto-dismiss feedback popup after 1.5 seconds
+  useEffect(() => {
+    if (showFeedback) {
+      const timer = setTimeout(() => {
+        setShowFeedback(false);
+        setIsCorrect(null);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [showFeedback]);
+
   if (!user || !room) {
     return (
       <Card>
@@ -93,60 +100,109 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
 
   // Show victory screen if room completed
   if (room.status === "completed" && room.rankings) {
-    return <VictoryScreen room={room} participants={participants} userId={user._id} />;
+    return (
+      <VictoryScreen
+        room={room}
+        participants={participants}
+        userId={user._id}
+      />
+    );
   }
 
   // Show waiting screen if user completed but others haven't
   if (userCompleted) {
-    return <WaitingScreen room={room} participants={participants} attempts={attempts} />;
+    return (
+      <WaitingScreen
+        room={room}
+        participants={participants}
+        attempts={attempts}
+      />
+    );
   }
 
   const currentItem = items[currentItemIndex];
+
+  // Debug: log item structure to see why question is missing
+  console.log("Current item:", currentItem);
+
   if (!currentItem) {
     return (
       <Card>
         <CardContent className="p-12 text-center">
           <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <p className="text-gray-600 mb-4">Item not found</p>
+          <p className="text-gray-600 mb-4">
+            Item not found (index: {currentItemIndex}, total: {items.length})
+          </p>
           <Button onClick={() => router.push("/duels")}>Back to Arena</Button>
         </CardContent>
       </Card>
     );
   }
 
+  // Determine item type and content
+  const isRateType =
+    !currentItem.params?.options || currentItem.type === "rate";
+  const question =
+    currentItem.params?.question ||
+    currentItem.params?.prompt ||
+    "No question available";
+  const scenario = currentItem.params?.scenario;
   const options = currentItem.params?.options || [];
-  const question = currentItem.params?.question || "No question available";
 
-  const handleSelectAnswer = (optionIndex: number) => {
+  const handleSelectAnswer = (answer: any) => {
     if (showFeedback || submitting) return;
-    setSelectedAnswer(optionIndex);
+    // For rate type: answer is string "bad"|"almost"|"good"
+    // For choose type: answer is number index
+    setSelectedAnswer(answer);
   };
 
   const handleSubmitAnswer = async () => {
     if (!currentItem || submitting) return;
-    
-    const answerIndex = selectedAnswer !== null ? selectedAnswer : -1;
 
     setSubmitting(true);
     try {
       const timeMs = Date.now() - startTime;
-      const selectedOption = answerIndex >= 0 ? options[answerIndex] : null;
-      const correct = selectedOption?.quality === "good";
-      const score = correct ? 100 : 0;
+      let correct = false;
+      let score = 0;
+      let response = {};
+
+      if (isRateType) {
+        // Rate logic
+        const answer = selectedAnswer as string; // "bad", "almost", "good"
+        const correctAnswer = currentItem.params?.correctAnswer;
+        correct = answer === correctAnswer;
+
+        // Match useGameState scoring
+        if (correct) {
+          score = 100; // Base score
+        } else if (answer === "almost" || correctAnswer === "almost") {
+          score = 25; // Partial credit logic could go here, keeping simple for now
+        } else {
+          score = 0;
+        }
+        response = { answer };
+      } else {
+        // Choose logic
+        const answerIndex = selectedAnswer as number;
+        const selectedOption = answerIndex >= 0 ? options[answerIndex] : null;
+        correct = selectedOption?.quality === "good";
+        score = correct ? 100 : 0;
+        response = { optionIndex: answerIndex };
+      }
 
       await submitAttempt({
         userId: user._id as any,
         roomId,
         itemId: currentItem._id,
-        response: { optionIndex: answerIndex },
+        response,
         score,
-        correct: correct || false,
+        correct,
         timeMs,
       });
 
-      setIsCorrect(correct || false);
+      setIsCorrect(correct);
       setShowFeedback(true);
-      
+
       if (correct) {
         setStreak((s) => s + 1);
       } else {
@@ -170,14 +226,17 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
   };
 
   // Calculate live leaderboard
-  const liveLeaderboard = participants.map((p) => {
-    const pAttempts = attempts.filter((a) => a.userId === p._id);
-    const score = pAttempts.reduce((sum, a) => sum + a.score, 0);
-    const progress = pAttempts.length;
-    return { participant: p, score, progress };
-  }).sort((a, b) => b.score - a.score);
+  const liveLeaderboard = participants
+    .map((p) => {
+      const pAttempts = attempts.filter((a) => a.userId === p._id);
+      const score = pAttempts.reduce((sum, a) => sum + a.score, 0);
+      const progress = pAttempts.length;
+      return { participant: p, score, progress };
+    })
+    .sort((a, b) => b.score - a.score);
 
-  const yourRank = liveLeaderboard.findIndex((l) => l.participant._id === user._id) + 1;
+  const yourRank =
+    liveLeaderboard.findIndex((l) => l.participant._id === user._id) + 1;
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto p-4">
@@ -200,31 +259,42 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
               <Trophy className="h-5 w-5 text-amber-500" />
               Live Leaderboard
             </h3>
-            <Badge className="bg-purple-600">
-              Your Rank: #{yourRank}
-            </Badge>
+            <Badge className="bg-purple-600">Your Rank: #{yourRank}</Badge>
           </div>
-          
+
           {liveLeaderboard.length <= 5 ? (
             <div className="grid grid-cols-5 gap-2">
               {liveLeaderboard.map((entry, idx) => (
                 <div
                   key={entry.participant._id}
                   className={`text-center p-2 rounded ${
-                    entry.participant._id === user._id ? "bg-purple-600" : "bg-gray-700"
+                    entry.participant._id === user._id
+                      ? "bg-purple-600"
+                      : "bg-gray-700"
                   }`}
                 >
                   <div className="text-2xl mb-1">
-                    {idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `${idx + 1}`}
+                    {idx === 0
+                      ? "🥇"
+                      : idx === 1
+                        ? "🥈"
+                        : idx === 2
+                          ? "🥉"
+                          : `${idx + 1}`}
                   </div>
                   <Avatar className="h-8 w-8 mx-auto mb-1">
                     <AvatarFallback className="bg-blue-500 text-white text-xs">
                       {(entry.participant.name || "P")[0].toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <p className="text-xs truncate">{entry.participant.name?.split(" ")[0] || "Player"}</p>
+                  <p className="text-xs truncate">
+                    {entry.participant.name?.split(" ")[0] || "Player"}
+                  </p>
                   <p className="text-sm font-bold">{entry.score}</p>
-                  <Progress value={(entry.progress / room.itemIds.length) * 100} className="h-1 mt-1" />
+                  <Progress
+                    value={(entry.progress / room.itemIds.length) * 100}
+                    className="h-1 mt-1"
+                  />
                 </div>
               ))}
             </div>
@@ -236,13 +306,17 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
                   className="flex items-center justify-between p-2 bg-gray-700 rounded"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">{idx === 0 ? "🥇" : idx === 1 ? "🥈" : "🥉"}</span>
+                    <span className="text-lg">
+                      {idx === 0 ? "🥇" : idx === 1 ? "🥈" : "🥉"}
+                    </span>
                     <Avatar className="h-6 w-6">
                       <AvatarFallback className="bg-blue-500 text-white text-xs">
                         {(entry.participant.name || "P")[0].toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="text-sm">{entry.participant.name || "Player"}</span>
+                    <span className="text-sm">
+                      {entry.participant.name || "Player"}
+                    </span>
                   </div>
                   <span className="font-bold">{entry.score}</span>
                 </div>
@@ -253,7 +327,9 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
                     <span className="text-sm">#{yourRank}</span>
                     <span className="text-sm font-bold">You</span>
                   </div>
-                  <span className="font-bold">{liveLeaderboard[yourRank - 1].score}</span>
+                  <span className="font-bold">
+                    {liveLeaderboard[yourRank - 1].score}
+                  </span>
                 </div>
               )}
             </div>
@@ -270,13 +346,13 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
             </Badge>
             <div className="flex items-center gap-3">
               <Clock className="h-5 w-5" />
-              <span 
+              <span
                 className={`font-mono text-2xl font-bold ${
-                  timeLeft < 10 
-                    ? 'text-red-300 animate-pulse' 
-                    : timeLeft < 30 
-                      ? 'text-yellow-300' 
-                      : 'text-white'
+                  timeLeft < 10
+                    ? "text-red-300 animate-pulse"
+                    : timeLeft < 30
+                      ? "text-yellow-300"
+                      : "text-white"
                 }`}
               >
                 {timeLeft}s
@@ -291,73 +367,133 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
           )}
         </CardHeader>
         <CardContent className="p-6 space-y-6">
-          {/* Question */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-linear-to-br from-blue-50 to-purple-50 p-6 rounded-lg border-2 border-blue-200"
-          >
-            <h3 className="text-xl font-bold text-gray-900">{question}</h3>
-          </motion.div>
+          {/* Scenario (if exists) */}
+          {scenario && (
+            <div className="space-y-2">
+              <h3 className="text-gray-500 text-xs font-bold uppercase tracking-wide">
+                Scenario
+              </h3>
+              <p className="text-gray-900 text-lg leading-relaxed font-medium">
+                {scenario}
+              </p>
+            </div>
+          )}
 
-          {/* Options */}
+          {/* Question/Prompt */}
+          <div className="space-y-2">
+            <h3 className="text-gray-500 text-xs font-bold uppercase tracking-wide">
+              {isRateType ? "Prompt" : "Question"}
+            </h3>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-linear-to-br from-blue-50 to-purple-50 p-6 rounded-lg border-2 border-blue-200"
+            >
+              <h3 className="text-xl font-bold text-gray-900 font-mono">
+                {question}
+              </h3>
+            </motion.div>
+          </div>
+
+          {/* Options or Rate Buttons */}
           <div className="space-y-3">
-            {options.map((option: any, index: number) => {
-              const isSelected = selectedAnswer === index;
-              const isCorrectOption = option.quality === "good";
-              const showCorrect = showFeedback && isCorrectOption;
-              const showIncorrect = showFeedback && isSelected && !isCorrectOption;
-
-              return (
-                <motion.button
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => handleSelectAnswer(index)}
-                  disabled={showFeedback || submitting}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                    showCorrect
-                      ? "border-green-500 bg-green-50"
-                      : showIncorrect
-                        ? "border-red-500 bg-red-50"
-                        : isSelected
-                          ? "border-purple-500 bg-purple-50"
-                          : "border-gray-200 hover:border-purple-300 hover:bg-purple-50"
-                  } ${showFeedback || submitting ? "cursor-not-allowed" : "cursor-pointer"}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold ${
-                        showCorrect
-                          ? "border-green-500 bg-green-500 text-white"
-                          : showIncorrect
-                            ? "border-red-500 bg-red-500 text-white"
-                            : isSelected
-                              ? "border-purple-500 bg-purple-500 text-white"
-                              : "border-gray-300 text-gray-600"
-                      }`}
+            {isRateType ? (
+              // RATE TYPE (Bad/Almost/Good)
+              <div className="flex gap-3">
+                {[
+                  { val: "bad", label: "Bad", emoji: "😔", color: "red" },
+                  {
+                    val: "almost",
+                    label: "Almost",
+                    emoji: "🤔",
+                    color: "yellow",
+                  },
+                  { val: "good", label: "Good", emoji: "🎯", color: "green" },
+                ].map((opt) => {
+                  const isSelected = selectedAnswer === opt.val;
+                  return (
+                    <motion.button
+                      key={opt.val}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleSelectAnswer(opt.val)}
+                      disabled={showFeedback || submitting}
+                      className={`flex-1 p-6 rounded-xl font-bold text-lg shadow-lg border-2 transition-all ${
+                        isSelected
+                          ? `bg-${opt.color}-500 border-${opt.color}-700 text-white`
+                          : `bg-white border-${opt.color}-200 text-${opt.color}-600 hover:bg-${opt.color}-50`
+                      } ${showFeedback ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
-                      {showCorrect ? (
-                        <CheckCircle2 className="h-5 w-5" />
-                      ) : showIncorrect ? (
-                        <XCircle className="h-5 w-5" />
-                      ) : (
-                        String.fromCharCode(65 + index)
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-gray-900 font-medium">{option.text}</p>
-                      {showFeedback && (isSelected || isCorrectOption) && option.explanation && (
-                        <p className="text-sm text-gray-600 mt-2">
-                          {option.explanation}
+                      <span className="text-2xl block mb-2">{opt.emoji}</span>
+                      {opt.label}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            ) : (
+              // CHOOSE TYPE (Options list)
+              options.map((option: any, index: number) => {
+                const isSelected = selectedAnswer === index;
+                const isCorrectOption = option.quality === "good";
+                const showCorrect = showFeedback && isCorrectOption;
+                const showIncorrect =
+                  showFeedback && isSelected && !isCorrectOption;
+
+                return (
+                  <motion.button
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => handleSelectAnswer(index)}
+                    disabled={showFeedback || submitting}
+                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                      showCorrect
+                        ? "border-green-500 bg-green-50"
+                        : showIncorrect
+                          ? "border-red-500 bg-red-50"
+                          : isSelected
+                            ? "border-purple-500 bg-purple-50"
+                            : "border-gray-200 hover:border-purple-300 hover:bg-purple-50"
+                    } ${showFeedback || submitting ? "cursor-not-allowed" : "cursor-pointer"}`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div
+                        className={`shrink-0 w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold ${
+                          showCorrect
+                            ? "border-green-500 bg-green-500 text-white"
+                            : showIncorrect
+                              ? "border-red-500 bg-red-500 text-white"
+                              : isSelected
+                                ? "border-purple-500 bg-purple-500 text-white"
+                                : "border-gray-300 text-gray-600"
+                        }`}
+                      >
+                        {showCorrect ? (
+                          <CheckCircle2 className="h-5 w-5" />
+                        ) : showIncorrect ? (
+                          <XCircle className="h-5 w-5" />
+                        ) : (
+                          String.fromCharCode(65 + index)
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-gray-900 font-medium">
+                          {option.text}
                         </p>
-                      )}
+                        {showFeedback &&
+                          (isSelected || isCorrectOption) &&
+                          option.explanation && (
+                            <p className="text-sm text-gray-600 mt-2">
+                              {option.explanation}
+                            </p>
+                          )}
+                      </div>
                     </div>
-                  </div>
-                </motion.button>
-              );
-            })}
+                  </motion.button>
+                );
+              })
+            )}
           </div>
 
           {/* Actions */}
@@ -382,11 +518,7 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
                 )}
               </Button>
             ) : (
-              <Button
-                onClick={handleNextItem}
-                className="flex-1"
-                size="lg"
-              >
+              <Button onClick={handleNextItem} className="flex-1" size="lg">
                 Next Question →
               </Button>
             )}
@@ -394,27 +526,35 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
         </CardContent>
       </Card>
 
-      {/* Feedback Overlay */}
+      {/* Feedback Overlay - Click anywhere or auto-dismiss after 1.5s */}
       <AnimatePresence>
         {showFeedback && isCorrect !== null && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 flex items-center justify-center bg-black/50 z-50 cursor-pointer"
+            onClick={() => {
+              // Click anywhere to dismiss and show the question with Next button
+              setShowFeedback(false);
+              setIsCorrect(null);
+            }}
           >
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", duration: 0.5 }}
             >
-              <Card className={`p-8 ${isCorrect ? 'border-green-500 border-4' : 'border-red-500 border-4'} shadow-2xl`}>
+              <Card
+                className={`p-8 ${isCorrect ? "border-green-500 border-4" : "border-red-500 border-4"} shadow-2xl`}
+              >
                 <CardContent className="text-center">
                   {isCorrect ? (
                     <>
                       <CheckCircle2 className="h-24 w-24 text-green-500 mx-auto mb-4" />
-                      <h2 className="text-4xl font-bold text-green-600 mb-2">Correct!</h2>
+                      <h2 className="text-4xl font-bold text-green-600 mb-2">
+                        Correct!
+                      </h2>
                       <p className="text-2xl text-gray-700">+100 points</p>
                       {streak > 1 && (
                         <div className="flex items-center justify-center gap-2 mt-3">
@@ -428,7 +568,9 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
                   ) : (
                     <>
                       <XCircle className="h-24 w-24 text-red-500 mx-auto mb-4" />
-                      <h2 className="text-4xl font-bold text-red-600 mb-2">Incorrect</h2>
+                      <h2 className="text-4xl font-bold text-red-600 mb-2">
+                        Incorrect
+                      </h2>
                       <p className="text-gray-700">Keep trying!</p>
                     </>
                   )}
@@ -447,7 +589,9 @@ function WaitingScreen({ room, participants, attempts }: any) {
   const completedPlayers = new Set(
     attempts
       .filter((a: any) => {
-        const playerAttempts = attempts.filter((pa: any) => pa.userId === a.userId);
+        const playerAttempts = attempts.filter(
+          (pa: any) => pa.userId === a.userId
+        );
         return playerAttempts.length === room.itemIds.length;
       })
       .map((a: any) => a.userId)
@@ -528,21 +672,39 @@ function VictoryScreen({ room, participants, userId }: any) {
             </motion.div>
 
             <h1 className="text-5xl font-bold text-center mb-2">
-              {yourRank === 1 ? "VICTORY!" : `${yourRank}${yourRank === 2 ? "nd" : yourRank === 3 ? "rd" : "th"} Place`}
+              {yourRank === 1
+                ? "VICTORY!"
+                : `${yourRank}${yourRank === 2 ? "nd" : yourRank === 3 ? "rd" : "th"} Place`}
             </h1>
             <p className="text-center text-gray-600 mb-8">
-              {yourRank === 1 ? "You dominated!" : yourRank <= 3 ? "Great job!" : "Good effort!"}
+              {yourRank === 1
+                ? "You dominated!"
+                : yourRank <= 3
+                  ? "Great job!"
+                  : "Good effort!"}
             </p>
 
             {/* Podium */}
             {rankings.length >= 3 && (
               <div className="flex items-end justify-center gap-4 mb-8">
                 {/* 2nd Place */}
-                <PodiumCard ranking={rankings[1]} participants={participants} place={2} />
+                <PodiumCard
+                  ranking={rankings[1]}
+                  participants={participants}
+                  place={2}
+                />
                 {/* 1st Place */}
-                <PodiumCard ranking={rankings[0]} participants={participants} place={1} />
+                <PodiumCard
+                  ranking={rankings[0]}
+                  participants={participants}
+                  place={1}
+                />
                 {/* 3rd Place */}
-                <PodiumCard ranking={rankings[2]} participants={participants} place={3} />
+                <PodiumCard
+                  ranking={rankings[2]}
+                  participants={participants}
+                  place={3}
+                />
               </div>
             )}
 
@@ -555,18 +717,28 @@ function VictoryScreen({ room, participants, userId }: any) {
                 </h3>
                 <div className="space-y-2">
                   {rankings.map((ranking: any) => {
-                    const participant = participants.find((p: any) => p._id === ranking.userId);
+                    const participant = participants.find(
+                      (p: any) => p._id === ranking.userId
+                    );
                     const isYou = ranking.userId === userId;
                     return (
                       <div
                         key={ranking.userId}
                         className={`flex items-center justify-between p-3 rounded-lg ${
-                          isYou ? "bg-purple-100 border-2 border-purple-500" : "bg-white"
+                          isYou
+                            ? "bg-purple-100 border-2 border-purple-500"
+                            : "bg-white"
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-2xl w-8">
-                            {ranking.rank === 1 ? "🥇" : ranking.rank === 2 ? "🥈" : ranking.rank === 3 ? "🥉" : `${ranking.rank}.`}
+                            {ranking.rank === 1
+                              ? "🥇"
+                              : ranking.rank === 2
+                                ? "🥈"
+                                : ranking.rank === 3
+                                  ? "🥉"
+                                  : `${ranking.rank}.`}
                           </span>
                           <Avatar className="h-8 w-8">
                             <AvatarFallback className="bg-blue-500 text-white">
@@ -579,11 +751,14 @@ function VictoryScreen({ room, participants, userId }: any) {
                               {isYou && " (You)"}
                             </p>
                             <p className="text-xs text-gray-600">
-                              {ranking.correct} correct · {Math.round(ranking.avgTimeMs / 1000)}s avg
+                              {ranking.correct} correct ·{" "}
+                              {Math.round(ranking.avgTimeMs / 1000)}s avg
                             </p>
                           </div>
                         </div>
-                        <span className="text-2xl font-bold">{ranking.score}</span>
+                        <span className="text-2xl font-bold">
+                          {ranking.score}
+                        </span>
                       </div>
                     );
                   })}
@@ -621,7 +796,7 @@ function PodiumCard({ ranking, participants, place }: any) {
   const participant = participants.find((p: any) => p._id === ranking.userId);
   const heights = { 1: "h-32", 2: "h-24", 3: "h-20" };
   const colors = { 1: "bg-amber-500", 2: "bg-gray-400", 3: "bg-orange-600" };
-  
+
   return (
     <div className="flex flex-col items-center">
       <Avatar className="h-16 w-16 mb-2 border-4 border-white">
@@ -630,7 +805,9 @@ function PodiumCard({ ranking, participants, place }: any) {
         </AvatarFallback>
       </Avatar>
       <p className="font-bold text-sm mb-2">{participant?.name || "Player"}</p>
-      <div className={`${heights[place as keyof typeof heights]} ${colors[place as keyof typeof colors]} w-24 rounded-t-lg flex flex-col items-center justify-center text-white`}>
+      <div
+        className={`${heights[place as keyof typeof heights]} ${colors[place as keyof typeof colors]} w-24 rounded-t-lg flex flex-col items-center justify-center text-white`}
+      >
         <div className="text-3xl mb-1">
           {place === 1 ? "🥇" : place === 2 ? "🥈" : "🥉"}
         </div>

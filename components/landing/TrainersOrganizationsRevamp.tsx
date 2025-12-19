@@ -10,7 +10,7 @@ export default function TrainersOrganizationsRevamp() {
   return (
     <section className="relative py-16 overflow-hidden rounded-3xl">
       <RevampedBackground />
-      <div className="relative z-10">
+      <div className="relative z-10 container mx-auto px-4">
         {/* Connector Line */}
         <motion.div
           initial={{ height: 0 }}

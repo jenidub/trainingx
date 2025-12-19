@@ -17,7 +17,7 @@ export default function Navigation() {
         { label: "Dashboard", href: "/dashboard" },
         { label: "Practice", href: "/practice" },
         { label: "Matching", href: "/matching" },
-        { label: "Portfolio", href: "/portfolio" },
+        // { label: "Portfolio", href: "/portfolio" },
         { label: "Assessment", href: "/assessment" },
       ]
     : [

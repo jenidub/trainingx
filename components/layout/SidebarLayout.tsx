@@ -7,7 +7,7 @@ interface SidebarLayoutProps {
 
 export function SidebarLayout({ children }: SidebarLayoutProps) {
   const style = {
-    "--sidebar-width": "13rem",
+    "--sidebar-width": "13.2rem",
     "--sidebar-width-icon": "3rem",
   };
 
@@ -16,9 +16,7 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
       <div className="bg-white flex h-screen w-full">
         <AppSidebar />
         <div className="flex flex-col flex-1 overflow-hidden">
-          <main className="flex-1 overflow-auto">
-            {children}
-          </main>
+          <main className="flex-1 overflow-auto">{children}</main>
         </div>
       </div>
     </SidebarProvider>

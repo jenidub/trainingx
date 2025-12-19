@@ -1,69 +1,69 @@
-"use client"
+"use client";
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import type { ComponentProps } from "react"
-import { useConversation } from "@elevenlabs/react"
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { ComponentProps } from "react";
+import { useConversation } from "@elevenlabs/react";
 import {
   AudioLinesIcon,
   CheckIcon,
   CopyIcon,
   PhoneOffIcon,
   SendIcon,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Conversation,
   ConversationContent,
   ConversationEmptyState,
   ConversationScrollButton,
-} from "@/components/ui/conversation"
-import { Input } from "@/components/ui/input"
-import { Message, MessageContent } from "@/components/ui/message"
-import { Orb } from "@/components/ui/orb"
-import { Response } from "@/components/ui/response"
-import { ShimmeringText } from "@/components/ui/shimmering-text"
+} from "@/components/ui/conversation";
+import { Input } from "@/components/ui/input";
+import { Message, MessageContent } from "@/components/ui/message";
+import { Orb } from "@/components/ui/orb";
+import { Response } from "@/components/ui/response";
+import { ShimmeringText } from "@/components/ui/shimmering-text";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
-type SystemMessageType = "initial" | "connecting" | "connected" | "error"
+type SystemMessageType = "initial" | "connecting" | "connected" | "error";
 
 interface ChatMessage {
-  role: "user" | "assistant"
-  content: string
-  timestamp?: Date
-  type?: SystemMessageType
+  role: "user" | "assistant";
+  content: string;
+  timestamp?: Date;
+  type?: SystemMessageType;
 }
 
 const DEFAULT_AGENT = {
   agentId: process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID!,
-  name: "Customer Support",
-  description: "AI Voice Assistant",
-}
+  name: "Spiral the Studdy Buddy",
+  description: "Making learning fun and engaging",
+};
 
-type ChatActionsProps = ComponentProps<"div">
+type ChatActionsProps = ComponentProps<"div">;
 
 const ChatActions = ({ className, children, ...props }: ChatActionsProps) => (
   <div className={cn("flex items-center gap-1", className)} {...props}>
     {children}
   </div>
-)
+);
 
 type ChatActionProps = ComponentProps<typeof Button> & {
-  tooltip?: string
-  label?: string
-}
+  tooltip?: string;
+  label?: string;
+};
 
 const ChatAction = ({
   tooltip,
@@ -88,7 +88,7 @@ const ChatAction = ({
       {children}
       <span className="sr-only">{label || tooltip}</span>
     </Button>
-  )
+  );
 
   if (tooltip) {
     return (
@@ -100,34 +100,34 @@ const ChatAction = ({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-    )
+    );
   }
 
-  return button
-}
+  return button;
+};
 
 export default function Page() {
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [agentState, setAgentState] = useState<
     "disconnected" | "connecting" | "connected" | "disconnecting" | null
-  >("disconnected")
-  const [textInput, setTextInput] = useState("")
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const mediaStreamRef = useRef<MediaStream | null>(null)
-  const isTextOnlyModeRef = useRef<boolean>(true)
+  >("disconnected");
+  const [textInput, setTextInput] = useState("");
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const isTextOnlyModeRef = useRef<boolean>(true);
 
   const conversation = useConversation({
     onConnect: () => {
       // Only clear messages for voice mode
       if (!isTextOnlyModeRef.current) {
-        setMessages([])
+        setMessages([]);
       }
     },
     onDisconnect: () => {
       // Only clear messages for voice mode
       if (!isTextOnlyModeRef.current) {
-        setMessages([])
+        setMessages([]);
       }
     },
     onMessage: (message) => {
@@ -135,34 +135,36 @@ export default function Page() {
         const newMessage: ChatMessage = {
           role: message.source === "user" ? "user" : "assistant",
           content: message.message,
-        }
-        setMessages((prev) => [...prev, newMessage])
+        };
+        setMessages((prev) => [...prev, newMessage]);
       }
     },
     onError: (error) => {
-      console.error("Error:", error)
-      setAgentState("disconnected")
+      console.error("Error:", error);
+      setAgentState("disconnected");
     },
     onDebug: (debug) => {
-      console.log("Debug:", debug)
+      console.log("Debug:", debug);
     },
-  })
+  });
 
   const getMicStream = useCallback(async () => {
-    if (mediaStreamRef.current) return mediaStreamRef.current
+    if (mediaStreamRef.current) return mediaStreamRef.current;
 
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      mediaStreamRef.current = stream
-      setErrorMessage(null)
-      return stream
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
+      setErrorMessage(null);
+      return stream;
     } catch (error) {
       if (error instanceof DOMException && error.name === "NotAllowedError") {
-        setErrorMessage("Please enable microphone permissions in your browser.")
+        setErrorMessage(
+          "Please enable microphone permissions in your browser."
+        );
       }
-      throw error
+      throw error;
     }
-  }, [])
+  }, []);
 
   const startConversation = useCallback(
     async (
@@ -170,14 +172,14 @@ export default function Page() {
       skipConnectingMessage: boolean = false
     ) => {
       try {
-        isTextOnlyModeRef.current = textOnly
+        isTextOnlyModeRef.current = textOnly;
 
         if (!skipConnectingMessage) {
-          setMessages([])
+          setMessages([]);
         }
 
         if (!textOnly) {
-          await getMicStream()
+          await getMicStream();
         }
 
         await conversation.startSession({
@@ -192,112 +194,112 @@ export default function Page() {
             },
           },
           onStatusChange: (status) => setAgentState(status.status),
-        })
+        });
       } catch (error) {
-        console.error(error)
-        setAgentState("disconnected")
-        setMessages([])
+        console.error(error);
+        setAgentState("disconnected");
+        setMessages([]);
       }
     },
     [conversation, getMicStream]
-  )
+  );
 
   const handleCall = useCallback(async () => {
     if (agentState === "disconnected" || agentState === null) {
-      setAgentState("connecting")
+      setAgentState("connecting");
       try {
-        await startConversation(false)
+        await startConversation(false);
       } catch {
-        setAgentState("disconnected")
+        setAgentState("disconnected");
       }
     } else if (agentState === "connected") {
-      conversation.endSession()
-      setAgentState("disconnected")
+      conversation.endSession();
+      setAgentState("disconnected");
 
       if (mediaStreamRef.current) {
-        mediaStreamRef.current.getTracks().forEach((t) => t.stop())
-        mediaStreamRef.current = null
+        mediaStreamRef.current.getTracks().forEach((t) => t.stop());
+        mediaStreamRef.current = null;
       }
     }
-  }, [agentState, conversation, startConversation])
+  }, [agentState, conversation, startConversation]);
 
   const handleTextInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTextInput(e.target.value)
+      setTextInput(e.target.value);
     },
     []
-  )
+  );
 
   const handleSendText = useCallback(async () => {
-    if (!textInput.trim()) return
+    if (!textInput.trim()) return;
 
-    const messageToSend = textInput
+    const messageToSend = textInput;
 
     if (agentState === "disconnected" || agentState === null) {
       const userMessage: ChatMessage = {
         role: "user",
         content: messageToSend,
-      }
-      setTextInput("")
-      setAgentState("connecting")
+      };
+      setTextInput("");
+      setAgentState("connecting");
 
       try {
-        await startConversation(true, true)
+        await startConversation(true, true);
         // Add message once converstation started
-        setMessages([userMessage])
+        setMessages([userMessage]);
         // Send message after connection is established
-        conversation.sendUserMessage(messageToSend)
+        conversation.sendUserMessage(messageToSend);
       } catch (error) {
-        console.error("Failed to start conversation:", error)
+        console.error("Failed to start conversation:", error);
       }
     } else if (agentState === "connected") {
       const newMessage: ChatMessage = {
         role: "user",
         content: messageToSend,
-      }
-      setMessages((prev) => [...prev, newMessage])
-      setTextInput("")
+      };
+      setMessages((prev) => [...prev, newMessage]);
+      setTextInput("");
 
-      conversation.sendUserMessage(messageToSend)
+      conversation.sendUserMessage(messageToSend);
     }
-  }, [textInput, agentState, conversation, startConversation])
+  }, [textInput, agentState, conversation, startConversation]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault()
-        handleSendText()
+        e.preventDefault();
+        handleSendText();
       }
     },
     [handleSendText]
-  )
+  );
 
   useEffect(() => {
     return () => {
       if (mediaStreamRef.current) {
-        mediaStreamRef.current.getTracks().forEach((t) => t.stop())
+        mediaStreamRef.current.getTracks().forEach((t) => t.stop());
       }
-    }
-  }, [])
+    };
+  }, []);
 
-  const isCallActive = agentState === "connected"
+  const isCallActive = agentState === "connected";
   const isTransitioning =
-    agentState === "connecting" || agentState === "disconnecting"
+    agentState === "connecting" || agentState === "disconnecting";
 
   const getInputVolume = useCallback(() => {
-    const rawValue = conversation.getInputVolume?.() ?? 0
-    return Math.min(1.0, Math.pow(rawValue, 0.5) * 2.5)
-  }, [conversation])
+    const rawValue = conversation.getInputVolume?.() ?? 0;
+    return Math.min(1.0, Math.pow(rawValue, 0.5) * 2.5);
+  }, [conversation]);
 
   const getOutputVolume = useCallback(() => {
-    const rawValue = conversation.getOutputVolume?.() ?? 0
-    return Math.min(1.0, Math.pow(rawValue, 0.5) * 2.5)
-  }, [conversation])
+    const rawValue = conversation.getOutputVolume?.() ?? 0;
+    return Math.min(1.0, Math.pow(rawValue, 0.5) * 2.5);
+  }, [conversation]);
 
   return (
     <Card
       className={cn(
-        "mx-auto flex h-[380px] w-full flex-col gap-0 overflow-hidden"
+        "mx-auto flex max-w-3xl mt-10 h-[780px] w-full flex-col gap-0 overflow-hidden"
       )}
     >
       <CardHeader className="flex shrink-0 flex-row items-center justify-between pb-4">
@@ -393,9 +395,9 @@ export default function Page() {
                           size="sm"
                           tooltip={copiedIndex === index ? "Copied!" : "Copy"}
                           onClick={() => {
-                            navigator.clipboard.writeText(message.content)
-                            setCopiedIndex(index)
-                            setTimeout(() => setCopiedIndex(null), 2000)
+                            navigator.clipboard.writeText(message.content);
+                            setCopiedIndex(index);
+                            setTimeout(() => setCopiedIndex(null), 2000);
                           }}
                         >
                           {copiedIndex === index ? (
@@ -407,7 +409,7 @@ export default function Page() {
                       </ChatActions>
                     )}
                   </div>
-                )
+                );
               })
             )}
           </ConversationContent>
@@ -463,5 +465,5 @@ export default function Page() {
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

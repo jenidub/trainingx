@@ -42,6 +42,21 @@ Return the response as a JSON object with an "opportunities" array containing ex
   "skillThresholds": {"generative_ai": 60, "communication": 65}
 }
 
+Rules:
+- Ground locations/comp in the US (or Remote) and stay plausible; no fictional companies.
+- Keep requiredSkills and skillThresholds strictly within this taxonomy: generative_ai, agentic_ai, synthetic_ai, coding, agi_readiness, communication, logic, planning, analysis, creativity, collaboration.
+- Salary ranges should be USD bands; remotePolicy must be set.
+- Make titles/roles applicable across domains if their answers suggest non-tech sectors (education, biotech, agriculture, finance, media, manufacturing, etc.).
+- Align to user preferences from quiz answers (work type, location preference, industry focus, risk/time/comp) when provided.
+
+Also include a "skillSuggestions" array with 10-12 concise skills for the user to develop to unlock more opportunities. Each item should follow:
+{
+  "name": "Skill name",
+  "category": "technical" | "data" | "product" | "communication" | "business" | "design" | "ops",
+  "why": "One short line on why this skill matters for their goals"
+}
+Keep the "why" lines tight (under 14 words) and make the list varied.
+
 Make each opportunity feel personalized and exciting based on their specific answers.`;
 
     const userPrompt = `User's Quiz Answers:
@@ -53,8 +68,7 @@ User's Current Profile:
 - Prompt Score: ${userProfile?.promptScore || 0}
 - Completed Projects: ${userProfile?.completedProjects || 0}
 - Skills: ${JSON.stringify(userProfile?.skills || {})}
-
-Generate 5 personalized AI career opportunities for this user.`;
+Generate 5 personalized AI career opportunities and 10-12 focused skill suggestions for this user.`;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -73,6 +87,11 @@ Generate 5 personalized AI career opportunities for this user.`;
 
     const parsed = JSON.parse(content);
     const opportunities = parsed.opportunities || parsed;
+    const skillSuggestions =
+      parsed.skillSuggestions ||
+      parsed.skills ||
+      parsed.skill_suggestions ||
+      [];
 
     // Save the results if user is authenticated
     // We check identity existence here to avoid calling mutation unnecessarily
@@ -82,6 +101,9 @@ Generate 5 personalized AI career opportunities for this user.`;
         opportunities: Array.isArray(opportunities)
           ? opportunities
           : [opportunities],
+        skillSuggestions: Array.isArray(skillSuggestions)
+          ? skillSuggestions
+          : [],
         quizAnswers: quizAnswers,
       });
     }
@@ -90,6 +112,9 @@ Generate 5 personalized AI career opportunities for this user.`;
       opportunities: Array.isArray(opportunities)
         ? opportunities
         : [opportunities],
+      skillSuggestions: Array.isArray(skillSuggestions)
+        ? skillSuggestions
+        : [],
     };
   },
 });
@@ -116,6 +141,15 @@ export const saveAIMatches = mutation({
         skillThresholds: v.any(),
       })
     ),
+    skillSuggestions: v.optional(
+      v.array(
+        v.object({
+          name: v.string(),
+          category: v.string(),
+          why: v.string(),
+        })
+      )
+    ),
     quizAnswers: v.any(),
   },
   handler: async (ctx, args) => {
@@ -138,6 +172,7 @@ export const saveAIMatches = mutation({
     await ctx.db.insert("aiMatchingResults", {
       userId: userId,
       opportunities: args.opportunities,
+      skillSuggestions: args.skillSuggestions || [],
       quizAnswers: args.quizAnswers,
       generatedAt: Date.now(),
     });

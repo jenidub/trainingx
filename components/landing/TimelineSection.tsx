@@ -69,7 +69,7 @@ export default function TimelineSection() {
       <div className="relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
-            The TrainingX.AI <span className="text-purple-600">Story</span>
+            The TrainingX.AI <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">Story</span>
           </h2>
           <p className="text-slate-500 max-w-2xl mx-auto">
             From Spiral the Study Buddy to Universal Prompting Zone - a journey
@@ -82,11 +82,11 @@ export default function TimelineSection() {
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-slate-100 -ml-0.5 md:-ml-0.5">
             <motion.div
               style={{ scaleY: lineProgress }}
-              className="absolute top-0 left-0 right-0 bg-linear-to-b from-blue-500 via-purple-500 to-emerald-500 w-full origin-top"
+              className="absolute top-0 left-0 right-0 h-full bg-linear-to-b from-gradient-from to-gradient-to w-full origin-top"
             />
           </div>
 
-          <div className="space-y-12 md:space-y-24">
+          <div className="space-y-8 md:space-y-12">
             {milestones.map((m, i) => (
               <TimelineItem key={i} item={m} index={i} />
             ))}

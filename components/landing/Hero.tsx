@@ -118,9 +118,9 @@ function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardP
             ease: "easeOut"
           }}
         >
-          {React.createElement(Icon, { className: "h-8 w-8 mb-3 mx-auto" })}
+          {React.createElement(Icon, { className: "h-8 w-8 mt-1 mb-2 mx-auto" })}
         </motion.div>
-        <div className="text-3xl font-bold mb-2" data-testid={`text-value-${label.replace(/\s+/g, '-').toLowerCase()}`}>
+        <div className="text-2xl sm:text-3xl font-bold my-1" data-testid={`text-value-${label.replace(/\s+/g, '-').toLowerCase()}`}>
           {displayValue}
         </div>
         <div className="text-sm text-white/90">
@@ -156,13 +156,13 @@ export default function Hero() {
         <div className="max-w-5xl mx-auto space-y-6">
           <div className="inline-flex items-center gap-2 bg-slate-900/60 backdrop-blur-sm rounded-full px-6 py-2 border border-white/20">
             <Sparkles className="h-4 w-4" />
-            <span className="text-sm font-medium">
+            <span className="text-xs sm:text-sm sm:font-medium">
               {/* AI Skills Training Platform */}
               {`Built in 2015. Proven for a decade. Now it's your turn.`}
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-15 tracking-tight">
+          <h1 className="text-[45px] text-5xl md:text-6xl lg:text-7xl font-bold leading-12 md:leading-15 tracking-tight">
             Universal Prompting for{" "}
             <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent tracking-tight inline-block pb-2">
               the 21st Century

@@ -1,34 +1,37 @@
 "use client";
 
-import Link from "next/link";
 import { useMemo } from "react";
-
-import { SidebarLayout } from "@/components/layout/SidebarLayout";
+import Link from "next/link";
+import { motion } from "framer-motion";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContextProvider";
-import { useUserStats } from "@/contexts/UserStatsContext";
-import { computeMatches, meetsRequirements } from "@/lib/matching";
-import {
-  ArrowRight,
   Briefcase,
   Building2,
-  CheckCircle,
+  CheckCircle2,
   Database,
   DollarSign,
   Home,
+  Loader2,
   Lock,
   MapPin,
-  TrendingUp,
+  Sparkles,
+  Target,
+  Trophy,
   Wrench,
+  Zap,
+  ChevronRight,
 } from "lucide-react";
+
+import { SidebarLayout } from "@/components/layout/SidebarLayout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { JuicyButton } from "@/components/ui/juicy-button";
+import { Card, CardContent } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContextProvider";
+import { useUserStats } from "@/contexts/UserStatsContext";
+import { computeMatches, meetsRequirements } from "@/lib/matching";
+
+const generatedImage =
+  "/assets/generated_images/soft_abstract_3d_shapes_on_white_background_for_light_mode_ui.png";
 
 const categoryIcons = {
   career: Briefcase,
@@ -38,10 +41,10 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  career: "from-blue-500 to-blue-600",
-  business: "from-purple-500 to-purple-600",
-  side: "from-green-500 to-green-600",
-  trade: "from-orange-500 to-orange-600",
+  career: "bg-blue-100 text-blue-600",
+  business: "bg-purple-100 text-purple-600",
+  side: "bg-green-100 text-green-600",
+  trade: "bg-orange-100 text-orange-600",
 };
 
 const categoryLabels = {
@@ -49,6 +52,182 @@ const categoryLabels = {
   business: "Business",
   side: "Side Hustle",
   trade: "Trade",
+};
+
+type MatchType = keyof typeof categoryIcons;
+
+type AIOpportunity = {
+  id: string;
+  title: string;
+  type: MatchType;
+  location: string;
+  salaryRange: string;
+  employmentType: string;
+  seniority: string;
+  description: string;
+  impactHighlights: string[];
+  keyTechnologies: string[];
+  requiredSkills: string[];
+  whyPerfectMatch: string;
+  nextSteps: string;
+  remotePolicy: string;
+  promptScoreMin: number;
+  skillThresholds: Record<string, number>;
+};
+
+const OpportunityCard = ({
+  opportunity,
+  unlocked,
+  index,
+}: {
+  opportunity: AIOpportunity;
+  unlocked: boolean;
+  index: number;
+}) => {
+  const Icon =
+    categoryIcons[opportunity.type as MatchType] ?? categoryIcons.career;
+
+  // Duolingo-style color mapping
+  const themeColors = {
+    career: {
+      border: "border-blue-200",
+      borderHover: "group-hover:border-blue-400",
+      iconBg: "bg-blue-400",
+      text: "text-blue-500",
+      bg: "bg-blue-50",
+    },
+    business: {
+      border: "border-purple-200",
+      borderHover: "group-hover:border-purple-400",
+      iconBg: "bg-purple-400",
+      text: "text-purple-500",
+      bg: "bg-purple-50",
+    },
+    side: {
+      border: "border-green-200",
+      borderHover: "group-hover:border-green-400",
+      iconBg: "bg-green-400",
+      text: "text-green-500",
+      bg: "bg-green-50",
+    },
+    trade: {
+      border: "border-orange-200",
+      borderHover: "group-hover:border-orange-400",
+      iconBg: "bg-orange-400",
+      text: "text-orange-500",
+      bg: "bg-orange-50",
+    },
+  };
+
+  const theme =
+    themeColors[opportunity.type as MatchType] ?? themeColors.career;
+
+  return (
+    <Link href={`/matching/${opportunity.id}`} className="block h-full">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: index * 0.1 }}
+        className={`group relative h-full overflow-hidden rounded-3xl border-2 border-b-[6px] bg-white transition-all duration-200 ${theme.border} ${theme.borderHover} hover:shadow-xl hover:-translate-y-1`}
+      >
+        {/* XP Badge - Floating */}
+        <div className="absolute top-4 right-4 z-10">
+          {unlocked ? (
+            <div className="flex items-center gap-1.5 rounded-2xl border-2 border-b-4 border-yellow-500 bg-yellow-400 px-3 py-1.5 text-xs font-black uppercase tracking-wide text-yellow-950 shadow-sm">
+              <Zap className="h-5 w-5 fill-current" />
+              <span>+{opportunity.promptScoreMin * 10 + 500} XP</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 rounded-2xl border-2 border-b-4 border-slate-300 bg-slate-200 px-3 py-1.5 text-xs font-black uppercase tracking-wide text-slate-500 shadow-sm">
+              <Lock className="h-5 w-5" />
+              {/* <span>XP LOCKED</span> */}
+            </div>
+          )}
+        </div>
+
+        <div className="flex h-full flex-col p-6">
+          {/* Header */}
+          <div className="mb-6 flex items-start gap-4">
+            <div
+              className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 border-b-4 border-black/10 ${theme.iconBg} text-white shadow-sm`}
+            >
+              <Icon className="h-7 w-7" />
+            </div>
+            <div className="flex-1 space-y-2 pr-12">
+              <h3 className="text-xl font-extrabold leading-6 text-slate-700">
+                {opportunity.title}
+              </h3>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {/* Category Badge */}
+            <span
+              className={`inline-flex items-center rounded-xl border-2 border-b-4 px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${theme.bg} ${theme.border} ${theme.text} bg-opacity-50`}
+            >
+              {categoryLabels[opportunity.type] ?? opportunity.type}
+            </span>
+
+            {/* Remote Policy Badge (Moved here) */}
+            {opportunity.remotePolicy && (
+              <span className="inline-flex items-center rounded-xl border-2 border-b-4 border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                <Home className="mr-1 h-3 w-3" />
+                {opportunity.remotePolicy}
+              </span>
+            )}
+
+            {/* Match Score Badge */}
+            {unlocked ? (
+              <span className="inline-flex items-center rounded-xl border-2 border-b-4 border-green-500 bg-green-500 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white">
+                94% Match
+              </span>
+            ) : (
+              <span className="inline-flex items-center rounded-xl border-2 border-b-4 border-slate-300 bg-slate-200 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                <Lock className="mr-1 h-3 w-3" />
+                Locked
+              </span>
+            )}
+          </div>
+
+          {/* Description */}
+          <p className="mb-6 line-clamp-3 text-sm font-medium leading-relaxed text-slate-500">
+            {opportunity.description}
+          </p>
+
+          {/* Skills (Mini Pills) */}
+          <div className="mb-6 flex flex-wrap gap-2">
+            {opportunity.requiredSkills.slice(0, 3).map((skill) => (
+              <span
+                key={skill}
+                className="rounded-lg bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500"
+              >
+                {skill.replace(/_/g, " ")}
+              </span>
+            ))}
+            {opportunity.requiredSkills.length > 3 && (
+              <span className="rounded-lg bg-slate-100 px-2 py-1 text-xs font-bold text-slate-400">
+                +{opportunity.requiredSkills.length - 3}
+              </span>
+            )}
+          </div>
+
+          {/* Footer / CTA */}
+          <div className="mt-auto pt-4 border-t-2 border-slate-100">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                <Briefcase className="h-3.5 w-3.5" />
+                {opportunity.employmentType}
+              </div>
+              <div
+                className={`font-extrabold text-sm ${theme.text} group-hover:underline decoration-2 underline-offset-4`}
+              >
+                VIEW DETAILS
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
 };
 
 export default function AIDatabase() {
@@ -78,352 +257,177 @@ export default function AIDatabase() {
     [userStats, completedProjects.length, completedProjectSlugs]
   );
 
-  const matchesByCategory = useMemo(() => {
-    return allMatches.reduce(
-      (acc, match) => {
-        if (!acc[match.type]) acc[match.type] = [];
-        acc[match.type].push(match);
-        return acc;
-      },
-      {} as Record<string, typeof allMatches>
-    );
+  const opportunities: AIOpportunity[] = useMemo(() => {
+    return allMatches.map((match) => ({
+      id: match.careerId,
+      title: match.title,
+      type: match.type as MatchType,
+      location: match.location || "Remote",
+      salaryRange: match.salaryRange || "",
+      employmentType: match.employmentType || "Full-time",
+      seniority: match.seniority || "Mid-Level",
+      description: match.reason || "No description available.",
+      impactHighlights: [],
+      keyTechnologies: [],
+      requiredSkills: match.requiredSkills,
+      whyPerfectMatch: match.reason || "Matches your profile.",
+      nextSteps: "Apply now",
+      remotePolicy: match.remotePolicy || "Remote",
+      promptScoreMin: match.requiredPS || 0,
+      skillThresholds: match.skillThresholds || {},
+    }));
   }, [allMatches]);
 
-  if (!user) {
+  const unlockedCount = useMemo(() => {
+    if (!userStats) return 0;
+    return opportunities.filter(
+      (opp) =>
+        userStats.promptScore >= opp.promptScoreMin &&
+        Object.entries(opp.skillThresholds || {}).every(
+          ([skill, threshold]) =>
+            (userStats.skills?.[skill as keyof typeof userStats.skills] || 0) >=
+            threshold
+        )
+    ).length;
+  }, [opportunities, userStats]);
+
+  if (!user || userStats === undefined) {
     return (
       <SidebarLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center text-center space-y-3">
-          <div>
-            <p className="text-xl font-semibold">
-              Sign in to explore personalized AI opportunities.
-            </p>
-            <Link href="/auth">
-              <Button className="mt-3 bg-gradient-to-r from-gradient-from to-gradient-to">
-                Go to Sign In
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+        <div className="min-h-screen flex items-center justify-center bg-slate-50/50">
+          <div className="flex flex-col items-center gap-4">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-sm text-slate-500">Loading database...</p>
           </div>
         </div>
       </SidebarLayout>
     );
   }
-
-  if (userStats === undefined) {
-    return (
-      <SidebarLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <p>Loading your opportunity database...</p>
-        </div>
-      </SidebarLayout>
-    );
-  }
-
-  if (!userStats) {
-    return (
-      <SidebarLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center text-center space-y-3">
-          <div>
-            <p className="text-xl font-semibold mb-2">
-              Unlock the database by completing the matching quiz.
-            </p>
-            <p className="text-gray-600">
-              Your opportunities unlock as soon as we understand your skills.
-            </p>
-            <Link href="/matching-quiz">
-              <Button className="mt-4 bg-gradient-to-r from-gradient-from to-gradient-to">
-                Take the Matching Quiz
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </SidebarLayout>
-    );
-  }
-
-  const unlockedCount = allMatches.filter((match) =>
-    meetsRequirements(
-      match,
-      userStats.promptScore,
-      userStats.skills,
-      completedProjects.length
-    )
-  ).length;
-
-  const renderMatchCard = (
-    match: (typeof allMatches)[number],
-    isUnlocked: boolean
-  ) => {
-    const Icon =
-      categoryIcons[match.type as keyof typeof categoryIcons] || Briefcase;
-    const colorClass =
-      categoryColors[match.type as keyof typeof categoryColors];
-    const psGap = Math.max(0, (match.requiredPS || 0) - userStats.promptScore);
-
-    const missingSkills = match.skillThresholds
-      ? Object.entries(match.skillThresholds)
-          .filter(
-            ([skill, threshold]) =>
-              userStats.skills[skill as keyof typeof userStats.skills] <
-              threshold
-          )
-          .map(([skill]) => skill)
-      : match.requiredSkills.filter(
-          (skill) =>
-            userStats.skills[skill as keyof typeof userStats.skills] < 60
-        );
-
-    return (
-      <Card
-        key={match.title}
-        className={`flex flex-col justify-between ${isUnlocked ? "border-l-4 border-l-green-500" : ""}`}
-      >
-        <div>
-          <CardHeader>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <div
-                    className={`p-2 rounded-lg bg-gradient-to-r ${colorClass}`}
-                  >
-                    <Icon className="h-4 w-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <CardTitle className="text-lg">{match.title}</CardTitle>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <Badge variant="outline" className="text-xs">
-                    {categoryLabels[
-                      match.type as keyof typeof categoryLabels
-                    ] || match.type}
-                  </Badge>
-                  {match.seniority && (
-                    <Badge variant="secondary" className="text-xs">
-                      {match.seniority}
-                    </Badge>
-                  )}
-                  {match.employmentType && (
-                    <Badge variant="secondary" className="text-xs">
-                      {match.employmentType}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-              {isUnlocked ? (
-                <CheckCircle className="h-6 w-6 text-green-500" />
-              ) : (
-                <Lock className="h-6 w-6 text-gray-400" />
-              )}
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-5">
-              <div className="flex flex-wrap gap-3 text-sm">
-                {match.location && (
-                  <div
-                    className="flex items-center gap-1 text-gray-600"
-                    data-testid={`text-location-${match.careerId}`}
-                  >
-                    <MapPin className="h-4 w-4" />
-                    <span>{match.location}</span>
-                  </div>
-                )}
-                {match.remotePolicy && (
-                  <div
-                    className="flex items-center gap-1 text-gray-600"
-                    data-testid={`text-remote-${match.careerId}`}
-                  >
-                    <Home className="h-4 w-4" />
-                    <span>{match.remotePolicy}</span>
-                  </div>
-                )}
-              </div>
-
-              {match.salaryRange && (
-                <div
-                  className="p-3 py-5 bg-gradient-to-r from-gradient-from/10 to-gradient-to/10 rounded-lg"
-                  data-testid={`text-salary-${match.careerId}`}
-                >
-                  <div className="font-semibold text-gray-800">
-                    {match.salaryRange}
-                  </div>
-                </div>
-              )}
-
-              <p className="text-sm text-gray-600 italic">{match.reason}</p>
-
-              <div className="space-y-3">
-                {match.requiredSkills.length > 0 && (
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">
-                      Required Skills:
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {match.requiredSkills.map((skill) => {
-                        const hasSkill =
-                          userStats.skills[
-                            skill as keyof typeof userStats.skills
-                          ] >= 60;
-                        return (
-                          <Badge
-                            key={skill}
-                            variant={hasSkill ? "default" : "outline"}
-                            className={`text-xs capitalize ${hasSkill ? "bg-neutral-200 text-black" : ""}`}
-                          >
-                            {skill.replace(/_/g, " ")}
-                          </Badge>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {!isUnlocked && (
-                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <div className="flex items-start gap-2">
-                      <TrendingUp className="h-4 w-4 text-blue-600 mt-0.5" />
-                      <div className="text-sm text-blue-700">
-                        {psGap > 0 && <div>Increase PS by {psGap} points</div>}
-                        {missingSkills.length > 0 && (
-                          <div>
-                            Build:{" "}
-                            {missingSkills
-                              .map((s) => s.replace(/_/g, " "))
-                              .join(", ")}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </div>
-        <CardFooter className="w-full block">
-          {match.careerId && (
-            <Link href={`/career/${match.careerId}`}>
-              <Button
-                className="w-full mt-2 bg-gradient-to-r from-gradient-from to-gradient-to"
-                data-testid={`button-details-${match.careerId}`}
-              >
-                View Details
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          )}
-        </CardFooter>
-      </Card>
-    );
-  };
 
   return (
     <SidebarLayout>
-      <div className="bg-gray-50 min-h-full">
-        <div className="container mx-auto px-4 py-8">
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-2">
-              <Database className="h-8 w-8 text-primary" />
-              <h1 className="text-3xl font-bold">AI Opportunity Database</h1>
-            </div>
-            <p className="text-gray-600">
-              Browse our complete collection of {allMatches.length} AI career
-              opportunities. {unlockedCount} unlocked based on your current
-              skills.
-            </p>
-          </div>
+      <div className="relative min-h-screen bg-slate-50/50">
+        {/* Background Asset */}
+        <div className="fixed inset-0 z-0 opacity-40 pointer-events-none">
+          <img
+            src={generatedImage}
+            alt="Background"
+            className="w-full h-full object-cover opacity-50 blur-3xl"
+          />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            {Object.entries(categoryIcons).map(([category, Icon]) => {
-              const categoryMatches = matchesByCategory[category] || [];
-              const unlocked = categoryMatches.filter((match) =>
-                meetsRequirements(
-                  match,
-                  userStats.promptScore,
-                  userStats.skills,
-                  completedProjects.length
-                )
-              ).length;
-              const total = categoryMatches.length;
-              const colorClass =
-                categoryColors[category as keyof typeof categoryColors];
+        <div className="relative z-10 container mx-auto px-6 md:px-8 py-12 max-w-7xl space-y-12">
+          {/* Header Section */}
+          <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
+            <div className="space-y-6 max-w-2xl">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-extrabold uppercase tracking-wider text-slate-600 shadow-sm border-2 border-b-4 border-slate-200"
+              >
+                <Database className="h-4 w-4 fill-current text-blue-500" />
+                <span>Opportunity Database</span>
+              </motion.div>
 
-              return (
-                <Card key={category}>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-3 rounded-lg bg-gradient-to-r ${colorClass}`}
-                      >
-                        <Icon className="h-5 w-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold">
-                          {unlocked}/{total}
-                        </div>
-                        <div className="text-sm text-gray-600 capitalize">
-                          {
-                            categoryLabels[
-                              category as keyof typeof categoryLabels
-                            ]
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-
-          <div className="space-y-6">
-            {Object.entries(matchesByCategory).map(([category, matches]) => (
-              <div key={category}>
-                <h2 className="text-xl font-bold mb-4 capitalize flex items-center gap-2">
-                  {(() => {
-                    const Icon =
-                      categoryIcons[category as keyof typeof categoryIcons];
-                    return <Icon className="h-5 w-5" />;
-                  })()}
-                  {categoryLabels[category as keyof typeof categoryLabels]} (
-                  {matches.length})
-                </h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {matches.map((match) => {
-                    const isUnlocked = meetsRequirements(
-                      match,
-                      userStats.promptScore,
-                      userStats.skills,
-                      completedProjects.length
-                    );
-                    return renderMatchCard(match, isUnlocked);
-                  })}
-                </div>
+              <div className="space-y-2">
+                <motion.h1
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight"
+                >
+                  Explore All <br />
+                  <span className="text-primary">AI Careers</span>
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="text-lg font-medium text-slate-500 leading-relaxed max-w-xl"
+                >
+                  Browse our complete collection of {opportunities.length} AI
+                  career opportunities. Unlock them by improving your skills and
+                  prompt score.
+                </motion.p>
               </div>
-            ))}
+            </div>
 
-            {allMatches.length === 0 && (
-              <Card className="bg-blue-50 border-blue-200">
-                <CardContent className="p-8 text-center">
-                  <Database className="h-12 w-12 mx-auto mb-4 text-blue-600" />
-                  <h3 className="text-xl font-bold mb-2">
-                    No Opportunities Found
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    {`Based on your quiz preferences, we couldn't find matching
-                    opportunities. Try adjusting your preferences.`}
+            {/* Right Column: Progress & Actions */}
+            <div className="flex flex-col gap-4 w-full lg:w-auto min-w-[340px]">
+              {/* Gamified Progress Tracker */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <Trophy className="h-6 w-6 text-yellow-500 fill-current" />
+                      <span className="font-black text-slate-700 uppercase tracking-wide">
+                        Database Unlocked
+                      </span>
+                    </div>
+                    <span className="font-black text-xl text-primary">
+                      {unlockedCount} / {opportunities.length}
+                    </span>
+                  </div>
+                  <div className="h-4 w-full rounded-full bg-slate-100 overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{
+                        width: `${(unlockedCount / opportunities.length) * 100}%`,
+                      }}
+                      transition={{ duration: 1, ease: "easeOut" }}
+                      className="h-full bg-yellow-400 rounded-full"
+                    />
+                  </div>
+                  <p className="mt-3 text-xs font-bold text-slate-400 uppercase tracking-wide text-center">
+                    Keep learning to unlock more roles!
                   </p>
-                  <Link href="/matching-quiz">
-                    <Button className="bg-gradient-to-r from-gradient-from to-gradient-to">
-                      Retake Quiz
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            )}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Link href="/matching-quiz" className="block">
+                  <JuicyButton
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2 text-slate-600 border-slate-300 hover:bg-slate-50 hover:border-slate-300 active:border-slate-300"
+                  >
+                    <Target className="h-5 w-5" />
+                    Update Profile
+                  </JuicyButton>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Results Grid */}
+          <div className="space-y-6">
+            <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              {opportunities.map((opp, index) => {
+                const unlocked =
+                  userStats.promptScore >= opp.promptScoreMin &&
+                  Object.entries(opp.skillThresholds || {}).every(
+                    ([skill, threshold]) =>
+                      (userStats.skills?.[
+                        skill as keyof typeof userStats.skills
+                      ] || 0) >= threshold
+                  );
+                return (
+                  <OpportunityCard
+                    key={opp.id}
+                    opportunity={opp}
+                    unlocked={unlocked}
+                    index={index}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

@@ -12,6 +12,14 @@ export const viewer = query({
   },
 });
 
+// Get user by ID
+export const get = query({
+  args: { id: v.id("users") },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
 // Initialize user stats on first login
 export const initializeUserStats = mutation({
   args: { userId: v.id("users") },
@@ -249,7 +257,7 @@ export const completeProject = mutation({
       badgeEarned,
       badgeId,
       skillsGained,
-    },
+    }
   ) => {
     const stats = await ctx.db
       .query("userStats")
@@ -263,7 +271,7 @@ export const completeProject = mutation({
 
     // Check if project already completed
     const alreadyCompleted = completedProjects.some(
-      (p) => p.slug === projectSlug,
+      (p) => p.slug === projectSlug
     );
     if (alreadyCompleted) {
       return stats._id;

@@ -1,9 +1,11 @@
 export function LoadingState() {
   return (
-    <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 min-h-full flex items-center justify-center">
-      <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-        <p className="text-emerald-100">Loading practice zone...</p>
+    <div className="min-h-full py-12 flex items-center justify-center bg-slate-50">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <div className="text-slate-500 text-lg font-bold">
+          Loading practice zone...
+        </div>
       </div>
     </div>
   );

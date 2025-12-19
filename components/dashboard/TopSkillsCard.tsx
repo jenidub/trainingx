@@ -1,17 +1,19 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { calculateSkillLevel } from "./utils";
 import { useEffect, useState } from "react";
+import { Zap } from "lucide-react";
 
 interface TopSkillsCardProps {
   skills: Record<string, number>;
 }
 
 export function TopSkillsCard({ skills }: TopSkillsCardProps) {
-  const [animatedSkills, setAnimatedSkills] = useState<Record<string, number>>({});
+  const [animatedSkills, setAnimatedSkills] = useState<Record<string, number>>(
+    {}
+  );
 
   const topSkills = Object.entries(skills)
     .sort(([, a], [, b]) => b - a)
@@ -35,10 +37,13 @@ export function TopSkillsCard({ skills }: TopSkillsCardProps) {
           setAnimatedSkills((prev) => ({ ...prev, [skillName]: targetValue }));
           clearInterval(timer);
         } else {
-          setAnimatedSkills((prev) => ({ ...prev, [skillName]: Math.round(current) }));
+          setAnimatedSkills((prev) => ({
+            ...prev,
+            [skillName]: Math.round(current),
+          }));
         }
       }, stepDuration);
-      
+
       timers.push(timer);
     };
 
@@ -47,55 +52,71 @@ export function TopSkillsCard({ skills }: TopSkillsCardProps) {
     });
 
     return () => {
-      timers.forEach(timer => clearInterval(timer));
+      timers.forEach((timer) => clearInterval(timer));
     };
   }, [topSkills]);
 
   if (topSkills.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Top Skills</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-500">Complete assessments to see your skills</p>
-        </CardContent>
-      </Card>
+      <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+            <Zap className="h-6 w-6 stroke-3" />
+          </div>
+          <h3 className="text-lg font-extrabold text-slate-700">Top Skills</h3>
+        </div>
+        <p className="text-sm font-medium text-slate-400">
+          Complete assessments to see your skills
+        </p>
+      </div>
     );
   }
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-300">
-      <CardHeader>
-        <CardTitle>Top Skills</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {topSkills.map(([skill, score]) => {
-            const { level, color } = calculateSkillLevel(score);
-            const animatedScore = animatedSkills[skill] || 0;
-            return (
-              <div key={skill} className="space-y-2 animate-in fade-in slide-in-from-left-4 duration-500">
-                <div className="flex items-center justify-between">
-                  <span className="capitalize text-sm font-medium">
-                    {skill.replace(/_/g, ' ')}
-                  </span>
-                  <Badge className={color}>{level}</Badge>
-                </div>
-                <Progress 
-                  value={animatedScore} 
-                  className="transition-all duration-1000 ease-out" 
-                />
-                <div className="flex justify-between text-xs text-gray-500">
-                  <span>Score: {animatedScore}/100</span>
-                  <span>{level}</span>
-                </div>
-              </div>
-            );
-          })}
+    <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-100 text-yellow-600">
+          <Zap className="h-6 w-6 stroke-3" />
         </div>
-      </CardContent>
-    </Card>
+        <h3 className="text-lg font-extrabold text-slate-700">Top Skills</h3>
+      </div>
+
+      <div className="space-y-6">
+        {topSkills.map(([skill, score]) => {
+          const { level, color } = calculateSkillLevel(score);
+          const animatedScore = animatedSkills[skill] || 0;
+
+          // Map color classes to specific tailwind colors for the bar
+          const barColor = color.includes("green")
+            ? "bg-green-500"
+            : color.includes("blue")
+              ? "bg-blue-500"
+              : color.includes("purple")
+                ? "bg-purple-500"
+                : color.includes("yellow")
+                  ? "bg-yellow-500"
+                  : "bg-slate-500";
+
+          return (
+            <div key={skill} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="capitalize text-sm font-extrabold text-slate-600">
+                  {skill.replace(/_/g, " ")}
+                </span>
+                <span className="text-xs font-black uppercase tracking-wide text-slate-400">
+                  {level}
+                </span>
+              </div>
+              <div className="h-4 w-full rounded-full bg-slate-100 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-1000 ease-out ${barColor}`}
+                  style={{ width: `${animatedScore}%` }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
-

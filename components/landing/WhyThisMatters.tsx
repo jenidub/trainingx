@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function ProblemOpportunitySection() {
   return (
-    <section className="py-24 bg-slate-50 overflow-hidden">
+    <section className="py-16 sm:py-24 bg-slate-50 overflow-hidden">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-20 max-w-3xl mx-auto">
           <Badge
@@ -32,13 +32,13 @@ export default function ProblemOpportunitySection() {
             <br className="hidden md:block" />
             Which side of history will you be on?
           </p> */}
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-600 mb-4 sm:mb-8">
             Every app, every industry, every career runs on AI now.{" "}
           </p>
-          <p className="text-lg text-gray-700 mb-6">
+          <p className="text-lg text-gray-700 mb-4 sm:mb-6">
             ChatGPT. Claude. Microsoft Copilot. Google Gemini. GitHub Copilot.
-            Midjourney. Over 200 tools—and they all require one universal skill:
-            <strong>prompting</strong>.{" "}
+            Midjourney. Over 200 tools and they all require one universal skill:
+          {" "}  <strong>prompting</strong>.
           </p>
         </div>
 
@@ -180,7 +180,7 @@ export default function ProblemOpportunitySection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-20 bg-white rounded-3xl border border-slate-200 p-8 md:p-12 text-center shadow-sm relative overflow-hidden"
+          className="mt-8 sm:mt-12 bg-white rounded-xl border border-slate-200 p-6 md:p-12 text-center shadow-sm relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-400 via-slate-200 to-emerald-400" />
           <h3 className="text-2xl md:text-3xl font-heading font-bold text-slate-900 mb-4">
@@ -190,7 +190,7 @@ export default function ProblemOpportunitySection() {
             Don't let the AI revolution happen <em>to</em> you. Make it happen{" "}
             <em>for</em> you.
           </p>
-          <button className="bg-slate-900 text-white px-8 py-4 rounded-full font-bold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 transition-all transform hover:-translate-y-0.5">
+          <button className="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 transition-all transform hover:-translate-y-0.5">
             Start Free Assessment
           </button>
         </motion.div>

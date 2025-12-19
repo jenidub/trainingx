@@ -51,7 +51,7 @@ export function CardModal({
           onClick={(e) => e.stopPropagation()}
         >
           <motion.div
-            className="w-full h-[500px] max-h-[85vh]"
+            className="w-full h-[700px] max-h-[85vh]"
             style={{ perspective: 2000 }}
           >
             <motion.div
@@ -68,7 +68,7 @@ export function CardModal({
                 onClose={onClose}
                 onAnswerSelect={onAnswerSelect}
               />
-              
+
               <CardBack
                 card={card}
                 selectedAnswer={selectedAnswer}

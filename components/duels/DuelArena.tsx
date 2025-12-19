@@ -11,17 +11,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { JuicyButton } from "@/components/ui/juicy-button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Swords, Trophy, Clock, Target, TrendingUp, Users, Settings } from "lucide-react";
+  Swords,
+  Trophy,
+  Clock,
+  Target,
+  TrendingUp,
+  Users,
+  Settings,
+  Zap,
+  Crown,
+  ArrowLeft,
+} from "lucide-react";
 import Link from "next/link";
 import { Id } from "convex/_generated/dataModel";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { DuelTopicSelection } from "./DuelTopicSelection";
 import {
   Dialog,
   DialogContent,
@@ -56,6 +64,11 @@ export function DuelArena() {
 
   const [creating, setCreating] = useState(false);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [dialogStep, setDialogStep] = useState<"topic" | "settings">("topic");
+  const [selectedTopic, setSelectedTopic] = useState<{
+    trackId: Id<"practiceTracks"> | null;
+    trackName: string;
+  } | null>(null);
   const [duelParams, setDuelParams] = useState({
     itemCount: 5,
     difficulty: "matched",
@@ -65,13 +78,16 @@ export function DuelArena() {
     if (!user?._id) return;
     setCreating(true);
     try {
-      const result = await createDuel({ 
+      const result = await createDuel({
         userId: user._id as any,
         itemCount: duelParams.itemCount,
         minPlayers: 2,
         maxPlayers: 10,
+        trackId: selectedTopic?.trackId || undefined,
       });
       setShowCreateDialog(false);
+      setDialogStep("topic");
+      setSelectedTopic(null);
       // Redirect to room lobby
       window.location.href = `/duels/${result.roomId}`;
     } catch (error) {
@@ -81,12 +97,28 @@ export function DuelArena() {
     }
   };
 
+  const handleTopicSelect = (
+    trackId: Id<"practiceTracks"> | null,
+    trackName: string
+  ) => {
+    setSelectedTopic({ trackId, trackName });
+    setDialogStep("settings");
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setShowCreateDialog(open);
+    if (!open) {
+      setDialogStep("topic");
+      setSelectedTopic(null);
+    }
+  };
+
   const handleAcceptDuel = async (roomId: Id<"practiceDuels">) => {
     if (!user?._id) return;
     try {
-      await acceptDuel({ 
+      await acceptDuel({
         userId: user._id as any,
-        roomId 
+        roomId,
       });
       window.location.href = `/duels/${roomId}`;
     } catch (error) {
@@ -97,25 +129,23 @@ export function DuelArena() {
   // Show loading only if undefined
   if (duelStats === undefined) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="animate-pulse space-y-3">
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="rounded-3xl border-2 border-slate-200 bg-white p-6">
+        <div className="animate-pulse space-y-3">
+          <div className="h-4 bg-slate-200 rounded w-3/4"></div>
+          <div className="h-4 bg-slate-200 rounded w-1/2"></div>
+        </div>
+      </div>
     );
   }
 
   // If null, user not authenticated
   if (duelStats === null) {
     return (
-      <Card>
-        <CardContent className="p-6 text-center">
-          <p className="text-gray-600">Please log in to access Duels</p>
-        </CardContent>
-      </Card>
+      <div className="rounded-3xl border-2 border-slate-200 bg-white p-6 text-center">
+        <p className="text-slate-600 font-bold">
+          Please log in to access Duels
+        </p>
+      </div>
     );
   }
 
@@ -124,327 +154,425 @@ export function DuelArena() {
     userDuels?.filter((d) => d.status === "completed") || [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
-            <Swords className="h-8 w-8 text-red-600" />
-            Duel Arena
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Challenge others and prove your prompting skills
-          </p>
+        <div className="flex items-center gap-4">
+          <div className="flex h-16 w-16 items-center justify-center rounded-3xl border-2 border-b-[6px] border-red-200 bg-white text-red-500 shadow-sm">
+            <Swords className="h-8 w-8 stroke-3" />
+          </div>
+          <div>
+            <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight">
+              Duel Arena
+            </h1>
+            <p className="text-lg font-medium text-slate-500">
+              Challenge others and prove your prompting skills
+            </p>
+          </div>
         </div>
-        <Button onClick={() => setShowCreateDialog(true)}>
+        <JuicyButton
+          onClick={() => setShowCreateDialog(true)}
+          className="gap-2"
+        >
+          <Swords className="h-5 w-5 stroke-3" />
           Create Duel
-        </Button>
+        </JuicyButton>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Total Duels</div>
-                <div className="text-2xl font-bold">{duelStats.totalRooms}</div>
-              </div>
-              <Swords className="h-8 w-8 text-gray-400" />
+        <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm font-bold text-slate-400 uppercase tracking-wide">
+              Total Duels
             </div>
-          </CardContent>
-        </Card>
+            <Swords className="h-6 w-6 text-slate-300 stroke-3" />
+          </div>
+          <div className="text-4xl font-black text-slate-700">
+            {duelStats.totalRooms}
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Wins</div>
-                <div className="text-2xl font-bold text-green-600">
-                  {duelStats.wins}
-                </div>
-              </div>
-              <Trophy className="h-8 w-8 text-amber-500" />
+        <div className="rounded-3xl border-2 border-b-[6px] border-green-200 bg-white p-6">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm font-bold text-green-600 uppercase tracking-wide">
+              Wins
             </div>
-          </CardContent>
-        </Card>
+            <Trophy className="h-6 w-6 text-green-400 stroke-3" />
+          </div>
+          <div className="text-4xl font-black text-green-500">
+            {duelStats.wins}
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Win Rate</div>
-                <div className="text-2xl font-bold">{duelStats.winRate}%</div>
-              </div>
-              <TrendingUp className="h-8 w-8 text-blue-500" />
+        <div className="rounded-3xl border-2 border-b-[6px] border-blue-200 bg-white p-6">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm font-bold text-blue-600 uppercase tracking-wide">
+              Win Rate
             </div>
-          </CardContent>
-        </Card>
+            <TrendingUp className="h-6 w-6 text-blue-400 stroke-3" />
+          </div>
+          <div className="text-4xl font-black text-blue-500">
+            {duelStats.winRate}%
+          </div>
+        </div>
 
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600 mb-1">Active</div>
-                <div className="text-2xl font-bold">
-                  {duelStats.activeRooms}
-                </div>
-              </div>
-              <Clock className="h-8 w-8 text-orange-500" />
+        <div className="rounded-3xl border-2 border-b-[6px] border-orange-200 bg-white p-6">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-sm font-bold text-orange-600 uppercase tracking-wide">
+              Active
             </div>
-          </CardContent>
-        </Card>
+            <Clock className="h-6 w-6 text-orange-400 stroke-3" />
+          </div>
+          <div className="text-4xl font-black text-orange-500">
+            {duelStats.activeRooms}
+          </div>
+        </div>
       </div>
 
       {/* Duels Tabs */}
-      <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="active">
+      <Tabs
+        value={selectedTab}
+        onValueChange={setSelectedTab}
+        className="space-y-6"
+      >
+        <TabsList className="w-full h-auto p-1 bg-slate-100 rounded-2xl border-2 border-slate-200">
+          <TabsTrigger
+            value="active"
+            className="flex-1 py-3 rounded-xl font-bold text-slate-500 data-[state=active]:bg-white data-[state=active]:text-slate-800 data-[state=active]:shadow-sm transition-all"
+          >
             Active ({activeDuels.length})
           </TabsTrigger>
-          <TabsTrigger value="open">
+          <TabsTrigger
+            value="open"
+            className="flex-1 py-3 rounded-xl font-bold text-slate-500 data-[state=active]:bg-white data-[state=active]:text-slate-800 data-[state=active]:shadow-sm transition-all"
+          >
             Open Challenges ({openDuels?.length || 0})
           </TabsTrigger>
-          <TabsTrigger value="completed">
+          <TabsTrigger
+            value="completed"
+            className="flex-1 py-3 rounded-xl font-bold text-slate-500 data-[state=active]:bg-white data-[state=active]:text-slate-800 data-[state=active]:shadow-sm transition-all"
+          >
             Completed ({completedDuels.length})
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="active" className="space-y-4">
           {activeDuels.length === 0 ? (
-            <Card>
-              <CardContent className="p-12 text-center">
-                <Swords className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">No active duels</p>
-                <Button onClick={handleCreateDuel}>
-                  Create Your First Duel
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                <Swords className="h-8 w-8 text-slate-300" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-700">
+                No active duels
+              </h3>
+              <p className="text-slate-500 font-medium mt-1 mb-6">
+                Start a duel to challenge others!
+              </p>
+              <JuicyButton onClick={handleCreateDuel}>
+                <Swords className="mr-2 h-5 w-5 stroke-3" />
+                Create Your First Duel
+              </JuicyButton>
+            </div>
           ) : (
             activeDuels.map((duel) => (
-              <Card
+              <div
                 key={duel._id}
-                className="hover:shadow-lg transition-shadow"
+                className="group relative flex items-center justify-between overflow-hidden rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-extrabold text-slate-800">
                       Duel #{duel._id.slice(-6)}
-                    </CardTitle>
-                    <Badge variant="secondary">Active</Badge>
+                    </h3>
+                    <span className="rounded-lg bg-green-100 px-2 py-1 text-[10px] font-black uppercase tracking-wide text-green-600">
+                      Active
+                    </span>
                   </div>
-                  <CardDescription>
+                  <p className="text-sm font-medium text-slate-500 mb-4">
                     {duel.itemIds.length} items · Started{" "}
                     {new Date(duel.startedAt).toLocaleDateString()}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <div className="text-sm">
-                        Your Score:{" "}
-                        <span className="font-bold">
-                          {duel.challengerScore}
-                        </span>
+                  </p>
+                  <div className="flex items-center gap-6">
+                    <div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                        Your Score
                       </div>
-                      {duel.opponentScore !== undefined && (
-                        <div className="text-sm">
-                          Opponent:{" "}
-                          <span className="font-bold">
-                            {duel.opponentScore}
-                          </span>
-                        </div>
-                      )}
+                      <div className="text-2xl font-black text-blue-500">
+                        {duel.challengerScore}
+                      </div>
                     </div>
-                    <Button asChild>
-                      <Link href={`/duels/${duel._id}`}>Continue</Link>
-                    </Button>
+                    {duel.opponentScore !== undefined && (
+                      <div>
+                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                          Opponent
+                        </div>
+                        <div className="text-2xl font-black text-red-500">
+                          {duel.opponentScore}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <JuicyButton asChild className="h-12 px-6">
+                  <Link href={`/duels/${duel._id}`}>Continue</Link>
+                </JuicyButton>
+              </div>
             ))
           )}
         </TabsContent>
 
         <TabsContent value="open" className="space-y-4">
           {!openDuels || openDuels.length === 0 ? (
-            <Card>
-              <CardContent className="p-12 text-center">
-                <Users className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-600">No open challenges available</p>
-              </CardContent>
-            </Card>
+            <div className="rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                <Users className="h-8 w-8 text-slate-300" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-700">
+                No open challenges
+              </h3>
+              <p className="text-slate-500 font-medium mt-1">
+                Check back later or create your own!
+              </p>
+            </div>
           ) : (
             openDuels.map((duel) => (
-              <Card
+              <div
                 key={duel._id}
-                className="hover:shadow-lg transition-shadow"
+                className="group relative flex items-center justify-between overflow-hidden rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
               >
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-extrabold text-slate-800">
                       Open Challenge #{duel._id.slice(-6)}
-                    </CardTitle>
-                    <Badge>Open</Badge>
+                    </h3>
+                    <span className="rounded-lg bg-blue-100 px-2 py-1 text-[10px] font-black uppercase tracking-wide text-blue-600">
+                      Open
+                    </span>
                   </div>
-                  <CardDescription>
+                  <p className="text-sm font-medium text-slate-500 mb-4">
                     {duel.itemIds.length} items · Created{" "}
                     {new Date(duel.startedAt).toLocaleDateString()}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-gray-600">
-                      Expires in{" "}
-                      {Math.ceil(
-                        (duel.expiresAt - Date.now()) / (1000 * 60 * 60 * 24)
-                      )}{" "}
-                      days
-                    </div>
-                    <Button onClick={() => handleAcceptDuel(duel._id)}>
-                      Accept Challenge
-                    </Button>
+                  </p>
+                  <div className="flex items-center gap-2 text-sm font-bold text-orange-500">
+                    <Clock className="h-4 w-4 stroke-3" />
+                    Expires in{" "}
+                    {Math.ceil(
+                      (duel.expiresAt - Date.now()) / (1000 * 60 * 60 * 24)
+                    )}{" "}
+                    days
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <JuicyButton
+                  onClick={() => handleAcceptDuel(duel._id)}
+                  className="h-12 px-6"
+                >
+                  Accept Challenge
+                </JuicyButton>
+              </div>
             ))
           )}
         </TabsContent>
 
         <TabsContent value="completed" className="space-y-4">
           {completedDuels.length === 0 ? (
-            <Card>
-              <CardContent className="p-12 text-center">
-                <Trophy className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-600">No completed duels yet</p>
-              </CardContent>
-            </Card>
+            <div className="rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+                <Trophy className="h-8 w-8 text-slate-300" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-700">
+                No completed duels yet
+              </h3>
+              <p className="text-slate-500 font-medium mt-1">
+                Complete a duel to see your history!
+              </p>
+            </div>
           ) : (
             completedDuels.map((duel) => (
-              <Card key={duel._id}>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-lg">
+              <div
+                key={duel._id}
+                className="group relative flex items-center justify-between overflow-hidden rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-extrabold text-slate-800">
                       Duel #{duel._id.slice(-6)}
-                    </CardTitle>
-                    <Badge variant={duel.winnerId ? "default" : "outline"}>
+                    </h3>
+                    <span
+                      className={`rounded-lg px-2 py-1 text-[10px] font-black uppercase tracking-wide ${
+                        duel.winnerId
+                          ? "bg-purple-100 text-purple-600"
+                          : "bg-slate-100 text-slate-500"
+                      }`}
+                    >
                       {duel.winnerId ? "Completed" : "Draw"}
-                    </Badge>
+                    </span>
                   </div>
-                  <CardDescription>
+                  <p className="text-sm font-medium text-slate-500 mb-4">
                     Completed{" "}
                     {new Date(duel.completedAt || 0).toLocaleDateString()}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="space-y-1">
-                      <div className="text-sm">
-                        Final Score:{" "}
-                        <span className="font-bold">
+                  </p>
+                  <div className="flex items-center gap-6">
+                    <div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                        Final Score
+                      </div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-black text-slate-700">
                           {duel.challengerScore}
-                        </span>{" "}
-                        vs{" "}
-                        <span className="font-bold">
+                        </span>
+                        <span className="text-sm font-bold text-slate-400">
+                          vs
+                        </span>
+                        <span className="text-2xl font-black text-slate-700">
                           {duel.opponentScore || 0}
                         </span>
                       </div>
-                      {duel.winnerId && (
-                        <div className="text-sm font-medium text-green-600">
-                          {duel.winnerId === duel.challengerId
-                            ? "Victory!"
-                            : "Defeat"}
-                        </div>
-                      )}
                     </div>
-                    <Button asChild variant="outline">
-                      <Link href={`/duels/${duel._id}`}>View Details</Link>
-                    </Button>
+                    {duel.winnerId && (
+                      <div
+                        className={`flex items-center gap-2 font-bold ${
+                          duel.winnerId === duel.challengerId
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        {duel.winnerId === duel.challengerId ? (
+                          <>
+                            <Trophy className="h-5 w-5 stroke-3" />
+                            Victory!
+                          </>
+                        ) : (
+                          <>
+                            <Target className="h-5 w-5 stroke-3" />
+                            Defeat
+                          </>
+                        )}
+                      </div>
+                    )}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <JuicyButton asChild variant="secondary" className="h-12 px-6">
+                  <Link href={`/duels/${duel._id}`}>View Details</Link>
+                </JuicyButton>
+              </div>
             ))
           )}
         </TabsContent>
       </Tabs>
 
       {/* Create Duel Dialog */}
-      <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Settings className="h-5 w-5" />
-              Create Battle Room
+      <Dialog open={showCreateDialog} onOpenChange={handleDialogClose}>
+        <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden rounded-3xl border-2 border-slate-200">
+          <DialogHeader className="p-6 pb-4 border-b-2 border-slate-100 bg-slate-50/50">
+            <DialogTitle className="flex items-center gap-2 text-2xl font-extrabold text-slate-800">
+              {dialogStep === "topic" ? (
+                <>
+                  <Swords className="h-6 w-6 stroke-3 text-red-400" />
+                  Choose Topic
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setDialogStep("topic")}
+                    className="p-1 -ml-1 rounded-lg hover:bg-slate-200 transition-colors"
+                  >
+                    <ArrowLeft className="h-5 w-5 text-slate-400" />
+                  </button>
+                  <Settings className="h-6 w-6 stroke-3 text-slate-400" />
+                  Battle Settings
+                </>
+              )}
             </DialogTitle>
-            <DialogDescription>
-              Create a multi-player room for 2-10 players
+            <DialogDescription className="font-medium text-slate-500">
+              {dialogStep === "topic"
+                ? "Select a topic for your duel"
+                : `Topic: ${selectedTopic?.trackName || "Random Mix"}`}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="item-count">Number of Items</Label>
-              <Select
-                value={duelParams.itemCount.toString()}
-                onValueChange={(value) => setDuelParams({ ...duelParams, itemCount: parseInt(value) })}
-              >
-                <SelectTrigger id="item-count">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="3">3 Items (Quick - 5 min)</SelectItem>
-                  <SelectItem value="5">5 Items (Standard - 10 min)</SelectItem>
-                  <SelectItem value="10">10 Items (Marathon - 20 min)</SelectItem>
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-gray-500">
-                More items = longer duel but more accurate skill test
-              </p>
-            </div>
+          <div className="p-6">
+            {dialogStep === "topic" && user?._id && (
+              <DuelTopicSelection
+                userId={user._id as any}
+                onSelectTrack={handleTopicSelect}
+                onCancel={() => setShowCreateDialog(false)}
+              />
+            )}
 
-            <div className="space-y-2">
-              <Label htmlFor="difficulty">Difficulty Level</Label>
-              <Select
-                value={duelParams.difficulty}
-                onValueChange={(value) => setDuelParams({ ...duelParams, difficulty: value })}
-              >
-                <SelectTrigger id="difficulty">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="matched">Matched (Your Skill Level)</SelectItem>
-                  <SelectItem value="easy">Easy (Practice Mode)</SelectItem>
-                  <SelectItem value="hard">Hard (Challenge Mode)</SelectItem>
-                </SelectContent>
-              </Select>
-              <p className="text-xs text-gray-500">
-                Items will be selected based on your current skill rating
-              </p>
-            </div>
+            {dialogStep === "settings" && (
+              <div className="space-y-6">
+                {/* Selected Topic Badge */}
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 border-2 border-emerald-200">
+                  <Swords className="h-5 w-5 text-emerald-600" />
+                  <span className="font-bold text-emerald-700">
+                    {selectedTopic?.trackName || "Random Mix"}
+                  </span>
+                </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-              <p className="text-sm text-blue-900">
-                <strong>💡 Multi-Player:</strong> 2-10 players can join! Items are selected at your skill level for fair competition.
-              </p>
-            </div>
-          </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="item-count"
+                    className="text-xs font-bold text-slate-500 uppercase tracking-wide"
+                  >
+                    Number of Items
+                  </Label>
+                  <Select
+                    value={duelParams.itemCount.toString()}
+                    onValueChange={(value) =>
+                      setDuelParams({
+                        ...duelParams,
+                        itemCount: parseInt(value),
+                      })
+                    }
+                  >
+                    <SelectTrigger
+                      id="item-count"
+                      className="h-12 rounded-xl border-2 border-slate-200 bg-slate-50 font-bold text-slate-700 focus:ring-0"
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="rounded-xl border-2 border-slate-200 font-bold">
+                      <SelectItem value="3">3 Items (Quick - 5 min)</SelectItem>
+                      <SelectItem value="5">
+                        5 Items (Standard - 10 min)
+                      </SelectItem>
+                      <SelectItem value="10">
+                        10 Items (Marathon - 20 min)
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs font-medium text-slate-400">
+                    More items = longer duel but more accurate skill test
+                  </p>
+                </div>
 
-          <div className="flex gap-3">
-            <Button
-              variant="outline"
-              onClick={() => setShowCreateDialog(false)}
-              className="flex-1"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleCreateDuel}
-              disabled={creating}
-              className="flex-1"
-            >
-              {creating ? "Creating..." : "Create Room"}
-            </Button>
+                <div className="rounded-xl border-2 border-blue-200 bg-blue-50 p-4">
+                  <p className="text-sm font-bold text-blue-700 leading-relaxed">
+                    <span className="mr-2">💡</span>
+                    Multi-Player: 2-10 players can join! Share the room link
+                    after creating.
+                  </p>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <Button
+                    variant="ghost"
+                    onClick={() => setDialogStep("topic")}
+                    className="flex-1 h-12 rounded-xl font-bold text-slate-500 hover:bg-slate-100"
+                  >
+                    Back
+                  </Button>
+                  <JuicyButton
+                    onClick={handleCreateDuel}
+                    disabled={creating}
+                    className="flex-1"
+                  >
+                    {creating ? "Creating..." : "Create Room"}
+                  </JuicyButton>
+                </div>
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>

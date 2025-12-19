@@ -1,4 +1,11 @@
-import { Award, Zap, TrendingUp, BarChart, RotateCcw, Shuffle } from "lucide-react";
+import {
+  Award,
+  Zap,
+  TrendingUp,
+  BarChart,
+  RotateCcw,
+  Shuffle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface GameHUDProps {
@@ -11,73 +18,91 @@ interface GameHUDProps {
   onShuffle: () => void;
 }
 
-export function GameHUD({ score, streak, answeredCount, totalCount, onShowStats, onReset, onShuffle }: GameHUDProps) {
+export function GameHUD({
+  score,
+  streak,
+  answeredCount,
+  totalCount,
+  onShowStats,
+  onReset,
+  onShuffle,
+}: GameHUDProps) {
   return (
     <div className="flex flex-col gap-3">
-      <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-xl">
+      <div className="bg-white rounded-2xl p-4 border-2 border-b-4 border-slate-200">
         <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="bg-white/10 border border-white/20 p-2 rounded-xl">
-              <Award className="w-5 h-5 text-yellow-300" />
+          <div className="flex items-center gap-3">
+            <div className="bg-yellow-100 p-2 rounded-xl">
+              <Award className="w-5 h-5 text-yellow-600 stroke-[3px]" />
             </div>
             <div>
-              <div className="text-xs text-emerald-100 uppercase tracking-wide font-bold">Score</div>
-              <div className="text-2xl font-bold text-white">{score}</div>
+              <div className="text-xs text-slate-400 uppercase tracking-wide font-black">
+                Score
+              </div>
+              <div className="text-2xl font-black text-slate-700">{score}</div>
             </div>
           </div>
-          
-          <div className="h-10 w-px bg-white/10" />
-          
-          <div className="flex items-center gap-2">
-            <div className="bg-white/10 border border-white/20 p-2 rounded-xl">
-              <Zap className="w-5 h-5 text-orange-300" />
+
+          <div className="h-10 w-0.5 bg-slate-100" />
+
+          <div className="flex items-center gap-3">
+            <div className="bg-orange-100 p-2 rounded-xl">
+              <Zap className="w-5 h-5 text-orange-500 stroke-[3px]" />
             </div>
             <div>
-              <div className="text-xs text-emerald-100 uppercase tracking-wide font-bold">Streak</div>
-              <div className="text-2xl font-bold text-white">{streak}x</div>
+              <div className="text-xs text-slate-400 uppercase tracking-wide font-black">
+                Streak
+              </div>
+              <div className="text-2xl font-black text-slate-700">
+                {streak}x
+              </div>
             </div>
           </div>
-          
-          <div className="h-10 w-px bg-white/10" />
-          
-          <div className="flex items-center gap-2">
-            <div className="bg-white/10 border border-white/20 p-2 rounded-xl">
-              <TrendingUp className="w-5 h-5 text-green-300" />
+
+          <div className="h-10 w-0.5 bg-slate-100" />
+
+          <div className="flex items-center gap-3">
+            <div className="bg-green-100 p-2 rounded-xl">
+              <TrendingUp className="w-5 h-5 text-green-600 stroke-[3px]" />
             </div>
             <div>
-              <div className="text-xs text-emerald-100 uppercase tracking-wide font-bold">Progress</div>
-              <div className="text-2xl font-bold text-white">{answeredCount}/{totalCount}</div>
+              <div className="text-xs text-slate-400 uppercase tracking-wide font-black">
+                Progress
+              </div>
+              <div className="text-2xl font-black text-slate-700">
+                {answeredCount}/{totalCount}
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div className="grid grid-cols-3 gap-2">
         <Button
           onClick={onShowStats}
           variant="outline"
           size="sm"
-          className="bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 w-full font-bold rounded-xl shadow-sm"
+          className="py-4 bg-white border-2 border-b-4 border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 hover:border-slate-300 active:border-b-0 active:translate-y-[4px] font-bold rounded-xl transition-all"
         >
-          <BarChart className="w-4 h-4 mr-2" />
+          <BarChart className="w-4 h-4 mr-2 stroke-[3px]" />
           Stats
         </Button>
         <Button
           onClick={onReset}
           variant="outline"
           size="sm"
-          className="bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 w-full font-bold rounded-xl shadow-sm"
+          className="py-4 bg-white border-2 border-b-4 border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 hover:border-slate-300 active:border-b-0 active:translate-y-[4px] font-bold rounded-xl transition-all"
         >
-          <RotateCcw className="w-4 h-4 mr-2" />
+          <RotateCcw className="w-4 h-4 mr-2 stroke-[3px]" />
           Reset
         </Button>
         <Button
           onClick={onShuffle}
           variant="outline"
           size="sm"
-          className="bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 w-full font-bold rounded-xl shadow-sm"
+          className="py-4 bg-white border-2 border-b-4 border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-800 hover:border-slate-300 active:border-b-0 active:translate-y-[4px] font-bold rounded-xl transition-all"
         >
-          <Shuffle className="w-4 h-4 mr-2" />
+          <Shuffle className="w-4 h-4 mr-2 stroke-[3px]" />
           Shuffle
         </Button>
       </div>

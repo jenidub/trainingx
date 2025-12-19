@@ -20,26 +20,26 @@ export default function SkillsOpportunityHub() {
   return (
     <section className="relative py-16 overflow-hidden rounded-3xl">
       <RevampedBackground />
-      <div className="relative z-10">
+      <div className="relative z-10 container mx-auto px-4">
         <div className="text-center mb-12 md:mb-20 relative">
           {/* Floating elements behind title */}
           <FloatingElement
             delay={0}
-            x={-200}
-            y={-50}
+            x={-190}
+            y={-60}
             className="hidden lg:block"
           >
-            <div className="w-12 h-12 bg-white rounded-xl shadow-lg border border-slate-100 flex items-center justify-center transform -rotate-12">
+            <div className="w-10 h-10 bg-white rounded-xl shadow-lg border border-slate-100 flex items-center justify-center transform -rotate-12">
               <Zap className="w-6 h-6 text-yellow-500 fill-yellow-500" />
             </div>
           </FloatingElement>
           <FloatingElement
             delay={1.5}
-            x={200}
+            x={240}
             y={20}
             className="hidden lg:block"
           >
-            <div className="w-12 h-12 bg-white rounded-xl shadow-lg border border-slate-100 flex items-center justify-center transform rotate-12">
+            <div className="w-10 h-10 bg-white rounded-xl shadow-lg border border-slate-100 flex items-center justify-center transform rotate-12">
               <Globe className="w-6 h-6 text-blue-500" />
             </div>
           </FloatingElement>
@@ -64,10 +64,10 @@ export default function SkillsOpportunityHub() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-7xl font-bold tracking-tight mb-4 md:mb-6 text-slate-900"
+            className="text-[48px]/12 sm:text-5xl md:text-7xl font-bold tracking-tight mb-4 md:mb-6 text-slate-900"
           >
             Skills &{" "}
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 animate-gradient-x block md:inline">
+            <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent block md:inline">
               Opportunity Hub
             </span>
           </motion.h1>
@@ -85,10 +85,11 @@ export default function SkillsOpportunityHub() {
         </div>
 
         {/* Bento Grid Layout for Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 md:mb-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12 md:mb-20">
+          {/* AI Careers - Row 1, Col 1-2 on lg */}
           <BentoCard
             delay={0}
-            className="lg:col-span-2 bg-white border-slate-200 hover:border-blue-300 shadow-sm hover:shadow-blue-100/50"
+            className="col-span-2 lg:col-start-1 lg:row-start-1 bg-white border-slate-200 hover:border-blue-300 shadow-sm hover:shadow-blue-100/50"
           >
             <div className="flex justify-between items-start h-full relative overflow-hidden">
               <div className="flex flex-col justify-between h-full z-10">
@@ -119,32 +120,89 @@ export default function SkillsOpportunityHub() {
             </div>
           </BentoCard>
 
+          {/* AI Services - Row 2, Col 1-2 on lg (below AI Careers) */}
           <BentoCard
-            delay={0.1}
-            className="bg-white border-slate-200 hover:border-purple-300 shadow-sm hover:shadow-purple-100/50"
+            delay={0.15}
+            className="col-span-2 lg:col-start-1 lg:row-start-2 bg-white border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-orange-100/50"
           >
-            <div className="flex flex-col h-full relative overflow-hidden">
-              <div className="p-3 rounded-xl bg-purple-50 border border-purple-100 w-fit mb-auto relative z-10">
-                <Building2 className="w-6 h-6 text-purple-600" />
+            <div className="flex justify-between items-start h-full relative overflow-hidden">
+              <div className="flex flex-col justify-between h-full z-10">
+                <div className="p-3 rounded-xl bg-orange-50 border border-orange-100 w-fit mb-4">
+                  <Wrench className="w-6 h-6 text-orange-500" />
+                </div>
+                <div>
+                  <Counter
+                    value={100}
+                    suffix="+"
+                    className="text-4xl font-bold text-slate-900 mb-1 block"
+                  />
+                  <p className="text-slate-500 font-medium">AI Services</p>
+                </div>
               </div>
-
-              {/* Animated Background Circle */}
-              <div className="absolute -right-10 -top-10 w-32 h-32 bg-purple-50 rounded-full blur-2xl opacity-50" />
-
-              <div className="relative z-10">
-                <Counter
-                  value={200}
-                  suffix="+"
-                  className="text-3xl font-bold text-slate-900 mb-1 block"
-                />
-                <p className="text-slate-500 text-sm">AI Businesses</p>
+              {/* Animated Gears/Dots */}
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-3 z-10">
+                {[1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{
+                      duration: 2,
+                      delay: i * 0.1,
+                      repeat: Infinity,
+                    }}
+                    className="w-3 h-3 rounded-full bg-orange-400"
+                  />
+                ))}
               </div>
             </div>
           </BentoCard>
 
+          {/* AI Businesses - Col 3, Row 1-2 on lg */}
+          <BentoCard
+            delay={0.1}
+            className="bg-white border-slate-200 hover:border-purple-300 shadow-sm hover:shadow-purple-100/50 lg:col-start-3 lg:row-start-1 lg:row-span-2"
+          >
+            <div className="flex flex-col h-full relative">
+              <div className="p-3 rounded-xl bg-purple-50 border border-purple-100 w-fit mb-6">
+                <Building2 className="w-6 h-6 text-purple-600" />
+              </div>
+
+              <Counter
+                value={200}
+                suffix="+"
+                className="text-4xl font-bold text-slate-900 mb-2 block"
+              />
+              <p className="text-purple-700 font-medium mb-8 bg-purple-50 px-2 py-1 rounded-md w-fit text-sm">
+                AI Businesses
+              </p>
+
+              <div className="mt-auto space-y-4">
+                <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
+                  <div className="w-2 h-2 rounded-full bg-purple-400 group-hover/item:scale-150 transition-transform" />
+                  <span className="group-hover/item:translate-x-1 transition-transform">
+                    SaaS
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
+                  <div className="w-2 h-2 rounded-full bg-purple-400 group-hover/item:scale-150 transition-transform" />
+                  <span className="group-hover/item:translate-x-1 transition-transform">
+                    Agencies
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
+                  <div className="w-2 h-2 rounded-full bg-purple-400 group-hover/item:scale-150 transition-transform" />
+                  <span className="group-hover/item:translate-x-1 transition-transform">
+                    Startups
+                  </span>
+                </div>
+              </div>
+            </div>
+          </BentoCard>
+
+          {/* Side Hustles - Col 4, Row 1-2 on lg */}
           <BentoCard
             delay={0.2}
-            className="bg-white border-slate-200 hover:border-emerald-300 shadow-sm hover:shadow-emerald-100/50 row-span-2"
+            className="bg-white border-slate-200 hover:border-emerald-300 shadow-sm hover:shadow-emerald-100/50 lg:col-start-4 lg:row-start-1 lg:row-span-2"
           >
             <div className="flex flex-col h-full relative">
               <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100 w-fit mb-6">
@@ -180,44 +238,6 @@ export default function SkillsOpportunityHub() {
                   </span>
                 </div>
               </div>
-            </div>
-          </BentoCard>
-
-          <BentoCard
-            delay={0.3}
-            className="lg:col-span-3 bg-linear-to-r from-white to-slate-50 border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-orange-100/50"
-          >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8 h-full relative overflow-hidden">
-              <div className="p-4 rounded-2xl bg-orange-50 border border-orange-100 relative z-10">
-                <Wrench className="w-8 h-8 text-orange-500" />
-              </div>
-              <div className="relative z-10">
-                <h3 className="text-3xl font-bold text-slate-900 mb-1">
-                  100+ AI Services
-                </h3>
-                <p className="text-slate-500 text-sm">
-                  Tools, APIs, and platforms ready to deploy.
-                </p>
-              </div>
-
-              {/* Animated Gears/Dots */}
-              <div className="ml-auto flex gap-3 relative z-10 pr-8 hidden sm:flex">
-                {[1, 2, 3].map((i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{
-                      duration: 2,
-                      delay: i * 0.2,
-                      repeat: Infinity,
-                    }}
-                    className="w-3 h-3 rounded-full bg-orange-400"
-                  />
-                ))}
-              </div>
-
-              {/* Background graphic */}
-              <div className="absolute right-0 top-0 bottom-0 w-64 bg-linear-to-l from-orange-50/50 to-transparent skew-x-12 transform translate-x-10" />
             </div>
           </BentoCard>
         </div>
@@ -263,12 +283,12 @@ function FloatingElement({
       className={`absolute left-1/2 top-1/2 pointer-events-none z-0 ${className}`}
       initial={{ x: 0, y: 0, opacity: 0 }}
       animate={{
-        x: [x, x + 10, x],
-        y: [y, y - 10, y],
+        x: [x, x + 8, x],
+        y: [y, y - 8, y],
         opacity: 1,
       }}
       transition={{
-        duration: 5,
+        duration: 3,
         delay: delay,
         repeat: Infinity,
         repeatType: "reverse",

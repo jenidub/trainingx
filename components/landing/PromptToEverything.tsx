@@ -87,7 +87,7 @@ export default function PromptToEverything() {
         // Wait before switching to next
         timeoutId = setTimeout(() => {
           setCurrentIndex((prev) => (prev + 1) % SCENARIOS.length);
-        }, 3000);
+        }, 1000);
       }
     };
 
@@ -122,7 +122,7 @@ export default function PromptToEverything() {
       {/* Overlay Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a]/20 via-[#0f172a]/80 to-[#0f172a] z-0 pointer-events-none" />
 
-      <div className="relative z-10 container mx-auto px-4 py-20 flex flex-col items-center justify-center min-h-screen">
+      <div className="relative z-10 container mx-auto px-4 pb-30 py-20 flex flex-col items-center justify-center min-h-screen">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -135,7 +135,7 @@ export default function PromptToEverything() {
               The Era of Generative Everything
             </span>
           </div>
-          <h1 className="font-display text-5xl md:text-7xl font-black tracking-tight mb-6 text-white drop-shadow-2xl">
+          <h1 className="font-display text-[44px]/12 sm:text-5xl md:text-7xl font-black tracking-tight mb-6 text-white drop-shadow-2xl">
             Your Prompting Skills <br />
             {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f2ea] via-white to-[#cc33ff] animate-gradient-x"> */}
             <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent animate-gradient-x">
@@ -157,14 +157,14 @@ export default function PromptToEverything() {
           </div>
 
           {/* Output Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 h-[500px] items-end">
+          <div className="flex flex-col gap-3 md:grid md:grid-cols-3 lg:grid-cols-5 md:gap-4 md:h-[450px] lg:h-[500px] md:items-end">
             {SCENARIOS.map((scenario, index) => (
               <div
                 key={scenario.id}
                 className={`transition-all duration-700 ease-out ${
                   index === currentIndex
-                    ? "lg:-translate-y-8 lg:h-[450px] h-[400px] z-10"
-                    : "lg:h-[350px] h-[100px] opacity-50 scale-95 z-0"
+                    ? "h-[200px] md:h-[380px] lg:-translate-y-8 lg:h-[450px] z-10"
+                    : "h-[80px] md:h-[300px] lg:h-[350px] opacity-50 scale-95 z-0"
                 }`}
               >
                 <OutputCard {...scenario} isActive={index === currentIndex} />

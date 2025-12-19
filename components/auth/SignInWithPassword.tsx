@@ -31,6 +31,15 @@ export function SignInWithPassword({
         event.preventDefault();
         setSubmitting(true);
         const formData = new FormData(event.currentTarget);
+        const nameValue = (formData.get("name") || "").toString().trim();
+        if (flow === "signUp" && !nameValue) {
+          toast.error("Please enter your name to sign up.");
+          setSubmitting(false);
+          return;
+        }
+        if (flow === "signUp") {
+          formData.set("name", nameValue);
+        }
         signIn(provider ?? "password", formData)
           .then(() => {
             handleSent?.(formData.get("email") as string);
@@ -87,6 +96,19 @@ export function SignInWithPassword({
     >
       <label htmlFor="email">Email</label>
       <Input name="email" id="email" className="mb-4" autoComplete="email" />
+      {flow === "signUp" && (
+        <>
+          <label htmlFor="name">Full name</label>
+          <Input
+            name="name"
+            id="name"
+            className="mb-4"
+            autoComplete="name"
+            required={flow === "signUp"}
+            placeholder="Your name"
+          />
+        </>
+      )}
       <div className="flex items-center justify-between">
         <label htmlFor="password">Password</label>
         {handlePasswordReset && flow === "signIn" ? (

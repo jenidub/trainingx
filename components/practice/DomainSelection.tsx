@@ -5,7 +5,15 @@ import { useQuery } from "convex/react";
 import { api } from "convex/_generated/api";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Lock, ArrowRight, Sparkles, Zap } from "lucide-react";
+import {
+  Lock,
+  ArrowRight,
+  Sparkles,
+  Zap,
+  Target,
+  Star,
+  Trophy,
+} from "lucide-react";
 import { Id } from "convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import {
@@ -20,45 +28,73 @@ interface DomainSelectionProps {
   onSelectDomain: (domainId: Id<"practiceDomains">, slug: string) => void;
 }
 
-export function DomainSelection({ userId, onSelectDomain }: DomainSelectionProps) {
-  const domains = useQuery(api.practiceDomains.listWithUnlockStatus, { userId }) as any;
+export function DomainSelection({
+  userId,
+  onSelectDomain,
+}: DomainSelectionProps) {
+  const domains = useQuery(api.practiceDomains.listWithUnlockStatus, {
+    userId,
+  }) as any;
 
   if (!domains) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 flex items-center justify-center">
-        <div className="text-emerald-100 text-xl font-semibold">Loading domains...</div>
+      <div className="min-h-full py-12 flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <div className="text-slate-500 text-lg font-bold">
+            Loading domains...
+          </div>
+        </div>
       </div>
     );
   }
 
   const starterDomain = domains.find((d: any) => d.isStarter);
   const specializedDomains = domains.filter((d: any) => !d.isStarter);
-  const hasUnlockedSpecialized = specializedDomains.some((d: any) => d.isUnlocked);
+  const hasUnlockedSpecialized = specializedDomains.some(
+    (d: any) => d.isUnlocked
+  );
+  const unlockedCount = specializedDomains.filter(
+    (d: any) => d.isUnlocked
+  ).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-full bg-slate-50 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header with Progress */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="mb-8"
         >
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-emerald-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent">
-            Practice Zone
-          </h1>
-          <p className="text-xl text-emerald-100 mb-6 font-medium">
-            Master AI prompting across every domain
-          </p>
-          
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
+              Practice Zone
+            </h1>
+            <p className="text-xl font-medium text-slate-500">
+              Master AI prompting across every domain
+            </p>
+          </div>
+
           {/* Progress Indicator */}
-          <div className="inline-block bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20 shadow-md">
-            <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-yellow-300" />
-              <span className="text-sm text-emerald-100 font-medium">
-                <span className="text-emerald-200 font-bold">{specializedDomains.filter((d: any) => d.isUnlocked).length}</span>
-                {" "}of {specializedDomains.length} specialized domains unlocked
-              </span>
+          <div className="max-w-md mx-auto">
+            <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-white p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-100 text-yellow-600">
+                  <Zap className="h-6 w-6 stroke-[3px]" />
+                </div>
+                <span className="font-bold text-slate-600">
+                  Specialized Domains
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-xl font-black text-slate-700">
+                  {unlockedCount}
+                </span>
+                <span className="text-xl font-bold text-slate-400">
+                  / {specializedDomains.length}
+                </span>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -69,60 +105,71 @@ export function DomainSelection({ userId, onSelectDomain }: DomainSelectionProps
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-12"
+            className="mb-8"
           >
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="w-5 h-5 text-yellow-300" />
-              <h2 className="text-2xl font-bold text-white">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-500">
+                <Star className="h-6 w-6 stroke-[3px]" />
+              </div>
+              <h2 className="text-2xl font-extrabold text-slate-700">
                 {hasUnlockedSpecialized ? "Continue Learning" : "Start Here"}
               </h2>
             </div>
 
             <motion.div
-              whileHover={{ scale: 1.02, y: -4 }}
+              whileHover={{ scale: 1.01, y: -4 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <Card
-                className="bg-gradient-to-br from-emerald-800 to-emerald-700 border-2 border-emerald-400 hover:border-emerald-300 hover:shadow-2xl transition-all cursor-pointer group"
-                onClick={() => onSelectDomain(starterDomain._id, starterDomain.slug)}
+                className="bg-white border-2 border-b-[6px] border-slate-200 hover:border-blue-200 rounded-3xl transition-all cursor-pointer group overflow-hidden"
+                onClick={() =>
+                  onSelectDomain(starterDomain._id, starterDomain.slug)
+                }
               >
-                <CardContent className="p-8">
+                <CardContent className="px-5">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-3">
-                        <motion.span 
-                          className="text-5xl"
+                      <div className="flex items-center gap-6 mb-4">
+                        <motion.div
+                          className="text-6xl p-4 bg-blue-50 rounded-3xl border-2 border-blue-100"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                         >
                           {starterDomain.icon}
-                        </motion.span>
+                        </motion.div>
                         <div>
-                          <h3 className="text-2xl font-bold text-white">
+                          <h3 className="text-3xl font-extrabold text-slate-800 mb-2">
                             {starterDomain.title}
                           </h3>
-                          <p className="text-emerald-100 font-medium">
+                          <p className="text-lg text-slate-500 font-medium max-w-xl">
                             {starterDomain.description}
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-4 mt-4">
-                        <Badge variant="secondary" className="bg-white/10 text-emerald-100 border border-white/20">
+                      <div className="flex items-center gap-3 mt-6">
+                        <Badge
+                          variant="secondary"
+                          className="bg-slate-100 text-slate-600 border-slate-200 px-3 py-1 font-bold"
+                        >
                           {starterDomain.trackCount} tracks
                         </Badge>
-                        <Badge variant="secondary" className="bg-white/10 text-emerald-100 border border-white/20">
+                        <Badge
+                          variant="secondary"
+                          className="bg-yellow-100 text-yellow-700 border-yellow-200 px-3 py-1 font-bold"
+                        >
                           Essential for everyone
                         </Badge>
                       </div>
                     </div>
 
-                    <motion.div
-                      animate={{ x: 0 }}
-                      whileHover={{ x: 4 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <ArrowRight className="w-6 h-6 text-emerald-200" />
-                    </motion.div>
+                    <div className="self-center">
+                      <div
+                        className="h-14 w-14 rounded-2xl bg-blue-500 flex items-center justify-center text-white
+                          shadow-[0_4px_0_0_#2563eb] active:shadow-none active:translate-y-[4px] transition-all"
+                      >
+                        <ArrowRight className="w-8 h-8 stroke-[3px]" />
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -132,12 +179,22 @@ export function DomainSelection({ userId, onSelectDomain }: DomainSelectionProps
 
         {/* Specialized Domains */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-white">
-              {hasUnlockedSpecialized ? "Specialized Domains" : "Unlock Specialized Domains"}
-            </h2>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-500">
+                <Trophy className="h-6 w-6 stroke-[3px]" />
+              </div>
+              <h2 className="text-2xl font-extrabold text-slate-700">
+                {hasUnlockedSpecialized
+                  ? "Specialized Domains"
+                  : "Unlock Specialized Domains"}
+              </h2>
+            </div>
             {!hasUnlockedSpecialized && (
-              <Badge variant="outline" className="text-emerald-100 border-emerald-400 bg-white/10">
+              <Badge
+                variant="outline"
+                className="text-slate-500 border-slate-300 bg-slate-100 font-bold px-3 py-1"
+              >
                 Complete Level 1 to unlock
               </Badge>
             )}
@@ -157,62 +214,82 @@ export function DomainSelection({ userId, onSelectDomain }: DomainSelectionProps
                     <TooltipTrigger asChild>
                       <Card
                         className={cn(
-                          "h-full transition-all",
+                          "h-full transition-all border-2 border-b-[6px] rounded-3xl relative overflow-hidden",
                           domain.isUnlocked
-                            ? "bg-white/10 backdrop-blur-sm border border-white/20 hover:border-emerald-300 hover:shadow-2xl cursor-pointer group"
-                            : "bg-white/5 backdrop-blur-sm border border-white/10 opacity-50 cursor-not-allowed"
+                            ? "bg-white border-slate-200 hover:border-purple-200 hover:shadow-lg cursor-pointer group"
+                            : "bg-slate-50 border-slate-200 opacity-70 cursor-not-allowed"
                         )}
-                        onClick={() => domain.isUnlocked && onSelectDomain(domain._id, domain.slug)}
+                        onClick={() =>
+                          domain.isUnlocked &&
+                          onSelectDomain(domain._id, domain.slug)
+                        }
                       >
-                        <CardContent className="p-6">
+                        <CardContent className="px-6 py-6 font-medium">
                           <div className="flex items-start justify-between mb-4">
-                            <motion.span 
-                              className="text-4xl"
-                              whileHover={domain.isUnlocked ? { scale: 1.1 } : {}}
+                            <motion.span
+                              className={cn(
+                                "text-5xl p-3 rounded-2xl border-2 transition-colors",
+                                domain.isUnlocked
+                                  ? "bg-purple-50 border-purple-100 text-purple-600 group-hover:scale-110 duration-200"
+                                  : "bg-slate-100 border-slate-200 grayscale"
+                              )}
                             >
                               {domain.icon}
                             </motion.span>
                             {!domain.isUnlocked && (
-                              <Lock className="w-5 h-5 text-emerald-300/70" />
+                              <div className="bg-slate-200 p-2 rounded-xl">
+                                <Lock className="w-5 h-5 text-slate-400" />
+                              </div>
                             )}
                           </div>
 
-                          <h3 className="text-xl font-bold text-white mb-2">
+                          <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight">
                             {domain.title}
                           </h3>
-                          <p className={cn(
-                            "text-sm mb-4 font-medium",
-                            domain.isUnlocked ? "text-emerald-100" : "text-emerald-200/60"
-                          )}>
+                          <p
+                            className={cn(
+                              "text-sm mb-6 leading-relaxed font-semibold",
+                              domain.isUnlocked
+                                ? "text-slate-500"
+                                : "text-slate-400"
+                            )}
+                          >
                             {domain.description}
                           </p>
 
-                          <div className="flex items-center gap-2">
-                            <Badge variant="secondary" className="bg-white/10 text-emerald-100 border border-white/20 text-xs">
+                          <div className="flex items-center gap-2 mb-4">
+                            <Badge
+                              variant="secondary"
+                              className="bg-slate-100 text-slate-600 border-slate-200 font-bold"
+                            >
                               {domain.trackCount} tracks
                             </Badge>
                             {domain.isUnlocked && (
-                              <Badge variant="secondary" className="bg-white/10 text-emerald-100 border border-white/20 text-xs">
-                                ✨ Unlocked
+                              <Badge
+                                variant="secondary"
+                                className="bg-green-100 text-green-700 border-green-200 font-bold"
+                              >
+                                Unlocked
                               </Badge>
                             )}
                           </div>
 
                           {domain.isUnlocked && (
-                            <motion.div 
-                              className="mt-4 flex items-center text-emerald-200 text-sm font-semibold"
-                              whileHover={{ x: 4 }}
-                            >
-                              <span>Explore</span>
-                              <ArrowRight className="w-4 h-4 ml-1" />
-                            </motion.div>
+                            <div className="mt-auto">
+                              <div
+                                className="w-full py-3 rounded-xl bg-purple-100/50 border-2 border-purple-100 text-purple-700 font-extrabold text-center uppercase tracking-wide text-xs
+                                  group-hover:bg-purple-500 group-hover:border-purple-500 group-hover:text-white transition-all shadow-sm"
+                              >
+                                Start Practice
+                              </div>
+                            </div>
                           )}
                         </CardContent>
                       </Card>
                     </TooltipTrigger>
                     {!domain.isUnlocked && (
-                      <TooltipContent className="bg-emerald-900 border border-emerald-500/50 text-emerald-50">
-                        <p className="text-sm font-medium">Complete Level 1 to unlock</p>
+                      <TooltipContent className="bg-slate-800 text-white border-slate-700">
+                        <p className="font-bold">Complete Level 1 to unlock</p>
                       </TooltipContent>
                     )}
                   </Tooltip>

@@ -69,7 +69,7 @@ export default function PillarsSection() {
   }, [isPaused]);
 
   return (
-    <section className="container mx-auto px-4 py-24 max-w-7xl">
+    <section className="container mx-auto px-4 py-16 sm:py-24 max-w-7xl">
       <div className="mb-10 text-center space-y-2">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -88,7 +88,7 @@ export default function PillarsSection() {
 
       {/* Interactive Expanding Deck */}
       <div
-        className="flex flex-col lg:flex-row gap-4 h-[650px] lg:h-[360px] w-full"
+        className="flex flex-col lg:flex-row gap-2 sm:gap-4 h-[670px] lg:h-[360px] w-full"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
@@ -171,7 +171,7 @@ export default function PillarsSection() {
                     layout
                     className={cn(
                       "font-heading font-bold text-white leading-none transition-all duration-600",
-                      isActive ? "text-5xl md:text-6xl" : "text-3xl md:text-4xl"
+                      isActive ? "text-[44px] sm:text-5xl md:text-6xl" : "text-3xl md:text-4xl"
                     )}
                   >
                     {pillar.title}

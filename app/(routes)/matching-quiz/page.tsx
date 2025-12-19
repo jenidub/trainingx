@@ -23,11 +23,21 @@ export default function Quiz() {
   const [currentQIndex, setCurrentQIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [textResponse, setTextResponse] = useState("");
 
   const saveQuizResult = useMutation(api.quizResults.saveQuizResult);
 
   const currentQuestion = questions[currentQIndex];
   const progress = (currentQIndex / questions.length) * 100;
+  const currentAnswer = answers[currentQuestion.id] ?? "";
+
+  useEffect(() => {
+    if (currentQuestion.type === "text") {
+      setTextResponse((answers[currentQuestion.id] as string) || "");
+    } else {
+      setTextResponse("");
+    }
+  }, [currentQuestion.id, currentQuestion.type, answers]);
 
   const handleAnswer = (value: string) => {
     // Save answer
@@ -44,6 +54,10 @@ export default function Quiz() {
         await saveResults(newAnswers);
       }
     }, 300);
+  };
+
+  const handleTextSubmit = () => {
+    handleAnswer(textResponse.trim());
   };
 
   const saveResults = async (finalAnswers: Record<string, string>) => {
@@ -136,16 +150,35 @@ export default function Quiz() {
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
-                {currentQuestion.options.map((option) => (
-                  <OptionCard
-                    key={option.id}
-                    option={option}
-                    onClick={() => handleAnswer(option.value)}
-                    isSelected={answers[currentQuestion.id] === option.value}
+              {currentQuestion.type === "text" ? (
+                <div className="pt-6 max-w-3xl mx-auto w-full">
+                  <TextResponseCard
+                    value={textResponse}
+                    onChange={setTextResponse}
+                    onSubmit={handleTextSubmit}
+                    placeholder={currentQuestion.placeholder}
+                    helperText={currentQuestion.helperText}
+                    isSubmitting={isSubmitting}
                   />
-                ))}
-              </div>
+                </div>
+              ) : (
+                <div
+                  className={`grid gap-4 pt-8 ${
+                    currentQuestion.options.length > 4
+                      ? "grid-cols-1 xs:grid-cols-2 md:grid-cols-3"
+                      : "grid-cols-1 xs:grid-cols-2 md:grid-cols-2"
+                  }`}
+                >
+                  {currentQuestion.options.map((option) => (
+                    <OptionCard
+                      key={option.id}
+                      option={option}
+                      onClick={() => handleAnswer(option.value)}
+                      isSelected={currentAnswer === option.value}
+                    />
+                  ))}
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -175,14 +208,18 @@ function OptionCard({
         ${
           isSelected
             ? "border-[var(--gradient-from)] bg-primary/5 shadow-lg shadow-primary/10"
-            : "border-white bg-white/80 hover:border-primary/30 hover:bg-white hover:shadow-xl hover:shadow-indigo-500/10"
+            : "border-white bg-white/80 hover:border-[var(--gradient-from)] hover:bg-primary/5 hover:shadow-lg hover:shadow-primary/10"
         }
       `}
     >
       <div
         className={`
         p-4 rounded-2xl transition-colors duration-300
-        ${isSelected ? "bg-linear-to-r from-gradient-from to-gradient-to text-white" : "bg-slate-100 text-slate-600 group-hover:bg-primary/10 group-hover:text-primary"}
+        ${
+          isSelected
+            ? "bg-linear-to-r from-gradient-from to-gradient-to text-white"
+            : "bg-slate-100 text-slate-600 group-hover:bg-linear-to-r group-hover:from-gradient-from group-hover:to-gradient-to group-hover:text-white"
+        }
       `}
       >
         {Icon && <Icon className="w-8 h-8" />}
@@ -209,5 +246,65 @@ function OptionCard({
         </motion.div>
       )}
     </motion.button>
+  );
+}
+
+function TextResponseCard({
+  value,
+  onChange,
+  onSubmit,
+  placeholder,
+  helperText,
+  isSubmitting,
+}: {
+  value: string;
+  onChange: (val: string) => void;
+  onSubmit: () => void;
+  placeholder?: string;
+  helperText?: string;
+  isSubmitting: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="relative overflow-hidden rounded-3xl border-2 border-white bg-white/80 p-6 md:p-8 shadow-lg shadow-indigo-500/5"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-indigo-50 opacity-60 pointer-events-none" />
+      <div className="relative space-y-4">
+        <div className="flex items-start justify-between gap-4">
+          <p className="text-sm text-slate-600">
+            {helperText || "Optional context to tailor your matches"}
+          </p>
+          <span className="text-xs font-semibold uppercase tracking-wide text-primary/80">
+            Optional
+          </span>
+        </div>
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+              onSubmit();
+            }
+          }}
+          placeholder={placeholder || "Add any notes or specifics here"}
+          className="w-full min-h-[160px] rounded-2xl border-2 border-slate-200 bg-white/90 ring-0 px-4 py-3 text-base text-slate-800 placeholder:text-slate-400 focus:border-primary/50 focus:ring-0  focus: transition"
+        />
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-slate-400">
+            Cmd/Ctrl + Enter to continue
+          </span>
+          <Button
+            onClick={onSubmit}
+            disabled={isSubmitting}
+            className="gap-2 bg-primary hover:bg-primary/90 shadow-md shadow-primary/20"
+          >
+            Continue
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </motion.div>
   );
 }

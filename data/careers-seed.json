@@ -1152,5 +1152,575 @@
     "growthOutlook": "Strong - AI enhancing support efficiency",
     "remotePolicy": "Fully Remote",
     "visaSupport": null
+  },
+  {
+    "id": "ai-bioinformatics-analyst",
+    "title": "AI Bioinformatics Analyst",
+    "location": "Boston, MA / Remote",
+    "salaryRange": "$140k - $190k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use LLMs and generative models to summarize research, triage datasets, and accelerate wet lab decision-making for biotech teams.",
+    "impactHighlights": [
+      "Shorten experiment cycles with rapid literature and data synthesis",
+      "Build prompt patterns for genomic and proteomic analyses",
+      "Partner with scientists to surface candidates and risks earlier",
+      "Standardize AI workflows that scale across programs"
+    ],
+    "keyTechnologies": ["LLMs", "Vector Databases", "Pandas", "Python", "Benchling", "PubMed APIs"],
+    "requiredSkills": ["generative_ai", "analysis", "coding", "planning"],
+    "preferredSkills": ["communication", "synthetic_ai"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "generative_ai": 75,
+      "analysis": 75,
+      "coding": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - biotech teams are adding AI copilots for research and ops",
+    "remotePolicy": "Hybrid (2-3 days/week)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-education-curriculum-designer",
+    "title": "AI Education Curriculum Designer",
+    "location": "Remote (US)",
+    "salaryRange": "$110k - $160k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Create AI-first learning paths, interactive prompts, and assessments for students and professionals across domains.",
+    "impactHighlights": [
+      "Launch adaptive lessons that respond to learner prompts",
+      "Design prompt libraries and rubrics for teachers",
+      "Ship multimodal learning activities (text, image, video)",
+      "Track outcomes and iterate on engagement signals"
+    ],
+    "keyTechnologies": ["LLMs", "Prompt Libraries", "LMS Platforms", "Canva", "Figma"],
+    "requiredSkills": ["communication", "creativity", "generative_ai", "planning"],
+    "preferredSkills": ["analysis", "collaboration"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "generative_ai": 65,
+      "communication": 75,
+      "creativity": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - districts and bootcamps need AI-native curriculum fast",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-agriculture-ops-lead",
+    "title": "AI Agriculture Ops Lead",
+    "location": "Austin, TX / Remote",
+    "salaryRange": "$130k - $180k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Deploy AI workflows for crop monitoring, yield forecasting, and field task automation with drones and sensors.",
+    "impactHighlights": [
+      "Pair satellite data with LLM summaries for farm decisions",
+      "Automate scouting reports with vision + prompt templates",
+      "Reduce waste and improve yield predictions for growers",
+      "Coordinate vendors and agronomists with AI agent workflows"
+    ],
+    "keyTechnologies": ["Vision Models", "LLMs", "Geospatial Tools", "Edge Devices", "Drones"],
+    "requiredSkills": ["analysis", "planning", "agentic_ai", "communication"],
+    "preferredSkills": ["generative_ai", "collaboration"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "analysis": 70,
+      "planning": 70,
+      "agentic_ai": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Growing - precision ag is rapidly adopting AI copilots",
+    "remotePolicy": "Hybrid (travel to sites)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-fincrime-analyst",
+    "title": "AI Financial Crime Analyst",
+    "location": "New York, NY / Remote",
+    "salaryRange": "$120k - $170k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to triage alerts, summarize investigations, and reduce false positives across AML/Fraud programs.",
+    "impactHighlights": [
+      "Turn long case files into fast risk summaries",
+      "Design prompt checks that catch policy gaps",
+      "Partner with risk teams to improve detection logic",
+      "Cut investigation time with AI-assisted narratives"
+    ],
+    "keyTechnologies": ["LLMs", "Case Management Tools", "Vector Search", "SQL", "RegTech Platforms"],
+    "requiredSkills": ["analysis", "logic", "communication", "generative_ai"],
+    "preferredSkills": ["planning", "collaboration"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "analysis": 75,
+      "logic": 75,
+      "communication": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - banks accelerating AI for investigations and QA",
+    "remotePolicy": "Hybrid (2 days/week)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-safety-evaluation-specialist",
+    "title": "AI Safety Evaluation Specialist",
+    "location": "Remote (US)",
+    "salaryRange": "$140k - $190k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Design and run evals for safety, reliability, and hallucinations across LLM and multimodal systems.",
+    "impactHighlights": [
+      "Ship red-team style test suites for model launches",
+      "Quantify hallucination, bias, and jailbreak resilience",
+      "Collaborate with product and policy on guardrails",
+      "Automate eval runs and reporting in CI/CD"
+    ],
+    "keyTechnologies": ["LLM Evals", "Python", "Datasets", "Vector Stores", "Safety Policies"],
+    "requiredSkills": ["logic", "analysis", "coding", "generative_ai"],
+    "preferredSkills": ["planning", "communication"],
+    "promptScoreMin": 75,
+    "skillThresholds": {
+      "logic": 80,
+      "analysis": 80,
+      "coding": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - every AI product needs measurable safety signals",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-video-creation-specialist",
+    "title": "AI Video Creation Specialist",
+    "location": "Los Angeles, CA / Remote",
+    "salaryRange": "$90k - $140k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Produce short and long-form video assets with generative video and image models, keeping brand and pacing tight.",
+    "impactHighlights": [
+      "Ship weekly video sets for campaigns with AI-first workflows",
+      "Build prompt boards and style guides for video consistency",
+      "Blend voice, music, and captions into export-ready reels",
+      "Test multiple cuts and pick winners from metrics"
+    ],
+    "keyTechnologies": ["Gen Video Models", "Image Models", "Audio Tools", "Editing Suites", "LLMs"],
+    "requiredSkills": ["creativity", "generative_ai", "communication"],
+    "preferredSkills": ["planning", "analysis"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "creativity": 70,
+      "generative_ai": 65,
+      "communication": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - brands need high-volume, fast-turn video",
+    "remotePolicy": "Hybrid (flex for shoots)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-product-ops-manager",
+    "title": "AI Product Ops Manager",
+    "location": "Seattle, WA / Remote",
+    "salaryRange": "$130k - $185k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Operationalize AI features: track quality, feedback, and launch readiness across teams.",
+    "impactHighlights": [
+      "Own AI feature health dashboards and playbooks",
+      "Translate user feedback into prompt/eval updates",
+      "Run A/B tests to tune responses and latency",
+      "Coordinate with eng/PM on safety and rollout"
+    ],
+    "keyTechnologies": ["LLMs", "Analytics", "A/B Testing", "Evals", "Product Ops Tools"],
+    "requiredSkills": ["planning", "communication", "analysis", "generative_ai"],
+    "preferredSkills": ["collaboration", "iteration"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "planning": 70,
+      "communication": 75,
+      "analysis": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - AI features need ongoing ops and QA",
+    "remotePolicy": "Hybrid (1-2 days/week)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-clinical-documentation-specialist",
+    "title": "AI Clinical Documentation Specialist",
+    "location": "Remote (US)",
+    "salaryRange": "$95k - $140k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to draft, summarize, and QA clinical notes while aligning to compliance and coding rules.",
+    "impactHighlights": [
+      "Cut provider time on notes with AI first drafts",
+      "Ensure coding accuracy and reduce denials",
+      "Align templates to specialty-specific workflows",
+      "Monitor quality and surface fixes quickly"
+    ],
+    "keyTechnologies": ["LLMs", "EHR Integrations", "Medical Ontologies", "Voice to Text"],
+    "requiredSkills": ["communication", "analysis", "generative_ai"],
+    "preferredSkills": ["planning", "logic"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "communication": 75,
+      "analysis": 70,
+      "generative_ai": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - clinical AI adoption accelerating",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-research-facilitator",
+    "title": "AI Research Facilitator (STEM)",
+    "location": "Cambridge, MA / Remote",
+    "salaryRange": "$125k - $175k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Support physics/math labs with AI literature reviews, experiment planning, and code scaffolding.",
+    "impactHighlights": [
+      "Turn dense papers into quick briefs and comparisons",
+      "Build prompt kits for derivations and simulation setup",
+      "Draft analysis code for experiments and models",
+      "Coordinate data/org notes for reproducibility"
+    ],
+    "keyTechnologies": ["LLMs", "Python", "Math Tools", "Citation Managers", "Vector Search"],
+    "requiredSkills": ["analysis", "logic", "coding", "generative_ai"],
+    "preferredSkills": ["communication", "planning"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "analysis": 80,
+      "logic": 80,
+      "coding": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Growing - labs are adding AI copilots for research velocity",
+    "remotePolicy": "Hybrid (lab collaboration)",
+    "visaSupport": true
+  },
+  {
+    "id": "ai-agent-ops-coordinator",
+    "title": "AI Agent Ops Coordinator",
+    "location": "Remote (US)",
+    "salaryRange": "$110k - $155k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Manage fleets of AI agents: routing, monitoring, and continuous prompt/skill tuning for reliability.",
+    "impactHighlights": [
+      "Set up guardrails and escalation paths for agents",
+      "Optimize task routing and success rates",
+      "Instrument latency, cost, and hallucination metrics",
+      "Run fast prompt and tool updates based on incidents"
+    ],
+    "keyTechnologies": ["Agent Frameworks", "LLMs", "Vector Stores", "Monitoring", "APM Tools"],
+    "requiredSkills": ["agentic_ai", "planning", "analysis", "communication"],
+    "preferredSkills": ["coding", "logic"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "agentic_ai": 75,
+      "planning": 70,
+      "analysis": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - agentic systems need ops and reliability owners",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-marketing-automation-lead",
+    "title": "AI Marketing Automation Lead",
+    "location": "Remote (US)",
+    "salaryRange": "$120k - $175k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Deploy AI-driven campaigns, generate creative variants, and run continuous tests to lift conversion and engagement.",
+    "impactHighlights": [
+      "Ship multi-variant prompts for copy, images, and video",
+      "Automate briefs-to-launch workflows across channels",
+      "Instrument uplift and cost-per-result for each asset",
+      "Build playbooks other marketers can reuse safely"
+    ],
+    "keyTechnologies": ["LLMs", "Gen Image/Video", "A/B Testing", "Analytics", "CRM/Marketing Ops"],
+    "requiredSkills": ["communication", "planning", "analysis", "generative_ai", "creativity"],
+    "preferredSkills": ["iteration", "collaboration"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "communication": 70,
+      "planning": 70,
+      "analysis": 70,
+      "generative_ai": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - brands need AI-native growth playbooks",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-sales-enablement-specialist",
+    "title": "AI Sales Enablement Specialist",
+    "location": "Chicago, IL / Remote",
+    "salaryRange": "$100k - $150k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to create deal briefs, call recaps, and tailored collateral that help reps close faster.",
+    "impactHighlights": [
+      "Draft meeting notes and next steps automatically",
+      "Generate custom one-pagers per account in minutes",
+      "Maintain a prompt library for objection handling",
+      "Benchmark messaging performance and iterate weekly"
+    ],
+    "keyTechnologies": ["LLMs", "CRM", "Sales Enablement Tools", "Analytics"],
+    "requiredSkills": ["communication", "analysis", "planning", "generative_ai"],
+    "preferredSkills": ["collaboration", "iteration"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "communication": 70,
+      "analysis": 65,
+      "planning": 65,
+      "generative_ai": 60
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - AI is redefining sales support workflows",
+    "remotePolicy": "Hybrid (1-2 days/week)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-cyber-threat-analyst-llm",
+    "title": "AI Cyber Threat Analyst (LLM)",
+    "location": "Remote (US)",
+    "salaryRange": "$130k - $185k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Apply LLMs to summarize alerts, draft investigation notes, and propose response actions while minimizing noise.",
+    "impactHighlights": [
+      "Triage alerts with AI-generated context summaries",
+      "Create prompt templates for phishing/malware analysis",
+      "Cut mean time to respond with structured AI playbooks",
+      "Partner with SOC to keep prompts safe and auditable"
+    ],
+    "keyTechnologies": ["LLMs", "Security Platforms", "Vector Search", "Python", "SIEM"],
+    "requiredSkills": ["logic", "analysis", "coding", "generative_ai"],
+    "preferredSkills": ["planning", "communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "logic": 80,
+      "analysis": 75,
+      "coding": 70,
+      "generative_ai": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - SOCs need AI to handle alert volume",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-legal-drafting-analyst",
+    "title": "AI Legal Drafting Analyst",
+    "location": "Remote (US)",
+    "salaryRange": "$115k - $165k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to draft clauses, summarize contracts, and prep negotiation points with compliance-safe patterns.",
+    "impactHighlights": [
+      "Summarize long agreements into negotiation briefs",
+      "Draft standard clauses with prompt guardrails",
+      "Flag risky language and propose alternatives",
+      "Maintain playbooks by contract type and jurisdiction"
+    ],
+    "keyTechnologies": ["LLMs", "Document AI", "Citation Tools", "CLM Platforms"],
+    "requiredSkills": ["communication", "analysis", "logic", "generative_ai"],
+    "preferredSkills": ["planning"],
+    "promptScoreMin": 65,
+    "skillThresholds": {
+      "communication": 75,
+      "analysis": 75,
+      "logic": 70,
+      "generative_ai": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - legal teams are piloting AI drafting",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-supply-chain-optimizer",
+    "title": "AI Supply Chain Optimizer",
+    "location": "Remote (US)",
+    "salaryRange": "$125k - $180k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to forecast demand, route inventory, and summarize disruptions across suppliers and lanes.",
+    "impactHighlights": [
+      "Generate daily risk briefs from logistics data",
+      "Tune prompts for ETA, cost, and stockout predictions",
+      "Automate what-if scenarios for planners",
+      "Align ops, finance, and vendors with clear AI outputs"
+    ],
+    "keyTechnologies": ["LLMs", "Analytics", "Optimization", "Agent Frameworks", "SQL"],
+    "requiredSkills": ["analysis", "planning", "agentic_ai", "coding"],
+    "preferredSkills": ["communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "analysis": 75,
+      "planning": 75,
+      "agentic_ai": 70,
+      "coding": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - supply chains need faster AI decisions",
+    "remotePolicy": "Hybrid (travel as needed)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-people-ops-analyst",
+    "title": "AI People Ops Analyst",
+    "location": "Remote (US)",
+    "salaryRange": "$95k - $140k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Leverage AI to draft role scorecards, summarize feedback, and automate people analytics reporting.",
+    "impactHighlights": [
+      "Generate role briefs and interview kits quickly",
+      "Summarize performance/engagement signals with AI",
+      "Create prompt-safe templates for internal comms",
+      "Track people metrics and surface actionable trends"
+    ],
+    "keyTechnologies": ["LLMs", "HRIS", "Survey Tools", "Analytics"],
+    "requiredSkills": ["communication", "analysis", "planning", "generative_ai"],
+    "preferredSkills": ["collaboration", "iteration"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "communication": 70,
+      "analysis": 65,
+      "planning": 65,
+      "generative_ai": 60
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Growing - HR teams adopting AI for ops/analytics",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-ux-research-synthesist",
+    "title": "AI UX Research Synthesist",
+    "location": "Remote (US)",
+    "salaryRange": "$105k - $155k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to synthesize research sessions, cluster insights, and generate user journey hypotheses.",
+    "impactHighlights": [
+      "Auto-summarize interviews and usability tests",
+      "Cluster themes with embeddings and prompt templates",
+      "Draft POV statements and opportunity maps fast",
+      "Keep stakeholders aligned with concise briefs"
+    ],
+    "keyTechnologies": ["LLMs", "Embeddings", "Research Repos", "Design Tools"],
+    "requiredSkills": ["communication", "analysis", "creativity", "generative_ai"],
+    "preferredSkills": ["planning", "collaboration"],
+    "promptScoreMin": 60,
+    "skillThresholds": {
+      "communication": 70,
+      "analysis": 70,
+      "creativity": 65,
+      "generative_ai": 60
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - research teams need faster synthesis",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-manufacturing-quality-engineer",
+    "title": "AI Manufacturing Quality Engineer",
+    "location": "Detroit, MI / Remote",
+    "salaryRange": "$120k - $175k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Apply vision + LLM workflows to spot defects, summarize incidents, and optimize quality loops on the line.",
+    "impactHighlights": [
+      "Deploy vision checks and AI summaries for defects",
+      "Generate RCA templates and playbooks via LLMs",
+      "Track latency/cost/accuracy of inspections",
+      "Coordinate fixes across ops, vendors, and engineering"
+    ],
+    "keyTechnologies": ["Vision Models", "LLMs", "Edge/IoT", "Analytics"],
+    "requiredSkills": ["analysis", "logic", "planning", "agentic_ai"],
+    "preferredSkills": ["coding", "communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "analysis": 75,
+      "logic": 75,
+      "planning": 70,
+      "agentic_ai": 70
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - quality teams are adding AI inspectors",
+    "remotePolicy": "Hybrid (site visits)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-climate-data-modeler",
+    "title": "AI Climate Data Modeler",
+    "location": "San Francisco, CA / Remote",
+    "salaryRange": "$130k - $185k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to model climate risks, summarize reports, and build scenario narratives for stakeholders.",
+    "impactHighlights": [
+      "Transform raw climate data into concise decision briefs",
+      "Run scenario prompts for regions, assets, and timelines",
+      "Blend geospatial + LLM outputs for exec-ready summaries",
+      "Automate report generation and validation loops"
+    ],
+    "keyTechnologies": ["LLMs", "Geospatial", "Python", "Vector Databases", "Dashboards"],
+    "requiredSkills": ["analysis", "coding", "planning", "generative_ai"],
+    "preferredSkills": ["communication"],
+    "promptScoreMin": 70,
+    "skillThresholds": {
+      "analysis": 80,
+      "coding": 70,
+      "planning": 70,
+      "generative_ai": 65
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "Growing - climate teams need faster modeling and briefs",
+    "remotePolicy": "Hybrid (optional)",
+    "visaSupport": null
+  },
+  {
+    "id": "ai-customer-insights-analyst",
+    "title": "AI Customer Insights Analyst",
+    "location": "Remote (US)",
+    "salaryRange": "$95k - $140k",
+    "employmentType": "Full-time",
+    "seniority": "Mid-Level",
+    "description": "Use AI to synthesize surveys, reviews, and telemetry into clear customer insights and recommendations.",
+    "impactHighlights": [
+      "Summarize multi-channel feedback with LLMs",
+      "Cluster themes and quantify sentiment quickly",
+      "Draft recommendations tied to metrics and experiments",
+      "Share concise briefs that drive product changes"
+    ],
+    "keyTechnologies": ["LLMs", "Analytics", "Surveys", "Dashboards"],
+    "requiredSkills": ["analysis", "communication", "creativity", "generative_ai"],
+    "preferredSkills": ["planning", "iteration"],
+    "promptScoreMin": 55,
+    "skillThresholds": {
+      "analysis": 70,
+      "communication": 70,
+      "creativity": 60,
+      "generative_ai": 60
+    },
+    "portfolioProjects": [],
+    "growthOutlook": "High - product teams need faster customer insight loops",
+    "remotePolicy": "Fully Remote",
+    "visaSupport": null
   }
 ]

@@ -1,0 +1,726 @@
+{
+  "users": [
+    {
+      "name": "Maya Chen",
+      "email": "maya@trainingx.ai",
+      "image": "",
+      "promptScore": 1685,
+      "streak": 9,
+      "lastActiveDaysAgo": 0,
+      "weeklyPracticeMinutes": 160,
+      "rubric": {
+        "clarity": 88,
+        "constraints": 84,
+        "iteration": 82,
+        "tool": 85
+      },
+      "skills": {
+        "generative_ai": 88,
+        "agentic_ai": 82,
+        "synthetic_ai": 76,
+        "coding": 74,
+        "agi_readiness": 80,
+        "communication": 90,
+        "logic": 83,
+        "planning": 85,
+        "analysis": 86,
+        "creativity": 89,
+        "collaboration": 87
+      },
+      "communityActivity": {
+        "postsCreated": 2,
+        "upvotesReceived": 59,
+        "downvotesReceived": 3,
+        "helpfulAnswers": 8,
+        "communityScore": 97
+      }
+    },
+    {
+      "name": "Leo Martinez",
+      "email": "leo@trainingx.ai",
+      "image": "",
+      "promptScore": 1720,
+      "streak": 6,
+      "lastActiveDaysAgo": 1,
+      "weeklyPracticeMinutes": 140,
+      "rubric": {
+        "clarity": 90,
+        "constraints": 86,
+        "iteration": 84,
+        "tool": 87
+      },
+      "skills": {
+        "generative_ai": 90,
+        "agentic_ai": 84,
+        "synthetic_ai": 78,
+        "coding": 79,
+        "agi_readiness": 82,
+        "communication": 88,
+        "logic": 86,
+        "planning": 84,
+        "analysis": 87,
+        "creativity": 86,
+        "collaboration": 85
+      },
+      "communityActivity": {
+        "postsCreated": 2,
+        "upvotesReceived": 71,
+        "downvotesReceived": 2,
+        "helpfulAnswers": 6,
+        "communityScore": 102
+      }
+    },
+    {
+      "name": "Aanya Patel",
+      "email": "aanya@trainingx.ai",
+      "image": "",
+      "promptScore": 1580,
+      "streak": 5,
+      "lastActiveDaysAgo": 0,
+      "weeklyPracticeMinutes": 120,
+      "rubric": {
+        "clarity": 82,
+        "constraints": 78,
+        "iteration": 79,
+        "tool": 80
+      },
+      "skills": {
+        "generative_ai": 82,
+        "agentic_ai": 75,
+        "synthetic_ai": 70,
+        "coding": 68,
+        "agi_readiness": 74,
+        "communication": 84,
+        "logic": 80,
+        "planning": 81,
+        "analysis": 79,
+        "creativity": 83,
+        "collaboration": 82
+      },
+      "communityActivity": {
+        "postsCreated": 1,
+        "upvotesReceived": 26,
+        "downvotesReceived": 2,
+        "helpfulAnswers": 3,
+        "communityScore": 58
+      }
+    },
+    {
+      "name": "Jonah Brooks",
+      "email": "jonah@trainingx.ai",
+      "image": "",
+      "promptScore": 1655,
+      "streak": 7,
+      "lastActiveDaysAgo": 2,
+      "weeklyPracticeMinutes": 150,
+      "rubric": {
+        "clarity": 86,
+        "constraints": 82,
+        "iteration": 80,
+        "tool": 83
+      },
+      "skills": {
+        "generative_ai": 86,
+        "agentic_ai": 79,
+        "synthetic_ai": 74,
+        "coding": 80,
+        "agi_readiness": 78,
+        "communication": 85,
+        "logic": 84,
+        "planning": 82,
+        "analysis": 85,
+        "creativity": 81,
+        "collaboration": 84
+      },
+      "communityActivity": {
+        "postsCreated": 2,
+        "upvotesReceived": 78,
+        "downvotesReceived": 3,
+        "helpfulAnswers": 6,
+        "communityScore": 104
+      }
+    },
+    {
+      "name": "Sofia Morales",
+      "email": "sofia@trainingx.ai",
+      "image": "",
+      "promptScore": 1490,
+      "streak": 4,
+      "lastActiveDaysAgo": 1,
+      "weeklyPracticeMinutes": 95,
+      "rubric": {
+        "clarity": 79,
+        "constraints": 75,
+        "iteration": 74,
+        "tool": 76
+      },
+      "skills": {
+        "generative_ai": 78,
+        "agentic_ai": 70,
+        "synthetic_ai": 66,
+        "coding": 63,
+        "agi_readiness": 70,
+        "communication": 82,
+        "logic": 75,
+        "planning": 74,
+        "analysis": 76,
+        "creativity": 80,
+        "collaboration": 79
+      },
+      "communityActivity": {
+        "postsCreated": 2,
+        "upvotesReceived": 34,
+        "downvotesReceived": 2,
+        "helpfulAnswers": 4,
+        "communityScore": 68
+      }
+    },
+    {
+      "name": "Priya Raman",
+      "email": "priya@trainingx.ai",
+      "image": "",
+      "promptScore": 1610,
+      "streak": 8,
+      "lastActiveDaysAgo": 0,
+      "weeklyPracticeMinutes": 175,
+      "rubric": {
+        "clarity": 85,
+        "constraints": 82,
+        "iteration": 81,
+        "tool": 84
+      },
+      "skills": {
+        "generative_ai": 84,
+        "agentic_ai": 77,
+        "synthetic_ai": 72,
+        "coding": 78,
+        "agi_readiness": 77,
+        "communication": 86,
+        "logic": 83,
+        "planning": 84,
+        "analysis": 82,
+        "creativity": 85,
+        "collaboration": 86
+      },
+      "communityActivity": {
+        "postsCreated": 1,
+        "upvotesReceived": 28,
+        "downvotesReceived": 2,
+        "helpfulAnswers": 5,
+        "communityScore": 70
+      }
+    },
+    {
+      "name": "Ethan Walker",
+      "email": "ethan@trainingx.ai",
+      "image": "",
+      "promptScore": 1430,
+      "streak": 3,
+      "lastActiveDaysAgo": 3,
+      "weeklyPracticeMinutes": 80,
+      "rubric": {
+        "clarity": 76,
+        "constraints": 72,
+        "iteration": 70,
+        "tool": 73
+      },
+      "skills": {
+        "generative_ai": 74,
+        "agentic_ai": 67,
+        "synthetic_ai": 62,
+        "coding": 66,
+        "agi_readiness": 65,
+        "communication": 79,
+        "logic": 72,
+        "planning": 70,
+        "analysis": 71,
+        "creativity": 77,
+        "collaboration": 75
+      },
+      "communityActivity": {
+        "postsCreated": 1,
+        "upvotesReceived": 18,
+        "downvotesReceived": 2,
+        "helpfulAnswers": 2,
+        "communityScore": 45
+      }
+    },
+    {
+      "name": "Nora Kim",
+      "email": "nora@trainingx.ai",
+      "image": "",
+      "promptScore": 1555,
+      "streak": 5,
+      "lastActiveDaysAgo": 2,
+      "weeklyPracticeMinutes": 110,
+      "rubric": {
+        "clarity": 83,
+        "constraints": 79,
+        "iteration": 78,
+        "tool": 80
+      },
+      "skills": {
+        "generative_ai": 83,
+        "agentic_ai": 74,
+        "synthetic_ai": 69,
+        "coding": 71,
+        "agi_readiness": 73,
+        "communication": 86,
+        "logic": 79,
+        "planning": 80,
+        "analysis": 78,
+        "creativity": 82,
+        "collaboration": 84
+      },
+      "communityActivity": {
+        "postsCreated": 1,
+        "upvotesReceived": 31,
+        "downvotesReceived": 1,
+        "helpfulAnswers": 4,
+        "communityScore": 66
+      }
+    },
+    {
+      "name": "Ravi Narayanan",
+      "email": "ravi@trainingx.ai",
+      "image": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=600&q=80",
+      "promptScore": 1780,
+      "streak": 11,
+      "lastActiveDaysAgo": 0,
+      "weeklyPracticeMinutes": 200,
+      "rubric": {
+        "clarity": 92,
+        "constraints": 88,
+        "iteration": 87,
+        "tool": 90
+      },
+      "skills": {
+        "generative_ai": 92,
+        "agentic_ai": 86,
+        "synthetic_ai": 82,
+        "coding": 88,
+        "agi_readiness": 86,
+        "communication": 90,
+        "logic": 91,
+        "planning": 89,
+        "analysis": 92,
+        "creativity": 88,
+        "collaboration": 90
+      },
+      "communityActivity": {
+        "postsCreated": 1,
+        "upvotesReceived": 50,
+        "downvotesReceived": 2,
+        "helpfulAnswers": 6,
+        "communityScore": 108
+      }
+    },
+    {
+      "name": "Lila Thompson",
+      "email": "lila@trainingx.ai",
+      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80&sat=-5",
+      "promptScore": 1380,
+      "streak": 2,
+      "lastActiveDaysAgo": 4,
+      "weeklyPracticeMinutes": 70,
+      "rubric": {
+        "clarity": 72,
+        "constraints": 70,
+        "iteration": 69,
+        "tool": 71
+      },
+      "skills": {
+        "generative_ai": 71,
+        "agentic_ai": 64,
+        "synthetic_ai": 60,
+        "coding": 62,
+        "agi_readiness": 63,
+        "communication": 77,
+        "logic": 70,
+        "planning": 69,
+        "analysis": 68,
+        "creativity": 74,
+        "collaboration": 73
+      },
+      "communityActivity": {
+        "postsCreated": 1,
+        "upvotesReceived": 14,
+        "downvotesReceived": 1,
+        "helpfulAnswers": 1,
+        "communityScore": 38
+      }
+    }
+  ],
+  "posts": [
+    {
+      "ref": "teardown-meeting-notes",
+      "authorEmail": "maya@trainingx.ai",
+      "title": "Prompt teardown: messy meeting notes -> exec summary (with evidence links)",
+      "content": "Took a 14-minute Zoom transcript with speakers overtalking and produced a 180-word exec summary + 5 evidence links. Used role = \"operational analyst\", explicit section headers, and a bullet-for-bullet trace of how each link is picked. Added a guardrail: refuse to invent links. Sharing the exact template + two bad examples that I debugged.",
+      "category": "prompts",
+      "tags": ["prompt-engineering", "summaries", "few-shot"],
+      "upvotes": 38,
+      "downvotes": 2,
+      "viewCount": 184,
+      "createdHoursAgo": 6
+    },
+    {
+      "ref": "rag-onboarding",
+      "authorEmail": "jonah@trainingx.ai",
+      "title": "Shipped a tiny RAG for onboarding docs in 2 hours — stack + eval notes",
+      "content": "Used the practice zone retrieval pattern to wire up a RAG over onboarding docs: Qdrant + 768-dim embeddings, 600-token chunks, overlap 120, rerank with Cohere, then a tight synthesis prompt. Baseline hallucinated PTO policy; after adding a \"show gaps\" step and scoring with 20 synthetic eval Qs, hallucination rate dropped from 18% to 2%.",
+      "category": "projects",
+      "tags": ["rag", "evaluation", "retrieval"],
+      "upvotes": 45,
+      "downvotes": 3,
+      "viewCount": 210,
+      "createdHoursAgo": 20
+    },
+    {
+      "ref": "duel-recap-unit-tests",
+      "authorEmail": "leo@trainingx.ai",
+      "title": "Duel recap: beat the zero-shot baseline 7-5 using prompt unit tests",
+      "content": "Queued a duel vs. the default template for summarizing customer tickets. I wrote 6 micro-tests (one-hot edge cases, sarcasm, mixed languages) and iterated until each passed. Net gain: +9 prompt score, +41 upvotes. Dropping the test harness and the exact \"failing example\" section I include in the prompt so the model self-checks before responding.",
+      "category": "achievements",
+      "tags": ["duels", "testing", "prompt-unit-tests"],
+      "upvotes": 41,
+      "downvotes": 1,
+      "viewCount": 160,
+      "createdHoursAgo": 32
+    },
+    {
+      "ref": "chunking-voice-transcripts",
+      "authorEmail": "sofia@trainingx.ai",
+      "title": "Question: chunking voice transcripts for agentic flows?",
+      "content": "Working on call coaching. Transcripts are 20-30 minutes and I need an agent to detect objections + suggest responses without missing context. Anyone have a rule-of-thumb for chunk size/overlap and whether to pre-label speaker turns? I'm testing 480-token chunks with 120 overlap and storing speaker as metadata but open to better patterns.",
+      "category": "questions",
+      "tags": ["agentic", "chunking", "voice"],
+      "upvotes": 22,
+      "downvotes": 1,
+      "viewCount": 130,
+      "createdHoursAgo": 10
+    },
+    {
+      "ref": "prompt-qa-checklist",
+      "authorEmail": "nora@trainingx.ai",
+      "title": "Resource: prompt QA checklist I use before shipping",
+      "content": "Quick checklist I run for every prompt change: 1) Define success/fail examples, 2) Add a \"what not to do\" block, 3) Set output schema + refusal policy, 4) Add two contrastive few-shots, 5) Run eval set with 10 red-team prompts, 6) Track deltas in a simple CSV. Includes the template I paste inside the prompt to nudge self-checks.",
+      "category": "resources",
+      "tags": ["qa", "templates", "shipping"],
+      "upvotes": 31,
+      "downvotes": 1,
+      "viewCount": 142,
+      "createdHoursAgo": 14
+    },
+    {
+      "ref": "auto-coach-rubric",
+      "authorEmail": "priya@trainingx.ai",
+      "title": "Project share: auto-coach that tags rubric gaps after each practice step",
+      "content": "Built a small auto-coach for my practice sessions. It stores each step, scores with our rubric (clarity/constraints/iteration/tool), and suggests one tweak before I move on. Uses a \"keep/kill/change\" pattern so feedback stays concise. Seeing +11 prompt score over three days. Code + prompt attached.",
+      "category": "projects",
+      "tags": ["coach", "rubric", "practice"],
+      "upvotes": 28,
+      "downvotes": 2,
+      "viewCount": 155,
+      "createdHoursAgo": 8
+    },
+    {
+      "ref": "practice-speedrun-level1",
+      "authorEmail": "aanya@trainingx.ai",
+      "title": "Practice Zone speedrun: Level 1 fundamentals in 11 minutes (score 86)",
+      "content": "Tried a speedrun: Level 1 fundamentals, all 12 prompts in 11 minutes. Highest lift came from rewriting the instruction order and adding a pre-flight \"restate the constraints\" step. Sharing a Loom + my notes on which prompts were traps.",
+      "category": "achievements",
+      "tags": ["practice", "speedrun", "fundamentals"],
+      "upvotes": 26,
+      "downvotes": 2,
+      "viewCount": 120,
+      "createdHoursAgo": 5
+    },
+    {
+      "ref": "diagnostic-tree-pattern",
+      "authorEmail": "ravi@trainingx.ai",
+      "title": "Prompt pattern: diagnostic tree for broken outputs",
+      "content": "When outputs drift, I run a diagnostic tree: 1) ask model to classify failure type (missing constraints vs hallucination vs tone), 2) request a \"minimal patch\" suggestion, 3) re-run with patch and compare deltas. It cuts debug time in half. Dropping the exact system prompt + a before/after example from a pricing email.",
+      "category": "prompts",
+      "tags": ["debugging", "patterns", "diagnostics"],
+      "upvotes": 50,
+      "downvotes": 2,
+      "viewCount": 190,
+      "createdHoursAgo": 16
+    },
+    {
+      "ref": "retrieval-boundaries",
+      "authorEmail": "ethan@trainingx.ai",
+      "title": "Using retrieval + function calls to enforce boundaries with clients",
+      "content": "Freelance prompt ops: I built a guardrail that checks whether the answer stays inside the retrieved context *before* it goes out. Using a two-call pattern: retrieval -> \"policy validator\" prompt -> final generation. Anyone else doing this? Curious if you auto-flag and store violations.",
+      "category": "general",
+      "tags": ["guardrails", "retrieval", "clients"],
+      "upvotes": 18,
+      "downvotes": 2,
+      "viewCount": 98,
+      "createdHoursAgo": 12
+    },
+    {
+      "ref": "reporting-prompt-deltas",
+      "authorEmail": "lila@trainingx.ai",
+      "title": "Ask: best way to report prompt score deltas to leadership?",
+      "content": "I need a quick way to show \"we improved prompts\" without overwhelming non-technical execs. Thinking a single slide: prompt score delta, community score delta, and 2 examples of before/after outputs. Anyone have a template or metric set that resonates?",
+      "category": "questions",
+      "tags": ["reporting", "prompt-score", "stakeholders"],
+      "upvotes": 14,
+      "downvotes": 1,
+      "viewCount": 88,
+      "createdHoursAgo": 30
+    },
+    {
+      "ref": "hallucination-red-team",
+      "authorEmail": "jonah@trainingx.ai",
+      "title": "Mini dataset: 25 red-team prompts for hallucination hunts",
+      "content": "Built a tiny eval set to smoke out hallucinations on policy answers: tricky date math, inverted names, and \"impossible\" questions that should refuse. Running it nightly against my RAG stack and tracking refusal rate + citation coverage. CSV + prompt harness attached.",
+      "category": "resources",
+      "tags": ["red-team", "evaluation", "hallucinations"],
+      "upvotes": 33,
+      "downvotes": 2,
+      "viewCount": 145,
+      "createdHoursAgo": 18
+    },
+    {
+      "ref": "multi-agent-weekend",
+      "authorEmail": "maya@trainingx.ai",
+      "title": "Maker log: weekend experiment with multi-agent critique",
+      "content": "Tried a lightweight 2-agent loop: drafter -> critic -> drafter. For marketing copy it improved tone, but for data tasks it hallucinated more. Key lesson: constrain the critic to ONLY label violations of the rubric, not rewrite. Curious if anyone got multi-agent to outperform a single well-structured prompt here.",
+      "category": "projects",
+      "tags": ["multi-agent", "critique", "maker-log"],
+      "upvotes": 21,
+      "downvotes": 2,
+      "viewCount": 110,
+      "createdHoursAgo": 9
+    },
+    {
+      "ref": "first-client-portfolio",
+      "authorEmail": "leo@trainingx.ai",
+      "title": "Win: first paying client from my prompt portfolio",
+      "content": "Posted my prompt portfolio last week (screenshots + scores). Landed a $1.2k/mo retainer to maintain their support macros. Biggest hook was showing prompt score improvements alongside before/after outputs. If you haven't filled your portfolio, do it — it's working.",
+      "category": "achievements",
+      "tags": ["portfolio", "freelance", "wins"],
+      "upvotes": 30,
+      "downvotes": 1,
+      "viewCount": 170,
+      "createdHoursAgo": 26
+    },
+    {
+      "ref": "feedback-onboarding-email",
+      "authorEmail": "sofia@trainingx.ai",
+      "title": "Feedback wanted: onboarding email rewrite prompt",
+      "content": "Trying to tighten an onboarding email prompt for a fintech client. Goal: 120 words, 1 CTA, no jargon. Current issue: model adds legal caveats. Prompt includes an \"off-limits\" section but it's still leaking. If you spot holes, please roast it — snippet in comments.",
+      "category": "feedback",
+      "tags": ["copywriting", "onboarding", "feedback"],
+      "upvotes": 12,
+      "downvotes": 1,
+      "viewCount": 90,
+      "createdHoursAgo": 7
+    }
+  ],
+  "comments": [
+    {
+      "postRef": "teardown-meeting-notes",
+      "authorEmail": "leo@trainingx.ai",
+      "content": "Ran this on our CS standup. Adding \"list unresolved decisions\" made the exec summary instantly usable. Thanks for the few-shot contrasts.",
+      "upvotes": 6,
+      "downvotes": 0,
+      "createdHoursAgo": 5
+    },
+    {
+      "postRef": "teardown-meeting-notes",
+      "authorEmail": "nora@trainingx.ai",
+      "content": "+1 on the evidence links. I also append \"if no evidence, say so explicitly\" to stop it from guessing.",
+      "upvotes": 5,
+      "downvotes": 0,
+      "createdHoursAgo": 4
+    },
+    {
+      "postRef": "teardown-meeting-notes",
+      "authorEmail": "ravi@trainingx.ai",
+      "content": "If you want less fluff, add a \"verbs only\" pass: ask it to rewrite bullets starting with a verb + owner.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 3
+    },
+    {
+      "postRef": "rag-onboarding",
+      "authorEmail": "maya@trainingx.ai",
+      "content": "Love the gap step. Did you try sentence-window retrieval instead of 600-token chunks? Curious if it reduced repeats.",
+      "upvotes": 5,
+      "downvotes": 0,
+      "createdHoursAgo": 18
+    },
+    {
+      "postRef": "rag-onboarding",
+      "authorEmail": "ethan@trainingx.ai",
+      "content": "What eval model are you using for the nightly run? I'm stuck between GPT-4o mini and Claude Haiku for cost reasons.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 17
+    },
+    {
+      "postRef": "duel-recap-unit-tests",
+      "authorEmail": "priya@trainingx.ai",
+      "content": "That \"failing example\" block is gold. I copy-pasted and my refusal rate on sensitive tickets improved.",
+      "upvotes": 5,
+      "downvotes": 0,
+      "createdHoursAgo": 28
+    },
+    {
+      "postRef": "duel-recap-unit-tests",
+      "authorEmail": "ravi@trainingx.ai",
+      "content": "If you can, also log which micro-test failed during duels. Makes it easier to prioritize fixes.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 27
+    },
+    {
+      "postRef": "chunking-voice-transcripts",
+      "authorEmail": "leo@trainingx.ai",
+      "content": "Try labeling objection spans during retrieval. Then have the agent plan a \"respond vs park\" decision before generating.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 8
+    },
+    {
+      "postRef": "chunking-voice-transcripts",
+      "authorEmail": "aanya@trainingx.ai",
+      "content": "I had better recall with 360-token chunks + 25% overlap. Also store speaker role; it reduces weird attributions.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 7
+    },
+    {
+      "postRef": "prompt-qa-checklist",
+      "authorEmail": "maya@trainingx.ai",
+      "content": "Saved. I added a \"describe two failure modes\" line so the model self-critiques before final output.",
+      "upvotes": 5,
+      "downvotes": 0,
+      "createdHoursAgo": 12
+    },
+    {
+      "postRef": "prompt-qa-checklist",
+      "authorEmail": "sofia@trainingx.ai",
+      "content": "Thank you for the CSV idea — way lighter than spinning up a dashboard.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 11
+    },
+    {
+      "postRef": "auto-coach-rubric",
+      "authorEmail": "leo@trainingx.ai",
+      "content": "How are you storing rubric history? Thinking of logging per-step deltas so I can see where I regress.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 6
+    },
+    {
+      "postRef": "auto-coach-rubric",
+      "authorEmail": "nora@trainingx.ai",
+      "content": "Seconding this. I keep a column for \"constraint violations\" and it makes patterns obvious after a week.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 6
+    },
+    {
+      "postRef": "practice-speedrun-level1",
+      "authorEmail": "priya@trainingx.ai",
+      "content": "Speedrun king/queen! Did you preload any few-shots or pure instructions?",
+      "upvotes": 2,
+      "downvotes": 0,
+      "createdHoursAgo": 4
+    },
+    {
+      "postRef": "diagnostic-tree-pattern",
+      "authorEmail": "sofia@trainingx.ai",
+      "content": "Tried this on a tone issue. The \"minimal patch\" step is underrated — stopped the model from rewriting everything.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 14
+    },
+    {
+      "postRef": "diagnostic-tree-pattern",
+      "authorEmail": "ethan@trainingx.ai",
+      "content": "Do you ever ask it to propose tests after the patch? Thinking of chaining it with Leo's unit tests idea.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 13
+    },
+    {
+      "postRef": "retrieval-boundaries",
+      "authorEmail": "jonah@trainingx.ai",
+      "content": "I auto-flag violations to a Slack channel with the offending span highlighted. Keeps clients happy.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 11
+    },
+    {
+      "postRef": "reporting-prompt-deltas",
+      "authorEmail": "maya@trainingx.ai",
+      "content": "Single slide: prompt score delta, top 2 risks removed, and one \"before/after\" card. Works great for execs.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 24
+    },
+    {
+      "postRef": "hallucination-red-team",
+      "authorEmail": "ravi@trainingx.ai",
+      "content": "Nice set. Add a \"should refuse\" label per row so you can separate refusals from bad citations in metrics.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 15
+    },
+    {
+      "postRef": "hallucination-red-team",
+      "authorEmail": "nora@trainingx.ai",
+      "content": "If you release v2, I'd love 5 finance-specific red-teamers. Happy to co-create.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 15
+    },
+    {
+      "postRef": "multi-agent-weekend",
+      "authorEmail": "aanya@trainingx.ai",
+      "content": "I saw the same. Critic started hallucinating constraints. Switched to a checklist critic and it stabilized.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 8
+    },
+    {
+      "postRef": "multi-agent-weekend",
+      "authorEmail": "leo@trainingx.ai",
+      "content": "For marketing copy I cap the critic to 3 bullets: tone, evidence, compliance. Anything more and it derails.",
+      "upvotes": 4,
+      "downvotes": 0,
+      "createdHoursAgo": 7
+    },
+    {
+      "postRef": "first-client-portfolio",
+      "authorEmail": "priya@trainingx.ai",
+      "content": "Huge congrats! Did you include Looms or just screenshots in the portfolio?",
+      "upvotes": 2,
+      "downvotes": 0,
+      "createdHoursAgo": 22
+    },
+    {
+      "postRef": "feedback-onboarding-email",
+      "authorEmail": "lila@trainingx.ai",
+      "content": "Here’s the prompt snippet: system = \"Fintech onboarding coach\", hard limits on legal text, and a {company_tone} variable. Model still adds \"consult your advisor\" — ideas?",
+      "upvotes": 2,
+      "downvotes": 0,
+      "createdHoursAgo": 5
+    },
+    {
+      "postRef": "feedback-onboarding-email",
+      "authorEmail": "ravi@trainingx.ai",
+      "content": "Add a refusal policy: if legal/financial advice is requested, ask a clarifying question instead. Also add a \"tone: confident, not legal\" line.",
+      "upvotes": 3,
+      "downvotes": 0,
+      "createdHoursAgo": 4
+    }
+  ]
+}

@@ -19,7 +19,7 @@ export default function ComparisonSection() {
   return (
     <section className="relative py-16 overflow-hidden rounded-3xl">
       <RevampedBackground />
-      <div className="relative z-10">
+      <div className="relative z-10 px-4 max-w-6xl mx-auto">
         {/* Connector Line */}
         <motion.div
           initial={{ height: 0 }}
@@ -29,7 +29,7 @@ export default function ComparisonSection() {
           className="absolute left-1/2 -top-24 w-px bg-linear-to-b from-transparent via-slate-300 to-transparent hidden lg:block"
         />
 
-        <div className="text-center mb-12 md:mb-20">
+        <div className="text-center mb-12 md:mb-20 ">
           <div className="inline-flex items-center justify-center p-3 mb-4 rounded-full bg-blue-50 text-blue-600">
             <Swords className="w-6 h-6" />
           </div>
@@ -96,7 +96,7 @@ export default function ComparisonSection() {
                       Feature
                     </th>
                     <th className="p-0 w-1/4 relative group">
-                      <div className="absolute inset-0 bg-linear-to-b from-blue-600 to-emerald-600 opacity-100" />
+                      <div className="absolute inset-0 bg-linear-to-b from-gradient-from to-gradient-to opacity-100" />
                       <div className="relative p-8 text-white font-bold text-lg text-center flex items-center justify-center gap-2">
                         <Crown className="w-5 h-5 text-yellow-300 fill-yellow-300 animate-pulse" />
                         TrainingX.Ai

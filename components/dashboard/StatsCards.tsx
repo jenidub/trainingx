@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Target, Trophy, Flame } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -56,61 +56,90 @@ export function StatsCards({
     animateValue(0, streak, setAnimatedStreak);
   }, [promptScore, completedProjects, streak]);
 
-  const scoreDiff = previousPromptScore && previousPromptScore > 0
-    ? promptScore - previousPromptScore
-    : null;
+  const scoreDiff =
+    previousPromptScore && previousPromptScore > 0
+      ? promptScore - previousPromptScore
+      : null;
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-6 mb-8">
-      <Card className="py-4 border-l-4 border-l-blue-500 bg-gradient-to-br from-blue-50 to-white hover:shadow-lg transition-all duration-300">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-sm font-medium">Prompt Score</CardTitle>
-          <Target className="h-4 w-4 text-blue-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-blue-700 transition-all duration-300">
-            {animatedPromptScore}/100
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
+      {/* Prompt Score Card */}
+      <div className="group relative overflow-hidden rounded-3xl border-2 border-b-[6px] border-blue-200 bg-white hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-400">
+              Prompt Score
+            </h3>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-500">
+              <Target className="h-6 w-6 stroke-3" />
+            </div>
           </div>
-          <Progress 
-            value={animatedPromptScore} 
-            className="mt-2 transition-all duration-1000 ease-out" 
-          />
+          <div className="flex items-baseline gap-1 mb-2">
+            <span className="text-4xl font-black text-blue-500">
+              {animatedPromptScore}
+            </span>
+            <span className="text-lg font-bold text-slate-300">/100</span>
+          </div>
+          <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden mb-2">
+            <div
+              className="h-full bg-blue-500 rounded-full transition-all duration-1000 ease-out"
+              style={{ width: `${animatedPromptScore}%` }}
+            />
+          </div>
           {scoreDiff !== null && (
-            <p className="text-xs text-muted-foreground mt-1">
-              {scoreDiff >= 0 ? '+' : ''}{scoreDiff} from last assessment
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">
+              {scoreDiff >= 0 ? "+" : ""}
+              {scoreDiff} from last check
             </p>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card className="py-4 border-l-4 border-l-purple-500 bg-gradient-to-br from-purple-50 to-white hover:shadow-lg transition-all duration-300">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-sm font-medium">Projects Completed</CardTitle>
-          <Trophy className="h-4 w-4 text-purple-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-purple-700 transition-all duration-300">
-            {animatedProjects}
+      {/* Projects Card */}
+      <div className="group relative overflow-hidden rounded-3xl border-2 border-b-[6px] border-purple-200 bg-white hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-400">
+              Projects
+            </h3>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-500">
+              <Trophy className="h-6 w-6 stroke-3" />
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            {availableProjects} projects available
+          <div className="flex items-baseline gap-1 mb-2">
+            <span className="text-4xl font-black text-purple-500">
+              {animatedProjects}
+            </span>
+            <span className="text-lg font-bold text-slate-300">Done</span>
+          </div>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">
+            {availableProjects} more available
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card className="py-4 border-l-4 border-l-orange-500 bg-gradient-to-br from-orange-50 to-white hover:shadow-lg transition-all duration-300">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0">
-          <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
-          <Flame className="h-4 w-4 text-orange-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-orange-700 transition-all duration-300">
-            {animatedStreak} days
+      {/* Streak Card */}
+      <div className="group relative overflow-hidden rounded-3xl border-2 border-b-[6px] border-orange-200 bg-white hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-400">
+              Streak
+            </h3>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-orange-500">
+              <Flame className="h-6 w-6 stroke-3" />
+            </div>
           </div>
-          <p className="text-xs text-muted-foreground">Keep it going!</p>
-        </CardContent>
-      </Card>
+          <div className="flex items-baseline gap-1 mb-2">
+            <span className="text-4xl font-black text-orange-500">
+              {animatedStreak}
+            </span>
+            <span className="text-lg font-bold text-slate-300">Days</span>
+          </div>
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">
+            You're on fire!
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
-

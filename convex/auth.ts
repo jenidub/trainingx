@@ -13,6 +13,14 @@ import { TwilioVerify } from "./otp/TwilioVerify.js";
 import { ResendOTPPasswordReset } from "./passwordReset/ResendOTPPasswordReset.js";
 import { DataModel } from "./_generated/dataModel.js";
 
+const profileWithOptionalName = (params: Record<string, unknown>) => {
+  const name = (params.name as string | undefined)?.trim();
+  return {
+    email: params.email as string,
+    ...(name ? { name } : {}),
+  };
+};
+
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [
     GitHub,
@@ -30,16 +38,21 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     ResendOTP,
     TwilioVerify,
     TwilioOTP,
-    Password,
+    Password<DataModel>({
+      profile: profileWithOptionalName,
+    }),
     // Sample password auth with a custom parameter provided during sign-up
     // flow and custom password validation requirements (at least six chars
     // with at least one number, upper and lower case chars).
     Password<DataModel>({
       id: "password-custom",
       profile(params, _ctx) {
+        const name = (params.name as string | undefined)?.trim();
+        const favoriteColor = params.favoriteColor as string | undefined;
         return {
           email: params.email as string,
-          favoriteColor: params.favoriteColor as string,
+          ...(name ? { name } : {}),
+          ...(favoriteColor ? { favoriteColor } : {}),
         };
       },
       validatePasswordRequirements: (password: string) => {
@@ -54,14 +67,23 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
         }
       },
     }),
-    Password({ id: "password-with-reset", reset: ResendOTPPasswordReset }),
-    Password({
+    Password<DataModel>({
+      id: "password-with-reset",
+      reset: ResendOTPPasswordReset,
+      profile: profileWithOptionalName,
+    }),
+    Password<DataModel>({
       id: "password-code",
       reset: ResendOTPPasswordReset,
       verify: ResendOTP,
+      profile: profileWithOptionalName,
     }),
     // This one only makes sense with routing, ignore for now:
-    Password({ id: "password-link", verify: Resend }),
+    Password<DataModel>({
+      id: "password-link",
+      verify: Resend,
+      profile: profileWithOptionalName,
+    }),
     Anonymous,
   ],
 });

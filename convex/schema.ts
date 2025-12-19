@@ -224,9 +224,45 @@ export default defineSchema({
         skillThresholds: v.any(),
       })
     ),
+    skillSuggestions: v.optional(
+      v.array(
+        v.object({
+          name: v.string(),
+          category: v.string(),
+          why: v.string(),
+        })
+      )
+    ),
     quizAnswers: v.any(),
     generatedAt: v.number(),
   }).index("by_user", ["userId"]),
+
+  // User feedback with rewards/gamification
+  feedback: defineTable({
+    userId: v.id("users"),
+    sentiment: v.string(), // "love" | "happy" | "meh" | "sad" | "angry"
+    score: v.optional(v.number()), // 0-10 slider
+    tags: v.array(v.string()),
+    message: v.optional(v.string()),
+    contactOk: v.boolean(),
+    contactEmail: v.optional(v.string()),
+    page: v.optional(v.string()),
+    feature: v.optional(v.string()),
+    env: v.optional(
+      v.object({
+        userAgent: v.optional(v.string()),
+        viewport: v.optional(v.string()),
+      })
+    ),
+    reward: v.object({
+      xp: v.number(),
+      badgeAwarded: v.optional(v.string()),
+    }),
+    status: v.string(), // "new" | "reviewed"
+    createdAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_createdAt", ["createdAt"]),
 
   // Custom AI assistants (GPTs)
   customAssistants: defineTable({
@@ -572,6 +608,10 @@ export default defineSchema({
     totalChallengesCompleted: v.number(),
     totalChallenges: v.number(),
     percentComplete: v.number(),
+    score: v.optional(v.number()), // NEW: Average score 0-100
+    stars: v.optional(v.number()), // NEW: 0-3 stars earned
+    bestScore: v.optional(v.number()), // NEW: Highest score achieved
+    attempts: v.optional(v.number()), // NEW: Number of attempts
     startedAt: v.number(),
     lastAccessedAt: v.number(),
   })
@@ -584,9 +624,12 @@ export default defineSchema({
     userId: v.id("users"),
     levelId: v.id("practiceLevels"),
     challengesCompleted: v.number(),
+    completedChallengeIds: v.optional(v.array(v.string())), // Store actual completed challenge IDs
     totalChallenges: v.number(),
     percentComplete: v.number(),
     averageScore: v.number(),
+    stars: v.optional(v.number()), // NEW: 0-3 stars earned
+    attempts: v.optional(v.number()), // NEW: Number of attempts
     status: v.string(), // "locked" | "in_progress" | "completed"
     startedAt: v.optional(v.number()),
     completedAt: v.optional(v.number()),
@@ -968,7 +1011,7 @@ export default defineSchema({
     participants: v.array(v.id("users")), // All players in room
     itemIds: v.array(v.id("practiceItems")),
     status: v.string(), // "lobby" | "open" | "active" | "completed" | "expired"
-    scores: v.object({}), // Map of userId -> score (stored as strings)
+    scores: v.any(), // Map of userId -> score (dynamic keys)
     rankings: v.optional(
       v.array(
         v.object({
@@ -986,6 +1029,8 @@ export default defineSchema({
     // Room settings
     minPlayers: v.number(),
     maxPlayers: v.number(),
+    // Topic selection
+    trackId: v.optional(v.id("practiceTracks")),
     // Ready system
     readyPlayers: v.array(v.id("users")),
     // Legacy fields for backward compatibility
@@ -1143,4 +1188,139 @@ export default defineSchema({
     .index("by_referrer", ["referrerId"])
     .index("by_code", ["referralCode"])
     .index("by_status", ["status"]),
+
+  // ===== DOMAIN MASTERY ASSESSMENTS =====
+
+  // Assessment definitions (one per domain)
+  domainAssessments: defineTable({
+    domainId: v.id("practiceDomains"),
+    title: v.string(),
+    description: v.string(),
+    timeLimit: v.number(), // in minutes
+    passingScore: v.number(), // percentage (e.g., 70)
+    questionCount: v.number(), // total questions (15)
+    maxAttempts: v.number(), // max retries
+    cooldownHours: v.number(), // hours between retries
+    status: v.string(), // "draft" | "live"
+  })
+    .index("by_domain", ["domainId"])
+    .index("by_status", ["status"]),
+
+  // Questions for assessments
+  domainAssessmentQuestions: defineTable({
+    assessmentId: v.id("domainAssessments"),
+    type: v.string(), // "mcq" | "multi-select" | "prompt-write" | "prompt-fix" | "image-prompt"
+    order: v.number(),
+    scenario: v.optional(v.string()), // Context/scenario text
+    question: v.string(), // The actual question
+    options: v.optional(
+      v.array(
+        v.object({
+          id: v.string(),
+          text: v.string(),
+          isCorrect: v.boolean(),
+        })
+      )
+    ),
+    promptGoal: v.optional(v.string()), // For prompt writing questions
+    promptRubric: v.optional(
+      v.object({
+        // For AI grading
+        criteria: v.array(
+          v.object({
+            name: v.string(),
+            weight: v.number(),
+            description: v.string(),
+          })
+        ),
+      })
+    ),
+    idealAnswer: v.optional(v.string()), // Reference answer for AI comparison
+    points: v.number(),
+    difficulty: v.string(), // "easy" | "medium" | "hard"
+    tags: v.array(v.string()),
+    status: v.string(), // "live" | "retired"
+  })
+    .index("by_assessment", ["assessmentId"])
+    .index("by_type", ["type"])
+    .index("by_status", ["status"]),
+
+  // User assessment attempts
+  domainAssessmentAttempts: defineTable({
+    userId: v.id("users"),
+    assessmentId: v.id("domainAssessments"),
+    startedAt: v.number(),
+    completedAt: v.optional(v.number()),
+    timeSpent: v.number(), // in seconds
+    answers: v.array(
+      v.object({
+        questionId: v.id("domainAssessmentQuestions"),
+        response: v.any(), // varies by question type
+        score: v.number(), // 0-100 for that question
+        isCorrect: v.boolean(),
+        aiEvaluation: v.optional(
+          v.object({
+            rationale: v.string(),
+            rubricScores: v.any(),
+          })
+        ),
+      })
+    ),
+    totalScore: v.number(), // 0-100
+    passed: v.boolean(),
+    attemptNumber: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_assessment", ["assessmentId"])
+    .index("by_user_assessment", ["userId", "assessmentId"]),
+
+  // Certificates issued on passing
+  domainCertificates: defineTable({
+    userId: v.id("users"),
+    domainId: v.id("practiceDomains"),
+    assessmentAttemptId: v.id("domainAssessmentAttempts"),
+    score: v.number(),
+    issuedAt: v.number(),
+    verificationCode: v.string(), // unique code for sharing
+    certificateUrl: v.optional(v.string()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_domain", ["domainId"])
+    .index("by_verification", ["verificationCode"]),
+
+  // ===== AI CAREER COACH =====
+
+  // Career Coach Conversations
+  careerCoachConversations: defineTable({
+    userId: v.id("users"),
+    messages: v.array(
+      v.object({
+        role: v.union(v.literal("user"), v.literal("assistant")),
+        content: v.string(),
+        opportunities: v.optional(
+          v.array(
+            v.object({
+              id: v.string(),
+              title: v.string(),
+              type: v.string(),
+              description: v.string(),
+              incomeData: v.object({
+                range: v.string(),
+                entryLevel: v.string(),
+                experienced: v.string(),
+                topEarners: v.string(),
+              }),
+              whyMatch: v.string(),
+              keySkillsMatched: v.array(v.string()),
+              nextSteps: v.array(v.string()),
+            })
+          )
+        ),
+        extractedSkills: v.optional(v.array(v.string())),
+        timestamp: v.number(),
+      })
+    ),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index("by_user", ["userId"]),
 });

@@ -19,6 +19,8 @@ import {
   Palette,
   Users,
   Building2,
+  Home,
+  Globe2,
   Coffee,
   MessagesSquare,
   Hammer,
@@ -36,20 +38,28 @@ import {
   Scale,
   Swords,
   Flame,
+  Stethoscope,
+  ShoppingBag,
+  Megaphone,
+  Factory,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export interface Option {
   id: string;
   value: string;
   label: string;
   description?: string;
-  icon: any;
+  icon: LucideIcon;
 }
 
 export interface Question {
   id: string;
   text: string;
   category: string;
+  type?: "choice" | "text";
+  placeholder?: string;
+  helperText?: string;
   options: Option[];
 }
 
@@ -86,6 +96,104 @@ export const questions: Question[] = [
         label: "Skilled Trade Work",
         description: "Specialized AI tasks like prompting, annotation, QA",
         icon: Wrench,
+      },
+    ],
+  },
+  {
+    id: "location_preference",
+    text: "How do you prefer to work day-to-day?",
+    category: "Location",
+    options: [
+      {
+        id: "remote",
+        value: "remote",
+        label: "Remote-First",
+        description: "Fully remote with flexible hours/time zones",
+        icon: Home,
+      },
+      {
+        id: "hybrid",
+        value: "hybrid",
+        label: "Hybrid",
+        description: "Mix of in-office collaboration and remote focus time",
+        icon: Shuffle,
+      },
+      {
+        id: "onsite",
+        value: "onsite",
+        label: "On-Site",
+        description: "Primarily in-office and co-located with the team",
+        icon: Building2,
+      },
+      {
+        id: "flexible_location",
+        value: "flexible_location",
+        label: "Flexible / Open",
+        description: "Open to remote, hybrid, or moving for the right fit",
+        icon: Globe2,
+      },
+    ],
+  },
+  {
+    id: "industry_focus",
+    text: "Which industry or sector feels like home?",
+    category: "Industry",
+    options: [
+      {
+        id: "tech_ai",
+        value: "tech_ai",
+        label: "Tech & AI",
+        description: "Product, engineering, and AI-driven roles",
+        icon: Cpu,
+      },
+      {
+        id: "finance_fintech",
+        value: "finance_fintech",
+        label: "Finance & Fintech",
+        description: "Banking, payments, trading, and analytics",
+        icon: PieChart,
+      },
+      {
+        id: "healthcare_biotech",
+        value: "healthcare_biotech",
+        label: "Healthcare & Biotech",
+        description: "Clinical, research, patient experience, medtech",
+        icon: Stethoscope,
+      },
+      {
+        id: "marketing_media",
+        value: "marketing_media",
+        label: "Marketing & Media",
+        description: "Content, growth, brand, and creative production",
+        icon: Megaphone,
+      },
+      {
+        id: "education_public",
+        value: "education_public",
+        label: "Education & Public Sector",
+        description: "Learning, civic tech, government, or non-profit",
+        icon: GraduationCap,
+      },
+      {
+        id: "commerce_retail",
+        value: "commerce_retail",
+        label: "E-commerce & Retail",
+        description: "Marketplaces, logistics, merchandising, CX",
+        icon: ShoppingBag,
+      },
+      {
+        id: "industrial_ops",
+        value: "industrial_ops",
+        label: "Industrial & Ops",
+        description: "Manufacturing, supply chain, field ops, energy",
+        icon: Factory,
+      },
+      {
+        id: "open_to_any",
+        value: "open_to_any",
+        label: "Open to Any",
+        description: "Curious across multiple sectors",
+        icon: Globe2,
       },
     ],
   },
@@ -403,5 +511,15 @@ export const questions: Question[] = [
         icon: Flame,
       },
     ],
+  },
+  {
+    id: "additional_context",
+    text: "Anything else we should know to get your matches right?",
+    category: "Context",
+    type: "text",
+    placeholder:
+      "Share specifics like target companies, visa status, relocation plans, timeline, or deal-breakers.",
+    helperText: "Optional, but helps personalize opportunities even more",
+    options: [],
   },
 ];

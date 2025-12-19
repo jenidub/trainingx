@@ -10,16 +10,21 @@ import { useWizardContext } from "@/contexts/WizardContextProvider";
 import { useAuth } from "@/contexts/AuthContextProvider";
 import { useUserStats } from "@/contexts/UserStatsContext";
 import { StatsCards } from "@/components/dashboard/StatsCards";
-import { NextBestActionCard } from "@/components/dashboard/NextBestActionCard";
 import { TopSkillsCard } from "@/components/dashboard/TopSkillsCard";
-import { CareerOpportunitiesCard } from "@/components/dashboard/CareerOpportunitiesCard";
 import { CoachPanel } from "@/components/common/CoachPanel";
 import { getNextBestAction } from "@/components/dashboard/utils";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Target, Trophy, ArrowRight, Sparkles, TrendingUp, Flame } from "lucide-react";
+import { JuicyButton } from "@/components/ui/juicy-button";
+import {
+  Target,
+  Trophy,
+  ArrowRight,
+  Sparkles,
+  TrendingUp,
+  Flame,
+  Zap,
+  Calendar,
+  Star,
+} from "lucide-react";
 import badgeRules from "@/data/badge-rules.json";
 
 export default function DashboardPage() {
@@ -97,15 +102,15 @@ export default function DashboardPage() {
   useEffect(() => {
     if (userStatsData && userProgress !== undefined) {
       setContext({
-        page: 'dashboard',
-        pageTitle: 'Dashboard',
+        page: "dashboard",
+        pageTitle: "Dashboard",
         userState: {
           promptScore: userStatsData.promptScore,
           skills: userStatsData.skills,
           completedProjects: userProgress.length,
-          badges: userStatsData.badges.length
+          badges: userStatsData.badges.length,
         },
-        recentAction: `Viewing dashboard with ${userStatsData.promptScore}/100 prompt score`
+        recentAction: `Viewing dashboard with ${userStatsData.promptScore}/100 prompt score`,
       });
     }
 
@@ -113,28 +118,36 @@ export default function DashboardPage() {
   }, [userStatsData, userProgress, setContext]);
 
   const completedProjectIds = useMemo(() => {
-    return userStats.completedProjects.map((p: { projectId?: string; _id?: string }) => p.projectId || p._id);
+    return userStats.completedProjects.map(
+      (p: { projectId?: string; _id?: string }) => p.projectId || p._id
+    );
   }, [userStats.completedProjects]);
 
   const liveMatches = useMemo(() => {
-    if (!projects || (userStats.promptScore === 0 && Object.keys(userStats.skills).length === 0)) {
+    if (
+      !projects ||
+      (userStats.promptScore === 0 &&
+        Object.keys(userStats.skills).length === 0)
+    ) {
       return { unlocked: [], almostUnlocked: [], newlyUnlocked: [] };
     }
-    return getLiveMatchPreview(
-      userStats.promptScore,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      userStats.skills as any,
-      userStats.completedProjects.length,
-      completedProjectIds,
-      userStats.previousPromptScore,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      userStats.previousSkills as any
-    ) || { unlocked: [], almostUnlocked: [], newlyUnlocked: [] };
+    return (
+      getLiveMatchPreview(
+        userStats.promptScore,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        userStats.skills as any,
+        userStats.completedProjects.length,
+        completedProjectIds,
+        userStats.previousPromptScore,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        userStats.previousSkills as any
+      ) || { unlocked: [], almostUnlocked: [], newlyUnlocked: [] }
+    );
   }, [userStats, completedProjectIds, projects]);
 
   const availableProjects = useMemo(() => {
     if (!projects) return [];
-    return projects.filter(p => !completedProjectIds.includes(p._id));
+    return projects.filter((p) => !completedProjectIds.includes(p._id));
   }, [projects, completedProjectIds]);
 
   const nextAction = useMemo(() => {
@@ -143,18 +156,24 @@ export default function DashboardPage() {
       userStats.completedProjects.length,
       liveMatches?.almostUnlocked?.length || 0
     );
-  }, [userStats.assessmentComplete, userStats.completedProjects.length, liveMatches]);
+  }, [
+    userStats.assessmentComplete,
+    userStats.completedProjects.length,
+    liveMatches,
+  ]);
 
   return (
     <SidebarLayout>
-      <div className="py-8">
+      <div className="py-8 bg-slate-50 min-h-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Welcome back, {user?.name || "there"}!
+            <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
+              Welcome back, {user?.name || "Friend"}!
             </h1>
-            <p className="text-gray-600">Track your progress and continue your AI learning journey</p>
+            <p className="text-lg font-medium text-slate-500">
+              Ready to level up your AI skills today?
+            </p>
           </div>
 
           <StatsCards
@@ -165,256 +184,343 @@ export default function DashboardPage() {
             streak={userStats.streak}
           />
 
-          {/* <NextBestActionCard
-            title={nextAction.title}
-            description={nextAction.description}
-            link={nextAction.link}
-            iconType={nextAction.iconType}
-          /> */}
-
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Main Column */}
             <div className="lg:col-span-2 space-y-6">
               {/* Prompt Score Breakdown */}
               {userStatsData && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <span>Your Prompt Score</span>
-                      {userStatsData.previousPromptScore && userStatsData.previousPromptScore > 0 && 
-                       userStatsData.promptScore > userStatsData.previousPromptScore && (
-                        <Badge variant="default" className="bg-green-500">
-                          +{userStatsData.promptScore - userStatsData.previousPromptScore}
-                        </Badge>
+                <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-500">
+                        <Target className="h-7 w-7 stroke-3" />
+                      </div>
+                      <div>
+                        <h2 className="text-xl font-extrabold text-slate-700">
+                          Prompt Score Breakdown
+                        </h2>
+                        <p className="text-sm font-bold text-slate-400 uppercase tracking-wide">
+                          Your AI Proficiency
+                        </p>
+                      </div>
+                    </div>
+                    {userStatsData.previousPromptScore &&
+                      userStatsData.previousPromptScore > 0 &&
+                      userStatsData.promptScore >
+                        userStatsData.previousPromptScore && (
+                        <div className="flex items-center gap-1 rounded-xl bg-green-100 px-3 py-1 text-sm font-black text-green-600">
+                          <TrendingUp className="h-4 w-4 stroke-3" />
+                          <span>
+                            +
+                            {userStatsData.promptScore -
+                              userStatsData.previousPromptScore}
+                          </span>
+                        </div>
                       )}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-5xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
-                        {userStatsData.promptScore}
-                      </div>
-                      <div className="text-right">
-                        <div className="text-2xl font-semibold text-gray-400">/100</div>
-                        <div className="text-sm text-gray-500">Universal Score</div>
-                      </div>
-                    </div>
-                    <div className="space-y-3 mb-4">
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium">Clarity</span>
-                          <span className="text-sm text-gray-600">{userStatsData.rubric?.clarity || 0}/25</span>
+                  </div>
+
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {[
+                      {
+                        label: "Clarity",
+                        value: userStatsData.rubric?.clarity || 0,
+                        color: "bg-blue-500",
+                      },
+                      {
+                        label: "Constraints",
+                        value: userStatsData.rubric?.constraints || 0,
+                        color: "bg-purple-500",
+                      },
+                      {
+                        label: "Iteration",
+                        value: userStatsData.rubric?.iteration || 0,
+                        color: "bg-green-500",
+                      },
+                      {
+                        label: "Tool Selection",
+                        value: userStatsData.rubric?.tool || 0,
+                        color: "bg-orange-500",
+                      },
+                    ].map((item) => (
+                      <div key={item.label} className="space-y-2">
+                        <div className="flex justify-between items-end">
+                          <span className="font-bold text-slate-600">
+                            {item.label}
+                          </span>
+                          <span className="text-sm font-black text-slate-400">
+                            {item.value}/25
+                          </span>
                         </div>
-                        <Progress value={((userStatsData.rubric?.clarity || 0) / 25) * 100} />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium">Constraints</span>
-                          <span className="text-sm text-gray-600">{userStatsData.rubric?.constraints || 0}/25</span>
+                        <div className="h-4 w-full rounded-full bg-slate-100 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${item.color}`}
+                            style={{ width: `${(item.value / 25) * 100}%` }}
+                          />
                         </div>
-                        <Progress value={((userStatsData.rubric?.constraints || 0) / 25) * 100} />
                       </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium">Iteration</span>
-                          <span className="text-sm text-gray-600">{userStatsData.rubric?.iteration || 0}/25</span>
-                        </div>
-                        <Progress value={((userStatsData.rubric?.iteration || 0) / 25) * 100} />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium">Tool Selection</span>
-                          <span className="text-sm text-gray-600">{userStatsData.rubric?.tool || 0}/25</span>
-                        </div>
-                        <Progress value={((userStatsData.rubric?.tool || 0) / 25) * 100} />
-                      </div>
-                    </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8">
                     <Link href="/quiz">
-                      <Button variant="outline" className="w-full">
-                        <Target className="mr-2 h-4 w-4" />
+                      <JuicyButton
+                        variant="outline"
+                        className="w-full border-slate-200 text-slate-600 hover:bg-slate-50"
+                      >
+                        <Target className="mr-2 h-5 w-5" />
                         Retake Assessment
-                      </Button>
+                      </JuicyButton>
                     </Link>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               )}
 
               {/* Score History */}
-              {userStatsData?.assessmentHistory && userStatsData.assessmentHistory.length > 1 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Score History</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {userStatsData.assessmentHistory.slice().reverse().slice(0, 5).map((assessment: any, idx: number) => (
-                        <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                          <div>
-                            <div className="text-sm font-medium">
-                              {new Date(assessment.date).toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
-                              })}
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              {new Date(assessment.date).toLocaleTimeString('en-US', {
-                                hour: 'numeric',
-                                minute: '2-digit'
-                              })}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <div className="text-2xl font-bold text-gradient-from">
-                              {assessment.promptScore}
-                            </div>
-                            {idx < userStatsData.assessmentHistory.length - 1 && (
-                              <Badge variant={
-                                assessment.promptScore > userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore 
-                                  ? "default" 
-                                  : "secondary"
-                              } className={
-                                assessment.promptScore > userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore 
-                                  ? "bg-green-500" 
-                                  : ""
-                              }>
-                                {assessment.promptScore > userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore 
-                                  ? `+${assessment.promptScore - userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore}` 
-                                  : `${assessment.promptScore - userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore}`
-                                }
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+              {userStatsData?.assessmentHistory &&
+                userStatsData.assessmentHistory.length > 1 && (
+                  <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-500">
+                        <Calendar className="h-6 w-6 stroke-3" />
+                      </div>
+                      <h3 className="text-lg font-extrabold text-slate-700">
+                        Recent Progress
+                      </h3>
                     </div>
-                  </CardContent>
-                </Card>
-              )}
+
+                    <div className="space-y-3">
+                      {userStatsData.assessmentHistory
+                        .slice()
+                        .reverse()
+                        .slice(0, 5)
+                        .map((assessment: any, idx: number) => (
+                          <div
+                            key={idx}
+                            className="flex items-center justify-between p-4 rounded-2xl border-2 border-slate-100 bg-slate-50 hover:border-slate-200 transition-colors"
+                          >
+                            <div className="flex items-center gap-4">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white border-2 border-slate-200 font-black text-slate-400 text-sm">
+                                {idx + 1}
+                              </div>
+                              <div>
+                                <div className="font-bold text-slate-700">
+                                  {new Date(assessment.date).toLocaleDateString(
+                                    "en-US",
+                                    {
+                                      month: "short",
+                                      day: "numeric",
+                                    }
+                                  )}
+                                </div>
+                                <div className="text-xs font-bold text-slate-400 uppercase tracking-wide">
+                                  Assessment
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="text-xl font-black text-slate-700">
+                                {assessment.promptScore}
+                              </div>
+                              {idx <
+                                userStatsData.assessmentHistory.length - 1 && (
+                                <div
+                                  className={`px-2 py-1 rounded-lg text-xs font-black ${
+                                    assessment.promptScore >
+                                    userStatsData.assessmentHistory[
+                                      userStatsData.assessmentHistory.length -
+                                        idx -
+                                        2
+                                    ].promptScore
+                                      ? "bg-green-100 text-green-600"
+                                      : "bg-slate-200 text-slate-500"
+                                  }`}
+                                >
+                                  {assessment.promptScore >
+                                  userStatsData.assessmentHistory[
+                                    userStatsData.assessmentHistory.length -
+                                      idx -
+                                      2
+                                  ].promptScore
+                                    ? `+${assessment.promptScore - userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore}`
+                                    : `${assessment.promptScore - userStatsData.assessmentHistory[userStatsData.assessmentHistory.length - idx - 2].promptScore}`}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
               {/* Top Skills */}
               <TopSkillsCard skills={userStats.skills} />
-
-              {/* Next Best Action */}
-              <NextBestActionCard
-                title={nextAction.title}
-                description={nextAction.description}
-                link={nextAction.link}
-                iconType={nextAction.iconType}
-              />
             </div>
 
             {/* Sidebar */}
             <div className="space-y-6">
               {/* AI Coach Panel */}
               {user?._id && (
-                <CoachPanel userId={user._id as any} />
+                <div className="rounded-3xl border-2 border-b-[6px] border-indigo-200 bg-white overflow-hidden">
+                  <CoachPanel userId={user._id as any} />
+                </div>
               )}
 
-              {/* Streak */}
-              {/* <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Flame className="h-5 w-5 text-orange-500 mr-2" />
-                    Streak
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-orange-500 mb-1">
-                      {userStats.streak}
-                    </div>
-                    <div className="text-sm text-gray-600">days in a row</div>
-                  </div>
-                </CardContent>
-              </Card> */}
-
               {/* Badges */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Trophy className="h-5 w-5 text-yellow-500 mr-2" />
-                    Badges Earned
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {userStats.badges && userStats.badges.length > 0 ? (
-                    <div className="space-y-2">
-                      {Object.entries(badgeRules)
-                        .filter(([badgeId]) => userStats.badges.includes(badgeId))
-                        .map(([badgeId, badge]: [string, any]) => (
-                          <div key={badgeId} className="flex items-center p-2 bg-yellow-50 rounded-lg">
-                            <Trophy className="h-4 w-4 text-yellow-500 mr-2" />
-                            <span className="text-sm font-medium">{badge.name}</span>
+              <div className="rounded-3xl border-2 border-b-[6px] border-yellow-200 bg-white p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-100 text-yellow-600">
+                    <Trophy className="h-6 w-6 stroke-3" />
+                  </div>
+                  <h3 className="text-lg font-extrabold text-slate-700">
+                    Badges
+                  </h3>
+                </div>
+
+                {userStats.badges && userStats.badges.length > 0 ? (
+                  <div className="grid grid-cols-3 gap-2">
+                    {Object.entries(badgeRules)
+                      .filter(([badgeId]) => userStats.badges.includes(badgeId))
+                      .map(([badgeId, badge]: [string, any]) => (
+                        <div
+                          key={badgeId}
+                          className="flex flex-col items-center p-2 rounded-xl bg-yellow-50 text-center"
+                        >
+                          <div className="h-8 w-8 rounded-full bg-yellow-200 flex items-center justify-center mb-1">
+                            <Star className="h-4 w-4 text-yellow-600 fill-current" />
                           </div>
-                        ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-gray-500">No badges yet. Complete projects to earn badges!</p>
-                  )}
-                </CardContent>
-              </Card>
+                          <span className="text-[10px] font-bold text-slate-600 leading-tight">
+                            {badge.name}
+                          </span>
+                        </div>
+                      ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-4 px-2 rounded-xl bg-slate-50 border-2 border-dashed border-slate-200">
+                    <p className="text-sm font-bold text-slate-400">
+                      No badges yet.
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Complete projects to earn them!
+                    </p>
+                  </div>
+                )}
+              </div>
 
               {/* Unlocked Matches */}
               {liveMatches.unlocked.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Career Matches</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2 mb-4">
-                      {liveMatches.unlocked.slice(0, 3).map((match: any, idx: number) => (
-                        <div key={idx} className="p-2 bg-green-50 border border-green-200 rounded-lg">
-                          <div className="text-sm font-medium text-green-800">{match.title}</div>
-                          <div className="text-xs text-green-600 capitalize">{match.type}</div>
+                <div className="rounded-3xl border-2 border-b-[6px] border-green-200 bg-white p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100 text-green-600">
+                      <BriefcaseIcon className="h-6 w-6 stroke-3" />
+                    </div>
+                    <h3 className="text-lg font-extrabold text-slate-700">
+                      Matches
+                    </h3>
+                  </div>
+
+                  <div className="space-y-2 mb-4">
+                    {liveMatches.unlocked
+                      .slice(0, 3)
+                      .map((match: any, idx: number) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between p-3 rounded-xl bg-green-50 border-2 border-green-100"
+                        >
+                          <div className="text-sm font-bold text-slate-700 truncate max-w-[140px]">
+                            {match.title}
+                          </div>
+                          <div className="text-[10px] font-black uppercase tracking-wide text-green-600 bg-green-200 px-2 py-0.5 rounded-lg">
+                            {match.type}
+                          </div>
                         </div>
                       ))}
-                    </div>
-                    <Link href="/matching">
-                      <Button variant="outline" size="sm" className="w-full">
-                        View All Matches
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <Link href="/matching">
+                    <JuicyButton
+                      variant="secondary"
+                      size="sm"
+                      className="w-full"
+                    >
+                      View All Matches
+                    </JuicyButton>
+                  </Link>
+                </div>
               )}
 
               {/* Quick Actions */}
-              <Card>
-                <CardHeader className="mb-0 pb-0">
-                  <CardTitle className="mb-0 pb-0">Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2 mt-0 pt-0 flex flex-col">
-                  <Link href="/practice">
-                    <Button variant="outline" size="sm" className="w-full justify-start">
-                      <Target className="mr-2 h-4 w-4" />
+              <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                    <Zap className="h-6 w-6 stroke-3" />
+                  </div>
+                  <h3 className="text-lg font-extrabold text-slate-700">
+                    Quick Actions
+                  </h3>
+                </div>
+
+                <div className="space-y-3">
+                  <Link href="/practice" className="block">
+                    <JuicyButton
+                      variant="outline"
+                      className="w-full justify-start border-slate-200 text-slate-600 hover:bg-slate-50"
+                    >
+                      <Target className="mr-3 h-5 w-5 text-blue-500" />
                       Practice Zone
-                    </Button>
+                    </JuicyButton>
                   </Link>
-                  <Link href="/portfolio">
-                    <Button variant="outline" size="sm" className="w-full justify-start">
-                      <Trophy className="mr-2 h-4 w-4" />
+                  <Link href="/portfolio" className="block">
+                    <JuicyButton
+                      variant="outline"
+                      className="w-full justify-start border-slate-200 text-slate-600 hover:bg-slate-50"
+                    >
+                      <Trophy className="mr-3 h-5 w-5 text-purple-500" />
                       View Portfolio
-                    </Button>
+                    </JuicyButton>
                   </Link>
-                  <Link href="/matching">
-                    <Button variant="outline" size="sm" className="w-full justify-start">
-                      <TrendingUp className="mr-2 h-4 w-4" />
+                  <Link href="/matching" className="block">
+                    <JuicyButton
+                      variant="outline"
+                      className="w-full justify-start border-slate-200 text-slate-600 hover:bg-slate-50"
+                    >
+                      <TrendingUp className="mr-3 h-5 w-5 text-green-500" />
                       Career Matching
-                    </Button>
+                    </JuicyButton>
                   </Link>
-                  <Link href="/community">
-                    <Button variant="outline" size="sm" className="w-full justify-start">
-                      <Sparkles className="mr-2 h-4 w-4" />
+                  <Link href="/community" className="block">
+                    <JuicyButton
+                      variant="outline"
+                      className="w-full justify-start border-slate-200 text-slate-600 hover:bg-slate-50"
+                    >
+                      <Sparkles className="mr-3 h-5 w-5 text-yellow-500" />
                       Community
-                    </Button>
+                    </JuicyButton>
                   </Link>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </SidebarLayout>
+  );
+}
+
+function BriefcaseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
   );
 }

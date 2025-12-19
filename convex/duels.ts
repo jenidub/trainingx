@@ -11,40 +11,78 @@ export const createRoom = mutation({
     itemCount: v.optional(v.number()),
     minPlayers: v.optional(v.number()),
     maxPlayers: v.optional(v.number()),
+    trackId: v.optional(v.id("practiceTracks")),
   },
   handler: async (ctx, args) => {
     const userId = args.userId;
-
-    // Get user's skill level for fair item selection
-    const userSkills = await ctx.db
-      .query("practiceUserSkills")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
-      .collect();
-    
-    const avgElo = userSkills.length > 0
-      ? userSkills.reduce((sum, s) => sum + s.rating, 0) / userSkills.length
-      : 1500;
-    
     const itemCount = args.itemCount || 5;
-    const allItems = await ctx.db
-      .query("practiceItems")
-      .withIndex("by_status", (q) => q.eq("status", "live"))
-      .collect();
 
-    const suitableItems = allItems
-      .map(item => ({
-        item,
-        eloDiff: Math.abs(item.elo - avgElo)
-      }))
-      .filter(({ eloDiff }) => eloDiff < 100)
-      .sort((a, b) => a.eloDiff - b.eloDiff)
-      .slice(0, Math.min(itemCount * 2, 20));
-    
-    const shuffled = suitableItems.sort(() => Math.random() - 0.5);
-    const selectedItems = shuffled.slice(0, itemCount).map(({ item }) => item._id);
+    let selectedItems: Id<"practiceItems">[] = [];
 
-    if (selectedItems.length < itemCount) {
-      throw new Error(`Not enough practice items available. Need at least ${itemCount} items.`);
+    // If trackId is provided, get items from that track's levels
+    if (args.trackId) {
+      // Get all levels for this track
+      const levels = await ctx.db
+        .query("practiceLevels")
+        .withIndex("by_track", (q) => q.eq("trackId", args.trackId!))
+        .collect();
+
+      const levelIds = levels.map((l) => l._id);
+
+      // Get items from these levels
+      const trackItems = await ctx.db
+        .query("practiceItems")
+        .withIndex("by_status", (q) => q.eq("status", "live"))
+        .collect();
+
+      // Filter to items that belong to this track's levels
+      const filteredItems = trackItems.filter(
+        (item) => item.levelId && levelIds.includes(item.levelId)
+      );
+
+      // Shuffle and select
+      const shuffled = filteredItems.sort(() => Math.random() - 0.5);
+      selectedItems = shuffled.slice(0, itemCount).map((item) => item._id);
+
+      if (selectedItems.length < itemCount) {
+        throw new Error(
+          `Not enough practice items for this topic. Found ${selectedItems.length}, need ${itemCount}.`
+        );
+      }
+    } else {
+      // Fallback: Get user's skill level for fair item selection
+      const userSkills = await ctx.db
+        .query("practiceUserSkills")
+        .withIndex("by_user", (q) => q.eq("userId", userId))
+        .collect();
+
+      const avgElo =
+        userSkills.length > 0
+          ? userSkills.reduce((sum, s) => sum + s.rating, 0) / userSkills.length
+          : 1500;
+
+      const allItems = await ctx.db
+        .query("practiceItems")
+        .withIndex("by_status", (q) => q.eq("status", "live"))
+        .collect();
+
+      const suitableItems = allItems
+        .map((item) => ({
+          item,
+          eloDiff: Math.abs(item.elo - avgElo),
+        }))
+        .filter(({ eloDiff }) => eloDiff < 100)
+        .sort((a, b) => a.eloDiff - b.eloDiff)
+        .slice(0, Math.min(itemCount * 2, 20));
+
+      const shuffled = suitableItems.sort(() => Math.random() - 0.5);
+      selectedItems = shuffled.slice(0, itemCount).map(({ item }) => item._id);
+
+      if (selectedItems.length < itemCount) {
+        throw new Error(
+          `Not enough practice items available. Need at least ${itemCount} items.`
+        );
+      }
     }
 
     // Create room
@@ -59,6 +97,7 @@ export const createRoom = mutation({
       minPlayers: args.minPlayers || 2,
       maxPlayers: args.maxPlayers || 10,
       readyPlayers: [],
+      trackId: args.trackId,
     });
 
     await upsertDuelMember(ctx, roomId, userId, "lobby");
@@ -69,7 +108,7 @@ export const createRoom = mutation({
 
 // Join a room
 export const joinRoom = mutation({
-  args: { 
+  args: {
     userId: v.id("users"),
     roomId: v.id("practiceDuels"),
   },
@@ -113,8 +152,8 @@ export const leaveRoom = mutation({
       throw new Error("Cannot leave after game started");
     }
 
-    const newParticipants = room.participants.filter(p => p !== args.userId);
-    const newReadyPlayers = room.readyPlayers.filter(p => p !== args.userId);
+    const newParticipants = room.participants.filter((p) => p !== args.userId);
+    const newReadyPlayers = room.readyPlayers.filter((p) => p !== args.userId);
 
     // If host leaves and others remain, assign new host
     let newHostId = room.hostId;
@@ -164,8 +203,12 @@ export const kickPlayer = mutation({
       throw new Error("Host cannot kick themselves");
     }
 
-    const newParticipants = room.participants.filter(p => p !== args.playerId);
-    const newReadyPlayers = room.readyPlayers.filter(p => p !== args.playerId);
+    const newParticipants = room.participants.filter(
+      (p) => p !== args.playerId
+    );
+    const newReadyPlayers = room.readyPlayers.filter(
+      (p) => p !== args.playerId
+    );
 
     await ctx.db.patch(args.roomId, {
       participants: newParticipants,
@@ -198,13 +241,13 @@ export const markReady = mutation({
     }
 
     let newReadyPlayers = [...room.readyPlayers];
-    
+
     if (args.ready) {
       if (!newReadyPlayers.includes(args.userId)) {
         newReadyPlayers.push(args.userId);
       }
     } else {
-      newReadyPlayers = newReadyPlayers.filter(p => p !== args.userId);
+      newReadyPlayers = newReadyPlayers.filter((p) => p !== args.userId);
     }
 
     await ctx.db.patch(args.roomId, {
@@ -291,7 +334,7 @@ export const submitAttempt = mutation({
     const existing = await ctx.db
       .query("practiceDuelAttempts")
       .withIndex("by_duel", (q) => q.eq("duelId", args.roomId))
-      .filter((q) => 
+      .filter((q) =>
         q.and(
           q.eq(q.field("userId"), args.userId),
           q.eq(q.field("itemId"), args.itemId)
@@ -338,23 +381,26 @@ export const submitAttempt = mutation({
 
     const completedPlayers = new Set(
       allAttempts
-        .filter(a => {
-          const playerAttempts = allAttempts.filter(pa => pa.userId === a.userId);
+        .filter((a) => {
+          const playerAttempts = allAttempts.filter(
+            (pa) => pa.userId === a.userId
+          );
           return playerAttempts.length === room.itemIds.length;
         })
-        .map(a => a.userId)
+        .map((a) => a.userId)
     );
 
     if (completedPlayers.size === room.participants.length) {
       // Calculate rankings
       const rankings = await Promise.all(
         room.participants.map(async (userId) => {
-          const attempts = allAttempts.filter(a => a.userId === userId);
+          const attempts = allAttempts.filter((a) => a.userId === userId);
           const score = attempts.reduce((sum, a) => sum + a.score, 0);
-          const correct = attempts.filter(a => a.correct).length;
-          const avgTimeMs = attempts.length > 0
-            ? attempts.reduce((sum, a) => sum + a.timeMs, 0) / attempts.length
-            : 0;
+          const correct = attempts.filter((a) => a.correct).length;
+          const avgTimeMs =
+            attempts.length > 0
+              ? attempts.reduce((sum, a) => sum + a.timeMs, 0) / attempts.length
+              : 0;
 
           return {
             userId,
@@ -401,19 +447,17 @@ export const getRoomDetails = query({
       .withIndex("by_duel", (q) => q.eq("duelId", args.roomId))
       .collect();
 
-    const items = await Promise.all(
-      room.itemIds.map(id => ctx.db.get(id))
-    );
+    const items = await Promise.all(room.itemIds.map((id) => ctx.db.get(id)));
 
     const participants = await Promise.all(
-      room.participants.map(id => ctx.db.get(id))
+      room.participants.map((id) => ctx.db.get(id))
     );
 
     return {
       room,
       attempts,
-      items: items.filter(i => i !== null),
-      participants: participants.filter(p => p !== null),
+      items: items.filter((i) => i !== null),
+      participants: participants.filter((p) => p !== null),
     };
   },
 });
@@ -437,9 +481,7 @@ export const getUserRooms = query({
 
     const memberships = await membershipQuery.collect();
     const rooms = (
-      await Promise.all(
-        memberships.map((member) => ctx.db.get(member.duelId))
-      )
+      await Promise.all(memberships.map((member) => ctx.db.get(member.duelId)))
     ).filter((room): room is Doc<"practiceDuels"> => room !== null);
 
     return rooms
@@ -467,7 +509,7 @@ export const getOpenRooms = query({
 
     // Filter rooms that aren't full
     return rooms
-      .filter(r => r.participants && r.participants.length < r.maxPlayers)
+      .filter((r) => r.participants && r.participants.length < r.maxPlayers)
       .slice(0, limit);
   },
 });
@@ -482,37 +524,40 @@ export const getRoomStats = query({
       .collect();
 
     const rooms = (
-      await Promise.all(
-        memberships.map((member) => ctx.db.get(member.duelId))
-      )
+      await Promise.all(memberships.map((member) => ctx.db.get(member.duelId)))
     ).filter((room): room is Doc<"practiceDuels"> => room !== null);
 
     const userRooms = rooms.filter(
-      (room) =>
-        room.participants && room.participants.includes(args.userId)
+      (room) => room.participants && room.participants.includes(args.userId)
     );
 
-    const completedRooms = userRooms.filter(r => r.status === "completed");
-    
+    const completedRooms = userRooms.filter((r) => r.status === "completed");
+
     // Count wins (1st place)
-    const wins = completedRooms.filter(r => 
-      r.rankings && r.rankings.length > 0 && r.rankings[0].userId === args.userId
+    const wins = completedRooms.filter(
+      (r) =>
+        r.rankings &&
+        r.rankings.length > 0 &&
+        r.rankings[0].userId === args.userId
     ).length;
 
     // Count podium finishes (top 3)
-    const podiums = completedRooms.filter(r => 
-      r.rankings && r.rankings.slice(0, 3).some(rank => rank.userId === args.userId)
+    const podiums = completedRooms.filter(
+      (r) =>
+        r.rankings &&
+        r.rankings.slice(0, 3).some((rank) => rank.userId === args.userId)
     ).length;
 
     return {
       totalRooms: userRooms.length,
       completedRooms: completedRooms.length,
-      activeRooms: userRooms.filter(r => r.status === "active").length,
+      activeRooms: userRooms.filter((r) => r.status === "active").length,
       wins,
       podiums,
-      winRate: completedRooms.length > 0
-        ? Math.round((wins / completedRooms.length) * 100)
-        : 0,
+      winRate:
+        completedRooms.length > 0
+          ? Math.round((wins / completedRooms.length) * 100)
+          : 0,
     };
   },
 });
@@ -571,7 +616,10 @@ async function removeDuelMember(
   }
 }
 
-async function removeAllDuelMembers(ctx: MutationCtx, duelId: Id<"practiceDuels">) {
+async function removeAllDuelMembers(
+  ctx: MutationCtx,
+  duelId: Id<"practiceDuels">
+) {
   const members = await ctx.db
     .query("practiceDuelMembers")
     .withIndex("by_duel", (q) => q.eq("duelId", duelId))

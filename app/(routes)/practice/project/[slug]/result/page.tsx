@@ -85,7 +85,7 @@ export default function PracticeResultPage() {
             <p className="text-gray-600 mb-6">
               Complete the project first to see your results.
             </p>
-            <Link href={`/practice/${params.slug}`}>
+            <Link href={`/practice/project/${params.slug}`}>
               <Button>Start Project</Button>
             </Link>
           </CardContent>

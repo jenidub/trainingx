@@ -1,0 +1,307 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { useQuery, useMutation, useAction } from "convex/react";
+import { api } from "convex/_generated/api";
+import { Id } from "convex/_generated/dataModel";
+import { AssessmentPrep } from "./Prep";
+import { QuestionWrapper } from "./Question";
+import { MCQQuestion } from "./questions/MCQ";
+import { PromptWriteQuestion } from "./questions/PromptWrite";
+import { AssessmentResults } from "./Results";
+import { CertificateView } from "./Certificate";
+
+type AssessmentPhase = "prep" | "questions" | "results" | "certificate";
+
+interface AssessmentProps {
+  userId: Id<"users">;
+  domainId: Id<"practiceDomains">;
+  onBack: () => void;
+}
+
+export function Assessment({ userId, domainId, onBack }: AssessmentProps) {
+  const [phase, setPhase] = useState<AssessmentPhase>("prep");
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [attemptId, setAttemptId] =
+    useState<Id<"domainAssessmentAttempts"> | null>(null);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+  const [answers, setAnswers] = useState<
+    Array<{ questionId: string; isCorrect: boolean; score: number }>
+  >([]);
+  const [finalResult, setFinalResult] = useState<{
+    passed: boolean;
+    score: number;
+    certificateId?: Id<"domainCertificates">;
+  } | null>(null);
+
+  // All queries at the top level (following React hooks rules)
+  const assessment = useQuery(api.domainAssessments.getByDomain, { domainId });
+  const canTake = useQuery(
+    api.domainAssessments.canTake,
+    assessment ? { userId, assessmentId: assessment._id } : "skip"
+  );
+  const questions = useQuery(
+    api.domainAssessments.getQuestions,
+    assessment ? { assessmentId: assessment._id } : "skip"
+  );
+  const certificate = useQuery(api.certificates.getByDomain, {
+    userId,
+    domainId,
+  });
+  const user = useQuery(api.users.get, { id: userId });
+  const domains = useQuery(api.practiceDomains.list);
+
+  // Mutations
+  const startAttempt = useMutation(api.domainAssessments.startAttempt);
+  const submitAnswer = useMutation(api.domainAssessments.submitAnswer);
+  const completeAttempt = useMutation(api.domainAssessments.completeAttempt);
+
+  // Actions
+  const runPromptAction = useAction(api.assessmentGrading.runPrompt);
+
+  // Find current domain data
+  const domainData = domains?.find((d: any) => d._id === domainId);
+
+  // If user already has certificate, show it
+  useEffect(() => {
+    if (certificate) {
+      setPhase("certificate");
+    }
+  }, [certificate]);
+
+  // Handle starting the assessment
+  const handleStart = useCallback(async () => {
+    if (!assessment) return;
+
+    try {
+      const result = await startAttempt({
+        userId,
+        assessmentId: assessment._id,
+      });
+      setAttemptId(result.attemptId);
+      setTimeRemaining(assessment.timeLimit * 60); // Convert to seconds
+      setPhase("questions");
+      setCurrentQuestionIndex(0);
+      setAnswers([]);
+    } catch (error) {
+      console.error("Failed to start assessment:", error);
+    }
+  }, [assessment, userId, startAttempt]);
+
+  // Handle answer submission
+  const handleAnswer = useCallback(
+    async (
+      response: any,
+      isCorrect: boolean,
+      score: number = isCorrect ? 100 : 0
+    ) => {
+      if (!attemptId || !questions) return;
+
+      const currentQuestion = questions[currentQuestionIndex];
+
+      // Submit to server
+      await submitAnswer({
+        attemptId,
+        questionId: currentQuestion._id,
+        response,
+        score,
+        isCorrect,
+      });
+
+      // Track locally
+      setAnswers((prev) => [
+        ...prev,
+        { questionId: currentQuestion._id, isCorrect, score },
+      ]);
+
+      // Move to next question or complete
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex((prev) => prev + 1);
+      } else {
+        // Complete the assessment
+        await handleComplete();
+      }
+    },
+    [attemptId, questions, currentQuestionIndex, submitAnswer]
+  );
+
+  // Handle assessment completion
+  const handleComplete = useCallback(async () => {
+    if (!attemptId) return;
+
+    try {
+      const result = await completeAttempt({ attemptId });
+      setFinalResult({
+        passed: result.passed,
+        score: result.totalScore,
+        certificateId: result.certificateId,
+      });
+      setPhase("results");
+    } catch (error) {
+      console.error("Failed to complete assessment:", error);
+    }
+  }, [attemptId, completeAttempt]);
+
+  // Handle time up
+  const handleTimeUp = useCallback(() => {
+    handleComplete();
+  }, [handleComplete]);
+
+  // Handle viewing certificate
+  const handleViewCertificate = useCallback(() => {
+    setPhase("certificate");
+  }, []);
+
+  // Handle retry (go back to prep)
+  const handleRetry = useCallback(() => {
+    setPhase("prep");
+    setAttemptId(null);
+    setAnswers([]);
+    setFinalResult(null);
+  }, []);
+
+  // Run prompt via AI service (for prompt writing questions)
+  const runPrompt = useCallback(
+    async (prompt: string): Promise<string> => {
+      try {
+        // Call the real AI action - uses configured provider (OpenAI/Gemini/Anthropic)
+        const response = await runPromptAction({ prompt });
+        return response;
+      } catch (error) {
+        console.error("Failed to run prompt:", error);
+        return `Error running prompt. Please try again.\n\nYour prompt:\n"${prompt.substring(0, 200)}..."`;
+      }
+    },
+    [runPromptAction]
+  );
+
+  // Loading state
+  if (!assessment || !canTake) {
+    return (
+      <div className="min-h-full py-12 flex items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
+          <div className="text-slate-500 text-lg font-bold">
+            Loading assessment...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Render based on phase
+  switch (phase) {
+    case "prep":
+      return (
+        <AssessmentPrep
+          assessment={{
+            title: assessment.title,
+            description: assessment.description,
+            timeLimit: assessment.timeLimit,
+            passingScore: assessment.passingScore,
+            questionCount: assessment.questionCount,
+            maxAttempts: assessment.maxAttempts,
+          }}
+          attemptNumber={canTake.attemptNumber || 1}
+          attemptsRemaining={
+            canTake.attemptsRemaining || assessment.maxAttempts
+          }
+          onStart={handleStart}
+          onBack={onBack}
+        />
+      );
+
+    case "questions":
+      if (!questions || !questions[currentQuestionIndex]) {
+        return null;
+      }
+
+      const currentQuestion = questions[currentQuestionIndex];
+
+      return (
+        <QuestionWrapper
+          questionNumber={currentQuestionIndex + 1}
+          totalQuestions={questions.length}
+          timeRemaining={timeRemaining}
+          onTimeUp={handleTimeUp}
+        >
+          {currentQuestion.type === "mcq" ||
+          currentQuestion.type === "multi-select" ? (
+            <MCQQuestion
+              scenario={currentQuestion.scenario}
+              question={currentQuestion.question}
+              options={currentQuestion.options || []}
+              onSubmit={(selectedId, isCorrect) =>
+                handleAnswer(selectedId, isCorrect)
+              }
+            />
+          ) : currentQuestion.type === "prompt-write" ||
+            currentQuestion.type === "prompt-fix" ? (
+            <PromptWriteQuestion
+              scenario={currentQuestion.scenario}
+              question={currentQuestion.question}
+              promptGoal={currentQuestion.promptGoal || ""}
+              onSubmit={(prompt) => handleAnswer(prompt, true, 80)} // AI would grade this
+              onRunPrompt={runPrompt}
+            />
+          ) : currentQuestion.type === "image-prompt" ? (
+            <PromptWriteQuestion
+              scenario={currentQuestion.scenario}
+              question={currentQuestion.question}
+              promptGoal={currentQuestion.promptGoal || ""}
+              isImagePrompt
+              onSubmit={(prompt) => handleAnswer(prompt, true, 80)} // AI would grade this
+            />
+          ) : null}
+        </QuestionWrapper>
+      );
+
+    case "results":
+      if (!finalResult) return null;
+
+      const correctCount = answers.filter((a) => a.isCorrect).length;
+
+      return (
+        <AssessmentResults
+          passed={finalResult.passed}
+          score={finalResult.score}
+          passingScore={assessment.passingScore}
+          timeSpent={assessment.timeLimit * 60 - timeRemaining}
+          correctCount={correctCount}
+          totalQuestions={questions?.length || 0}
+          onRetry={canTake.canTake ? handleRetry : undefined}
+          onViewCertificate={
+            finalResult.passed ? handleViewCertificate : undefined
+          }
+          onBack={onBack}
+          cooldownHours={assessment.cooldownHours}
+        />
+      );
+
+    case "certificate":
+      if (!certificate) return null;
+
+      return (
+        <CertificateView
+          userName={user?.name || "User"}
+          domainTitle={domainData?.title || "Domain Mastery"}
+          domainIcon={domainData?.icon || "🏆"}
+          score={certificate.score}
+          issuedAt={certificate.issuedAt}
+          verificationCode={certificate.verificationCode}
+          onBack={onBack}
+          onDownload={() => {
+            // TODO: Implement PDF download
+            console.log("Download PDF");
+          }}
+          onShare={() => {
+            // TODO: Implement sharing
+            console.log("Share certificate");
+          }}
+        />
+      );
+
+    default:
+      return null;
+  }
+}
