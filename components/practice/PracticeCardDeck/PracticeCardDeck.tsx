@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { PracticeCardDeckProps } from "./types";
@@ -34,10 +34,12 @@ export function PracticeCardDeck({
 
   const {
     state,
+    isViewingAttempted,
     getShuffledCards,
     handleCardClick,
     handleCloseModal,
     handleAnswerSelect,
+    handleViewAnswer,
     handleShuffle,
     handleReset,
     toggleStats,
@@ -58,22 +60,41 @@ export function PracticeCardDeck({
     });
   }, [practiceItems, levelDetails, levelProgress, levelId, userId]);
 
+  // ⚠️ DEMO MODE: Set to true to mark all cards as completed (for recording demo videos)
+  // Remember to set back to false after recording!
+  const DEMO_MODE = true;
+
+  // Track if we've already initialized to prevent re-initialization after reset
+  const hasInitializedRef = useRef(false);
+  // Track if user has clicked reset (disables demo mode re-triggering)
+  const hasBeenResetRef = useRef(false);
+
   // Initialize answered cards from backend progress when data loads
   // Now using actual completedChallengeIds instead of assuming first N cards
   useEffect(() => {
-    if (practiceItems && levelProgress && practiceItems.length > 0) {
-      const completedIds = levelProgress.completedChallengeIds || [];
-      if (completedIds.length > 0 && state.answeredCards.size === 0) {
-        // Use actual completed card IDs from backend
-        initializeFromProgress(completedIds);
+    // Skip if already initialized (prevents re-init after reset)
+    if (hasInitializedRef.current) return;
+
+    if (practiceItems && practiceItems.length > 0) {
+      // DEMO MODE: Mark all cards as completed (only if hasn't been reset)
+      if (DEMO_MODE && !hasBeenResetRef.current) {
+        const allCardIds = practiceItems.map((item: any) => item._id);
+        initializeFromProgress(allCardIds);
+        hasInitializedRef.current = true;
+        return;
+      }
+
+      // Normal mode (or after reset): Use actual progress from backend
+      if (levelProgress) {
+        const completedIds = levelProgress.completedChallengeIds || [];
+        if (completedIds.length > 0) {
+          // Use actual completed card IDs from backend
+          initializeFromProgress(completedIds);
+          hasInitializedRef.current = true;
+        }
       }
     }
-  }, [
-    practiceItems,
-    levelProgress,
-    state.answeredCards.size,
-    initializeFromProgress,
-  ]);
+  }, [practiceItems, levelProgress, initializeFromProgress]);
 
   const displayItems =
     practiceItems && Array.isArray(practiceItems) ? practiceItems : [];
@@ -124,7 +145,13 @@ export function PracticeCardDeck({
             answeredCount={state.answeredCards.size}
             totalCount={displayItems.length}
             onShowStats={toggleStats}
-            onReset={handleReset}
+            onReset={() => {
+              // Mark that user has reset (disables demo mode permanently)
+              hasBeenResetRef.current = true;
+              // Clear the initialized flag so we can re-init from backend next time
+              hasInitializedRef.current = false;
+              handleReset();
+            }}
             onShuffle={() => handleShuffle(displayItems)}
           />
         </div>
@@ -154,8 +181,10 @@ export function PracticeCardDeck({
         isTimerRunning={state.isTimerRunning}
         lastScoreChange={state.lastScoreChange}
         streak={state.streak}
+        isViewingAttempted={isViewingAttempted}
         onClose={() => handleCloseModal(cardsToDisplay)}
         onAnswerSelect={(answer) => handleAnswerSelect(answer, cardsToDisplay)}
+        onViewAnswer={() => handleViewAnswer(cardsToDisplay)}
       />
 
       <LevelCompleteModal

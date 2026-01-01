@@ -97,7 +97,10 @@ export default function PromptToEverything() {
   }, [currentIndex]);
 
   return (
-    <div className="min-h-screen text-[#f8fafc] overflow-hidden font-sans selection:bg-[#00f2ea] selection:text-[#0f172a] relative bg-[#0f172a]">
+    <section
+      id="practice-zone"
+      className="min-h-screen text-[#f8fafc] overflow-hidden font-sans selection:bg-[#00f2ea] selection:text-[#0f172a] relative bg-[#0f172a] scroll-mt-24"
+    >
       {/* Background Texture */}
       <div
         className="absolute inset-0 opacity-40 z-0 pointer-events-none"
@@ -181,6 +184,6 @@ export default function PromptToEverything() {
           className="mt-20 text-center text-white/30 font-mono text-sm"
         ></motion.div>
       </div>
-    </div>
+    </section>
   );
 }

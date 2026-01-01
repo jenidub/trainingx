@@ -263,3 +263,289 @@ export const getWizardResponse = query({
     };
   },
 });
+
+// Generate a learning roadmap for a specific opportunity
+export const generateOpportunityRoadmap = action({
+  args: {
+    opportunityId: v.string(),
+    opportunityTitle: v.string(),
+    opportunityDescription: v.string(),
+    requiredSkills: v.array(v.string()),
+    userSkills: v.optional(v.any()),
+  },
+  handler: async (
+    ctx,
+    {
+      opportunityId,
+      opportunityTitle,
+      opportunityDescription,
+      requiredSkills,
+      userSkills,
+    }
+  ) => {
+    const systemPrompt = `You are the TrainingX.ai AI Career Coach - a friendly, knowledgeable career advisor.
+
+YOUR MISSION: Create an actionable, gamified learning roadmap to help the user achieve their career goal.
+
+ROADMAP STRUCTURE:
+- 2-4 phases (Foundation, Core Skills, Advanced, Launch)
+- Each phase has 3-5 concrete steps
+- Include realistic time estimates
+- Link to TrainingX practice tracks when possible
+
+AVAILABLE TRAININGX TRACKS (use these links):
+- /practice/ai-fundamentals - GenAI basics
+- /practice/prompt-engineering - Prompt mastery
+- /practice/ai-tools - Tool proficiency
+- /practice/ai-business - AI for business
+- /practice/ai-content - AI content creation
+- /practice/general-ai-skills - General AI skills practice
+
+TIME ESTIMATES:
+- Phase 1 (Foundation): 2-4 weeks
+- Phase 2 (Core Skills): 4-8 weeks
+- Phase 3 (Advanced): 4-8 weeks
+- Phase 4 (Launch): 2-4 weeks
+
+RESPONSE RULES:
+1. Be motivating and encouraging
+2. Make the first action immediately doable
+3. Include clear milestones for motivation
+4. Set first phase as "current", others as "locked"
+5. The first step should be a quick win (< 5 hours)
+6. Tailor the roadmap specifically to the opportunity
+
+Return a JSON object with this exact structure:
+{
+  "goalTitle": "Goal title based on the opportunity",
+  "estimatedTime": "X-Y months",
+  "hoursPerWeek": number,
+  "phases": [
+    {
+      "id": "phase-1",
+      "title": "Phase Title",
+      "duration": "X-Y weeks",
+      "description": "Brief description",
+      "status": "current" | "locked" | "completed",
+      "steps": [
+        {
+          "id": "step-1",
+          "title": "Step title",
+          "type": "track" | "project" | "external" | "milestone",
+          "description": "Brief description",
+          "link": "/practice/track-name or external URL",
+          "estimatedHours": number,
+          "skillsGained": ["skill1", "skill2"],
+          "isRequired": boolean
+        }
+      ],
+      "milestones": ["Milestone 1", "Milestone 2"]
+    }
+  ],
+  "nextAction": {
+    "title": "First action to take",
+    "link": "/practice/something",
+    "cta": "Start Learning"
+  }
+}`;
+
+    const userPrompt = `Create a personalized learning roadmap for this opportunity:
+
+OPPORTUNITY: ${opportunityTitle}
+DESCRIPTION: ${opportunityDescription}
+REQUIRED SKILLS: ${requiredSkills.join(", ")}
+USER'S CURRENT SKILLS: ${JSON.stringify(userSkills || {})}
+
+Generate a detailed, motivating roadmap that will help this user achieve this career goal. Focus on practical, actionable steps.`;
+
+    const response = await callAI<{
+      goalTitle: string;
+      estimatedTime: string;
+      hoursPerWeek: number;
+      phases: any[];
+      nextAction: { title: string; link?: string; cta: string };
+    }>(ctx, {
+      feature: "roadmap",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
+      ],
+      temperature: 0.7,
+      jsonMode: true,
+    });
+
+    const roadmap = response.data;
+
+    // Save the roadmap if user is authenticated
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity) {
+      await ctx.runMutation(api.aiMatching.saveOpportunityRoadmap, {
+        opportunityId,
+        roadmap,
+      });
+    }
+
+    return roadmap;
+  },
+});
+
+// Save a roadmap for an opportunity
+export const saveOpportunityRoadmap = mutation({
+  args: {
+    opportunityId: v.string(),
+    roadmap: v.object({
+      goalTitle: v.string(),
+      estimatedTime: v.string(),
+      hoursPerWeek: v.number(),
+      phases: v.array(
+        v.object({
+          id: v.string(),
+          title: v.string(),
+          duration: v.string(),
+          description: v.optional(v.string()),
+          status: v.string(),
+          steps: v.array(
+            v.object({
+              id: v.string(),
+              title: v.string(),
+              type: v.string(),
+              description: v.optional(v.string()),
+              link: v.optional(v.string()),
+              estimatedHours: v.number(),
+              skillsGained: v.optional(v.array(v.string())),
+              isRequired: v.boolean(),
+            })
+          ),
+          milestones: v.array(v.string()),
+        })
+      ),
+      nextAction: v.object({
+        title: v.string(),
+        link: v.optional(v.string()),
+        cta: v.string(),
+      }),
+    }),
+  },
+  handler: async (ctx, { opportunityId, roadmap }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    // Check if a roadmap already exists for this user-opportunity pair
+    const existing = await ctx.db
+      .query("opportunityRoadmaps")
+      .withIndex("by_user_opportunity", (q) =>
+        q.eq("userId", userId).eq("opportunityId", opportunityId)
+      )
+      .first();
+
+    if (existing) {
+      // Update existing roadmap
+      await ctx.db.patch(existing._id, {
+        ...roadmap,
+        updatedAt: Date.now(),
+      });
+      return existing._id;
+    }
+
+    // Create new roadmap
+    return await ctx.db.insert("opportunityRoadmaps", {
+      userId,
+      opportunityId,
+      ...roadmap,
+      generatedAt: Date.now(),
+    });
+  },
+});
+
+// Get a roadmap for a specific opportunity
+export const getOpportunityRoadmap = query({
+  args: {
+    opportunityId: v.string(),
+    userId: v.optional(v.id("users")),
+  },
+  handler: async (ctx, { opportunityId, userId: argUserId }) => {
+    const userId = argUserId ?? (await getAuthUserId(ctx));
+
+    if (!userId) return null;
+
+    const roadmap = await ctx.db
+      .query("opportunityRoadmaps")
+      .withIndex("by_user_opportunity", (q) =>
+        q.eq("userId", userId).eq("opportunityId", opportunityId)
+      )
+      .first();
+
+    return roadmap;
+  },
+});
+
+// Update step completion status in a roadmap
+export const updateRoadmapStepStatus = mutation({
+  args: {
+    roadmapId: v.id("opportunityRoadmaps"),
+    phaseId: v.string(),
+    stepId: v.string(),
+    isCompleted: v.boolean(),
+  },
+  handler: async (ctx, { roadmapId, phaseId, stepId, isCompleted }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
+    const roadmap = await ctx.db.get(roadmapId);
+    if (!roadmap || roadmap.userId !== userId) {
+      throw new Error("Roadmap not found");
+    }
+
+    // Update the step completion status
+    const updatedPhases = roadmap.phases.map((phase) => {
+      if (phase.id === phaseId) {
+        return {
+          ...phase,
+          steps: phase.steps.map((step: any) => {
+            if (step.id === stepId) {
+              return { ...step, isCompleted };
+            }
+            return step;
+          }),
+        };
+      }
+      return phase;
+    });
+
+    // Check if phase should be completed or next phase unlocked
+    const currentPhaseIndex = updatedPhases.findIndex((p) => p.id === phaseId);
+    if (currentPhaseIndex >= 0) {
+      const currentPhase = updatedPhases[currentPhaseIndex];
+      const allRequiredStepsComplete = currentPhase.steps
+        .filter((s: any) => s.isRequired)
+        .every((s: any) => s.isCompleted);
+
+      if (allRequiredStepsComplete && currentPhase.status === "current") {
+        // Mark current phase as completed
+        updatedPhases[currentPhaseIndex] = {
+          ...currentPhase,
+          status: "completed",
+        };
+
+        // Unlock next phase if exists
+        if (currentPhaseIndex + 1 < updatedPhases.length) {
+          updatedPhases[currentPhaseIndex + 1] = {
+            ...updatedPhases[currentPhaseIndex + 1],
+            status: "current",
+          };
+        }
+      }
+    }
+
+    await ctx.db.patch(roadmapId, {
+      phases: updatedPhases,
+      updatedAt: Date.now(),
+    });
+
+    return { success: true };
+  },
+});

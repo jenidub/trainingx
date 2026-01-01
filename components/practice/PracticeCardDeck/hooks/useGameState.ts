@@ -24,6 +24,9 @@ export function useGameState(
     correctAnswers: 0,
   });
 
+  // Track if we're viewing an already-answered card (read-only mode)
+  const [isViewingAttempted, setIsViewingAttempted] = useState(false);
+
   // Track shuffled card order
   const [shuffledIndices, setShuffledIndices] = useState<number[] | null>(null);
 
@@ -42,24 +45,30 @@ export function useGameState(
   }, [state.isTimerRunning]);
 
   const handleCardClick = (index: number, cards: PracticeCard[]) => {
-    if (
-      !cards[index] ||
-      state.answeredCards.has(cards[index]._id) ||
-      state.isShuffling
-    )
-      return;
+    if (!cards[index] || state.isShuffling) return;
+
+    const isAlreadyAnswered = state.answeredCards.has(cards[index]._id);
+
+    // Allow viewing already-answered cards in read-only mode
+    setIsViewingAttempted(isAlreadyAnswered);
 
     setState((prev) => ({
       ...prev,
       selectedCardIndex: index,
+      // Don't auto-flip for attempted cards - let user see the question first
       selectedAnswer: null,
       timer: 0,
-      isTimerRunning: true,
+      isTimerRunning: !isAlreadyAnswered, // Don't run timer for already-answered cards
     }));
   };
 
   const handleCloseModal = (cards: PracticeCard[]) => {
-    if (state.selectedAnswer !== null && state.selectedCardIndex !== null) {
+    // Only show completion animation for newly answered cards (not view-only)
+    if (
+      !isViewingAttempted &&
+      state.selectedAnswer !== null &&
+      state.selectedCardIndex !== null
+    ) {
       const selectedCard = cards[state.selectedCardIndex];
       if (selectedCard) {
         setState((prev) => ({ ...prev, justCompletedCard: selectedCard._id }));
@@ -69,6 +78,9 @@ export function useGameState(
       }
     }
 
+    // Reset viewing state
+    setIsViewingAttempted(false);
+
     setState((prev) => ({
       ...prev,
       selectedCardIndex: null,
@@ -77,11 +89,30 @@ export function useGameState(
     }));
   };
 
+  // Handler for viewing the answer on attempted cards (manual flip)
+  const handleViewAnswer = (cards: PracticeCard[]) => {
+    if (!isViewingAttempted || state.selectedCardIndex === null) return;
+
+    const selectedCard = cards[state.selectedCardIndex];
+    if (!selectedCard) return;
+
+    // Set the correct answer to flip the card
+    setState((prev) => ({
+      ...prev,
+      selectedAnswer: selectedCard.params?.correctAnswer,
+    }));
+  };
+
   const handleAnswerSelect = async (
     answerType: AnswerType,
     cards: PracticeCard[]
   ) => {
-    if (state.selectedCardIndex === null || state.selectedAnswer !== null)
+    // Don't allow answer selection when viewing already-attempted cards
+    if (
+      isViewingAttempted ||
+      state.selectedCardIndex === null ||
+      state.selectedAnswer !== null
+    )
       return;
 
     const selectedCard = cards[state.selectedCardIndex];
@@ -217,11 +248,13 @@ export function useGameState(
 
   return {
     state,
+    isViewingAttempted,
     shuffledIndices,
     getShuffledCards,
     handleCardClick,
     handleCloseModal,
     handleAnswerSelect,
+    handleViewAnswer,
     handleShuffle,
     handleReset,
     toggleStats,

@@ -237,6 +237,48 @@ export default defineSchema({
     generatedAt: v.number(),
   }).index("by_user", ["userId"]),
 
+  // Opportunity Roadmaps (Learning paths for specific AI matches)
+  opportunityRoadmaps: defineTable({
+    userId: v.id("users"),
+    opportunityId: v.string(), // The opportunity.id from aiMatchingResults
+    goalTitle: v.string(),
+    estimatedTime: v.string(),
+    hoursPerWeek: v.number(),
+    phases: v.array(
+      v.object({
+        id: v.string(),
+        title: v.string(),
+        duration: v.string(),
+        description: v.optional(v.string()),
+        status: v.string(), // "current" | "locked" | "completed"
+        steps: v.array(
+          v.object({
+            id: v.string(),
+            title: v.string(),
+            type: v.string(), // "track" | "project" | "external" | "milestone"
+            description: v.optional(v.string()),
+            link: v.optional(v.string()),
+            estimatedHours: v.number(),
+            skillsGained: v.optional(v.array(v.string())),
+            isRequired: v.boolean(),
+            isCompleted: v.optional(v.boolean()),
+          })
+        ),
+        milestones: v.array(v.string()),
+      })
+    ),
+    nextAction: v.object({
+      title: v.string(),
+      link: v.optional(v.string()),
+      cta: v.string(),
+    }),
+    generatedAt: v.number(),
+    updatedAt: v.optional(v.number()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_opportunity", ["opportunityId"])
+    .index("by_user_opportunity", ["userId", "opportunityId"]),
+
   // User feedback with rewards/gamification
   feedback: defineTable({
     userId: v.id("users"),
@@ -1315,19 +1357,30 @@ export default defineSchema({
     .index("by_assessment", ["assessmentId"])
     .index("by_user_assessment", ["userId", "assessmentId"]),
 
-  // Certificates issued on passing
+  // Certificates issued on passing - AI Career Readiness Certificate
   domainCertificates: defineTable({
     userId: v.id("users"),
     domainId: v.id("practiceDomains"),
     assessmentAttemptId: v.id("domainAssessmentAttempts"),
     score: v.number(),
     issuedAt: v.number(),
-    verificationCode: v.string(), // unique code for sharing
-    certificateUrl: v.optional(v.string()),
+    // New fields for AI Career Readiness Certificate
+    certificateId: v.string(), // TX-AI-YEAR-XXXXX format
+    userName: v.string(), // Locked-in name at time of issuance
+    pdfUrl: v.optional(v.string()), // Stored PDF URL
+    // Legacy field - kept for backwards compatibility
+    verificationCode: v.optional(v.string()),
   })
     .index("by_user", ["userId"])
     .index("by_domain", ["domainId"])
+    .index("by_certificate_id", ["certificateId"])
     .index("by_verification", ["verificationCode"]),
+
+  // Counter for sequential certificate IDs
+  certificateCounters: defineTable({
+    year: v.number(),
+    lastNumber: v.number(),
+  }).index("by_year", ["year"]),
 
   // ===== AI CAREER COACH =====
 

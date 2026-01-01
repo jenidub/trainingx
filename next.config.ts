@@ -24,6 +24,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
   images: {
+    // Some landing assets intentionally request quality=100 (e.g., tweet screenshots).
+    // Add 100 to avoid runtime warnings and keep text legible.
+    qualities: [75, 100],
     remotePatterns: [
       {
         protocol: "https",

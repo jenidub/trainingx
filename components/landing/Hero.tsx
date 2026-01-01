@@ -22,7 +22,12 @@ interface AnimatedStatCardProps {
   delay: number;
 }
 
-function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardProps) {
+function AnimatedStatCard({
+  icon: Icon,
+  value,
+  label,
+  delay,
+}: AnimatedStatCardProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const [displayValue, setDisplayValue] = useState("0");
@@ -40,8 +45,10 @@ function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardP
 
       const targetNum = parseFloat(numMatch[0]);
       const prefix = value.substring(0, value.indexOf(numMatch[0]));
-      const suffix = value.substring(value.indexOf(numMatch[0]) + numMatch[0].length);
-      
+      const suffix = value.substring(
+        value.indexOf(numMatch[0]) + numMatch[0].length
+      );
+
       const duration = 2000; // 2 seconds
       const steps = 60;
       const increment = targetNum / steps;
@@ -51,7 +58,7 @@ function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardP
       const interval = setInterval(() => {
         step++;
         current = Math.min(current + increment, targetNum);
-        
+
         // Format based on the original value
         let formatted: string;
         if (value.includes("B")) {
@@ -63,7 +70,7 @@ function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardP
         } else {
           formatted = Math.round(current).toString();
         }
-        
+
         setDisplayValue(prefix + formatted + suffix);
 
         if (step >= steps) {
@@ -85,16 +92,17 @@ function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardP
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: delay / 1000 }}
       className="relative bg-slate-900/60 backdrop-blur-sm rounded-xl p-3 md:p-6 border border-white/20 overflow-hidden group hover-elevate transition-all duration-300"
-      data-testid={`stat-card-${label.replace(/\s+/g, '-').toLowerCase()}`}
+      data-testid={`stat-card-${label.replace(/\s+/g, "-").toLowerCase()}`}
     >
       {/* Shimmer effect on hover */}
       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
+
       {/* Animated background glow */}
       <motion.div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
-          background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 50%)",
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 50%)",
         }}
         animate={{
           scale: [1, 1.2, 1],
@@ -105,27 +113,34 @@ function AnimatedStatCard({ icon: Icon, value, label, delay }: AnimatedStatCardP
           ease: "linear",
         }}
       />
-      
+
       <div className="relative z-10">
         <motion.div
-          animate={isInView ? { 
-            rotate: [0, 5, -5, 0],
-            scale: [1, 1.1, 1],
-          } : {}}
-          transition={{ 
-            duration: 0.5, 
-            delay: (delay / 1000) + 0.3,
-            ease: "easeOut"
+          animate={
+            isInView
+              ? {
+                  rotate: [0, 5, -5, 0],
+                  scale: [1, 1.1, 1],
+                }
+              : {}
+          }
+          transition={{
+            duration: 0.5,
+            delay: delay / 1000 + 0.3,
+            ease: "easeOut",
           }}
         >
-          {React.createElement(Icon, { className: "h-8 w-8 mt-1 mb-2 mx-auto" })}
+          {React.createElement(Icon, {
+            className: "h-8 w-8 mt-1 mb-2 mx-auto",
+          })}
         </motion.div>
-        <div className="text-2xl sm:text-3xl font-bold my-1" data-testid={`text-value-${label.replace(/\s+/g, '-').toLowerCase()}`}>
+        <div
+          className="text-2xl sm:text-3xl font-bold my-1"
+          data-testid={`text-value-${label.replace(/\s+/g, "-").toLowerCase()}`}
+        >
           {displayValue}
         </div>
-        <div className="text-sm text-white/90">
-          {label}
-        </div>
+        <div className="text-sm text-white/90">{label}</div>
       </div>
     </motion.div>
   );
@@ -156,28 +171,61 @@ export default function Hero() {
       {/* Hero Content */}
       <div className="relative z-10 container mx-auto px-4 text-center text-white">
         <div className="max-w-5xl mx-auto space-y-6">
-          <div className="inline-flex items-center gap-2 bg-slate-900/60 backdrop-blur-sm rounded-full px-6 py-2 border border-white/20">
-            <Sparkles className="h-4 w-4" />
-            <span className="text-xs sm:text-sm sm:font-medium">
-              {/* AI Skills Training Platform */}
-              {`Built in 2015. Proven for a decade. Now it's your turn.`}
-            </span>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="inline-flex items-center gap-2 bg-slate-900/60 backdrop-blur-sm rounded-full px-6 py-2 border border-white/20">
+              <Sparkles className="h-4 w-4" />
+              <span className="text-xs sm:text-sm sm:font-medium">
+                {/* AI Skills Training Platform */}
+                {`Built in 2015. Proven for a decade. Now it's your turn.`}
+              </span>
+            </div>
           </div>
 
-          <h1 className="text-[45px] text-5xl md:text-6xl lg:text-7xl font-bold leading-12 md:leading-15 tracking-tight">
-            Universal Prompting for{" "}
+          <h1 className="text-[45px] text-5xl md:text-6xl lg:text-7xl font-bold leading-12 md:leading-18 tracking-tight">
+            Master the One Skill That Controls{" "}
             <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent tracking-tight inline-block pb-2">
-              the 21st Century
-            </span>
+              Every AI Tool{" "}
+            </span>{" "}
           </h1>
 
           <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto">
-            2.5 billion AI prompts are sent daily. Most fail.
+            From confused beginner to certified prompt engineer, with real
+            practice, real feedback, and real career paths.
           </p>
 
           {/* <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
             Built in 2015. Proven for a decade. Now it's your turn.
           </p> */}
+
+          {/* CTAs */}
+          <div className="flex flex-col lg:flex-row gap-4 justify-center items-center pt-8">
+            <Link href="/quiz" className={"w-full lg:w-auto"}>
+              <Button
+                size="lg"
+                className="bg-white text-black border border-white font-semibold py-6 w-full lg:w-[300px] hover:bg-white/90"
+                data-testid="button-take-assessment"
+              >
+                Take Free AI Assessment
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border border-slate-500 text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full lg:w-[300px]"
+              data-testid="button-watch-walkthrough"
+            >
+              Watch 80-Second Walkthrough
+            </Button>
+            {/* <Button
+              size="lg"
+              variant="outline"
+              className="border border-slate-500 text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full lg:w-[300px]"
+              data-testid="button-book-call"
+            >
+              Book Discovery Call
+            </Button> */}
+          </div>
 
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 py-8 max-w-5xl mx-auto">
@@ -207,39 +255,18 @@ export default function Hero() {
             />
           </div>
 
-          {/* CTAs */}
-          <div className="flex flex-col lg:flex-row gap-4 justify-center items-center pt-4">
-            <Link href="/quiz" className={"w-full lg:w-auto"}>
-              <Button
-                size="lg"
-                className="bg-white text-black border border-white font-semibold py-6 w-full lg:w-[300px] hover:bg-white/90"
-                data-testid="button-take-assessment"
-              >
-                Take Free Assessment
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border border-slate-500 text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full lg:w-[300px]"
-              data-testid="button-watch-walkthrough"
+          <div className="mx-auto max-w-2xl">
+            <a
+              href="https://orcid.org/0009-0004-3282-7042"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
             >
-              Watch 60-Second Walkthrough
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border border-slate-500 text-white bg-slate-600/60 backdrop-blur-sm font-semibold py-6 w-full lg:w-[300px]"
-              data-testid="button-book-call"
-            >
-              Book Discovery Call
-            </Button>
+              <span className="inline-flex items-center rounded-full ">
+                Research-backed • ORCID verified
+              </span>
+            </a>
           </div>
-
-          <p className="text-sm text-white/70 py-4">
-            No login required • 3-minute assessment • Instant results
-          </p>
         </div>
       </div>
     </div>

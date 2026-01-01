@@ -33,14 +33,14 @@ export const getByUser = query({
   },
 });
 
-// Get certificate by verification code (public)
+// Get certificate by certificate ID (public verification)
 export const verify = query({
-  args: { verificationCode: v.string() },
+  args: { certificateId: v.string() },
   handler: async (ctx, args) => {
     const certificate = await ctx.db
       .query("domainCertificates")
-      .withIndex("by_verification", (q) =>
-        q.eq("verificationCode", args.verificationCode)
+      .withIndex("by_certificate_id", (q) =>
+        q.eq("certificateId", args.certificateId)
       )
       .first();
 
@@ -48,19 +48,50 @@ export const verify = query({
       return { valid: false, message: "Certificate not found" };
     }
 
-    // Get user and domain info
-    const user = await ctx.db.get(certificate.userId);
+    // Get domain info
     const domain = await ctx.db.get(certificate.domainId);
 
     return {
       valid: true,
       certificate: {
-        userName: user?.name || "Anonymous",
-        domainTitle: domain?.title || "Unknown Domain",
+        userName: certificate.userName,
+        certificateId: certificate.certificateId,
+        domainTitle: domain?.title || "AI Career Readiness",
         domainIcon: domain?.icon,
         score: certificate.score,
         issuedAt: certificate.issuedAt,
-        verificationCode: certificate.verificationCode,
+        // NOT showing: userId, email, or private info
+      },
+    };
+  },
+});
+
+// Get user's AI Career Readiness Certificate (General AI Skills domain)
+export const getAICareerCertificate = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, args) => {
+    // Find General AI Skills domain
+    const generalDomain = await ctx.db
+      .query("practiceDomains")
+      .withIndex("by_slug", (q) => q.eq("slug", "general-ai-skills"))
+      .first();
+
+    if (!generalDomain) return null;
+
+    const certificate = await ctx.db
+      .query("domainCertificates")
+      .withIndex("by_user", (q) => q.eq("userId", args.userId))
+      .filter((q) => q.eq(q.field("domainId"), generalDomain._id))
+      .first();
+
+    if (!certificate) return null;
+
+    return {
+      ...certificate,
+      domain: {
+        title: generalDomain.title,
+        icon: generalDomain.icon,
+        slug: generalDomain.slug,
       },
     };
   },
@@ -83,17 +114,124 @@ export const getByDomain = query({
   },
 });
 
+// Check if user is eligible for AI Career Readiness Certificate
+export const checkEligibility = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, args) => {
+    // Find General AI Skills domain
+    const generalDomain = await ctx.db
+      .query("practiceDomains")
+      .withIndex("by_slug", (q) => q.eq("slug", "general-ai-skills"))
+      .first();
+
+    if (!generalDomain) {
+      return { eligible: false, reason: "Domain not found" };
+    }
+
+    // Check if user already has certificate
+    const existingCert = await ctx.db
+      .query("domainCertificates")
+      .withIndex("by_user", (q) => q.eq("userId", args.userId))
+      .filter((q) => q.eq(q.field("domainId"), generalDomain._id))
+      .first();
+
+    if (existingCert) {
+      return {
+        eligible: false,
+        reason: "Already certified",
+        certificateId: existingCert.certificateId,
+      };
+    }
+
+    // Check track completion (all 8 tracks)
+    const tracks = await ctx.db
+      .query("practiceTracks")
+      .withIndex("by_domain", (q) => q.eq("domainId", generalDomain._id))
+      .filter((q) => q.eq(q.field("status"), "live"))
+      .collect();
+
+    const trackProgress = await Promise.all(
+      tracks.map(async (track) => {
+        const progress = await ctx.db
+          .query("userTrackProgress")
+          .withIndex("by_user_track", (q) =>
+            q.eq("userId", args.userId).eq("trackId", track._id)
+          )
+          .first();
+        return {
+          trackId: track._id,
+          trackTitle: track.title,
+          completed: progress?.percentComplete === 100,
+        };
+      })
+    );
+
+    const incompleteTracks = trackProgress.filter((t) => !t.completed);
+
+    if (incompleteTracks.length > 0) {
+      return {
+        eligible: false,
+        reason: `Complete ${incompleteTracks.length} more track(s)`,
+        incompleteTracks: incompleteTracks.map((t) => t.trackTitle),
+        totalTracks: tracks.length,
+        completedTracks: tracks.length - incompleteTracks.length,
+      };
+    }
+
+    // Check assessment passed
+    const assessment = await ctx.db
+      .query("domainAssessments")
+      .withIndex("by_domain", (q) => q.eq("domainId", generalDomain._id))
+      .filter((q) => q.eq(q.field("status"), "live"))
+      .first();
+
+    if (!assessment) {
+      return { eligible: false, reason: "Assessment not available yet" };
+    }
+
+    const attempts = await ctx.db
+      .query("domainAssessmentAttempts")
+      .withIndex("by_user_assessment", (q) =>
+        q.eq("userId", args.userId).eq("assessmentId", assessment._id)
+      )
+      .collect();
+
+    const passed = attempts.some((a) => a.passed);
+
+    if (!passed) {
+      return {
+        eligible: false,
+        reason: "Pass the domain assessment",
+        assessmentId: assessment._id,
+      };
+    }
+
+    return { eligible: true };
+  },
+});
+
 // ===== MUTATIONS =====
 
-// Update certificate URL (after PDF generation)
-export const updateUrl = mutation({
+// Update certificate PDF URL (after PDF generation)
+export const updatePdfUrl = mutation({
   args: {
-    certificateId: v.id("domainCertificates"),
-    certificateUrl: v.string(),
+    certificateId: v.string(),
+    pdfUrl: v.string(),
   },
   handler: async (ctx, args) => {
-    await ctx.db.patch(args.certificateId, {
-      certificateUrl: args.certificateUrl,
+    const certificate = await ctx.db
+      .query("domainCertificates")
+      .withIndex("by_certificate_id", (q) =>
+        q.eq("certificateId", args.certificateId)
+      )
+      .first();
+
+    if (!certificate) {
+      throw new Error("Certificate not found");
+    }
+
+    await ctx.db.patch(certificate._id, {
+      pdfUrl: args.pdfUrl,
     });
 
     return { success: true };

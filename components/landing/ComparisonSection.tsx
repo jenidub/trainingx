@@ -17,7 +17,7 @@ import RevampedBackground from "./RevampedBackground";
 
 export default function ComparisonSection() {
   return (
-    <section className="relative py-16 overflow-hidden rounded-3xl">
+    <section className="relative py-16 overflow-hidden">
       <RevampedBackground />
       <div className="relative z-10 px-4 max-w-6xl mx-auto">
         {/* Connector Line */}
@@ -99,7 +99,7 @@ export default function ComparisonSection() {
                       <div className="absolute inset-0 bg-linear-to-b from-gradient-from to-gradient-to opacity-100" />
                       <div className="relative p-8 text-white font-bold text-lg text-center flex items-center justify-center gap-2">
                         <Crown className="w-5 h-5 text-yellow-300 fill-yellow-300 animate-pulse" />
-                        TrainingX.Ai
+                        TrainingX.AI
                       </div>
                     </th>
                     <th className="p-8 w-1/6 text-slate-500 font-semibold text-center">

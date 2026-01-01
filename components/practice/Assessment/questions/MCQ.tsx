@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Option {
   id: string;
@@ -27,6 +27,11 @@ export function MCQQuestion({
   onSubmit,
 }: MCQQuestionProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // Reset selection when question changes
+  useEffect(() => {
+    setSelectedId(null);
+  }, [question]);
 
   const handleSelect = (optionId: string) => {
     setSelectedId(optionId);

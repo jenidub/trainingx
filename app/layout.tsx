@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import ComingSoon from "@/components/ComingSoon";
 import { comingSoonConfig, landingOnlyMode, IS_DEV } from "@/lib/featureFlags";
 import HomePage from "@/components/pages/Home";
+import ElevenLabsWidget from "@/components/common/ElevenLabsWidget";
 import "./globals.css";
 
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -29,7 +30,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "TrainingX.Ai - Universal Prompting for the 21st Century",
+  title: "TrainingX.AI - Universal Prompting for the 21st Century",
   description:
     "Master AI prompting skills with our proven training platform. Built in 2015, trusted for a decade. Start your free assessment today.",
   ...(IS_DEV && {
@@ -55,12 +56,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolageGrotesque.variable} ${spaceGrotesk.variable}`}
+      className={`${bricolageGrotesque.variable} ${spaceGrotesk.variable} relative`}
     >
       <head>
         {IS_DEV && <meta name="robots" content="noindex, nofollow" />}
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased relative">
         {IS_DEV ? (
           <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
             <div className="text-center">
@@ -74,13 +75,7 @@ export default function RootLayout({
           <Providers>
             <TooltipProvider>
               <HomePage />
-              {/* @ts-expect-error - elevenlabs-convai is not a valid HTML element */}
-              <elevenlabs-convai agent-id="agent_7701ka2g90che218dkm8pw4hmsa8"></elevenlabs-convai>
-              <script
-                src="https://unpkg.com/@elevenlabs/convai-widget-embed"
-                async
-                type="text/javascript"
-              ></script>
+              <ElevenLabsWidget />
               <Toaster />
             </TooltipProvider>
           </Providers>
@@ -88,13 +83,7 @@ export default function RootLayout({
           <Providers>
             <TooltipProvider>
               {children}
-              {/* @ts-expect-error - elevenlabs-convai is not a valid HTML element */}
-              <elevenlabs-convai agent-id="agent_7701ka2g90che218dkm8pw4hmsa8"></elevenlabs-convai>
-              <script
-                src="https://unpkg.com/@elevenlabs/convai-widget-embed"
-                async
-                type="text/javascript"
-              ></script>
+              <ElevenLabsWidget />
               <Toaster />
             </TooltipProvider>
           </Providers>

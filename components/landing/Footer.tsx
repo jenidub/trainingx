@@ -50,7 +50,7 @@ export default function Footer() {
               alt="TrainingX.Ai logo"
               width={80}
               height={80}
-              className="w-20 mb-4"
+              className="mb-4"
             />
             <p className="text-gray-400 mb-6 max-w-md">
               Universal Prompting for the 21st Century. Master AI skills with
@@ -97,10 +97,18 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 TrainingX.Ai. All rights reserved. Built for the AI
+              © 2025 TrainingX.AI. All rights reserved. Built for the AI
               economy.
             </div>
             <div className="flex space-x-6">
+              <a
+                href="https://orcid.org/0009-0004-3282-7042"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1"
+              >
+                ORCID Researcher
+              </a>
               <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors text-sm"

@@ -340,15 +340,21 @@ export function Assessment({ userId, domainId, onBack }: AssessmentProps) {
           domainIcon={domainData?.icon || "🏆"}
           score={certificate.score}
           issuedAt={certificate.issuedAt}
-          verificationCode={certificate.verificationCode}
+          verificationCode={
+            certificate.certificateId || certificate.verificationCode || ""
+          }
           onBack={onBack}
           onDownload={() => {
-            // TODO: Implement PDF download
-            console.log("Download PDF");
+            // Navigate to certificate page for full PDF experience
+            window.location.href = "/dashboard/certificate";
           }}
           onShare={() => {
-            // TODO: Implement sharing
-            console.log("Share certificate");
+            // Copy verification link
+            const certId =
+              certificate.certificateId || certificate.verificationCode;
+            const url = `${window.location.origin}/verify/${certId}`;
+            navigator.clipboard.writeText(url);
+            alert("Certificate link copied to clipboard!");
           }}
         />
       );

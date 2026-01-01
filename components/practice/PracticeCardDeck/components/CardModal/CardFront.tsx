@@ -8,8 +8,10 @@ interface CardFrontProps {
   timer: number;
   isTimerRunning: boolean;
   selectedAnswer: AnswerType;
+  isViewingAttempted?: boolean;
   onClose: () => void;
   onAnswerSelect: (answer: AnswerType) => void;
+  onViewAnswer?: () => void;
 }
 
 export function CardFront({
@@ -17,8 +19,10 @@ export function CardFront({
   timer,
   isTimerRunning,
   selectedAnswer,
+  isViewingAttempted = false,
   onClose,
   onAnswerSelect,
+  onViewAnswer,
 }: CardFrontProps) {
   return (
     <div
@@ -74,9 +78,35 @@ export function CardFront({
 
         <div>
           <h3 className="text-slate-400 text-xs font-black mb-3 uppercase tracking-wide">
-            Rate this prompt
+            {isViewingAttempted ? "Already Answered" : "Rate this prompt"}
           </h3>
-          {!selectedAnswer && (
+
+          {/* Show "View Answer" button for attempted cards */}
+          {isViewingAttempted && !selectedAnswer && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  onClick={onViewAnswer}
+                  className="w-full bg-purple-500 hover:bg-purple-600 text-white shadow-[0_4px_0_0_rgb(126,34,206)] active:shadow-none active:translate-y-[4px] font-bold rounded-2xl py-6 transition-all border-2 border-purple-600"
+                >
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-2xl">📖</span>
+                    <span className="text-lg font-black">View Answer</span>
+                  </div>
+                </Button>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Show rating buttons only for new (non-attempted) cards */}
+          {!isViewingAttempted && !selectedAnswer && (
             <motion.div
               className="flex gap-3"
               initial={{ opacity: 0, y: 20 }}

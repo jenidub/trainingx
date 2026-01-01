@@ -14,7 +14,7 @@ export default function FinalCTA() {
           backgroundSize: '20px 20px'
         }}></div>
       </div> */}
-      <div className="absolute inset-0 opacity-70">
+      <div className="absolute inset-0 opacity-50">
         <Image
           src="/hero-bg.webp"
           alt="Hero background"
@@ -27,7 +27,7 @@ export default function FinalCTA() {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-6xl font-bold mb-8">
-            "With TrainingX.Ai you'll be able to handle any AI app on the
+            "With TrainingX.AI you'll be able to handle any AI app on the
             market."
           </h2>
 

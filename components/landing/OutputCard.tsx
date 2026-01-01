@@ -42,7 +42,7 @@ export function OutputCard({
           alt={title}
           fill
           sizes="(max-width: 768px) 90vw, (max-width: 1024px) 40vw, 20vw"
-          quality={100}
+          quality={60}
           className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent" />

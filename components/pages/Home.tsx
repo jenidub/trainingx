@@ -1,18 +1,45 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Navigation from "@/components/landing/Navigation";
 import Hero from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
 import WhyThisMatters from "@/components/landing/WhyThisMatters";
-import TimelineSection from "@/components/landing/TimelineSection";
-import SkillsOpportunityHub from "@/components/landing/SkillsOpportunityHub";
-import TrainersOrganizationsRevamp from "@/components/landing/TrainersOrganizationsRevamp";
-import ComparisonSection from "@/components/landing/ComparisonSection";
-import AffiliateProgram from "@/components/landing/AffiliateProgram";
-import FinalCTA from "@/components/landing/FinalCTA";
-import Footer from "@/components/landing/Footer";
-import { TweetSlider } from "../ui/image-auto-slider";
-import PromptToEverything from "../landing/PromptToEverything";
+
+const TweetSlider = dynamic(
+  () => import("../ui/image-auto-slider").then((mod) => mod.TweetSlider),
+  { ssr: false }
+);
+const TimelineSection = dynamic(
+  () => import("@/components/landing/TimelineSection"),
+  { ssr: false }
+);
+const PromptToEverything = dynamic(
+  () => import("@/components/landing/PromptToEverything"),
+  { ssr: false }
+);
+const SkillsOpportunityHub = dynamic(
+  () => import("@/components/landing/SkillsOpportunityHub"),
+  { ssr: false }
+);
+const TrainersOrganizationsRevamp = dynamic(
+  () => import("@/components/landing/TrainersOrganizationsRevamp"),
+  { ssr: false }
+);
+const ComparisonSection = dynamic(
+  () => import("@/components/landing/ComparisonSection"),
+  { ssr: false }
+);
+const AffiliateProgram = dynamic(
+  () => import("@/components/landing/AffiliateProgram"),
+  { ssr: false }
+);
+const FinalCTA = dynamic(() => import("@/components/landing/FinalCTA"), {
+  ssr: false,
+});
+const Footer = dynamic(() => import("@/components/landing/Footer"), {
+  ssr: false,
+});
 
 export default function HomePage() {
   return (

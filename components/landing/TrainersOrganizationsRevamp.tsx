@@ -8,7 +8,7 @@ import RevampedBackground from "./RevampedBackground";
 
 export default function TrainersOrganizationsRevamp() {
   return (
-    <section className="relative py-16 overflow-hidden rounded-3xl">
+    <section className="relative py-16 overflow-hidden">
       <RevampedBackground />
       <div className="relative z-10 container mx-auto px-4">
         {/* Connector Line */}

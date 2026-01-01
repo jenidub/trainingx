@@ -40,8 +40,7 @@ const pillars = [
     title: "ALIGN",
     subtitle: "Career Match",
     icon: Target,
-    description:
-      "Your 'skill thumbprint' matches you to 500+ AI opportunities.",
+    description: "Your skill thumbprint matches you to 500+ AI opportunities.",
     detail:
       "Real-world AI careers, side hustles, and business ideas tailored to your new superpowers.",
     color: "from-emerald-500 to-teal-600",
@@ -69,7 +68,10 @@ export default function PillarsSection() {
   }, [isPaused]);
 
   return (
-    <section className="container mx-auto px-4 py-16 sm:py-24 max-w-7xl">
+    <section
+      id="how-it-works"
+      className="container mx-auto px-4 py-16 sm:py-24 max-w-7xl scroll-mt-24"
+    >
       <div className="mb-10 text-center space-y-2">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -171,7 +173,9 @@ export default function PillarsSection() {
                     layout
                     className={cn(
                       "font-heading font-bold text-white leading-none transition-all duration-600",
-                      isActive ? "text-[44px] sm:text-5xl md:text-6xl" : "text-3xl md:text-4xl"
+                      isActive
+                        ? "text-[44px] sm:text-5xl md:text-6xl"
+                        : "text-3xl md:text-4xl"
                     )}
                   >
                     {pillar.title}

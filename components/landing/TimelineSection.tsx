@@ -54,22 +54,32 @@ export default function TimelineSection() {
     {
       year: "2024",
       title: "Universal Prompting Zone",
-      desc: "A comprehensive ecosystem for mastering AI-powered future skills.",
+      desc: "Launched a comprehensive ecosystem for mastering AI-powered future skills, grounded in researcher-led methodology.",
       icon: Globe,
       color: "emerald",
+    },
+    {
+      year: "2025",
+      title: "10 Years of Innovation",
+      desc: "Celebrating a decade of impact. Verified by ORCID research and peer-reviewed educational frameworks.",
+      icon: BrainCircuit,
+      color: "blue",
     },
   ];
 
   return (
     <section
       ref={timelineRef}
-      className="relative py-20 overflow-hidden rounded-3xl"
+      className="relative py-20 overflow-hidden"
     >
       <RevampedBackground />
       <div className="relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">
-            The TrainingX.AI <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">Story</span>
+            The TrainingX.AI{" "}
+            <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
+              Story
+            </span>
           </h2>
           <p className="text-slate-500 max-w-2xl mx-auto">
             From Spiral the Study Buddy to Universal Prompting Zone - a journey

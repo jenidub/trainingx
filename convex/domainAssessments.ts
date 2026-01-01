@@ -347,38 +347,60 @@ export const completeAttempt = mutation({
     });
 
     // If passed, issue certificate
+    let certificateRecordId = null;
     let certificateId = null;
     if (passed) {
-      const domain = await ctx.db.get(assessment.domainId);
-      const verificationCode = generateVerificationCode();
+      // Get user info for the certificate
+      const user = await ctx.db.get(attempt.userId);
+      const userName = user?.name || "Anonymous";
 
-      certificateId = await ctx.db.insert("domainCertificates", {
+      // Generate sequential certificate ID
+      certificateId = await generateCertificateId(ctx);
+
+      certificateRecordId = await ctx.db.insert("domainCertificates", {
         userId: attempt.userId,
         domainId: assessment.domainId,
         assessmentAttemptId: args.attemptId,
         score: totalScore,
         issuedAt: Date.now(),
-        verificationCode,
+        certificateId,
+        userName,
       });
     }
 
     return {
       totalScore,
       passed,
+      certificateRecordId,
       certificateId,
       passingScore: assessment.passingScore,
     };
   },
 });
 
-// Helper function to generate verification code
-function generateVerificationCode(): string {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // Avoid confusing chars like 0/O, 1/I
-  let code = "";
-  for (let i = 0; i < 8; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
+// Helper function to generate sequential certificate ID (TX-AI-YEAR-XXXXX)
+async function generateCertificateId(ctx: any): Promise<string> {
+  const year = new Date().getFullYear();
+
+  // Get or create counter for this year
+  const counter = await ctx.db
+    .query("certificateCounters")
+    .withIndex("by_year", (q: any) => q.eq("year", year))
+    .first();
+
+  const nextNumber = counter ? counter.lastNumber + 1 : 1;
+
+  if (counter) {
+    await ctx.db.patch(counter._id, { lastNumber: nextNumber });
+  } else {
+    await ctx.db.insert("certificateCounters", {
+      year,
+      lastNumber: nextNumber,
+    });
   }
-  return code;
+
+  // Format: TX-AI-2025-00001
+  return `TX-AI-${year}-${String(nextNumber).padStart(5, "0")}`;
 }
 
 // ===== ANTI-CHEAT =====

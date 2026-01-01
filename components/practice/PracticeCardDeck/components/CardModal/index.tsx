@@ -10,8 +10,10 @@ interface CardModalProps {
   isTimerRunning: boolean;
   lastScoreChange: number | null;
   streak: number;
+  isViewingAttempted?: boolean;
   onClose: () => void;
   onAnswerSelect: (answer: AnswerType) => void;
+  onViewAnswer?: () => void;
 }
 
 export function CardModal({
@@ -21,8 +23,10 @@ export function CardModal({
   isTimerRunning,
   lastScoreChange,
   streak,
+  isViewingAttempted = false,
   onClose,
   onAnswerSelect,
+  onViewAnswer,
 }: CardModalProps) {
   if (!card) return null;
 
@@ -65,8 +69,10 @@ export function CardModal({
                 timer={timer}
                 isTimerRunning={isTimerRunning}
                 selectedAnswer={selectedAnswer}
+                isViewingAttempted={isViewingAttempted}
                 onClose={onClose}
                 onAnswerSelect={onAnswerSelect}
+                onViewAnswer={onViewAnswer}
               />
 
               <CardBack
@@ -75,6 +81,7 @@ export function CardModal({
                 lastScoreChange={lastScoreChange}
                 streak={streak}
                 timer={timer}
+                isViewingAttempted={isViewingAttempted}
                 onClose={onClose}
               />
             </motion.div>

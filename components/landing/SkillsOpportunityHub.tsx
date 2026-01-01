@@ -18,7 +18,10 @@ import RevampedBackground from "./RevampedBackground";
 
 export default function SkillsOpportunityHub() {
   return (
-    <section className="relative py-16 overflow-hidden rounded-3xl">
+    <section
+      id="careers"
+      className="relative py-16 overflow-hidden scroll-mt-24"
+    >
       <RevampedBackground />
       <div className="relative z-10 container mx-auto px-4">
         <div className="text-center mb-12 md:mb-20 relative">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -10,7 +10,13 @@ import { useAuth } from "@/contexts/AuthContextProvider";
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated } = useAuth();
-  const isLoggedIn = isAuthenticated;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isLoggedIn = mounted ? isAuthenticated : false;
 
   const navItems = isLoggedIn
     ? [
@@ -43,7 +49,7 @@ export default function Navigation() {
                 alt="TrainingX.Ai Logo"
                 width={48}
                 height={48}
-                className="h-12 w-auto"
+                className="h-12 w-12"
               />
               {/* <span className="text-2xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
                 TrainingX.Ai
@@ -78,7 +84,7 @@ export default function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             {!isLoggedIn && (
-              <Link href="/auth">
+              <Link href="/quiz">
                 <Button
                   className="bg-gradient-to-r from-gradient-from to-gradient-to"
                   data-testid="button-get-started"
@@ -111,7 +117,7 @@ export default function Navigation() {
         {isMenuOpen && (
           <div
             id="mobile-navigation"
-            className="md:hidden py-4 border-t border-gray-200"
+            className="md:hidden py-4 border-t border-white/10"
           >
             <div className="flex flex-col space-y-4">
               {navItems.map((item) =>
@@ -138,8 +144,8 @@ export default function Navigation() {
                 )
               )}
               {!isLoggedIn && (
-                <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                  <Link href="/auth">
+                <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
+                  <Link href="/quiz">
                     <Button
                       className="bg-gradient-to-r from-gradient-from to-gradient-to w-full"
                       data-testid="mobile-button-get-started"

@@ -16,6 +16,7 @@ import { AssessmentHistory } from "@/components/dashboard/AssessmentHistory";
 // import { BadgesCard } from "@/components/dashboard/BadgesCard";
 import { UnlockedMatchesCard } from "@/components/dashboard/UnlockedMatchesCard";
 import { QuickActionsCard } from "@/components/dashboard/QuickActionsCard";
+import { CertificateCard } from "@/components/dashboard/CertificateCard";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -183,6 +184,9 @@ export default function DashboardPage() {
                   <CoachPanel userId={user._id as any} />
                 </div>
               )}
+
+              {/* Certificate Status */}
+              <CertificateCard />
 
               {/* Badges */}
               {/* <BadgesCard userStats={userStats} /> */}
