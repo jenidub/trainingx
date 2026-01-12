@@ -6,13 +6,8 @@ interface SidebarLayoutProps {
 }
 
 export function SidebarLayout({ children }: SidebarLayoutProps) {
-  const style = {
-    "--sidebar-width": "13.2rem",
-    "--sidebar-width-icon": "3rem",
-  };
-
   return (
-    <SidebarProvider style={style as React.CSSProperties}>
+    <SidebarProvider>
       <div className="bg-white flex min-h-screen w-full">
         <AppSidebar />
         <div className="flex flex-col flex-1">

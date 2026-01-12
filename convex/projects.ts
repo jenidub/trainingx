@@ -1,13 +1,24 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { getAuthUserId } from "@convex-dev/auth/server";
+
+export const getProjectCount = query({
+  args: {},
+  handler: async (ctx) => {
+    const projects = await ctx.db.query("projects").collect();
+    return projects.length;
+  },
+});
 
 export const getProjects = query({
   args: {
     category: v.optional(v.string()),
     difficultyLevel: v.optional(v.number()),
     limit: v.optional(v.number()),
+    status: v.optional(v.string()), // "completed" | "pending" | "all"
   },
   handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
     let tasks = await ctx.db.query("projects").collect();
 
     // Filter in memory for now as some fields might be optional/missing in old data
@@ -19,23 +30,68 @@ export const getProjects = query({
       tasks = tasks.filter((t) => t.difficultyLevel === args.difficultyLevel);
     }
 
-    if (args.limit) {
-      tasks = tasks.slice(0, args.limit);
+    // Determine completion status
+    const completedProjectIds = new Set<string>();
+    if (userId) {
+      const userProgress = await ctx.db
+        .query("userProgress")
+        .withIndex("by_user", (q) => q.eq("userId", userId))
+        .collect();
+
+      userProgress.forEach((p) => {
+        if (p.projectId && p.status === "completed") {
+          completedProjectIds.add(p.projectId);
+        }
+      });
     }
 
-    return tasks;
+    // Filter by Status
+    if (userId && args.status && args.status !== "all") {
+      if (args.status === "completed") {
+        tasks = tasks.filter((t) => completedProjectIds.has(t._id));
+      } else if (args.status === "pending") {
+        tasks = tasks.filter((t) => !completedProjectIds.has(t._id));
+      }
+    }
+
+    const tasksWithStatus = tasks.map((t) => ({
+      ...t,
+      isCompleted: completedProjectIds.has(t._id),
+    }));
+
+    if (args.limit) {
+      return tasksWithStatus.slice(0, args.limit);
+    }
+
+    return tasksWithStatus;
   },
 });
 
 export const getProjectBySlug = query({
   args: { slug: v.string() },
   handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
     const project = await ctx.db
       .query("projects")
       .withIndex("by_slug", (q) => q.eq("slug", args.slug))
       .first();
 
-    return project;
+    if (!project) return null;
+
+    let isCompleted = false;
+    if (userId) {
+      const progress = await ctx.db
+        .query("userProgress")
+        .withIndex("by_user", (q) => q.eq("userId", userId))
+        .filter((q) => q.eq(q.field("projectId"), project._id))
+        .first();
+
+      if (progress && progress.status === "completed") {
+        isCompleted = true;
+      }
+    }
+
+    return { ...project, isCompleted };
   },
 });
 
@@ -137,9 +193,69 @@ export const deleteProject = mutation({
   },
 });
 
+export const toggleProjectCompletion = mutation({
+  args: { projectId: v.id("projects") },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthorized");
+
+    const existing = await ctx.db
+      .query("userProgress")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("projectId"), args.projectId))
+      .first();
+
+    if (existing) {
+      if (existing.status === "completed") {
+        await ctx.db.patch(existing._id, {
+          status: "in_progress",
+          completedAt: undefined,
+        });
+        return false;
+      } else {
+        await ctx.db.patch(existing._id, {
+          status: "completed",
+          completedAt: Date.now(),
+        });
+        return true;
+      }
+    } else {
+      await ctx.db.insert("userProgress", {
+        userId,
+        projectId: args.projectId,
+        status: "completed",
+        progress: 100,
+        startedAt: Date.now(),
+        lastAccessedAt: Date.now(),
+        completedAt: Date.now(),
+        timeSpent: 0,
+      });
+      return true;
+    }
+  },
+});
+
 export const getProject = query({
   args: { projectId: v.id("projects") },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.projectId);
+    const userId = await getAuthUserId(ctx);
+    const project = await ctx.db.get(args.projectId);
+
+    if (!project) return null;
+
+    let isCompleted = false;
+    if (userId) {
+      const progress = await ctx.db
+        .query("userProgress")
+        .withIndex("by_user", (q) => q.eq("userId", userId))
+        .filter((q) => q.eq(q.field("projectId"), args.projectId))
+        .first();
+
+      if (progress && progress.status === "completed") {
+        isCompleted = true;
+      }
+    }
+
+    return { ...project, isCompleted };
   },
 });

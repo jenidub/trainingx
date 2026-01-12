@@ -1,31 +1,27 @@
-"use client";
+import * as React from 'react';
+import { LogLevel, setLogLevel } from 'livekit-client';
+import { useRoomContext } from '@livekit/components-react';
 
-import * as React from "react";
-import { LogLevel, setLogLevel } from "livekit-client";
-import { useRoomContext } from "@livekit/components-react";
-
-export const useDebugMode = (
-  options: { logLevel?: LogLevel; enabled?: boolean } = {}
-) => {
+export const useDebugMode = (options: { logLevel?: LogLevel; enabled?: boolean } = {}) => {
   const room = useRoomContext();
-  const logLevel = options.logLevel ?? "debug";
+  const logLevel = options.logLevel ?? 'debug';
   const enabled = options.enabled ?? true;
 
   React.useEffect(() => {
     if (!enabled) {
-      setLogLevel("silent");
+      setLogLevel('silent');
       return;
     }
 
-    setLogLevel(logLevel ?? "debug");
+    setLogLevel(logLevel ?? 'debug');
 
-    // @ts-ignore - adding a global variable for debugging
+    // @ts-expect-error this is a global variable
     window.__lk_room = room;
 
     return () => {
-      // @ts-ignore - removing the global variable
+      // @ts-expect-error this is a global variable
       window.__lk_room = undefined;
-      setLogLevel("silent");
+      setLogLevel('silent');
     };
   }, [room, enabled, logLevel]);
 };

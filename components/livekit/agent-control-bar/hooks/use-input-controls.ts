@@ -1,12 +1,11 @@
-"use client";
-
-import { useCallback, useState, useMemo } from "react";
-import { Track } from "livekit-client";
+import { useCallback, useMemo } from 'react';
+import { Track } from 'livekit-client';
 import {
-  useTracks,
+  type TrackReferenceOrPlaceholder,
   useLocalParticipant,
-  type TrackReference,
-} from "@livekit/components-react";
+  usePersistentUserChoices,
+  useTrackToggle,
+} from '@livekit/components-react';
 
 export interface UseInputControlsProps {
   saveUserChoices?: boolean;
@@ -14,116 +13,120 @@ export interface UseInputControlsProps {
   onDeviceError?: (error: { source: Track.Source; error: Error }) => void;
 }
 
+export interface UseInputControlsReturn {
+  micTrackRef: TrackReferenceOrPlaceholder;
+  microphoneToggle: ReturnType<typeof useTrackToggle<Track.Source.Microphone>>;
+  cameraToggle: ReturnType<typeof useTrackToggle<Track.Source.Camera>>;
+  screenShareToggle: ReturnType<typeof useTrackToggle<Track.Source.ScreenShare>>;
+  handleAudioDeviceChange: (deviceId: string) => void;
+  handleVideoDeviceChange: (deviceId: string) => void;
+  handleMicrophoneDeviceSelectError: (error: Error) => void;
+  handleCameraDeviceSelectError: (error: Error) => void;
+}
+
 export function useInputControls({
-  onDeviceError,
   saveUserChoices = true,
-}: UseInputControlsProps = {}) {
-  const { localParticipant } = useLocalParticipant();
-  const [micEnabled, setMicEnabled] = useState(false);
-  const [cameraEnabled, setCameraEnabled] = useState(false);
-  const [screenShareEnabled, setScreenShareEnabled] = useState(false);
-  const [micPending, setMicPending] = useState(false);
-  const [cameraPending, setCameraPending] = useState(false);
-  const [screenSharePending, setScreenSharePending] = useState(false);
+  onDeviceError,
+}: UseInputControlsProps = {}): UseInputControlsReturn {
+  const { microphoneTrack, localParticipant } = useLocalParticipant();
 
-  const micTrackRef = useMemo<TrackReference | undefined>(() => {
-    const publication = localParticipant.getTrackPublication(
-      Track.Source.Microphone
-    );
-    return publication
-      ? {
-          source: Track.Source.Microphone,
-          participant: localParticipant,
-          publication,
-        }
-      : undefined;
-  }, [localParticipant]);
+  const microphoneToggle = useTrackToggle({
+    source: Track.Source.Microphone,
+    onDeviceError: (error) => onDeviceError?.({ source: Track.Source.Microphone, error }),
+  });
 
-  const toggleMicrophone = useCallback(async () => {
-    if (micPending) return;
-    setMicPending(true);
-    try {
-      await localParticipant.setMicrophoneEnabled(!micEnabled);
-      setMicEnabled(!micEnabled);
-    } catch (error) {
-      onDeviceError?.({
-        source: Track.Source.Microphone,
-        error: error as Error,
-      });
-    } finally {
-      setMicPending(false);
-    }
-  }, [localParticipant, micEnabled, micPending, onDeviceError]);
+  const cameraToggle = useTrackToggle({
+    source: Track.Source.Camera,
+    onDeviceError: (error) => onDeviceError?.({ source: Track.Source.Camera, error }),
+  });
 
-  const toggleCamera = useCallback(async () => {
-    if (cameraPending) return;
-    setCameraPending(true);
-    try {
-      await localParticipant.setCameraEnabled(!cameraEnabled);
-      setCameraEnabled(!cameraEnabled);
-    } catch (error) {
-      onDeviceError?.({ source: Track.Source.Camera, error: error as Error });
-    } finally {
-      setCameraPending(false);
-    }
-  }, [localParticipant, cameraEnabled, cameraPending, onDeviceError]);
+  const screenShareToggle = useTrackToggle({
+    source: Track.Source.ScreenShare,
+    onDeviceError: (error) => onDeviceError?.({ source: Track.Source.ScreenShare, error }),
+  });
 
-  const toggleScreenShare = useCallback(async () => {
-    if (screenSharePending) return;
-    setScreenSharePending(true);
-    try {
-      await localParticipant.setScreenShareEnabled(!screenShareEnabled);
-      setScreenShareEnabled(!screenShareEnabled);
-    } catch (error) {
-      onDeviceError?.({
-        source: Track.Source.ScreenShare,
-        error: error as Error,
-      });
-    } finally {
-      setScreenSharePending(false);
-    }
-  }, [localParticipant, screenShareEnabled, screenSharePending, onDeviceError]);
+  const micTrackRef = useMemo(() => {
+    return {
+      participant: localParticipant,
+      source: Track.Source.Microphone,
+      publication: microphoneTrack,
+    };
+  }, [localParticipant, microphoneTrack]);
 
-  const handleAudioDeviceChange = useCallback((deviceId: string) => {
-    // Device selection is handled by TrackSelector component
-    console.log("Audio device changed:", deviceId);
-  }, []);
+  const {
+    saveAudioInputEnabled,
+    saveVideoInputEnabled,
+    saveAudioInputDeviceId,
+    saveVideoInputDeviceId,
+  } = usePersistentUserChoices({ preventSave: !saveUserChoices });
 
-  const handleVideoDeviceChange = useCallback((deviceId: string) => {
-    // Device selection is handled by TrackSelector component
-    console.log("Video device changed:", deviceId);
-  }, []);
-
-  const handleMicrophoneDeviceSelectError = useCallback(
-    (error: Error) => {
-      onDeviceError?.({ source: Track.Source.Microphone, error });
+  const handleAudioDeviceChange = useCallback(
+    (deviceId: string) => {
+      saveAudioInputDeviceId(deviceId ?? 'default');
     },
+    [saveAudioInputDeviceId]
+  );
+
+  const handleVideoDeviceChange = useCallback(
+    (deviceId: string) => {
+      saveVideoInputDeviceId(deviceId ?? 'default');
+    },
+    [saveVideoInputDeviceId]
+  );
+
+  const handleToggleCamera = useCallback(
+    async (enabled?: boolean) => {
+      if (screenShareToggle.enabled) {
+        screenShareToggle.toggle(false);
+      }
+      await cameraToggle.toggle(enabled);
+      // persist video input enabled preference
+      saveVideoInputEnabled(!cameraToggle.enabled);
+    },
+    [cameraToggle, screenShareToggle, saveVideoInputEnabled]
+  );
+
+  const handleToggleMicrophone = useCallback(
+    async (enabled?: boolean) => {
+      await microphoneToggle.toggle(enabled);
+      // persist audio input enabled preference
+      saveAudioInputEnabled(!microphoneToggle.enabled);
+    },
+    [microphoneToggle, saveAudioInputEnabled]
+  );
+
+  const handleToggleScreenShare = useCallback(
+    async (enabled?: boolean) => {
+      if (cameraToggle.enabled) {
+        cameraToggle.toggle(false);
+      }
+      await screenShareToggle.toggle(enabled);
+    },
+    [cameraToggle, screenShareToggle]
+  );
+  const handleMicrophoneDeviceSelectError = useCallback(
+    (error: Error) => onDeviceError?.({ source: Track.Source.Microphone, error }),
     [onDeviceError]
   );
 
   const handleCameraDeviceSelectError = useCallback(
-    (error: Error) => {
-      onDeviceError?.({ source: Track.Source.Camera, error });
-    },
+    (error: Error) => onDeviceError?.({ source: Track.Source.Camera, error }),
     [onDeviceError]
   );
 
   return {
     micTrackRef,
-    microphoneToggle: {
-      enabled: micEnabled,
-      pending: micPending,
-      toggle: toggleMicrophone,
-    },
     cameraToggle: {
-      enabled: cameraEnabled,
-      pending: cameraPending,
-      toggle: toggleCamera,
+      ...cameraToggle,
+      toggle: handleToggleCamera,
+    },
+    microphoneToggle: {
+      ...microphoneToggle,
+      toggle: handleToggleMicrophone,
     },
     screenShareToggle: {
-      enabled: screenShareEnabled,
-      pending: screenSharePending,
-      toggle: toggleScreenShare,
+      ...screenShareToggle,
+      toggle: handleToggleScreenShare,
     },
     handleAudioDeviceChange,
     handleVideoDeviceChange,

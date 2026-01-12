@@ -12,7 +12,6 @@ import { useUserStats } from "@/contexts/UserStatsContext";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { TopSkillsCard } from "@/components/dashboard/TopSkillsCard";
 import { CoachPanel } from "@/components/common/CoachPanel";
-import { PromptScoreBreakdown } from "@/components/dashboard/PromptScoreBreakdown";
 import { AssessmentHistory } from "@/components/dashboard/AssessmentHistory";
 // import { BadgesCard } from "@/components/dashboard/BadgesCard";
 import { UnlockedMatchesCard } from "@/components/dashboard/UnlockedMatchesCard";
@@ -36,7 +35,7 @@ function DashboardContent() {
   }, [closeTour]);
 
   // Fetch data from Convex
-  const projects = useQuery(api.projects.getProjects, { limit: 20 });
+  const totalProjectCount = useQuery(api.projects.getProjectCount);
   const userProgress = useQuery(
     api.users.getUserProgress,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,6 +48,12 @@ function DashboardContent() {
   // Fetch skills from Elo system (converted to 0-100 display)
   const skillsDisplay = useQuery(
     api.practiceUserSkills.getUserSkillsDisplay,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    user?._id ? { userId: user._id as any } : "skip"
+  );
+
+  const trackProgress = useQuery(
+    api.userProgress.getAllTrackProgress,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     user?._id ? { userId: user._id as any } : "skip"
   );
@@ -76,6 +81,71 @@ function DashboardContent() {
     }
   }, [user?._id, userStatsData, updateStreakMutation]);
 
+  const practiceScoreMeta = useMemo(() => {
+    if (!userStatsData) {
+      return { score: 0, source: "none" as const };
+    }
+
+    const completedProjects = Array.isArray(userStatsData.completedProjects)
+      ? userStatsData.completedProjects
+      : [];
+
+    const recentProjectScores = completedProjects
+      .slice()
+      .sort((a: any, b: any) => {
+        const aTime = new Date(a.completedAt || 0).getTime();
+        const bTime = new Date(b.completedAt || 0).getTime();
+        return aTime - bTime;
+      })
+      .slice(-5)
+      .map((project: any) => project.finalScore)
+      .filter((score: any) => typeof score === "number");
+
+    const projectScore =
+      recentProjectScores.length > 0
+        ? Math.round(
+            recentProjectScores.reduce((sum, score) => sum + score, 0) /
+              recentProjectScores.length
+          )
+        : null;
+
+    const trackScores = Array.isArray(trackProgress)
+      ? trackProgress
+          .map((progress: any) => progress.percentComplete)
+          .filter((score: any) => typeof score === "number")
+      : [];
+
+    const trackScore =
+      trackScores.length > 0
+        ? Math.round(
+            trackScores.reduce((sum, score) => sum + score, 0) /
+              trackScores.length
+          )
+        : null;
+
+    const hasProjectScore = projectScore !== null;
+    const hasTrackScore = trackScore !== null;
+
+    if (!hasProjectScore && !hasTrackScore) {
+      return { score: userStatsData.promptScore || 0, source: "legacy" as const };
+    }
+
+    const projectWeight = hasProjectScore ? 0.7 : 0;
+    const trackWeight = hasTrackScore ? 0.3 : 0;
+    const totalWeight = projectWeight + trackWeight;
+
+    const blendedScore =
+      totalWeight > 0
+        ? Math.round(
+            ((projectScore ?? 0) * projectWeight +
+              (trackScore ?? 0) * trackWeight) /
+              totalWeight
+          )
+        : 0;
+
+    return { score: blendedScore, source: "practice" as const };
+  }, [userStatsData, trackProgress]);
+
   // Use default values when data is loading
   const userStats = useMemo(() => {
     if (!userStatsData) {
@@ -91,16 +161,19 @@ function DashboardContent() {
       };
     }
     return {
-      promptScore: userStatsData.promptScore,
+      promptScore: practiceScoreMeta.score,
       skills: skillsDisplay || userStatsData.skills || {},
       completedProjects: userProgress || [],
       badges: userStatsData.badges,
       streak: userStatsData.streak,
       assessmentComplete: userStatsData.assessmentComplete,
-      previousPromptScore: userStatsData.previousPromptScore,
+      previousPromptScore:
+        practiceScoreMeta.source === "legacy"
+          ? userStatsData.previousPromptScore
+          : undefined,
       previousSkills: userStatsData.previousSkills,
     };
-  }, [userStatsData, userProgress, skillsDisplay]);
+  }, [userStatsData, userProgress, skillsDisplay, practiceScoreMeta]);
 
   // Update wizard context with dashboard info
   useEffect(() => {
@@ -109,12 +182,12 @@ function DashboardContent() {
         page: "dashboard",
         pageTitle: "Dashboard",
         userState: {
-          promptScore: userStatsData.promptScore,
+          promptScore: practiceScoreMeta.score,
           skills: userStatsData.skills,
           completedProjects: userProgress.length,
           badges: userStatsData.badges.length,
         },
-        recentAction: `Viewing dashboard with ${userStatsData.promptScore}/100 prompt score`,
+        recentAction: `Viewing dashboard with ${practiceScoreMeta.score}/100 practice score`,
       });
     }
 
@@ -129,7 +202,7 @@ function DashboardContent() {
 
   const liveMatches = useMemo(() => {
     if (
-      !projects ||
+      totalProjectCount === undefined ||
       (userStats.promptScore === 0 &&
         Object.keys(userStats.skills).length === 0)
     ) {
@@ -147,12 +220,13 @@ function DashboardContent() {
         userStats.previousSkills as any
       ) || { unlocked: [], almostUnlocked: [], newlyUnlocked: [] }
     );
-  }, [userStats, completedProjectIds, projects]);
+  }, [userStats, completedProjectIds, totalProjectCount]);
 
-  const availableProjects = useMemo(() => {
-    if (!projects) return [];
-    return projects.filter((p) => !completedProjectIds.includes(p._id));
-  }, [projects, completedProjectIds]);
+  const availableProjectsCount = useMemo(() => {
+    if (totalProjectCount === undefined) return 0;
+    const completedCount = completedProjectIds.length;
+    return Math.max(0, totalProjectCount - completedCount);
+  }, [totalProjectCount, completedProjectIds]);
 
   return (
     <div className="py-8 bg-slate-50 min-h-full">
@@ -184,16 +258,13 @@ function DashboardContent() {
           promptScore={userStats.promptScore}
           previousPromptScore={userStats.previousPromptScore}
           completedProjects={userStats.completedProjects.length}
-          availableProjects={availableProjects.length}
+          availableProjects={availableProjectsCount}
           streak={userStats.streak}
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Main Column */}
           <div className="lg:col-span-2 space-y-5">
-            {/* Prompt Score Breakdown */}
-            <PromptScoreBreakdown userStatsData={userStatsData} />
-
             {/* Score History */}
             <AssessmentHistory userStatsData={userStatsData} />
 

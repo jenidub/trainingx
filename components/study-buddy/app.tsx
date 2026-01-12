@@ -9,8 +9,8 @@ import {
   useSession,
 } from "@livekit/components-react";
 import type { StudyBuddyConfig } from "@/lib/livekit-config";
+import { ViewController } from "@/components/study-buddy/view-controller";
 import { Toaster } from "@/components/livekit/toaster";
-import { StudyBuddyViewController } from "@/components/study-buddy/study-buddy-view-controller";
 import { useAgentErrors } from "@/hooks/livekit/useAgentErrors";
 import { useDebugMode } from "@/hooks/livekit/useDebug";
 
@@ -23,11 +23,11 @@ function AppSetup() {
   return null;
 }
 
-interface StudyBuddyAppProps {
+interface AppProps {
   appConfig: StudyBuddyConfig;
 }
 
-export function StudyBuddyApp({ appConfig }: StudyBuddyAppProps) {
+export function App({ appConfig }: AppProps) {
   const tokenSource = useMemo(() => {
     return TokenSource.endpoint("/api/livekit/connection-details");
   }, []);
@@ -40,8 +40,8 @@ export function StudyBuddyApp({ appConfig }: StudyBuddyAppProps) {
   return (
     <SessionProvider session={session}>
       <AppSetup />
-      <main className="min-h-svh overflow-hidden">
-        <StudyBuddyViewController appConfig={appConfig} />
+      <main className="grid h-svh grid-cols-1 place-content-center">
+        <ViewController appConfig={appConfig} />
       </main>
       <StartAudio label="Start Audio" />
       <RoomAudioRenderer />

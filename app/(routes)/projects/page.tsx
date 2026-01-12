@@ -10,10 +10,12 @@ import { SidebarLayout } from "@/components/layout/SidebarLayout";
 
 export default function ProjectsPage() {
   const [category, setCategory] = useState("All");
+  const [status, setStatus] = useState("all");
   const [search, setSearch] = useState("");
 
   const projects = useQuery(api.projects.getProjects, {
     category: category === "All" ? undefined : category,
+    status: status === "all" ? undefined : status,
   });
 
   const filteredProjects = projects?.filter(
@@ -49,6 +51,8 @@ export default function ProjectsPage() {
           <ProjectFilters
             category={category}
             setCategory={setCategory}
+            status={status}
+            setStatus={setStatus}
             search={search}
             setSearch={setSearch}
           />

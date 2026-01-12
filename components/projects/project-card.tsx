@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Flame, Trophy } from "lucide-react";
+import { ArrowRight, Flame, Trophy, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -53,9 +53,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <Badge className="bg-blue-100 text-blue-600 border-blue-200 hover:bg-blue-200 px-3 py-1 text-xs font-extrabold shadow-none">
             {project.category}
           </Badge>
-          <div className="flex items-center gap-1 text-xs font-bold text-yellow-500 bg-yellow-50 px-2 py-1 rounded-lg border border-yellow-200">
-            <Trophy className="h-3 w-3 fill-yellow-500" />
-            <span>{xpReward} XP</span>
+          <div className="flex items-center gap-2">
+            {(project as any).isCompleted && (
+              <div className="flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-lg border border-green-200">
+                <CheckCircle2 className="h-3 w-3" />
+                <span>Done</span>
+              </div>
+            )}
+            <div className="flex items-center gap-1 text-xs font-bold text-yellow-500 bg-yellow-50 px-2 py-1 rounded-lg border border-yellow-200">
+              <Trophy className="h-3 w-3 fill-yellow-500" />
+              <span>{xpReward} XP</span>
+            </div>
           </div>
         </div>
 

@@ -63,12 +63,12 @@ export function StatsCards({
 
   return (
     <div id="onborda-stats" className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
-      {/* Prompt Score Card */}
+      {/* Practice Score Card */}
       <div className="group relative overflow-hidden rounded-3xl border-2 border-b-[6px] border-blue-200 bg-white hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-extrabold uppercase tracking-widest text-slate-400">
-              Prompt Score
+              Practice Score
             </h3>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-500">
               <Target className="h-6 w-6 stroke-3" />

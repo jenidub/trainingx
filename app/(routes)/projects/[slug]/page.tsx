@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useParams } from "next/navigation";
@@ -18,6 +18,7 @@ export default function ProjectDetailPage() {
   const projectId = params.slug as Id<"projects">;
 
   const project = useQuery(api.projects.getProject, { projectId: projectId });
+  const toggleCompletion = useMutation(api.projects.toggleProjectCompletion);
 
   if (project === undefined) {
     return (
@@ -161,20 +162,48 @@ export default function ProjectDetailPage() {
 
             {/* Bottom Action Area */}
             <div className="pt-6 border-t-2 border-slate-200 mx-auto flex items-center gap-4">
-              <div className="max-w-xl mx-auto flex flex-col gap-4">
-                <Link
-                  href="https://aistudio.google.com/"
-                  target="_blank"
-                  className="w-full transform hover:scale-[1.02] transition-transform duration-200 mx-auto"
-                >
-                  <JuicyButton
-                    variant="primary"
-                    size="lg"
-                    className="text-lg sm:text-xl shadow-xl shadow-blue-200/50 hover:shadow-blue-300 decoration-none py-5 px-10 h-auto whitespace-normal leading-tight"
+              <div className="max-w-4xl mx-auto flex flex-col gap-4 w-full">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href="https://aistudio.google.com/"
+                    target="_blank"
+                    className="flex-1 transform hover:scale-[1.02] transition-transform duration-200"
                   >
-                    Build in Google AI Studio ⚡️
+                    <JuicyButton
+                      variant="primary"
+                      size="lg"
+                      className="w-full text-lg sm:text-xl py-4 px-8 shadow-xl shadow-blue-200/50 hover:shadow-blue-300 decoration-none h-auto whitespace-normal leading-tight"
+                    >
+                      <span className="text-lg">Build in Google AI Studio</span>
+                    </JuicyButton>
+                  </Link>
+
+                  <JuicyButton
+                    onClick={() => toggleCompletion({ projectId: project._id })}
+                    variant={
+                      (project as any).isCompleted ? "secondary" : "default"
+                    }
+                    size="lg"
+                    disabled={(project as any).isCompleted}
+                    className={`flex-1 text-lg sm:text-xl py-4 px-8 decoration-none h-auto whitespace-normal leading-tight ${
+                      (project as any).isCompleted
+                        ? "bg-green-200 text-green-700 hover:bg-green-200 border-green-300"
+                        : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                    }`}
+                  >
+                    {(project as any).isCompleted ? (
+                      <span className="flex items-center gap-2">
+                        <CheckCircle2 className="w-6 h-6 fill-green-600 text-white" />{" "}
+                        Completed
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <CheckCircle2 className="w-6 h-6" /> Mark Complete
+                      </span>
+                    )}
                   </JuicyButton>
-                </Link>
+                </div>
+
                 <p className="text-sm text-center text-slate-400 font-medium mx-auto">
                   Ready to code? Open Gemini and paste the starter prompt!
                 </p>

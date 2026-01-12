@@ -3,18 +3,21 @@
 import { type HTMLAttributes, useCallback, useState } from "react";
 import { Track } from "livekit-client";
 import { useChat, useRemoteParticipants } from "@livekit/components-react";
-import { ChatText, PhoneDisconnect } from "@phosphor-icons/react";
+import {
+  ChatTextIcon,
+  PhoneDisconnectIcon,
+} from "@phosphor-icons/react/dist/ssr";
+import { TrackToggle } from "@/components/livekit/agent-control-bar/track-toggle";
 import { Button } from "@/components/livekit/button";
 import { Toggle } from "@/components/livekit/toggle";
 import { cn } from "@/lib/utils";
 import { ChatInput } from "./chat-input";
 import {
+  UseInputControlsProps,
   useInputControls,
-  type UseInputControlsProps,
 } from "./hooks/use-input-controls";
 import { usePublishPermissions } from "./hooks/use-publish-permissions";
 import { TrackSelector } from "./track-selector";
-import { TrackToggle } from "./track-toggle";
 
 export interface ControlBarControls {
   leave?: boolean;
@@ -31,6 +34,9 @@ export interface AgentControlBarProps extends UseInputControlsProps {
   onDeviceError?: (error: { source: Track.Source; error: Error }) => void;
 }
 
+/**
+ * A control bar specifically designed for voice assistant interfaces
+ */
 export function AgentControlBar({
   controls,
   saveUserChoices = true,
@@ -114,7 +120,7 @@ export function AgentControlBar({
           )}
 
           {/* Toggle Camera */}
-          {visibleControls.camera && (
+          {/* {visibleControls.camera && (
             <TrackSelector
               kind="videoinput"
               aria-label="Toggle camera"
@@ -126,10 +132,10 @@ export function AgentControlBar({
               onMediaDeviceError={handleCameraDeviceSelectError}
               onActiveDeviceChange={handleVideoDeviceChange}
             />
-          )}
+          )} */}
 
           {/* Toggle Screen Share */}
-          {visibleControls.screenShare && (
+          {/* {visibleControls.screenShare && (
             <TrackToggle
               size="icon"
               variant="secondary"
@@ -139,7 +145,7 @@ export function AgentControlBar({
               disabled={screenShareToggle.pending}
               onPressedChange={screenShareToggle.toggle}
             />
-          )}
+          )} */}
 
           {/* Toggle Transcript */}
           <Toggle
@@ -149,7 +155,7 @@ export function AgentControlBar({
             pressed={chatOpen}
             onPressedChange={handleToggleTranscript}
           >
-            <ChatText weight="bold" />
+            <ChatTextIcon weight="bold" />
           </Toggle>
         </div>
 
@@ -161,7 +167,7 @@ export function AgentControlBar({
             disabled={!isConnected}
             className="font-mono"
           >
-            <PhoneDisconnect weight="bold" />
+            <PhoneDisconnectIcon weight="bold" />
             <span className="hidden md:inline">END CALL</span>
             <span className="inline md:hidden">END</span>
           </Button>

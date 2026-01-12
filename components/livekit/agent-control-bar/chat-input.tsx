@@ -1,55 +1,105 @@
-"use client";
-
-import { useState } from "react";
-import { PaperPlaneRight } from "@phosphor-icons/react";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
+import {
+  PaperPlaneRightIcon,
+  SpinnerIcon,
+} from "@phosphor-icons/react/dist/ssr";
 import { Button } from "@/components/livekit/button";
-import { cn } from "@/lib/utils";
+
+const MOTION_PROPS = {
+  variants: {
+    hidden: {
+      height: 0,
+      opacity: 0,
+      marginBottom: 0,
+    },
+    visible: {
+      height: "auto",
+      opacity: 1,
+      marginBottom: 12,
+    },
+  },
+  initial: "hidden",
+  transition: {
+    duration: 0.3,
+    ease: "easeOut",
+  },
+} as const;
 
 interface ChatInputProps {
   chatOpen: boolean;
-  isAgentAvailable: boolean;
-  onSend: (message: string) => void;
+  isAgentAvailable?: boolean;
+  onSend?: (message: string) => void;
 }
 
 export function ChatInput({
   chatOpen,
-  isAgentAvailable,
-  onSend,
+  isAgentAvailable = false,
+  onSend = async () => {},
 }: ChatInputProps) {
-  const [message, setMessage] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [message, setMessage] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (message.trim() && isAgentAvailable) {
-      onSend(message.trim());
+
+    try {
+      setIsSending(true);
+      await onSend(message);
       setMessage("");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSending(false);
     }
   };
 
+  const isDisabled =
+    isSending || !isAgentAvailable || message.trim().length === 0;
+
+  useEffect(() => {
+    if (chatOpen && isAgentAvailable) return;
+    // when not disabled refocus on input
+    inputRef.current?.focus();
+  }, [chatOpen, isAgentAvailable]);
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={cn(
-        "flex items-center gap-2 overflow-hidden transition-all duration-300",
-        chatOpen ? "mb-2 max-h-12 opacity-100" : "max-h-0 opacity-0"
-      )}
+    <motion.div
+      inert={!chatOpen}
+      {...MOTION_PROPS}
+      animate={chatOpen ? "visible" : "hidden"}
+      className="border-input/50 flex w-full items-start overflow-hidden border-b"
     >
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type a message..."
-        className="flex-1 rounded-full bg-secondary px-4 py-2 text-sm outline-none placeholder:text-muted-foreground"
-        disabled={!isAgentAvailable}
-      />
-      <Button
-        type="submit"
-        size="icon"
-        variant="secondary"
-        disabled={!message.trim() || !isAgentAvailable}
+      <form
+        onSubmit={handleSubmit}
+        className="mb-3 flex grow items-end gap-2 rounded-md pl-1 text-sm"
       >
-        <PaperPlaneRight weight="bold" />
-      </Button>
-    </form>
+        <input
+          autoFocus
+          ref={inputRef}
+          type="text"
+          value={message}
+          disabled={!chatOpen}
+          placeholder="Type something..."
+          onChange={(e) => setMessage(e.target.value)}
+          className="h-8 flex-1 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        />
+        <Button
+          size="icon"
+          type="submit"
+          disabled={isDisabled}
+          variant={isDisabled ? "secondary" : "primary"}
+          title={isSending ? "Sending..." : "Send"}
+          className="self-start"
+        >
+          {isSending ? (
+            <SpinnerIcon className="animate-spin" weight="bold" />
+          ) : (
+            <PaperPlaneRightIcon weight="bold" />
+          )}
+        </Button>
+      </form>
+    </motion.div>
   );
 }

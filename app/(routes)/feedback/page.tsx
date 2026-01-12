@@ -404,11 +404,11 @@ function RewardPreview({
               : "Submit to claim instantly"}
           </p>
         </div>
-        <div className="ml-auto">
+        {/* <div className="ml-auto">
           <span className="rounded-lg bg-emerald-500 px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
             Fast drop
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,21 +1,24 @@
-"use client";
-
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface ShimmerTextProps {
-  text: string;
+  children: React.ReactNode;
   className?: string;
 }
 
-export function ShimmerText({ text, className }: ShimmerTextProps) {
+export function ShimmerText({
+  children,
+  className,
+  ref,
+}: ShimmerTextProps & React.RefAttributes<HTMLSpanElement>) {
   return (
     <span
-      className={cn(
-        "animate-pulse bg-gradient-to-r from-muted-foreground via-foreground to-muted-foreground bg-clip-text text-transparent",
-        className
-      )}
+      ref={ref}
+      className={cn('animate-text-shimmer inline-block !bg-clip-text text-transparent', className)}
     >
-      {text}
+      {children}
     </span>
   );
 }
+
+export default ShimmerText;

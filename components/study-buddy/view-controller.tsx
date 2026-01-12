@@ -3,11 +3,11 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useSessionContext } from "@livekit/components-react";
 import type { StudyBuddyConfig } from "@/lib/livekit-config";
-import { StudyBuddySessionView } from "@/components/study-buddy/study-buddy-session-view";
-import { StudyBuddyWelcomeView } from "@/components/study-buddy/study-buddy-welcome-view";
+import { SessionView } from "@/components/study-buddy/session-view";
+import { WelcomeView } from "@/components/study-buddy/welcome-view";
 
-const MotionWelcomeView = motion.create(StudyBuddyWelcomeView);
-const MotionSessionView = motion.create(StudyBuddySessionView);
+const MotionWelcomeView = motion.create(WelcomeView);
+const MotionSessionView = motion.create(SessionView);
 
 const VIEW_MOTION_PROPS = {
   variants: {
@@ -23,17 +23,15 @@ const VIEW_MOTION_PROPS = {
   exit: "hidden",
   transition: {
     duration: 0.5,
-    ease: "linear" as const,
+    ease: "linear",
   },
-};
+} as const;
 
-interface StudyBuddyViewControllerProps {
+interface ViewControllerProps {
   appConfig: StudyBuddyConfig;
 }
 
-export function StudyBuddyViewController({
-  appConfig,
-}: StudyBuddyViewControllerProps) {
+export function ViewController({ appConfig }: ViewControllerProps) {
   const { isConnected, start } = useSessionContext();
 
   return (
@@ -43,6 +41,7 @@ export function StudyBuddyViewController({
         <MotionWelcomeView
           key="welcome"
           {...VIEW_MOTION_PROPS}
+          startButtonText={appConfig.startButtonText}
           onStartCall={start}
         />
       )}

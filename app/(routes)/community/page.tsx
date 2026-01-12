@@ -1729,7 +1729,7 @@ export default function Community() {
 
           {/* Community Guidelines */}
           <div className="rounded-2xl sm:rounded-3xl border-2 border-dashed border-slate-300 bg-white/50 p-3 sm:p-4">
-            <Accordion type="single" collapsible defaultValue="rules">
+            <Accordion type="single" collapsible>
               <AccordionItem value="rules" className="border-none">
                 <AccordionTrigger className="hover:no-underline py-1.5 sm:py-2">
                   <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wide">
@@ -1762,62 +1762,69 @@ export default function Community() {
           </div>
 
           {communityActivity && (
-            <div className="rounded-2xl sm:rounded-3xl border-2 border-b-[4px] sm:border-b-[6px] border-slate-200 bg-white p-4 sm:p-6">
-              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-                <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-yellow-100 text-yellow-600 shrink-0">
-                  <Award className="h-5 w-5 sm:h-6 sm:w-6 stroke-3" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-700">
-                  Your Stats
-                </h3>
-              </div>
-
-              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4">
-                <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
-                  <div
-                    className="text-lg sm:text-2xl font-black text-blue-500"
-                    data-testid="text-community-score"
-                  >
-                    {communityActivity.communityScore}
-                  </div>
-                  <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
-                    Score
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
-                  <div className="text-lg sm:text-2xl font-black text-green-500">
-                    {communityActivity.upvotesReceived}
-                  </div>
-                  <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
-                    Upvotes
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
-                  <div className="text-lg sm:text-2xl font-black text-red-500">
-                    {communityActivity.downvotesReceived}
-                  </div>
-                  <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
-                    <span className="hidden sm:inline">Downvotes</span>
-                    <span className="sm:hidden">Down</span>
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
-                  <div className="text-lg sm:text-2xl font-black text-purple-500">
-                    {communityActivity.postsCreated}
-                  </div>
-                  <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
-                    Posts
-                  </div>
-                </div>
-                <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
-                  <div className="text-lg sm:text-2xl font-black text-orange-500">
-                    {communityActivity.helpfulAnswers}
-                  </div>
-                  <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
-                    Helpful
-                  </div>
-                </div>
-              </div>
+            <div className="rounded-2xl sm:rounded-3xl border-2 border-b-[4px] sm:border-b-[6px] border-slate-200 bg-white px-4 sm:px-6 py-2 sm:py-4">
+              <Accordion type="single" collapsible>
+                <AccordionItem value="stats" className="border-none">
+                  <AccordionTrigger className="hover:no-underline py-2">
+                    <div className="flex items-center gap-2 sm:gap-3 text-left">
+                      <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-yellow-100 text-yellow-600 shrink-0">
+                        <Award className="h-5 w-5 sm:h-6 sm:w-6 stroke-3" />
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-extrabold text-slate-700">
+                        Your Stats
+                      </h3>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-4 pt-2 pb-2">
+                      <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
+                        <div
+                          className="text-lg sm:text-2xl font-black text-blue-500"
+                          data-testid="text-community-score"
+                        >
+                          {communityActivity.communityScore}
+                        </div>
+                        <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
+                          Score
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
+                        <div className="text-lg sm:text-2xl font-black text-green-500">
+                          {communityActivity.upvotesReceived}
+                        </div>
+                        <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
+                          Upvotes
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
+                        <div className="text-lg sm:text-2xl font-black text-red-500">
+                          {communityActivity.downvotesReceived}
+                        </div>
+                        <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
+                          <span className="hidden sm:inline">Downvotes</span>
+                          <span className="sm:hidden">Down</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
+                        <div className="text-lg sm:text-2xl font-black text-purple-500">
+                          {communityActivity.postsCreated}
+                        </div>
+                        <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
+                          Posts
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-center p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-50 border-2 border-slate-100">
+                        <div className="text-lg sm:text-2xl font-black text-orange-500">
+                          {communityActivity.helpfulAnswers}
+                        </div>
+                        <div className="text-[8px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5 sm:mt-1">
+                          Helpful
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           )}
 

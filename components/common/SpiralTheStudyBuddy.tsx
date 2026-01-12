@@ -1,6 +1,6 @@
 "use client";
 
-import { StudyBuddyApp } from "@/components/study-buddy/study-buddy-app";
+import { App as StudyBuddyApp } from "@/components/study-buddy/app";
 import { STUDY_BUDDY_CONFIG } from "@/lib/livekit-config";
 
 export default function SpiralTheStudyBuddy() {
