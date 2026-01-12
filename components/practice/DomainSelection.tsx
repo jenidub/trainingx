@@ -275,8 +275,8 @@ export function DomainSelection({
                 </motion.div>
               ))}
 
-              {/* Unlock Custom Domains Card */}
-              <motion.div
+              {/* Unlock Custom Domains Card - TODO: I'll come back to it later */}
+              {/* <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
@@ -304,13 +304,13 @@ export function DomainSelection({
                     </Card>
                   </TooltipTrigger>
                 </Tooltip>
-              </motion.div>
+              </motion.div> */}
             </TooltipProvider>
           </div>
         </div>
 
-        {/* Custom Domains Section */}
-        {customDomains && customDomains.length > 0 && (
+        {/* Custom Domains Section - TODO: I'll come back to it later */}
+        {/* {customDomains && customDomains.length > 0 && (
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
@@ -347,7 +347,7 @@ export function DomainSelection({
                           {domain.icon}
                         </motion.span>
 
-                        {/* Delete Button */}
+                        {/* Delete Button * /}
                         <AlertDialog>
                           <AlertDialogTrigger asChild>
                             <button
@@ -425,7 +425,7 @@ export function DomainSelection({
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { mapPracticeTagsToSkills } from "./skillTags";
 
 // Elo rating constants
 const K_FACTOR = 32; // Standard K-factor for Elo
@@ -186,7 +187,10 @@ export const pickNextItem = query({
     // Filter and score items
     const scoredItems = allItems
       .filter(item => !excludeItemIds.includes(item._id))
-      .filter(item => item.tags.includes(targetSkill))
+      .filter(item => {
+        const itemSkills = mapPracticeTagsToSkills(item.tags);
+        return itemSkills.includes(targetSkill);
+      })
       .map(item => ({
         item,
         eloDiff: Math.abs(item.elo - targetElo),

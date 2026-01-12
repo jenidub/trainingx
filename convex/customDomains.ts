@@ -10,6 +10,7 @@ import { internal } from "./_generated/api";
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { callAI } from "./lib/ai";
 import { Id } from "./_generated/dataModel";
+import { mapPracticeTagsToSkills, CANONICAL_SKILLS } from "./skillTags";
 
 // Limit constants
 const MAX_CUSTOM_DOMAINS = 1000;
@@ -98,6 +99,9 @@ export const fabricate = internalAction({
         
         Your mission: Design a bespoke curriculum that transforms the user from their current state to a Master of this domain.
         The curriculum must be structured into exactly ${TRACKS_PER_DOMAIN} distinct tracks, progressing logically or covering key pillars.
+
+        Skill tags must use ONLY this list:
+        ${CANONICAL_SKILLS.join(", ")}
         
         Return JSON satisfying:
         {
@@ -112,7 +116,8 @@ export const fabricate = internalAction({
               "title": "Track Title (e.g., 'The Foundations', 'Advanced Tactics')", 
               "description": "What specific skills are forged here?", 
               "icon": "emoji", 
-              "difficulty": "beginner|intermediate|advanced" 
+              "difficulty": "beginner|intermediate|advanced",
+              "skills": ["1-3 skills from the allowed list"]
             }
           ]
         }
@@ -251,6 +256,7 @@ export const persist = internalMutation({
 
     // Create Tracks, Levels, Items
     for (const [index, trackData] of args.tracks.entries()) {
+      const skillTags = mapPracticeTagsToSkills(trackData.skills || []);
       const trackId = await ctx.db.insert("practiceTracks", {
         domainId,
         slug: `track-${domainId}-${index}`,
@@ -263,7 +269,7 @@ export const persist = internalMutation({
         estimatedHours: 1,
         difficulty: trackData.difficulty,
         prerequisites: [],
-        tags: [],
+        tags: skillTags,
         status: "live",
         createdBy: req.userId,
         isUserGenerated: true,
@@ -332,7 +338,7 @@ export const persist = internalMutation({
           elo: 1200,
           eloDeviation: 0,
           difficultyBand: "core",
-          tags: [],
+          tags: skillTags,
           createdBy: req.userId,
           createdAt: Date.now(),
           status: "live",

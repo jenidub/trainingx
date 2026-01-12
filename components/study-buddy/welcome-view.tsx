@@ -35,7 +35,7 @@ export const WelcomeView = ({
         <WelcomeImage />
 
         <p className="text-foreground max-w-prose pt-1 leading-6 font-medium">
-          Chat live with your voice AI agent
+          Study with Spiral the Study Buddy
         </p>
 
         <JuicyButton

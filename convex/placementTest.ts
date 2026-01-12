@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { mapPracticeTagsToSkills } from "./skillTags";
 
 /**
  * Placement Test System
@@ -32,7 +33,7 @@ export const getOrCreatePlacementTest = query({
         itemId: item._id,
         question: item.params.question || "Question",
         type: item.params.type || "multiple-choice",
-        skills: item.tags,
+        skills: mapPracticeTagsToSkills(item.tags),
       })),
     };
   },
@@ -61,7 +62,8 @@ async function selectPlacementItems(ctx: any) {
   const skillGroups: Record<string, any[]> = {};
   
   for (const item of foundationItems) {
-    for (const skill of item.tags) {
+    const itemSkills = mapPracticeTagsToSkills(item.tags);
+    for (const skill of itemSkills) {
       if (!skillGroups[skill]) {
         skillGroups[skill] = [];
       }
@@ -108,7 +110,8 @@ export const submitPlacementTest = mutation({
       const item = await ctx.db.get(response.itemId);
       if (!item) continue;
 
-      for (const skill of item.tags) {
+      const itemSkills = mapPracticeTagsToSkills(item.tags);
+      for (const skill of itemSkills) {
         if (!skillScores[skill]) {
           skillScores[skill] = { correct: 0, total: 0 };
         }

@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { mapPracticeTagsToSkills } from "./skillTags";
 
 /**
  * Daily Drills & Streak System
@@ -133,10 +134,13 @@ async function selectDrillItems(ctx: any, userId: Id<"users">) {
     .withIndex("by_status", (q: any) => q.eq("status", "live"))
     .collect();
 
-  const weakSkillItems = allItems.filter((item: any) => 
-    item.tags.some((tag: string) => weakestSkills.includes(tag)) &&
-    !selectedIds.has(item._id)
-  );
+  const weakSkillItems = allItems.filter((item: any) => {
+    const itemSkills = mapPracticeTagsToSkills(item.tags);
+    return (
+      itemSkills.some((skill: string) => weakestSkills.includes(skill)) &&
+      !selectedIds.has(item._id)
+    );
+  });
 
   // Shuffle and take up to 2 more items
   const shuffled = weakSkillItems.sort(() => Math.random() - 0.5);
@@ -194,14 +198,17 @@ export const completeDrillItem = mutation({
     // Update skill ratings if we know correctness
     if (item && correct !== undefined) {
       const practiceUserSkills = await import("./practiceUserSkills");
-      
+
+      const skillIds = mapPracticeTagsToSkills(item.tags);
+      const itemDifficulty = item.elo ?? 1500;
+
       // Update each skill the item tests
-      for (const skillId of item.tags) {
+      for (const skillId of skillIds) {
         await practiceUserSkills.updateSkillRating(
           ctx,
           userId,
           skillId,
-          item.elo,
+          itemDifficulty,
           correct
         );
       }

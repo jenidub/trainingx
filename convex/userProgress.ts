@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { mapPracticeTagsToSkills } from "./skillTags";
 
 // Get user's progress for a level
 export const getLevelProgress = query({
@@ -146,6 +147,37 @@ export const updateLevelProgress = mutation({
     const level = await ctx.db.get(args.levelId);
     if (!level) throw new Error("Level not found");
 
+    const updateSkillRatings = async () => {
+      try {
+        const item = await ctx.db.get(args.challengeId as Id<"practiceItems">);
+        if (!item) return;
+
+        let skillIds = mapPracticeTagsToSkills(item.tags);
+
+        if (skillIds.length === 0 && item.templateId) {
+          const template = await ctx.db.get(item.templateId);
+          skillIds = mapPracticeTagsToSkills(template?.skills);
+        }
+
+        if (skillIds.length === 0) return;
+
+        const practiceUserSkills = await import("./practiceUserSkills");
+        const itemDifficulty = item.elo ?? 1500;
+
+        for (const skillId of skillIds) {
+          await practiceUserSkills.updateSkillRating(
+            ctx,
+            args.userId,
+            skillId,
+            itemDifficulty,
+            args.correct
+          );
+        }
+      } catch (error) {
+        console.error("Failed to update skill ratings:", error);
+      }
+    };
+
     if (existing) {
       // Check if this challenge was already completed (prevent duplicates)
       const existingIds = existing.completedChallengeIds || [];
@@ -181,6 +213,7 @@ export const updateLevelProgress = mutation({
 
       // Update track progress
       await calculateAndUpdateTrackProgress(ctx, args.userId, level.trackId);
+      await updateSkillRatings();
 
       return {
         levelId: args.levelId,
@@ -208,6 +241,7 @@ export const updateLevelProgress = mutation({
 
       // Update track progress
       await calculateAndUpdateTrackProgress(ctx, args.userId, level.trackId);
+      await updateSkillRatings();
 
       return {
         levelId: args.levelId,
