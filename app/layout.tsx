@@ -7,6 +7,8 @@ import ComingSoon from "@/components/ComingSoon";
 import { comingSoonConfig, landingOnlyMode, IS_DEV } from "@/lib/featureFlags";
 import HomePage from "@/components/pages/Home";
 import ElevenLabsWidget from "@/components/common/ElevenLabsWidget";
+import { OnbordaProvider } from "onborda";
+import { OnbordaWrapper } from "@/components/onboarding/OnbordaWrapper";
 import "./globals.css";
 
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -30,9 +32,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "TrainingX.AI - Universal Prompting for the 21st Century",
+  title: "TrainingX.AI - Master the One Skill That Controls Every AI Tool",
   description:
-    "Master AI prompting skills with our proven training platform. Built in 2015, trusted for a decade. Start your free assessment today.",
+    "From confused beginner to certified prompt engineer. Master AI prompting with real practice, real feedback, and real career paths. Trusted for a decade.",
   ...(IS_DEV && {
     robots: {
       index: false,
@@ -81,11 +83,15 @@ export default function RootLayout({
           </Providers>
         ) : (
           <Providers>
-            <TooltipProvider>
-              {children}
-              <ElevenLabsWidget />
-              <Toaster />
-            </TooltipProvider>
+            <OnbordaProvider>
+              <OnbordaWrapper>
+                <TooltipProvider>
+                  {children}
+                  <ElevenLabsWidget />
+                  <Toaster />
+                </TooltipProvider>
+              </OnbordaWrapper>
+            </OnbordaProvider>
           </Providers>
         )}
       </body>

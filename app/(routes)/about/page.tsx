@@ -14,6 +14,9 @@ import {
   Lightbulb,
   CheckCircle2,
   TrendingUp,
+  Zap,
+  GitBranch,
+  RefreshCw,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -92,16 +95,17 @@ export default function AboutPage() {
   const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen text-slate-900 selection:bg-blue-100 selection:text-blue-900">
       <div className="sticky top-0 z-50 w-full">
         <Navigation />
       </div>
 
       <main className="flex flex-col">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
         {/* DARK HERO SECTION */}
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20">
-          {/* Parallax Background */}
-          <motion.div className="absolute inset-0 z-0" style={{ y: heroY }}>
+        {/* <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20"> */}
+        {/* Parallax Background */}
+        {/* <motion.div className="absolute inset-0 z-0" style={{ y: heroY }}>
             <Image
               src="/hero-bg.webp"
               alt="About us background"
@@ -111,81 +115,70 @@ export default function AboutPage() {
             />
             <div className="absolute inset-0 bg-black/80" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent" />
-          </motion.div>
+          </motion.div> */}
 
-          {/* Animated Particles/Overlay */}
-          <div className="absolute inset-0 z-0 opacity-30">
-            <div
-              className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl mix-blend-screen animate-pulse"
-              style={{ animationDuration: "4s" }}
-            />
-            <div
-              className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/30 rounded-full blur-3xl mix-blend-screen animate-pulse"
-              style={{ animationDuration: "7s" }}
-            />
-          </div>
+        {/* Animated Particles/Overlay */}
+        <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
+          <div
+            className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl mix-blend-screen animate-pulse"
+            style={{ animationDuration: "4s" }}
+          />
+          <div
+            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-500/30 rounded-full blur-3xl mix-blend-screen animate-pulse"
+            style={{ animationDuration: "7s" }}
+          />
+        </div>
 
-          <div className="relative z-10 container mx-auto px-4 text-center">
-            <motion.div
-              className="max-w-5xl mx-auto space-y-10"
-              initial="initial"
-              animate="animate"
-              variants={staggerContainer}
-            >
-              {/* Badge */}
-              <motion.div variants={fadeInUp} className="flex justify-center">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white rounded-full px-5 py-2 border border-white/20 shadow-lg">
-                  <Sparkles className="h-4 w-4 text-blue-400" />
-                  <span className="text-sm font-semibold tracking-wide uppercase">
-                    About TrainingX.ai
-                  </span>
-                </div>
-              </motion.div>
-
-              {/* Main Heading */}
-              <motion.h1
-                variants={fadeInUp}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-2xl max-w-6xl mx-auto"
-              >
-                The Universal Platform for{" "}
-                <span className="bg-gradient-to-r from-[#0074b9] via-[#46bc61] to-[#0074b9] bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-                  Direction
+        <div className="pt-16 pb-4 relative z-10 container mx-auto px-4 text-center">
+          <motion.div
+            className="max-w-5xl mx-auto space-y-10"
+            initial="initial"
+            animate="animate"
+            variants={staggerContainer}
+          >
+            {/* Badge */}
+            <motion.div variants={fadeInUp} className="flex justify-center">
+              <div className="inline-flex items-center gap-2 backdrop-blur-md text-slate-800 rounded-full px-5 py-2 border border-black/20 shadow-lg">
+                <Sparkles className="h-4 w-4 text-blue-400" />
+                <span className="text-sm font-semibold tracking-wide uppercase">
+                  About TrainingX.ai
                 </span>
-              </motion.h1>
-
-              {/* Subheading */}
-              <motion.p
-                variants={fadeInUp}
-                className="text-lg md:text-2xl text-slate-200 max-w-3xl mx-auto leading-relaxed font-light drop-shadow-md"
-              >
-                The 21st century is defined by uncertainty. TrainingX.ai turns{" "}
-                <span className="font-semibold text-white">“I don’t know”</span>{" "}
-                into{" "}
-                <span className="font-semibold text-emerald-400">
-                  “I know exactly where I’m going.”
-                </span>
-              </motion.p>
-
-              {/* CTA Button */}
-              <motion.div variants={fadeInUp} className="pt-8">
-                <Link href="/quiz">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-[#0074b9] to-[#46bc61] text-white hover:opacity-90 font-bold py-6 w-[250px] text-lg rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border-0"
-                  >
-                    Start Your Pathway
-                    <ArrowRight className="ml-0 h-5 w-5" />
-                  </Button>
-                </Link>
-              </motion.div>
+              </div>
             </motion.div>
-          </div>
-        </section>
+
+            {/* Main Heading */}
+            <motion.h1
+              variants={fadeInUp}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 drop-shadow-2xl max-w-6xl mx-auto"
+            >
+              The Universal Platform for{" "}
+              <span className="bg-gradient-to-r from-[#0074b9] via-[#46bc61] to-[#0074b9] bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                Direction
+              </span>
+            </motion.h1>
+
+            {/* Subheading */}
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg md:text-2xl text-slate-700 max-w-3xl mx-auto leading-relaxed font-light drop-shadow-md"
+            >
+              The 21st century is defined by uncertainty. TrainingX.ai turns{" "}
+              <span className="font-semibold text-slate-900">
+                “I don’t know”
+              </span>{" "}
+              into{" "}
+              <span className="font-semibold text-emerald-600">
+                “I know exactly where I’m going.”
+              </span>
+            </motion.p>
+          </motion.div>
+        </div>
+        {/* </section> */}
 
         {/* The Science of Certainty - Clean Light with Floating Elements */}
-        <section className="py-32 bg-white relative overflow-hidden">
+        <section className="py-12 bg-white relative overflow-hidden">
           {/* Subtle Grid Background */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="grid md:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
@@ -282,8 +275,224 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Our Philosophy Section - Dark Premium Theme */}
+        <section className="py-24 bg-slate-900 relative overflow-hidden">
+          {/* Background Glow Effects */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] mix-blend-screen" />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            {/* Header Statement */}
+            <motion.div
+              className="max-w-4xl mx-auto text-center mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-emerald-400 border border-white/10 text-sm font-medium mb-8 backdrop-blur-sm">
+                <Sparkles className="w-4 h-4" />
+                <span>Our Philosophy</span>
+              </div>
+
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
+                The average{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                  does not exist.
+                </span>
+              </h2>
+              <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                For over a decade, under NuuED and Spiral the Study Buddy, our
+                mission has remained unchanged. Trainingx.ai is built on the
+                proven reality that outcomes improve only when the
+                <span className="text-white font-semibold">
+                  {" "}
+                  environment adapts to the learner.
+                </span>
+              </p>
+            </motion.div>
+
+            {/* Core Mechanism Grid */}
+            <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="space-y-8"
+              >
+                <h3 className="text-3xl font-bold text-white leading-snug">
+                  Operationalizing
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-emerald-400 to-blue-400 animate-gradient bg-[length:200%_auto]">
+                    Reactive Parallelism Continuous AI
+                  </span>
+                </h3>
+                <p className="text-lg text-slate-400 leading-relaxed border-l-4 border-blue-500/30 pl-6">
+                  We are scaling the only philosophy that matters: The system
+                  must fit the human, not the other way around.
+                </p>
+              </motion.div>
+
+              <div className="space-y-4">
+                {[
+                  {
+                    title: "Reactive",
+                    desc: "We respond to your real-time needs.",
+                    icon: Zap,
+                    color: "bg-yellow-500/20 text-yellow-400",
+                  },
+                  {
+                    title: "Parallel",
+                    desc: "We evaluate multiple success pathways simultaneously.",
+                    icon: GitBranch,
+                    color: "bg-blue-500/20 text-blue-400",
+                  },
+                  {
+                    title: "Continuous",
+                    desc: "We never stop matching you to the right opportunities.",
+                    icon: RefreshCw,
+                    color: "bg-emerald-500/20 text-emerald-400",
+                  },
+                ].map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.15 }}
+                    className="flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-md group"
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}
+                    >
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">
+                        {item.title}
+                      </h4>
+                      <p className="text-slate-400 text-sm md:text-base">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Research Section - Verified */}
+        <section className="py-16 bg-slate-50 relative">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                    Verified Research & Methodology
+                  </h2>
+                  <p className="text-lg text-slate-600 max-w-xl">
+                    TrainingX.ai is grounded in peer-reviewed research and
+                    real-world implementation.
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors py-3 px-5 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md font-medium">
+                  <span className="font-mono text-sm">
+                    ORCID: 0009-0004-3282-7042
+                  </span>
+                  {/* <ExternalLink className="h-4 w-4" /> */}
+                </span>
+              </div>
+
+              <div className="grid md:grid-cols-12 gap-8">
+                {/* Founder Profile */}
+                <div className="md:col-span-4">
+                  <div className="bg-white rounded-[2rem] p-4 border border-slate-100 text-center h-full shadow-lg relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="relative z-10">
+                      <div className="w-full aspect-[3/2] mx-auto relative mb-8 rounded-[1.2rem] overflow-hidden shadow-2xl ring-1 ring-slate-100">
+                        <Image
+                          src="/images/derrick-oneal.webp"
+                          alt="Derrick O'Neal"
+                          fill
+                          className="object-cover"
+                          quality={80}
+                          priority
+                        />
+                      </div>
+                      <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                        Derrick O&apos;Neal
+                      </h3>
+                      <p className="text-slate-500 font-medium mb-6">
+                        Founder & Primary Investigator
+                      </p>
+                      <div className="w-full h-px bg-slate-100 mb-6" />
+                      <p className="text-sm text-slate-400 italic">
+                        "Pioneering adaptive intelligence for human potential."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Publications List - Verified Links */}
+                <div className="md:col-span-8 flex flex-col gap-6">
+                  {[
+                    {
+                      title:
+                        "NuuED, Academia, and Community: Driving Engaged Scholarship and Civic Responsibility Through Enhanced Learning",
+                      publisher: "IGI Global",
+                      url: "https://www.irma-international.org/viewtitle/296355/?isxn=9781668438770", // Verified IGI Global Link
+                      year: "2014",
+                    },
+                    {
+                      title:
+                        "AI-Driven Education, Careers, and Entrepreneurship for a Transformed Tomorrow",
+                      publisher:
+                        "International Journal of Advanced Corporate Learning (iJAC)",
+                      url: "https://online-journals.org/index.php/i-jac/article/view/45683", // Verified iJAC Link
+                      year: "2024",
+                    },
+                  ].map((pub, idx) => (
+                    <motion.a
+                      key={idx}
+                      href={pub.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row sm:items-start justify-between gap-6 relative overflow-hidden"
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: idx * 0.1 }}
+                      whileHover={{ scale: 1.01 }}
+                    >
+                      <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-[#0074b9] to-[#46bc61] opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 uppercase tracking-wider">
+                            {pub.publisher}
+                          </span>
+                          <span className="text-xs text-slate-400">
+                            {pub.year}
+                          </span>
+                        </div>
+                        <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors leading-snug">
+                          {pub.title}
+                        </h4>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-semibold text-slate-400 group-hover:text-blue-600 transition-colors mt-2 sm:mt-0">
+                        Read Paper <ExternalLink className="h-4 w-4" />
+                      </div>
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Your Future, Your Way - Interactive Cards */}
-        <section className="py-32 bg-slate-50 relative">
+        <section className="py-16 bg-slate-50 relative">
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               className="max-w-4xl mx-auto text-center mb-20"
@@ -356,10 +565,10 @@ export default function AboutPage() {
                       {item.desc}
                     </p>
 
-                    <div className="mt-8 flex items-center text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                    {/* <div className="mt-8 flex items-center text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
                       Learn more{" "}
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </div>
+                    </div> */}
                   </SpotlightCard>
                 </motion.div>
               ))}
@@ -368,8 +577,8 @@ export default function AboutPage() {
         </section>
 
         {/* Promise Statement - High Impact */}
-        <section className="py-40 bg-white border-y border-slate-100 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-50" />
+        <section className="py-16 border-y border-slate-100 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-50 pointer-events-none" />
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               className="max-w-5xl mx-auto text-center"
@@ -382,156 +591,14 @@ export default function AboutPage() {
                 <span>The TrainingX Guarantee</span>
               </div>
               <h3 className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-10 tracking-tight">
-                "At TrainingX.ai, the future is not uncertain. It is{" "}
+                At TrainingX.ai, the future is not uncertain. It is{" "}
                 <span className="text-blue-600">clear</span>,{" "}
                 <span className="text-green-600">personalized</span>, and{" "}
                 <span className="text-slate-900 bg-yellow-100 px-2 rounded-lg decoration-wavy underline decoration-yellow-400 whitespace-nowrap">
                   within reach
                 </span>
-                ."
+                .
               </h3>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Research Section - Verified */}
-        <section className="py-32 bg-slate-50 relative">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto">
-              <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                    Verified Research & Methodology
-                  </h2>
-                  <p className="text-lg text-slate-600 max-w-xl">
-                    TrainingX.ai is grounded in peer-reviewed research and
-                    real-world implementation.
-                  </p>
-                </div>
-                <a
-                  href="https://orcid.org/0009-0004-3282-7042"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors py-3 px-5 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md font-medium"
-                >
-                  <span className="font-mono text-sm">
-                    ORCID: 0009-0004-3282-7042
-                  </span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-
-              <div className="grid md:grid-cols-12 gap-8">
-                {/* Founder Profile */}
-                <div className="md:col-span-4">
-                  <div className="bg-white rounded-[2rem] p-8 border border-slate-100 text-center h-full shadow-lg relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative z-10">
-                      <div className="w-32 h-32 mx-auto bg-gradient-to-br from-[#0074b9] to-[#46bc61] rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl mb-6 ring-4 ring-white">
-                        DO
-                      </div>
-                      <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                        Derrick O&apos;Neal
-                      </h3>
-                      <p className="text-slate-500 font-medium mb-6">
-                        Founder & Primary Investigator
-                      </p>
-                      <div className="w-full h-px bg-slate-100 mb-6" />
-                      <p className="text-sm text-slate-400 italic">
-                        "Pioneering adaptive intelligence for human potential."
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Publications List - Verified Links */}
-                <div className="md:col-span-8 flex flex-col gap-6">
-                  {[
-                    {
-                      title:
-                        "NuuED, Academia, and Community: Driving Engaged Scholarship and Civic Responsibility Through Enhanced Learning",
-                      publisher: "IGI Global",
-                      url: "https://www.igi-global.com/chapter/nuued-academia-and-community/361412", // Verified IGI Global Link
-                      year: "2010",
-                    },
-                    {
-                      title:
-                        "AI-Driven Education, Careers, and Entrepreneurship for a Transformed Tomorrow",
-                      publisher:
-                        "International Journal of Advanced Corporate Learning (iJAC)",
-                      url: "https://online-journals.org/index.php/i-jac/article/view/45683", // Verified iJAC Link
-                      year: "2024",
-                    },
-                  ].map((pub, idx) => (
-                    <motion.a
-                      key={idx}
-                      href={pub.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row sm:items-start justify-between gap-6 relative overflow-hidden"
-                      initial={{ opacity: 0, x: 20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      whileHover={{ scale: 1.01 }}
-                    >
-                      <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-[#0074b9] to-[#46bc61] opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 uppercase tracking-wider">
-                            {pub.publisher}
-                          </span>
-                          <span className="text-xs text-slate-400">
-                            {pub.year}
-                          </span>
-                        </div>
-                        <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors leading-snug">
-                          {pub.title}
-                        </h4>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm font-semibold text-slate-400 group-hover:text-blue-600 transition-colors mt-2 sm:mt-0">
-                        Read Paper <ExternalLink className="h-4 w-4" />
-                      </div>
-                    </motion.a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA - Dark & Premium */}
-        <section className="py-32 bg-slate-950 text-white relative overflow-hidden">
-          {/* Abstract effects */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(70,188,97,0.1),transparent_40%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(0,116,185,0.1),transparent_40%)]" />
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 mix-blend-overlay" />
-
-          <div className="container mx-auto px-4 relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <Sparkles className="h-12 w-12 text-yellow-400 mx-auto mb-8 animate-pulse" />
-              <h2 className="text-4xl md:text-7xl font-bold mb-8 tracking-tight">
-                Ready to Find Your Direction?
-              </h2>
-              <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
-                Join thousands of learners who have discovered their true
-                pathway with our advanced adaptive engine.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Link href="/quiz">
-                  <Button
-                    size="lg"
-                    className="bg-white text-slate-950 hover:bg-blue-50 font-bold py-6 w-[270px] text-xl rounded-full shadow-[0_0_50px_-15px_rgba(255,255,255,0.5)] border-2 border-transparent hover:border-blue-300 transition-all duration-300"
-                  >
-                    Find Your Direction
-                    <ArrowRight className="ml-2 h-6 w-6" />
-                  </Button>
-                </Link>
-              </div>
             </motion.div>
           </div>
         </section>

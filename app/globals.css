@@ -183,4 +183,20 @@ html {
   .glass-panel {
     @apply backdrop-blur-xl bg-white/5 border border-white/10;
   }
+
+  .theme-gradient {
+    background: linear-gradient(
+      to bottom right,
+      var(--gradient-from),
+      var(--gradient-to)
+    );
+  }
+
+  .theme-gradient-r {
+    background: linear-gradient(
+      to right,
+      var(--gradient-from),
+      var(--gradient-to)
+    );
+  }
 }

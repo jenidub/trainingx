@@ -57,13 +57,19 @@ export function TrackSelection({
     );
   }
 
-  // Calculate assessment state
+  // All tracks are always accessible (no locking)
+  const displayTracks = tracks.map((track: any) => ({
+    ...track,
+    isLocked: false,
+  }));
+
+  // Assessment is always unlocked
   const assessmentNode = assessment
     ? {
-        isUnlocked: assessmentUnlock?.isUnlocked ?? false,
+        isUnlocked: true,
         hasPassed: !!certificate,
         score: certificate?.score,
-        tracksRemaining: assessmentUnlock?.tracksRemaining ?? tracks.length,
+        tracksRemaining: 0,
       }
     : undefined;
 
@@ -83,7 +89,7 @@ export function TrackSelection({
           Back to Domains
         </Button>
 
-        <div className="text-center mb-8">
+        <div className="text-center">
           <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
             Your Learning Path
           </h1>
@@ -95,7 +101,7 @@ export function TrackSelection({
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Duolingo-style Track Path */}
         <TrackPath
-          tracks={tracks}
+          tracks={displayTracks}
           assessment={assessmentNode}
           onSelectTrack={onSelectTrack}
           onSelectAssessment={onSelectAssessment}

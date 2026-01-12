@@ -182,9 +182,9 @@ export default function Hero() {
           </div>
 
           <h1 className="text-[45px] text-5xl md:text-6xl lg:text-7xl font-bold leading-12 md:leading-18 tracking-tight">
-            Master the One Skill That Controls{" "}
+            Learn & Practice AI Skills{" "}
             <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent tracking-tight inline-block pb-2">
-              Every AI Tool{" "}
+              the Right Way{" "}
             </span>{" "}
           </h1>
 
@@ -196,6 +196,34 @@ export default function Hero() {
           {/* <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
             Built in 2015. Proven for a decade. Now it's your turn.
           </p> */}
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 py-8 max-w-5xl mx-auto">
+            <AnimatedStatCard
+              icon={TrendingUp}
+              value="2.5B"
+              label="prompts daily across AI apps"
+              delay={0}
+            />
+            <AnimatedStatCard
+              icon={DollarSign}
+              value="95K-375K"
+              label="prompt engineer salaries"
+              delay={200}
+            />
+            <AnimatedStatCard
+              icon={Wrench}
+              value="200+"
+              label="AI tools require prompting skills"
+              delay={400}
+            />
+            <AnimatedStatCard
+              icon={Zap}
+              value="70%+"
+              label="skill improvement rate"
+              delay={600}
+            />
+          </div>
 
           {/* CTAs */}
           <div className="flex flex-col lg:flex-row gap-4 justify-center items-center pt-8">
@@ -227,44 +255,14 @@ export default function Hero() {
             </Button> */}
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 py-8 max-w-5xl mx-auto">
-            <AnimatedStatCard
-              icon={TrendingUp}
-              value="2.5B"
-              label="prompts daily across AI apps"
-              delay={0}
-            />
-            <AnimatedStatCard
-              icon={DollarSign}
-              value="95K-375K"
-              label="prompt engineer salaries"
-              delay={200}
-            />
-            <AnimatedStatCard
-              icon={Wrench}
-              value="200+"
-              label="AI tools require prompting skills"
-              delay={400}
-            />
-            <AnimatedStatCard
-              icon={Zap}
-              value="70%+"
-              label="skill improvement rate"
-              delay={600}
-            />
-          </div>
-
-          <div className="mx-auto max-w-2xl">
+          <div className="mx-auto max-w-xs border-t border-white/10 mt-8 pt-4">
             <a
               href="https://orcid.org/0009-0004-3282-7042"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white/90 transition-colors"
+              className="inline-flex items-center gap-2 text-xs text-white/40 hover:text-white/70 transition-colors font-medium tracking-wide uppercase"
             >
-              <span className="inline-flex items-center rounded-full ">
-                Research-backed • ORCID verified
-              </span>
+              Research-backed • ORCID verified
             </a>
           </div>
         </div>

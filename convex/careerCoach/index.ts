@@ -4,73 +4,7 @@ import { v } from "convex/values";
 import { action } from "../_generated/server";
 import { api } from "../_generated/api";
 import { getAuthUserId } from "@convex-dev/auth/server";
-import { generateObject } from "ai";
-import { openai } from "@ai-sdk/openai";
-import { intentSchema } from "./schemas";
-import { generateOpportunities } from "./opportunities";
-import { generateRoadmap } from "./roadmap";
-
-// Detect user intent to route to appropriate generator
-async function detectIntent(
-  message: string
-): Promise<"opportunities" | "roadmap" | "chat"> {
-  // Quick regex-based detection for common patterns
-  const roadmapPatterns = [
-    /roadmap/i,
-    /how do i become/i,
-    /how to become/i,
-    /path to/i,
-    /steps to/i,
-    /guide to/i,
-    /learning path/i,
-    /what do i need to learn/i,
-    /make a? ?roadmap/i,
-    /create a? ?roadmap/i,
-  ];
-
-  for (const pattern of roadmapPatterns) {
-    if (pattern.test(message)) {
-      return "roadmap";
-    }
-  }
-
-  // For skill/background descriptions, use opportunities
-  const backgroundPatterns = [
-    /i('ve| have) been/i,
-    /i work(ed)? (as|in|at)/i,
-    /my background/i,
-    /my skills/i,
-    /i know/i,
-    /years? (of|in)/i,
-    /experience (in|with)/i,
-  ];
-
-  for (const pattern of backgroundPatterns) {
-    if (pattern.test(message)) {
-      return "opportunities";
-    }
-  }
-
-  // For ambiguous cases, use LLM to classify
-  try {
-    const { object } = await generateObject({
-      model: openai("gpt-4o-mini"),
-      schema: intentSchema,
-      prompt: `Classify this user message: "${message}"
-      
-      - "opportunities" if they describe their background, skills, experience, or want matches
-      - "roadmap" if they ask how to achieve/become something, want a learning path
-      - "chat" if it's a general question
-      
-      Be decisive.`,
-      temperature: 0,
-    });
-    return object.type;
-  } catch {
-    // Default to opportunities if classification fails
-    return "opportunities";
-  }
-}
+import { callAI } from "../lib/ai";
 
 export const chat = action({
   args: {
@@ -83,29 +17,79 @@ export const chat = action({
     ),
   },
   handler: async (ctx, { message, conversationHistory }) => {
-    // Detect intent
-    const intent = await detectIntent(message);
+    const userId = await getAuthUserId(ctx);
 
-    let result: any;
+    // Fetch user's existing matches to provide context
+    let matchContext = "The user has not taken the matching quiz yet.";
 
-    if (intent === "roadmap") {
-      result = await generateRoadmap(message, conversationHistory);
-    } else {
-      result = await generateOpportunities(message, conversationHistory);
-    }
+    if (userId) {
+      const matches = await ctx.runQuery(api.aiMatching.getAIMatches, {
+        userId,
+      });
 
-    // Save to database if authenticated
-    const identity = await ctx.auth.getUserIdentity();
-    if (identity) {
-      const userId = await getAuthUserId(ctx);
-      if (userId) {
-        await ctx.runMutation(api.careerCoach.db.saveConversation, {
-          userMessage: message,
-          assistantResponse: result,
-        });
+      if (
+        matches &&
+        matches.opportunities &&
+        matches.opportunities.length > 0
+      ) {
+        matchContext = `USER'S CURRENT AI CAREER MATCHES:\n${matches.opportunities
+          .map(
+            (m: any) =>
+              `- ${m.title} (${m.type}): ${m.description} (Match Score: ${m.matchScore || "N/A"})\n  Why: ${m.whyPerfectMatch}`
+          )
+          .join("\n")}`;
       }
     }
 
-    return result;
+    const systemPrompt = `You are the TrainingX.ai AI Career Coach - a friendly, knowledgeable career advisor.
+
+YOUR MISSION: Help the user understand and explore their CURRENT AI career matches.
+${matchContext}
+
+RULES:
+1. ONLY discuss the matches listed above or general AI career advice.
+2. DO NOT offer to generate new matches, roadmaps, or opportunities.
+3. If the user asks for a roadmap or new matches, politely explain that you can only help them explore their existing matches or discuss general AI topics.
+4. Be encouraging and helpful.
+5. Keep answers concise.
+
+Your goal is to help them take action on what they ALREADY have.`;
+
+    // specific system prompt overwrites the default one if passed as first message?
+    // callAI expects messages array.
+
+    const messages = [
+      { role: "system" as const, content: systemPrompt },
+      ...conversationHistory.map((m) => ({
+        role: m.role as "user" | "assistant",
+        content: m.content,
+      })),
+      { role: "user" as const, content: message },
+    ];
+
+    const response = await callAI(ctx, {
+      feature: "career-coach",
+      messages: messages,
+      temperature: 0.7,
+    });
+
+    // callAI returns data as string when jsonMode is false (default)
+    const content = response.data;
+
+    // Save conversation
+    if (userId) {
+      await ctx.runMutation(api.careerCoach.db.saveConversation, {
+        userMessage: message,
+        assistantResponse: { message: content }, // db schema expects structured object? let's stick to old shape but mostly empty
+      });
+    }
+
+    return {
+      message: content,
+      // Return empty arrays for backwards compatibility with frontend types for now
+      opportunities: [],
+      roadmap: undefined,
+      extractedSkills: [],
+    };
   },
 });

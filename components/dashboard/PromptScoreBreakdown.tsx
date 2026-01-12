@@ -12,7 +12,7 @@ export function PromptScoreBreakdown({
   if (!userStatsData) return null;
 
   return (
-    <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6 md:p-8">
+    <div id="onborda-breakdown" className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-500">

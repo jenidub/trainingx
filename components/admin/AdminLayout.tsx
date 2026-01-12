@@ -37,11 +37,11 @@ const adminItems = [
     url: "/admin/users",
     icon: Users,
   },
-  {
-    title: "Content",
-    url: "/admin/content",
-    icon: FileText,
-  },
+  //   {
+  //     title: "Content",
+  //     url: "/admin/content",
+  //     icon: FileText,
+  //   },
   {
     title: "AI Costs",
     url: "/admin/ai-costs",

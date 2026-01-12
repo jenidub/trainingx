@@ -7,7 +7,6 @@ import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { DomainSelection } from "@/components/practice/DomainSelection";
 import { LoadingState } from "@/components/practice";
 import { useAuth } from "@/contexts/AuthContextProvider";
-
 export default function PracticeZonePage() {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const router = useRouter();

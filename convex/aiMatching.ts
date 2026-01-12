@@ -345,7 +345,7 @@ Return a JSON object with this exact structure:
   "nextAction": {
     "title": "First action to take",
     "link": "/practice/something",
-    "cta": "Start Learning"
+    "cta": ""
   }
 }`;
 
@@ -547,5 +547,85 @@ export const updateRoadmapStepStatus = mutation({
     });
 
     return { success: true };
+  },
+});
+
+export const askCareerCoach = action({
+  args: {
+    opportunityTitle: v.optional(v.string()),
+    opportunityDescription: v.optional(v.string()),
+    userSkills: v.optional(v.any()),
+    allMatches: v.optional(v.array(v.any())), // Pass all matches for general context
+    messages: v.array(
+      v.object({
+        role: v.string(),
+        content: v.string(),
+      })
+    ),
+  },
+  handler: async (
+    ctx,
+    {
+      opportunityTitle,
+      opportunityDescription,
+      userSkills,
+      allMatches,
+      messages,
+    }
+  ) => {
+    let systemPrompt = "";
+
+    if (opportunityTitle) {
+      systemPrompt = `You are an expert AI Career Coach helping a user evaluate a specific career opportunity.
+    
+OPPORTUNITY CONTEXT:
+Title: ${opportunityTitle}
+Description: ${opportunityDescription}
+User Skills: ${JSON.stringify(userSkills || {})}
+
+YOUR ROLE:
+- Answer questions specifically about this opportunity
+- Explain how the user's skills might fit or where gaps exist
+- Provide realistic advice on what the day-to-day might look like
+- Be encouraging but honest
+- Keep answers concise and helpful
+- If asked about salary negotiation or interview prep, give specific advice for this role type
+- If user asks for generic career advice, try to tie it back to this opportunity if possible, or give general advice.
+
+Current conversation focus is on this specific opportunity.`;
+    } else {
+      // General Coaching Mode
+      const matchContext =
+        allMatches && allMatches.length > 0
+          ? `USER MATCHES: The user has been matched with the following opportunities based on a quiz:
+             ${allMatches.map((m: any) => `- ${m.title} (${m.type})`).join("\n")}`
+          : "USER PROFILE: The user has NOT taken the matching quiz yet. They are exploring.";
+
+      systemPrompt = `You are an expert AI Career Coach.
+        
+${matchContext}
+
+User Skills: ${JSON.stringify(userSkills || {})}
+
+YOUR ROLE:
+- Help the user explore career paths
+- If they have matches, discuss them and help compare
+- If they don't have matches, ask probing questions to help them figure out what they might like
+- Be encouraging, professional, and concise.`;
+    }
+
+    const response = await callAI(ctx, {
+      feature: "career-coach-chat",
+      messages: [
+        { role: "system", content: systemPrompt },
+        ...messages.map((m) => ({
+          role: m.role as "user" | "assistant",
+          content: m.content,
+        })),
+      ],
+      temperature: 0.7,
+    });
+
+    return response.data;
   },
 });

@@ -20,6 +20,24 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Required for FFmpeg WASM SharedArrayBuffer support
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin",
+          },
+          {
+            key: "Cross-Origin-Embedder-Policy",
+            value: "credentialless", // Use credentialless instead of require-corp to allow external resources
+          },
+        ],
+      },
+    ];
+  },
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },

@@ -60,9 +60,9 @@ export function PracticeCardDeck({
     });
   }, [practiceItems, levelDetails, levelProgress, levelId, userId]);
 
-  // ⚠️ DEMO MODE: Set to true to mark all cards as completed (for recording demo videos)
-  // Remember to set back to false after recording!
-  const DEMO_MODE = true;
+  // Demo mode controlled by environment variable (set in .env.local)
+  // Set NEXT_PUBLIC_DEMO_MODE=true to mark all cards as completed (for recording demo videos)
+  const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
   // Track if we've already initialized to prevent re-initialization after reset
   const hasInitializedRef = useRef(false);

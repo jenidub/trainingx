@@ -68,16 +68,6 @@ export function OutputCard({
         >
           {title}
         </h3>
-
-        <p
-          className={`text-sm transition-all duration-300 ${
-            isActive
-              ? "text-white/80 translate-y-0 opacity-100"
-              : "text-white/0 translate-y-4 opacity-0"
-          }`}
-        >
-          Generated in 0.4s
-        </p>
       </div>
 
       {/* Active Glow Overlay */}

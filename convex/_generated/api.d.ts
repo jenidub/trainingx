@@ -19,19 +19,21 @@ import type * as assessments from "../assessments.js";
 import type * as auth from "../auth.js";
 import type * as careerCoach_db from "../careerCoach/db.js";
 import type * as careerCoach_index from "../careerCoach/index.js";
-import type * as careerCoach_opportunities from "../careerCoach/opportunities.js";
-import type * as careerCoach_roadmap from "../careerCoach/roadmap.js";
-import type * as careerCoach_schemas from "../careerCoach/schemas.js";
 import type * as certificates from "../certificates.js";
+import type * as contentModeration from "../contentModeration.js";
 import type * as creatorStudio from "../creatorStudio.js";
+import type * as customDomains from "../customDomains.js";
 import type * as customGPTs from "../customGPTs.js";
 import type * as dailyDrills from "../dailyDrills.js";
 import type * as debug from "../debug.js";
+import type * as debugAllSlugs from "../debugAllSlugs.js";
+import type * as debugSlug from "../debugSlug.js";
 import type * as domainAssessments from "../domainAssessments.js";
 import type * as duels from "../duels.js";
 import type * as errors from "../errors.js";
 import type * as feedback from "../feedback.js";
 import type * as fixChallengeCounts from "../fixChallengeCounts.js";
+import type * as fixSlug from "../fixSlug.js";
 import type * as fixUserProgress from "../fixUserProgress.js";
 import type * as helpers from "../helpers.js";
 import type * as http from "../http.js";
@@ -39,9 +41,9 @@ import type * as itemTemplates from "../itemTemplates.js";
 import type * as leaderboard from "../leaderboard.js";
 import type * as lib_ai from "../lib/ai.js";
 import type * as messages from "../messages.js";
+import type * as migrations from "../migrations.js";
 import type * as migrations_backfillDuelMembers from "../migrations/backfillDuelMembers.js";
 import type * as migrations_cleanOldDuels from "../migrations/cleanOldDuels.js";
-import type * as migrations from "../migrations.js";
 import type * as moderation from "../moderation.js";
 import type * as otp_ResendOTP from "../otp/ResendOTP.js";
 import type * as otp_TwilioOTP from "../otp/TwilioOTP.js";
@@ -63,6 +65,8 @@ import type * as pruneItems from "../pruneItems.js";
 import type * as quests from "../quests.js";
 import type * as quizResults from "../quizResults.js";
 import type * as quizzes from "../quizzes.js";
+import type * as resetTrack1 from "../resetTrack1.js";
+import type * as seed from "../seed.js";
 import type * as seedAssessment from "../seedAssessment.js";
 import type * as seedCommunity from "../seedCommunity.js";
 import type * as seedLevel1Items from "../seedLevel1Items.js";
@@ -80,6 +84,7 @@ import type * as spacedRepetition from "../spacedRepetition.js";
 import type * as userProgress from "../userProgress.js";
 import type * as userStatsUtils from "../userStatsUtils.js";
 import type * as users from "../users.js";
+import type * as vibeProjects from "../vibeProjects.js";
 
 import type {
   ApiFromModules,
@@ -87,14 +92,6 @@ import type {
   FunctionReference,
 } from "convex/server";
 
-/**
- * A utility for referencing Convex functions in your app's API.
- *
- * Usage:
- * ```js
- * const myFunctionReference = api.myModule.myFunction;
- * ```
- */
 declare const fullApi: ApiFromModules<{
   adaptiveEngine: typeof adaptiveEngine;
   admin: typeof admin;
@@ -107,19 +104,21 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   "careerCoach/db": typeof careerCoach_db;
   "careerCoach/index": typeof careerCoach_index;
-  "careerCoach/opportunities": typeof careerCoach_opportunities;
-  "careerCoach/roadmap": typeof careerCoach_roadmap;
-  "careerCoach/schemas": typeof careerCoach_schemas;
   certificates: typeof certificates;
+  contentModeration: typeof contentModeration;
   creatorStudio: typeof creatorStudio;
+  customDomains: typeof customDomains;
   customGPTs: typeof customGPTs;
   dailyDrills: typeof dailyDrills;
   debug: typeof debug;
+  debugAllSlugs: typeof debugAllSlugs;
+  debugSlug: typeof debugSlug;
   domainAssessments: typeof domainAssessments;
   duels: typeof duels;
   errors: typeof errors;
   feedback: typeof feedback;
   fixChallengeCounts: typeof fixChallengeCounts;
+  fixSlug: typeof fixSlug;
   fixUserProgress: typeof fixUserProgress;
   helpers: typeof helpers;
   http: typeof http;
@@ -127,9 +126,9 @@ declare const fullApi: ApiFromModules<{
   leaderboard: typeof leaderboard;
   "lib/ai": typeof lib_ai;
   messages: typeof messages;
+  migrations: typeof migrations;
   "migrations/backfillDuelMembers": typeof migrations_backfillDuelMembers;
   "migrations/cleanOldDuels": typeof migrations_cleanOldDuels;
-  migrations: typeof migrations;
   moderation: typeof moderation;
   "otp/ResendOTP": typeof otp_ResendOTP;
   "otp/TwilioOTP": typeof otp_TwilioOTP;
@@ -151,6 +150,8 @@ declare const fullApi: ApiFromModules<{
   quests: typeof quests;
   quizResults: typeof quizResults;
   quizzes: typeof quizzes;
+  resetTrack1: typeof resetTrack1;
+  seed: typeof seed;
   seedAssessment: typeof seedAssessment;
   seedCommunity: typeof seedCommunity;
   seedLevel1Items: typeof seedLevel1Items;
@@ -168,15 +169,32 @@ declare const fullApi: ApiFromModules<{
   userProgress: typeof userProgress;
   userStatsUtils: typeof userStatsUtils;
   users: typeof users;
+  vibeProjects: typeof vibeProjects;
 }>;
-declare const fullApiWithMounts: typeof fullApi;
 
+/**
+ * A utility for referencing Convex functions in your app's public API.
+ *
+ * Usage:
+ * ```js
+ * const myFunctionReference = api.myModule.myFunction;
+ * ```
+ */
 export declare const api: FilterApi<
-  typeof fullApiWithMounts,
+  typeof fullApi,
   FunctionReference<any, "public">
 >;
+
+/**
+ * A utility for referencing Convex functions in your app's internal API.
+ *
+ * Usage:
+ * ```js
+ * const myFunctionReference = internal.myModule.myFunction;
+ * ```
+ */
 export declare const internal: FilterApi<
-  typeof fullApiWithMounts,
+  typeof fullApi,
   FunctionReference<any, "internal">
 >;
 

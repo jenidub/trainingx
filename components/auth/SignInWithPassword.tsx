@@ -3,7 +3,14 @@
 import { useAuthActions } from "@convex-dev/auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import toast from 'react-hot-toast';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import toast from "react-hot-toast";
 import { useState } from "react";
 import { ConvexError } from "convex/values";
 import { INVALID_PASSWORD } from "convex/errors";
@@ -24,6 +31,7 @@ export function SignInWithPassword({
   const { signIn } = useAuthActions();
   const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [submitting, setSubmitting] = useState(false);
+  const [gender, setGender] = useState("");
   return (
     <form
       className="flex flex-col"
@@ -32,13 +40,33 @@ export function SignInWithPassword({
         setSubmitting(true);
         const formData = new FormData(event.currentTarget);
         const nameValue = (formData.get("name") || "").toString().trim();
+        const ageValue = (formData.get("age") || "").toString().trim();
+        const genderValue = (formData.get("gender") || "").toString().trim();
         if (flow === "signUp" && !nameValue) {
           toast.error("Please enter your name to sign up.");
           setSubmitting(false);
           return;
         }
         if (flow === "signUp") {
+          if (!ageValue) {
+            toast.error("Please enter your age to sign up.");
+            setSubmitting(false);
+            return;
+          }
+          const parsedAge = Number.parseInt(ageValue, 10);
+          if (!Number.isFinite(parsedAge) || parsedAge <= 0) {
+            toast.error("Please enter a valid age.");
+            setSubmitting(false);
+            return;
+          }
+          if (!genderValue) {
+            toast.error("Please select your gender to sign up.");
+            setSubmitting(false);
+            return;
+          }
           formData.set("name", nameValue);
+          formData.set("age", ageValue);
+          formData.set("gender", genderValue);
         }
         signIn(provider ?? "password", formData)
           .then(() => {
@@ -50,10 +78,10 @@ export function SignInWithPassword({
             console.error(error);
             let toastTitle: string;
             let toastDescription: string | undefined;
-            
+
             const errorMessage = error?.message || error?.toString() || "";
             const errorName = error?.name || "";
-            
+
             if (
               error instanceof ConvexError &&
               error.data === INVALID_PASSWORD
@@ -63,32 +91,34 @@ export function SignInWithPassword({
             } else if (
               errorMessage.includes("InvalidAccountId") ||
               errorName === "InvalidAccountId" ||
-              (error instanceof Error && error.message.includes("InvalidAccountId"))
+              (error instanceof Error &&
+                error.message.includes("InvalidAccountId"))
             ) {
               toastTitle = "Account not found";
-              toastDescription = flow === "signIn"
-                ? "This account doesn't exist. Did you mean to sign up?"
-                : "Could not create account. Please try again.";
+              toastDescription =
+                flow === "signIn"
+                  ? "This account doesn't exist. Did you mean to sign up?"
+                  : "Could not create account. Please try again.";
             } else if (
               errorMessage.includes("Invalid") ||
               errorMessage.includes("not found") ||
               errorMessage.includes("does not exist")
             ) {
-              toastTitle = flow === "signIn"
-                ? "Could not sign in"
-                : "Could not sign up";
-              toastDescription = flow === "signIn"
-                ? "This account doesn't exist. Did you mean to sign up?"
-                : "Could not create account. Please try again.";
+              toastTitle =
+                flow === "signIn" ? "Could not sign in" : "Could not sign up";
+              toastDescription =
+                flow === "signIn"
+                  ? "This account doesn't exist. Did you mean to sign up?"
+                  : "Could not create account. Please try again.";
             } else {
-              toastTitle = flow === "signIn"
-                ? "Could not sign in"
-                : "Could not sign up";
-              toastDescription = flow === "signIn"
-                ? "Please check your credentials and try again."
-                : "Could not create account. Please try again.";
+              toastTitle =
+                flow === "signIn" ? "Could not sign in" : "Could not sign up";
+              toastDescription =
+                flow === "signIn"
+                  ? "Please check your credentials and try again."
+                  : "Could not create account. Please try again.";
             }
-            
+
             toast.error(toastDescription || "Could not sign in");
             setSubmitting(false);
           });
@@ -107,6 +137,30 @@ export function SignInWithPassword({
             required={flow === "signUp"}
             placeholder="Your name"
           />
+          <label htmlFor="age">Age</label>
+          <Input
+            name="age"
+            id="age"
+            type="number"
+            min={1}
+            className="mb-4"
+            placeholder="Your age"
+          />
+          <label>Gender</label>
+          <Select value={gender} onValueChange={setGender}>
+            <SelectTrigger className="mb-4 w-full">
+              <SelectValue placeholder="Select your gender" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="female">Female</SelectItem>
+              <SelectItem value="male">Male</SelectItem>
+              <SelectItem value="prefer-not-to-say">
+                Prefer not to say
+              </SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+          <input type="hidden" name="gender" value={gender} />
         </>
       )}
       <div className="flex items-center justify-between">

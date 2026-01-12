@@ -149,7 +149,7 @@ export function MultiPlayerGameplay({ roomId }: MultiPlayerGameplayProps) {
           <p className="text-gray-600 mb-4">
             Item not found (index: {currentItemIndex}, total: {items.length})
           </p>
-          <Button onClick={() => router.push("/duels")}>Back to Arena</Button>
+          Back to Arena
         </CardContent>
       </Card>
     );

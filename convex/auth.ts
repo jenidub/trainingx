@@ -1,4 +1,4 @@
-import { INVALID_PASSWORD } from "./errors.js"
+import { INVALID_PASSWORD } from "./errors.js";
 import GitHub from "@auth/core/providers/github";
 import Google from "@auth/core/providers/google";
 import Resend from "@auth/core/providers/resend";
@@ -15,9 +15,23 @@ import { DataModel } from "./_generated/dataModel.js";
 
 const profileWithOptionalName = (params: Record<string, unknown>) => {
   const name = (params.name as string | undefined)?.trim();
+  const gender = (params.gender as string | undefined)?.trim();
+  const ageParam = params.age;
+  const ageValue =
+    typeof ageParam === "number"
+      ? ageParam
+      : typeof ageParam === "string"
+        ? Number.parseInt(ageParam.trim(), 10)
+        : undefined;
+  const age =
+    typeof ageValue === "number" && Number.isFinite(ageValue) && ageValue > 0
+      ? ageValue
+      : undefined;
   return {
     email: params.email as string,
     ...(name ? { name } : {}),
+    ...(gender ? { gender } : {}),
+    ...(age !== undefined ? { age } : {}),
   };
 };
 

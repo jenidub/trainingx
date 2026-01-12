@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogOut } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/contexts/AuthContextProvider";
+import { useAuthActions } from "@convex-dev/auth/react";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+  const { signOut } = useAuthActions();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export default function Navigation() {
         { label: "Practice", href: "/practice" },
         { label: "Matching", href: "/matching" },
         // { label: "Portfolio", href: "/portfolio" },
-        { label: "Assessment", href: "/assessment" },
+        { label: "Assessment", href: "/quiz" },
         { label: "About", href: "/about" },
       ]
     : [
@@ -35,7 +37,7 @@ export default function Navigation() {
       ];
 
   return (
-    <nav className="z-50 bg-slate-950 backdrop-blur-xl border-b border-gray-700/50">
+    <nav className="z-50 bg-[#000408] backdrop-blur-xl border-b border-gray-700/50">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16 relative">
           {/* Logo */}
@@ -46,14 +48,11 @@ export default function Navigation() {
             >
               <Image
                 src="/logo.webp"
-                alt="TrainingX.Ai Logo"
+                alt="TrainingX.AI Logo"
                 width={48}
                 height={48}
-                className="h-12 w-12"
+                className="h-12 w-full"
               />
-              {/* <span className="text-2xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
-                TrainingX.Ai
-              </span> */}
             </div>
           </Link>
 
@@ -84,7 +83,7 @@ export default function Navigation() {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
             {!isLoggedIn && (
-              <Link href="/quiz">
+              <Link href="/auth">
                 <Button
                   className="bg-gradient-to-r from-gradient-from to-gradient-to"
                   data-testid="button-get-started"
@@ -93,6 +92,17 @@ export default function Navigation() {
                   Get Started
                 </Button>
               </Link>
+            )}
+            {isLoggedIn && (
+              <Button
+                variant="outline"
+                onClick={() => void signOut()}
+                className="border-red-500/50 text-red-400 bg-red-500/10 hover:bg-red-500/20 hover:text-red-300"
+                data-testid="button-logout"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Logout
+              </Button>
             )}
           </div>
 
@@ -145,7 +155,7 @@ export default function Navigation() {
               )}
               {!isLoggedIn && (
                 <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
-                  <Link href="/quiz">
+                  <Link href="/auth">
                     <Button
                       className="bg-gradient-to-r from-gradient-from to-gradient-to w-full"
                       data-testid="mobile-button-get-started"
@@ -153,6 +163,22 @@ export default function Navigation() {
                       Get Started
                     </Button>
                   </Link>
+                </div>
+              )}
+              {isLoggedIn && (
+                <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      void signOut();
+                      setIsMenuOpen(false);
+                    }}
+                    className="border-red-500/50 text-red-400 hover:bg-red-500/10 hover:text-red-300 w-full"
+                    data-testid="mobile-button-logout"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </Button>
                 </div>
               )}
             </div>

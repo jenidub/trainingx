@@ -25,6 +25,7 @@ import {
   MapPin,
   Clock,
 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { Button } from "@/components/ui/button";
@@ -143,10 +144,14 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-gradient-to-br from-violet-50 to-indigo-50 rounded-2xl border-2 border-violet-200 overflow-hidden"
+      className="rounded-2xl border-2 border-[color:var(--gradient-from)]/20 overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(to bottom right, color-mix(in srgb, var(--gradient-from) 8%, white), color-mix(in srgb, var(--gradient-to) 8%, white))",
+      }}
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-violet-500 to-purple-600 p-4 text-white">
+      <div className="theme-gradient-r p-4 text-white">
         <div className="flex items-center gap-2 mb-1">
           <MapPin className="h-4 w-4" />
           <span className="text-xs font-semibold uppercase tracking-wide opacity-90">
@@ -172,7 +177,7 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
               phase.status === "locked"
                 ? "bg-slate-100 border-slate-200 opacity-60"
                 : phase.status === "current"
-                  ? "bg-white border-violet-300 shadow-md"
+                  ? "bg-white border-blue-300 shadow-md"
                   : "bg-green-50 border-green-200"
             }`}
           >
@@ -188,7 +193,7 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
                     <CheckCircle2 className="h-4 w-4 text-white" />
                   </div>
                 ) : (
-                  <div className="w-6 h-6 rounded-full bg-violet-500 flex items-center justify-center text-white text-xs font-bold">
+                  <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-bold">
                     {phaseIndex + 1}
                   </div>
                 )}
@@ -213,26 +218,26 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
                         className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
                           step.type === "milestone"
                             ? "bg-yellow-100 border-yellow-400"
-                            : "bg-violet-100 border-violet-300"
+                            : "bg-blue-100 border-blue-300"
                         }`}
                         title={step.title}
                       >
                         {step.type === "track" && (
-                          <Target className="h-4 w-4 text-violet-600" />
+                          <Target className="h-4 w-4 text-blue-600" />
                         )}
                         {step.type === "project" && (
-                          <Lightbulb className="h-4 w-4 text-violet-600" />
+                          <Lightbulb className="h-4 w-4 text-blue-600" />
                         )}
                         {step.type === "milestone" && (
                           <CheckCircle2 className="h-4 w-4 text-yellow-600" />
                         )}
                         {step.type === "external" && (
-                          <ChevronRight className="h-4 w-4 text-violet-600" />
+                          <ChevronRight className="h-4 w-4 text-blue-600" />
                         )}
                       </div>
                       {/* Connector */}
                       {stepIndex < phase.steps.length - 1 && (
-                        <div className="w-4 h-0.5 bg-violet-300" />
+                        <div className="w-4 h-0.5 bg-blue-300" />
                       )}
                     </div>
                   ))}
@@ -245,7 +250,7 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
                       key={step.id}
                       className="text-xs text-slate-600 flex items-center gap-2"
                     >
-                      <span className="w-1 h-1 rounded-full bg-violet-400" />
+                      <span className="w-1 h-1 rounded-full bg-blue-400" />
                       {step.title}
                       {step.estimatedHours && (
                         <span className="text-slate-400">
@@ -255,7 +260,7 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
                     </div>
                   ))}
                   {phase.steps.length > 3 && (
-                    <div className="text-xs text-violet-600 font-medium">
+                    <div className="text-xs text-blue-600 font-medium">
                       +{phase.steps.length - 3} more steps
                     </div>
                   )}
@@ -282,7 +287,7 @@ function RoadmapView({ roadmap }: { roadmap: Roadmap }) {
       {roadmap.nextAction && (
         <div className="p-4 pt-0">
           <Link href={roadmap.nextAction.link || "/practice"}>
-            <Button className="w-full bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white">
+            <Button className="w-full theme-gradient-r hover:opacity-90 text-white">
               {roadmap.nextAction.cta}
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
@@ -461,9 +466,7 @@ function MessageBubble({ message }: { message: Message }) {
       {/* Avatar */}
       <div
         className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-          isUser
-            ? "bg-primary text-white"
-            : "bg-gradient-to-br from-violet-500 to-purple-600 text-white"
+          isUser ? "bg-primary text-white" : "theme-gradient text-white"
         }`}
       >
         {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
@@ -481,7 +484,13 @@ function MessageBubble({ message }: { message: Message }) {
               : "bg-white border border-slate-200 text-slate-800 rounded-tl-sm shadow-sm"
           }`}
         >
-          <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+          {isUser ? (
+            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+          ) : (
+            <div className="text-sm prose prose-sm prose-slate max-w-none prose-p:my-1 prose-headings:my-2 prose-ul:my-1 prose-li:my-0">
+              <ReactMarkdown>{message.content}</ReactMarkdown>
+            </div>
+          )}
         </div>
 
         {/* Extracted Skills */}
@@ -530,10 +539,10 @@ function WelcomeState({
   onExampleClick: (text: string) => void;
 }) {
   const examples = [
-    "I've been a marketing manager for 8 years with strong communication skills",
-    "I know Python and have used ChatGPT extensively",
-    "I'm a teacher looking to transition into tech",
-    "I want to start a side hustle using AI tools",
+    "What are my top career matches?",
+    "Why is 'AI Developer' a good fit for me?",
+    "What skills do I need to learn next?",
+    "How does the salary compare for my matches?",
   ];
 
   return (
@@ -544,16 +553,13 @@ function WelcomeState({
         className="max-w-2xl space-y-8"
       >
         <div className="space-y-4">
-          <div className="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
-            <Sparkles className="h-8 w-8 text-white" />
-          </div>
           <h1 className="text-3xl md:text-4xl font-bold text-slate-900">
             AI Career Coach
           </h1>
           <p className="text-lg text-slate-600 max-w-md mx-auto">
-            Tell me about your background, skills, or interests, and I&apos;ll
-            show you AI opportunities across careers, trades, side hustles, and
-            businesses.
+            Ask me anything about your <b>current career matches</b>. I can help
+            you compare options, understand salary potential, or plan your next
+            steps.
           </p>
         </div>
 
@@ -686,28 +692,6 @@ export default function AICareerCoachPage() {
     );
   }
 
-  if (!user) {
-    return (
-      <SidebarLayout>
-        <div className="min-h-screen flex items-center justify-center p-6">
-          <Card className="max-w-md w-full">
-            <CardContent className="p-8 text-center space-y-4">
-              <Sparkles className="h-12 w-12 text-primary mx-auto" />
-              <h2 className="text-2xl font-bold">Sign in Required</h2>
-              <p className="text-slate-600">
-                Please sign in to access the AI Career Coach and get
-                personalized recommendations.
-              </p>
-              <Link href="/auth">
-                <Button className="w-full">Sign In</Button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-      </SidebarLayout>
-    );
-  }
-
   return (
     <SidebarLayout>
       <div className="relative min-h-screen bg-slate-50/50 flex flex-col">
@@ -731,13 +715,13 @@ export default function AICareerCoachPage() {
                 <ArrowLeft className="h-5 w-5" />
               </Link>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg theme-gradient flex items-center justify-center">
                   <Sparkles className="h-4 w-4 text-white" />
                 </div>
                 <div>
                   <h1 className="font-bold text-slate-900">AI Career Coach</h1>
                   <p className="text-xs text-slate-500">
-                    Discover opportunities across 4 domains
+                    Explore your personalized matches
                   </p>
                 </div>
               </div>
@@ -771,7 +755,7 @@ export default function AICareerCoachPage() {
                   animate={{ opacity: 1 }}
                   className="flex gap-3"
                 >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full theme-gradient flex items-center justify-center">
                     <Bot className="h-4 w-4 text-white" />
                   </div>
                   <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm">

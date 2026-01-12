@@ -43,7 +43,7 @@ export default function SkillsOpportunityHub() {
             className="hidden lg:block"
           >
             <div className="w-10 h-10 bg-white rounded-xl shadow-lg border border-slate-100 flex items-center justify-center transform rotate-12">
-              <Globe className="w-6 h-6 text-blue-500" />
+              <Globe className="w-6 h-6 text-gradient-from" />
             </div>
           </FloatingElement>
 
@@ -54,8 +54,8 @@ export default function SkillsOpportunityHub() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm mb-6 md:mb-8"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gradient-from/40 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-gradient-from"></span>
             </span>
             <span className="text-xs md:text-sm font-semibold text-slate-600">
               The AI Economy Gateway
@@ -92,12 +92,12 @@ export default function SkillsOpportunityHub() {
           {/* AI Careers - Row 1, Col 1-2 on lg */}
           <BentoCard
             delay={0}
-            className="col-span-2 lg:col-start-1 lg:row-start-1 bg-white border-slate-200 hover:border-blue-300 shadow-sm hover:shadow-blue-100/50"
+            className="col-span-2 lg:col-start-1 lg:row-start-1 bg-white border-slate-200 hover:border-gradient-from/30 shadow-sm hover:shadow-gradient-from/5"
           >
             <div className="flex justify-between items-start h-full relative overflow-hidden">
               <div className="flex flex-col justify-between h-full z-10">
-                <div className="p-3 rounded-xl bg-blue-50 border border-blue-100 w-fit mb-4">
-                  <Briefcase className="w-6 h-6 text-blue-600" />
+                <div className="p-3 rounded-xl bg-gradient-from/10 border border-gradient-from/20 w-fit mb-4">
+                  <Briefcase className="w-6 h-6 text-gradient-from" />
                 </div>
                 <div>
                   <Counter
@@ -116,7 +116,7 @@ export default function SkillsOpportunityHub() {
                     initial={{ x: 20 }}
                     whileInView={{ x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="h-10 rounded-lg bg-blue-600 w-full shadow-sm"
+                    className="h-10 rounded-lg bg-gradient-from w-full shadow-sm"
                   />
                 ))}
               </div>
@@ -126,12 +126,12 @@ export default function SkillsOpportunityHub() {
           {/* AI Services - Row 2, Col 1-2 on lg (below AI Careers) */}
           <BentoCard
             delay={0.15}
-            className="col-span-2 lg:col-start-1 lg:row-start-2 bg-white border-slate-200 hover:border-orange-300 shadow-sm hover:shadow-orange-100/50"
+            className="col-span-2 lg:col-start-1 lg:row-start-2 bg-white border-slate-200 hover:border-gradient-to/30 shadow-sm hover:shadow-gradient-to/5"
           >
             <div className="flex justify-between items-start h-full relative overflow-hidden">
               <div className="flex flex-col justify-between h-full z-10">
-                <div className="p-3 rounded-xl bg-orange-50 border border-orange-100 w-fit mb-4">
-                  <Wrench className="w-6 h-6 text-orange-500" />
+                <div className="p-3 rounded-xl bg-gradient-to/10 border border-gradient-to/20 w-fit mb-4">
+                  <Wrench className="w-6 h-6 text-gradient-to" />
                 </div>
                 <div>
                   <Counter
@@ -153,7 +153,7 @@ export default function SkillsOpportunityHub() {
                       delay: i * 0.1,
                       repeat: Infinity,
                     }}
-                    className="w-3 h-3 rounded-full bg-orange-400"
+                    className="w-3 h-3 rounded-full bg-gradient-to/40"
                   />
                 ))}
               </div>
@@ -163,11 +163,11 @@ export default function SkillsOpportunityHub() {
           {/* AI Businesses - Col 3, Row 1-2 on lg */}
           <BentoCard
             delay={0.1}
-            className="bg-white border-slate-200 hover:border-purple-300 shadow-sm hover:shadow-purple-100/50 lg:col-start-3 lg:row-start-1 lg:row-span-2"
+            className="bg-white border-slate-200 hover:border-gradient-from/30 shadow-sm hover:shadow-gradient-from/5 lg:col-start-3 lg:row-start-1 lg:row-span-2"
           >
             <div className="flex flex-col h-full relative">
-              <div className="p-3 rounded-xl bg-purple-50 border border-purple-100 w-fit mb-6">
-                <Building2 className="w-6 h-6 text-purple-600" />
+              <div className="p-3 rounded-xl bg-gradient-from/10 border border-gradient-from/20 w-fit mb-6">
+                <Building2 className="w-6 h-6 text-gradient-from" />
               </div>
 
               <Counter
@@ -175,25 +175,25 @@ export default function SkillsOpportunityHub() {
                 suffix="+"
                 className="text-4xl font-bold text-slate-900 mb-2 block"
               />
-              <p className="text-purple-700 font-medium mb-8 bg-purple-50 px-2 py-1 rounded-md w-fit text-sm">
+              <p className="text-gradient-from font-medium mb-8 bg-gradient-from/5 px-2 py-1 rounded-md w-fit text-sm">
                 AI Businesses
               </p>
 
               <div className="mt-auto space-y-4">
                 <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
-                  <div className="w-2 h-2 rounded-full bg-purple-400 group-hover/item:scale-150 transition-transform" />
+                  <div className="w-2 h-2 rounded-full bg-gradient-from/40 group-hover/item:scale-150 transition-transform" />
                   <span className="group-hover/item:translate-x-1 transition-transform">
                     SaaS
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
-                  <div className="w-2 h-2 rounded-full bg-purple-400 group-hover/item:scale-150 transition-transform" />
+                  <div className="w-2 h-2 rounded-full bg-gradient-from/40 group-hover/item:scale-150 transition-transform" />
                   <span className="group-hover/item:translate-x-1 transition-transform">
                     Agencies
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
-                  <div className="w-2 h-2 rounded-full bg-purple-400 group-hover/item:scale-150 transition-transform" />
+                  <div className="w-2 h-2 rounded-full bg-gradient-from/40 group-hover/item:scale-150 transition-transform" />
                   <span className="group-hover/item:translate-x-1 transition-transform">
                     Startups
                   </span>
@@ -205,11 +205,11 @@ export default function SkillsOpportunityHub() {
           {/* Side Hustles - Col 4, Row 1-2 on lg */}
           <BentoCard
             delay={0.2}
-            className="bg-white border-slate-200 hover:border-emerald-300 shadow-sm hover:shadow-emerald-100/50 lg:col-start-4 lg:row-start-1 lg:row-span-2"
+            className="bg-white border-slate-200 hover:border-gradient-to/30 shadow-sm hover:shadow-gradient-to/5 lg:col-start-4 lg:row-start-1 lg:row-span-2"
           >
             <div className="flex flex-col h-full relative">
-              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-100 w-fit mb-6">
-                <DollarSign className="w-6 h-6 text-emerald-600" />
+              <div className="p-3 rounded-xl bg-gradient-to/10 border border-gradient-to/20 w-fit mb-6">
+                <DollarSign className="w-6 h-6 text-gradient-to" />
               </div>
 
               <Counter
@@ -217,25 +217,25 @@ export default function SkillsOpportunityHub() {
                 suffix="+"
                 className="text-4xl font-bold text-slate-900 mb-2 block"
               />
-              <p className="text-emerald-700 font-medium mb-8 bg-emerald-50 px-2 py-1 rounded-md w-fit text-sm">
+              <p className="text-gradient-to font-medium mb-8 bg-gradient-to/5 px-2 py-1 rounded-md w-fit text-sm">
                 Side Hustles
               </p>
 
               <div className="mt-auto space-y-4">
                 <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 group-hover/item:scale-150 transition-transform" />
+                  <div className="w-2 h-2 rounded-full bg-gradient-to/40 group-hover/item:scale-150 transition-transform" />
                   <span className="group-hover/item:translate-x-1 transition-transform">
                     Passive Income
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 group-hover/item:scale-150 transition-transform" />
+                  <div className="w-2 h-2 rounded-full bg-gradient-to/40 group-hover/item:scale-150 transition-transform" />
                   <span className="group-hover/item:translate-x-1 transition-transform">
                     Freelance Gigs
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600 group/item cursor-pointer">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 group-hover/item:scale-150 transition-transform" />
+                  <div className="w-2 h-2 rounded-full bg-gradient-to/40 group-hover/item:scale-150 transition-transform" />
                   <span className="group-hover/item:translate-x-1 transition-transform">
                     Micro-SaaS
                   </span>
@@ -243,25 +243,6 @@ export default function SkillsOpportunityHub() {
               </div>
             </div>
           </BentoCard>
-        </div>
-
-        {/* Choose Your Path Section */}
-        <div className="grid md:grid-cols-2 gap-6">
-          <PathCard
-            icon={Search}
-            title="Browse & Explore"
-            desc="Filter opportunities by industry, skill level, and income potential."
-            action="Explore Database"
-            color="teal"
-          />
-          <PathCard
-            icon={Target}
-            title="Take Assessment"
-            desc="Get personalized AI career matches based on your unique profile."
-            action="Find My Path"
-            color="indigo"
-            featured
-          />
         </div>
       </div>
     </section>
@@ -378,21 +359,21 @@ function PathCard({
   title: string;
   desc: string;
   action: string;
-  color: "teal" | "indigo";
+  color: "primary" | "secondary";
   featured?: boolean;
 }) {
   const styles = {
-    teal: {
-      card: "bg-teal-50 border-teal-100",
-      icon: "bg-teal-100 text-teal-600",
-      btn: "bg-teal-600 hover:bg-teal-700 text-white shadow-teal-200",
-      label: "text-teal-600",
+    primary: {
+      card: "bg-gradient-from/5 border-gradient-from/10",
+      icon: "bg-gradient-from/10 text-gradient-from",
+      btn: "bg-gradient-from hover:bg-gradient-from/90 text-white shadow-gradient-from/20",
+      label: "text-gradient-from",
     },
-    indigo: {
-      card: "bg-indigo-50 border-indigo-100",
-      icon: "bg-indigo-100 text-indigo-600",
-      btn: "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200",
-      label: "text-indigo-600",
+    secondary: {
+      card: "bg-gradient-to/5 border-gradient-to/10",
+      icon: "bg-gradient-to/10 text-gradient-to",
+      btn: "bg-gradient-to hover:bg-gradient-to/90 text-white shadow-gradient-to/20",
+      label: "text-gradient-to",
     },
   };
 
@@ -401,7 +382,7 @@ function PathCard({
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className={`rounded-3xl p-8 border transition-all duration-300 ${featured ? "bg-white shadow-xl shadow-indigo-100 ring-1 ring-indigo-50" : "bg-white shadow-lg border-slate-100"} relative group overflow-hidden`}
+      className={`rounded-3xl p-8 border transition-all duration-300 ${featured ? "bg-white shadow-xl shadow-gradient-from/10 ring-1 ring-gradient-from/5" : "bg-white shadow-lg border-slate-100"} relative group overflow-hidden`}
     >
       <div className="flex flex-col h-full relative z-10">
         <div

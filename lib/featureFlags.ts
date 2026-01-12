@@ -1,7 +1,7 @@
 export const comingSoonConfig = {
   enabled: false,
   logoSrc: "/logo.webp",
-  logoAlt: "TrainingX.Ai logo",
+  logoAlt: "TrainingX.AI logo",
   headline: "Massive upgrades cooking. Return soon.",
   message:
     "",

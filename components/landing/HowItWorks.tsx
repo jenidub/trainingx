@@ -68,10 +68,7 @@ export default function PillarsSection() {
   }, [isPaused]);
 
   return (
-    <section
-      id="how-it-works"
-      className="container mx-auto px-4 py-16 sm:py-24 max-w-7xl scroll-mt-24"
-    >
+    <section className="container mx-auto px-4 py-16 sm:py-24 max-w-7xl">
       <div className="mb-10 text-center space-y-2">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -105,7 +102,7 @@ export default function PillarsSection() {
               className={cn(
                 "relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-700 ease-out border border-white/10",
                 isActive
-                  ? "lg:flex-[3] flex-[3]"
+                  ? "lg:flex-[2.5] flex-[2.5]"
                   : "lg:flex-[1] flex-[1] opacity-70 hover:opacity-100"
               )}
             >

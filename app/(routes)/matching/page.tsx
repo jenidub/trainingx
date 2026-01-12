@@ -22,6 +22,7 @@ import {
   ChevronRight,
   Star,
   Trophy,
+  Bot,
 } from "lucide-react";
 
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
@@ -195,31 +196,6 @@ const OpportunityCard = ({
         transition={{ duration: 0.4, delay: index * 0.1 }}
         className={`group relative h-full overflow-hidden rounded-3xl border-2 border-b-[6px] bg-white transition-all duration-200 ${theme.border} ${theme.borderHover} hover:shadow-xl hover:-translate-y-1`}
       >
-        {/* XP & Match Badge - Floating */}
-        <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
-          {unlocked ? (
-            <div className="flex items-center gap-1.5 rounded-2xl border-2 border-b-4 border-yellow-500 bg-yellow-400 px-3 py-1.5 text-xs font-black uppercase tracking-wide text-yellow-950 shadow-sm">
-              <Zap className="h-5 w-5 fill-current" />
-              <span>+{opportunity.promptScoreMin * 10 + 500} XP</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 rounded-2xl border-2 border-b-4 border-slate-300 bg-slate-200 px-3 py-1.5 text-xs font-black uppercase tracking-wide text-slate-500 shadow-sm">
-              <Lock className="h-5 w-5" />
-            </div>
-          )}
-          <div
-            className={`inline-flex items-center gap-1 rounded-2xl border-2 border-b-4 px-2.5 py-1 text-xs font-black uppercase tracking-wide ${
-              matchScore >= 85
-                ? "border-green-500 bg-green-500 text-white"
-                : matchScore >= 70
-                  ? "border-yellow-400 bg-yellow-300 text-yellow-900"
-                  : "border-slate-300 bg-slate-200 text-slate-700"
-            }`}
-          >
-            {unlocked ? `${Math.round(matchScore)}% Match` : "Locked"}
-          </div>
-        </div>
-
         <div className="flex h-full flex-col p-6">
           {/* Header */}
           <div className="mb-6 flex items-start gap-4">
@@ -228,15 +204,15 @@ const OpportunityCard = ({
             >
               <Icon className="h-7 w-7" />
             </div>
-            <div className="flex-1 space-y-2 pr-12">
-              <h3 className="text-xl font-extrabold leading-6 text-slate-700">
+            <div className="flex-1 space-y-2 pr-10">
+              <h3 className="text-lg font-extrabold leading-5 text-slate-700">
                 {opportunity.title}
               </h3>
 
               {/* Badges Area */}
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-2">
             {/* Category Badge */}
             <span
               className={`inline-flex items-center rounded-xl border-2 border-b-4 px-2.5 py-1 text-xs font-bold uppercase tracking-wide ${theme.bg} ${theme.border} ${theme.text} bg-opacity-50`}
@@ -288,25 +264,6 @@ const OpportunityCard = ({
               </span>
             )}
           </div>
-
-          {/* Skill gaps */}
-          {gaps.length > 0 && (
-            <div className="mb-4">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 mb-2">
-                Skill gaps to unlock
-              </p>
-              <div className="flex flex-wrap gap-1.5">
-                {gaps.slice(0, 3).map((gap) => (
-                  <span
-                    key={gap}
-                    className="inline-flex items-center rounded-full bg-white px-2 py-1 text-[11px] font-semibold text-amber-700 border border-amber-200"
-                  >
-                    {gap.replace(/_/g, " ")}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
 
           {/* Footer / CTA */}
           <div className="mt-auto pt-4 border-t-2 border-slate-100">
@@ -549,7 +506,7 @@ export default function MatchingPage() {
           {/* Header Section */}
           {/* Header Section */}
           <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
-            <div className="space-y-6 max-w-2xl">
+            <div id="onborda-matching-header" className="space-y-6 max-w-2xl">
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -564,9 +521,9 @@ export default function MatchingPage() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight"
+                  className="text-4xl font-extrabold text-slate-900 tracking-tight"
                 >
-                  Your Personalized <br />
+                  Your Personalized{" "}
                   <span className="text-primary">AI Opportunities</span>
                 </motion.h1>
                 <motion.p
@@ -589,33 +546,18 @@ export default function MatchingPage() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
+                  className="space-y-4"
                 >
-                  <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
-                        <Trophy className="h-6 w-6 text-yellow-500 fill-current" />
-                        <span className="font-black text-slate-700 uppercase tracking-wide">
-                          Matches Unlocked
-                        </span>
-                      </div>
-                      <span className="font-black text-xl text-primary">
-                        {unlockedCount} / {aiOpportunities.length}
-                      </span>
-                    </div>
-                    <div className="h-4 w-full rounded-full bg-slate-100 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{
-                          width: `${(unlockedCount / aiOpportunities.length) * 100}%`,
-                        }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="h-full bg-yellow-400 rounded-full"
-                      />
-                    </div>
-                    <p className="mt-3 text-xs font-bold text-slate-400 uppercase tracking-wide text-center">
-                      Unlock all matches to earn a bonus reward!
-                    </p>
-                  </div>
+                  <Link href="/matching/ai-coach" className="block">
+                    <JuicyButton
+                      variant="outline"
+                      size="lg"
+                      className="w-full gap-2 text-slate-600 border-slate-300 hover:bg-slate-50 hover:border-slate-300 active:border-slate-300"
+                    >
+                      <Bot className="mr-2 h-5 w-5" />
+                      Talk to AI Coach
+                    </JuicyButton>
+                  </Link>
                 </motion.div>
               )}
 
@@ -632,7 +574,7 @@ export default function MatchingPage() {
                       className="w-full gap-2 text-slate-600 border-slate-300 hover:bg-slate-50 hover:border-slate-300 active:border-slate-300"
                     >
                       <Target className="h-5 w-5" />
-                      Retake Assessment
+                      Retake
                     </JuicyButton>
                   </Link>
                 </motion.div>
@@ -713,7 +655,10 @@ export default function MatchingPage() {
                 transition={{ delay: 0.4 }}
                 className="grid lg:grid-cols-3 gap-6"
               >
-                <Card className="group relative overflow-hidden border-none bg-white shadow-lg hover:shadow-xl transition-all duration-500">
+                <Card
+                  id="onborda-matching-cta"
+                  className="group relative overflow-hidden border-none bg-white shadow-lg hover:shadow-xl transition-all duration-500"
+                >
                   <div className="absolute top-0 right-0 p-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-primary/10" />
 
                   <CardContent className="relative p-8 flex flex-col items-start gap-6 h-full justify-between">
@@ -739,16 +684,22 @@ export default function MatchingPage() {
                   </CardContent>
                 </Card>
 
-                <Card className="group relative overflow-hidden border-none bg-gradient-to-br from-violet-50 to-purple-50 shadow-lg hover:shadow-xl transition-all duration-500 border-2 border-purple-200">
+                <Card
+                  className="group relative overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-500 border-2 border-[color:var(--gradient-from)]/20"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom right, color-mix(in srgb, var(--gradient-from) 10%, white), color-mix(in srgb, var(--gradient-to) 10%, white))",
+                  }}
+                >
                   <div className="absolute top-3 right-3">
-                    <Badge className="bg-purple-500 text-white border-purple-600">
+                    <Badge className="theme-gradient text-white border-[color:var(--gradient-from)]">
                       <Sparkles className="h-3 w-3 mr-1" />
                       New
                     </Badge>
                   </div>
                   <CardContent className="relative p-8 flex flex-col items-start gap-6 h-full justify-between">
                     <div className="space-y-4">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-sm flex items-center justify-center text-white">
+                      <div className="h-12 w-12 rounded-xl theme-gradient shadow-sm flex items-center justify-center text-white">
                         <Sparkles className="h-6 w-6" />
                       </div>
                       <h3 className="text-2xl font-bold text-slate-900">
@@ -760,8 +711,8 @@ export default function MatchingPage() {
                         hustles, and businesses.
                       </p>
                     </div>
-                    <Link href="/ai-career-coach" className="w-full">
-                      <Button className="w-full h-12 text-base bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/30 transition-all">
+                    <Link href="/matching/ai-coach" className="w-full">
+                      <Button className="w-full h-12 text-base theme-gradient-r hover:opacity-90 text-white shadow-lg shadow-[color:var(--gradient-from)]/20 group-hover:shadow-[color:var(--gradient-from)]/30 transition-all">
                         Start Chatting
                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                       </Button>

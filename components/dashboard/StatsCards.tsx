@@ -62,7 +62,7 @@ export function StatsCards({
       : null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
+    <div id="onborda-stats" className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
       {/* Prompt Score Card */}
       <div className="group relative overflow-hidden rounded-3xl border-2 border-b-[6px] border-blue-200 bg-white hover:-translate-y-1 hover:shadow-xl transition-all duration-200">
         <div className="p-6">

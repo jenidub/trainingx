@@ -336,8 +336,7 @@ export default function AIDatabase() {
                   transition={{ delay: 0.1 }}
                   className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight"
                 >
-                  Explore All <br />
-                  <span className="text-primary">AI Careers</span>
+                  Explore AI Opportunities
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: -20 }}

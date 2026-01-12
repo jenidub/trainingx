@@ -1,11 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 
 const DEFAULT_AGENT_ID = "agent_7701ka2g90che218dkm8pw4hmsa8";
 const WIDGET_SRC = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+
+// Pages where the widget should NOT appear (exact match or startsWith)
+const HIDDEN_PATHS = [
+  "/practice",
+  "/quiz",
+  "/leaderboard",
+  "/spiral-the-study-buddy",
+  "/matching",
+  "/community",
+  "/certificate",
+  "/verify",
+];
 
 export default function ElevenLabsWidget() {
   const pathname = usePathname();
@@ -17,6 +28,12 @@ export default function ElevenLabsWidget() {
   const agentId =
     process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID || DEFAULT_AGENT_ID;
 
+  // Check if current path should hide the widget
+  const isHiddenPath = HIDDEN_PATHS.some(
+    (path) => pathname === path || pathname.startsWith(path + "/")
+  );
+
+  // All hooks must be called before any conditional returns
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -25,14 +42,11 @@ export default function ElevenLabsWidget() {
     const isLanding = pathname === "/";
     if (!mounted) return;
 
-    // On non-landing pages, allow the widget immediately.
     if (!isLanding) {
       setActivated(true);
       return;
     }
 
-    // On landing, activate only after the user scrolls (no extra "open assistant" button),
-    // to avoid covering the hero CTA and to delay third-party loading.
     const onScroll = () => {
       if (window.scrollY > 0) {
         setActivated(true);
@@ -69,6 +83,8 @@ export default function ElevenLabsWidget() {
     scriptLoaded.current = true;
   }, [activated, enabled]);
 
+  // Conditional returns AFTER all hooks
+  if (isHiddenPath) return null;
   if (!mounted) return null;
   if (!activated) return null;
   if (!scriptReady) return null;

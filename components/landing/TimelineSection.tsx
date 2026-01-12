@@ -59,7 +59,7 @@ export default function TimelineSection() {
       color: "emerald",
     },
     {
-      year: "2025",
+      year: "2026",
       title: "10 Years of Innovation",
       desc: "Celebrating a decade of impact. Verified by ORCID research and peer-reviewed educational frameworks.",
       icon: BrainCircuit,
@@ -68,10 +68,7 @@ export default function TimelineSection() {
   ];
 
   return (
-    <section
-      ref={timelineRef}
-      className="relative py-20 overflow-hidden"
-    >
+    <section ref={timelineRef} className="relative py-20 overflow-hidden">
       <RevampedBackground />
       <div className="relative z-10">
         <div className="text-center mb-16">

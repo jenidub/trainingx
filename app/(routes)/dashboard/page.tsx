@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
+import { useOnboardingTour } from "@/hooks/useOnboardingTour";
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "convex/_generated/api";
@@ -17,10 +18,22 @@ import { AssessmentHistory } from "@/components/dashboard/AssessmentHistory";
 import { UnlockedMatchesCard } from "@/components/dashboard/UnlockedMatchesCard";
 import { QuickActionsCard } from "@/components/dashboard/QuickActionsCard";
 import { CertificateCard } from "@/components/dashboard/CertificateCard";
+import { Button } from "@/components/ui/button";
+import { HelpCircle } from "lucide-react";
 
-export default function DashboardPage() {
+function DashboardContent() {
   const { user } = useAuth();
   const { setContext } = useWizardContext();
+
+  // Initialize onboarding tour (auto-starts for first-time users)
+  const { restartTour, closeTour } = useOnboardingTour();
+
+  // Cleanup tour on unmount
+  useEffect(() => {
+    return () => {
+      closeTour();
+    };
+  }, [closeTour]);
 
   // Fetch data from Convex
   const projects = useQuery(api.projects.getProjects, { limit: 20 });
@@ -142,11 +155,14 @@ export default function DashboardPage() {
   }, [projects, completedProjectIds]);
 
   return (
-    <SidebarLayout>
-      <div className="py-8 bg-slate-50 min-h-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="mb-8 animate-in fade-in slide-in-from-top-4 duration-500">
+    <div className="py-8 bg-slate-50 min-h-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div
+          id="onborda-welcome"
+          className="mb-8 animate-in fade-in slide-in-from-top-4 duration-500 flex flex-col md:flex-row md:items-end justify-between gap-4"
+        >
+          <div>
             <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
               Welcome back, {user?.name || "Friend"}!
             </h1>
@@ -154,52 +170,68 @@ export default function DashboardPage() {
               Ready to level up your AI skills today?
             </p>
           </div>
+          <Button
+            onClick={() => restartTour()}
+            variant="outline"
+            className="rounded-xl border-2 border-b-4 hover:bg-slate-50 font-bold gap-2 h-11"
+          >
+            <HelpCircle className="w-5 h-5 text-blue-500" />
+            Take Tour
+          </Button>
+        </div>
 
-          <StatsCards
-            promptScore={userStats.promptScore}
-            previousPromptScore={userStats.previousPromptScore}
-            completedProjects={userStats.completedProjects.length}
-            availableProjects={availableProjects.length}
-            streak={userStats.streak}
-          />
+        <StatsCards
+          promptScore={userStats.promptScore}
+          previousPromptScore={userStats.previousPromptScore}
+          completedProjects={userStats.completedProjects.length}
+          availableProjects={availableProjects.length}
+          streak={userStats.streak}
+        />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Main Column */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Prompt Score Breakdown */}
-              <PromptScoreBreakdown userStatsData={userStatsData} />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          {/* Main Column */}
+          <div className="lg:col-span-2 space-y-5">
+            {/* Prompt Score Breakdown */}
+            <PromptScoreBreakdown userStatsData={userStatsData} />
 
-              {/* Score History */}
-              <AssessmentHistory userStatsData={userStatsData} />
+            {/* Score History */}
+            <AssessmentHistory userStatsData={userStatsData} />
 
-              {/* Top Skills */}
-              <TopSkillsCard skills={userStats.skills} />
-            </div>
+            {/* Top Skills */}
+            <TopSkillsCard skills={userStats.skills} />
+          </div>
 
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* AI Coach Panel */}
-              {user?._id && (
+          {/* Sidebar */}
+          <div className="space-y-5">
+            {/* AI Coach Panel */}
+            {/* {user?._id && (
                 <div className="rounded-3xl border-2 border-b-[6px] border-indigo-200 bg-white overflow-hidden">
                   <CoachPanel userId={user._id as any} />
                 </div>
-              )}
+              )} */}
 
-              {/* Certificate Status */}
-              <CertificateCard />
+            {/* Certificate Status */}
+            <CertificateCard />
 
-              {/* Badges */}
-              {/* <BadgesCard userStats={userStats} /> */}
+            {/* Badges */}
+            {/* <BadgesCard userStats={userStats} /> */}
 
-              {/* Unlocked Matches */}
-              <UnlockedMatchesCard liveMatches={liveMatches} />
+            {/* Unlocked Matches */}
+            <UnlockedMatchesCard liveMatches={liveMatches} />
 
-              {/* Quick Actions */}
-              <QuickActionsCard />
-            </div>
+            {/* Quick Actions */}
+            <QuickActionsCard />
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <SidebarLayout>
+      <DashboardContent />
     </SidebarLayout>
   );
 }

@@ -101,6 +101,6 @@ export function getMotivationalMessage(score: number): string {
     case "intermediate":
       return "👍 Good start! You understand the basics. Let's refine your skills with hands-on practice and unlock more advanced techniques.";
     case "beginner":
-      return "💪 Everyone starts somewhere! TrainingX.Ai will help you master prompting step by step. Complete projects, earn badges, and build your AI skillset.";
+      return "💪 Everyone starts somewhere! TrainingX.AI will help you master prompting step by step. Complete projects, earn badges, and build your AI skillset.";
   }
 }

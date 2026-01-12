@@ -16,8 +16,11 @@ export const getByUser = query({
     const enriched = await Promise.all(
       certificates.map(async (cert) => {
         const domain = await ctx.db.get(cert.domainId);
+        // Fetch current user name to ensure it's up to date
+        const user = await ctx.db.get(cert.userId);
         return {
           ...cert,
+          userName: user?.name ?? cert.userName,
           domain: domain
             ? {
                 title: domain.title,
@@ -86,8 +89,12 @@ export const getAICareerCertificate = query({
 
     if (!certificate) return null;
 
+    // Get current user name to ensure it's up to date
+    const user = await ctx.db.get(args.userId);
+
     return {
       ...certificate,
+      userName: user?.name ?? certificate.userName,
       domain: {
         title: generalDomain.title,
         icon: generalDomain.icon,

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -9,7 +10,20 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Brain, Sparkles, Cog, TrendingUp, MessageCircle } from "lucide-react";
+import {
+  Brain,
+  Sparkles,
+  Cog,
+  TrendingUp,
+  MessageCircle,
+  CheckCircle2,
+  ChevronRight,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContextProvider";
+
+const generatedImage =
+  "/assets/generated_images/soft_abstract_3d_shapes_on_white_background_for_light_mode_ui.png";
 
 interface Answer {
   text: string;
@@ -79,7 +93,10 @@ const questions: Question[] = [
         text: "Build a system where AI does it automatically",
         points: { agentic: 3, superintelligence: 1 },
       },
-      { text: "Do it manually — faster than explaining it", points: {} },
+      {
+        text: "Create a template I can quickly fill in myself",
+        points: { synthetic: 2, vibecoding: 1 },
+      },
       {
         text: "Ask AI for new ideas each time to keep it fresh",
         points: { generative: 2 },
@@ -121,7 +138,10 @@ const questions: Question[] = [
         text: "Ask it why it answered that way, then redirect",
         points: { synthetic: 3 },
       },
-      { text: "Give up and try a different tool", points: {} },
+      {
+        text: "Switch to a smarter model (e.g., o1/Claude) for a second opinion",
+        points: { superintelligence: 2 },
+      },
     ],
   },
   {
@@ -197,7 +217,10 @@ const questions: Question[] = [
     id: 9,
     text: "AI gives you a great answer. You:",
     answers: [
-      { text: "Use it as-is", points: {} },
+      {
+        text: "Ship it immediately — speed is more important than perfection",
+        points: { generative: 3 },
+      },
       { text: "Tweak the tone to match your voice", points: { vibecoding: 2 } },
       {
         text: "Ask follow-up questions to go deeper",
@@ -222,74 +245,6 @@ const questions: Question[] = [
       {
         text: "How to think strategically about what AI can unlock",
         points: { superintelligence: 2 },
-      },
-    ],
-  },
-  {
-    id: 11,
-    text: "Your favorite way to use AI right now:",
-    answers: [
-      { text: "Automate tasks and save time", points: { agentic: 3 } },
-      { text: "Create content and generate ideas", points: { generative: 3 } },
-      {
-        text: "Analyze data or think through complex problems",
-        points: { synthetic: 3 },
-      },
-      {
-        text: "Build business strategies and scale operations",
-        points: { superintelligence: 3 },
-      },
-    ],
-  },
-  {
-    id: 12,
-    text: "What matters most in a great AI response?",
-    answers: [
-      { text: "Speed and precision", points: { agentic: 2 } },
-      { text: "Fresh, creative ideas", points: { generative: 2 } },
-      { text: "Accuracy and logic", points: { synthetic: 2 } },
-      { text: "Personality and tone", points: { vibecoding: 2 } },
-    ],
-  },
-  {
-    id: 13,
-    text: "If AI could free up one thing for you today, what would it be?",
-    answers: [
-      { text: "Time", points: { agentic: 2 } },
-      { text: "Creativity", points: { generative: 2 } },
-      { text: "Clarity", points: { synthetic: 2 } },
-      { text: "Growth opportunities", points: { superintelligence: 2 } },
-    ],
-  },
-  {
-    id: 14,
-    text: "You get conflicting advice from AI in two different responses. You:",
-    answers: [
-      { text: "Test both and see which works", points: { agentic: 2 } },
-      {
-        text: "Ask AI to explain why it gave different answers",
-        points: { synthetic: 3 },
-      },
-      {
-        text: "Pick the one that feels right intuitively",
-        points: { vibecoding: 1 },
-      },
-      {
-        text: "Use the conflict to generate a third, better option",
-        points: { generative: 2, superintelligence: 1 },
-      },
-    ],
-  },
-  {
-    id: 15,
-    text: "Which line sounds most like you?",
-    answers: [
-      { text: '"I build systems that work."', points: { agentic: 3 } },
-      { text: '"I turn ideas into something new."', points: { generative: 3 } },
-      { text: '"I connect logic and emotion."', points: { vibecoding: 3 } },
-      {
-        text: '"I see how to scale it bigger."',
-        points: { superintelligence: 3 },
       },
     ],
   },
@@ -318,8 +273,7 @@ interface ResultData {
   subtitle: string;
   pathway: string;
   description: string;
-  gaps: string[];
-  learningPoints: string[];
+  magneticPitch: string[];
 }
 
 const resultTemplates: Record<LaneType, ResultData> = {
@@ -332,15 +286,10 @@ const resultTemplates: Record<LaneType, ResultData> = {
     pathway: "Side Hustle / Creative Work",
     description:
       "You're a natural idea generator. You see possibilities others miss. Your strength is creativity, innovation, and thinking outside the box.",
-    gaps: [
-      "Your ideas are strong, but execution is slower than it should be",
-      "Your prompts don't always capture the right tone or personality",
-      "You're not using AI to build repeatable systems",
-    ],
-    learningPoints: [
-      "How to structure prompts for consistent execution",
-      "How to add tone and personality to your outputs",
-      "How to turn creative ideas into automated workflows",
+    magneticPitch: [
+      "Gamified prompting practice for creativity with real feedback.",
+      "Personalized creator career and side hustle matching.",
+      "Progress tracking, design challenges, and community leaderboard.",
     ],
   },
   agentic: {
@@ -352,15 +301,10 @@ const resultTemplates: Record<LaneType, ResultData> = {
     pathway: "Trade / Technical Operator",
     description:
       "You're a systems thinker. You build things that work and automate what matters. Your strength is execution, efficiency, and getting things done.",
-    gaps: [
-      "Your outputs are efficient but lack personality",
-      "You're not tapping into AI's creative potential",
-      "Your prompts get the job done but don't inspire or engage",
-    ],
-    learningPoints: [
-      "How to add tone and emotion to your AI outputs",
-      "How to use AI for creative ideation, not just execution",
-      "How to balance efficiency with influence",
+    magneticPitch: [
+      "Gamified prompting practice for automation with real feedback.",
+      "Personalized technical career and side hustle matching.",
+      "Progress tracking, engineering challenges, and community leaderboard.",
     ],
   },
   synthetic: {
@@ -372,15 +316,10 @@ const resultTemplates: Record<LaneType, ResultData> = {
     pathway: "Career / Analytical Professional",
     description:
       "You're a logical problem-solver. You break things down, test assumptions, and think critically. Your strength is analysis, reasoning, and clear thinking.",
-    gaps: [
-      "Your prompts are logical but lack personality or warmth",
-      "You're not using AI to automate repetitive tasks",
-      "You're thinking clearly but not executing at scale",
-    ],
-    learningPoints: [
-      "How to add tone and influence to your communication",
-      "How to build systems that automate your workflows",
-      "How to balance logic with creativity and emotion",
+    magneticPitch: [
+      "Gamified prompting practice for logic with real feedback.",
+      "Personalized analytical career and side hustle matching.",
+      "Progress tracking, reasoning challenges, and community leaderboard.",
     ],
   },
   superintelligence: {
@@ -392,15 +331,10 @@ const resultTemplates: Record<LaneType, ResultData> = {
     pathway: "Business Ownership / Strategic Leadership",
     description:
       "You're a big-picture thinker. You see how things connect, scale, and grow. Your strength is strategy, vision, and long-term thinking.",
-    gaps: [
-      "You have the vision but execution is slower than it should be",
-      "Your prompts don't always capture the right tone for your audience",
-      "You're thinking strategically but not building the systems to support it",
-    ],
-    learningPoints: [
-      "How to build automated systems that execute your vision",
-      "How to add tone and personality to scale your influence",
-      "How to turn strategy into repeatable, efficient action",
+    magneticPitch: [
+      "Gamified prompting practice for strategy with real feedback.",
+      "Personalized founder career and side hustle matching.",
+      "Progress tracking, visionary challenges, and community leaderboard.",
     ],
   },
   vibecoding: {
@@ -412,15 +346,10 @@ const resultTemplates: Record<LaneType, ResultData> = {
     pathway: "Side Hustle / Creative Communication",
     description:
       "You're a natural communicator. You read people, adapt your tone, and connect through personality. Your strength is influence, emotion, and human-centered thinking.",
-    gaps: [
-      "Your communication is strong, but you're not automating workflows",
-      "You're great with tone but not always precise with logic",
-      "You're influencing people but not scaling your impact with systems",
-    ],
-    learningPoints: [
-      "How to build automated systems that amplify your voice",
-      "How to structure prompts for logic and precision",
-      "How to balance emotion with analysis and execution",
+    magneticPitch: [
+      "Gamified prompting practice for persuasion with real feedback.",
+      "Personalized brand career and side hustle matching.",
+      "Progress tracking, influence challenges, and community leaderboard.",
     ],
   },
 };
@@ -442,6 +371,10 @@ function getIndicatorClassName(score: number, maxScore = 20) {
 }
 
 export default function PromptingIntelligenceQuiz() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [started, setStarted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState<Scores>({
@@ -452,6 +385,27 @@ export default function PromptingIntelligenceQuiz() {
     vibecoding: 0,
   });
   const [completed, setCompleted] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      const params = searchParams.toString();
+      const redirectTo = params ? `${pathname}?${params}` : pathname;
+      sessionStorage.setItem("redirectAfterLogin", redirectTo);
+      router.push("/auth");
+    }
+  }, [authLoading, isAuthenticated, router, pathname, searchParams]);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const handleAnswer = (answer: Answer) => {
     const newScores = { ...scores };
@@ -477,56 +431,69 @@ export default function PromptingIntelligenceQuiz() {
 
   if (!started) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10">
-        <Card className="w-full max-w-2xl">
-          <CardHeader className="text-center space-y-4">
-            <div className="flex justify-center">
-              <div className="p-4 bg-gradient-to-br from-gradient-from to-gradient-to rounded-full">
-                <Brain className="w-12 h-12 text-white" />
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50 relative overflow-hidden">
+        {/* Background Asset */}
+        <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
+          <img
+            src={generatedImage}
+            alt="Background"
+            className="w-full h-full object-cover opacity-50 blur-2xl"
+          />
+        </div>
+
+        <div className="z-10 w-full p-4 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-2xl bg-white/80 backdrop-blur-xl rounded-3xl p-8 border-2 border-white shadow-xl"
+          >
+            <div className="text-center space-y-6">
+              <div className="flex justify-center">
+                <div className="p-4 bg-linear-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-2xl shadow-lg shadow-[var(--gradient-from)]/20">
+                  <Brain className="w-12 h-12 text-white" />
+                </div>
               </div>
+
+              <div className="space-y-2">
+                <h1 className="text-3xl md:text-5xl font-bold text-slate-700 font-heading leading-tight">
+                  Discover Your Prompting Aptitude
+                </h1>
+                <p className="text-lg text-slate-600 max-w-lg mx-auto leading-relaxed">
+                  Take this 2-minute assessment to discover your prompting level
+                  across 5 critical lanes.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-3 justify-center py-4">
+                {[
+                  { icon: Sparkles, label: "Generative" },
+                  { icon: Cog, label: "Agentic" },
+                  { icon: Brain, label: "Synthetic" },
+                  { icon: TrendingUp, label: "Superintel" },
+                  { icon: MessageCircle, label: "Vibecode" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100"
+                  >
+                    <item.icon className="w-5 h-5 text-[var(--gradient-from)]" />
+                    <span className="text-xs font-medium text-slate-600">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <Button
+                onClick={() => setStarted(true)}
+                className="w-full md:w-auto px-12 py-6 text-lg rounded-2xl bg-linear-to-r from-[var(--gradient-from)] to-[var(--gradient-to)] hover:opacity-90 shadow-lg shadow-[var(--gradient-from)]/20 border-none transition-all hover:scale-105"
+                data-testid="button-start-assessment"
+              >
+                Start Assessment <ChevronRight className="ml-2 w-5 h-5" />
+              </Button>
             </div>
-            <CardTitle className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent">
-              Discover Your Prompting Aptitude in 2mins
-            </CardTitle>
-            <CardDescription className="text-base md:text-lg">
-              Take this 2-minute assessment to discover your prompting level
-              across 5 critical lanes — and find out which success pathway fits
-              you best.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex flex-wrap gap-2 justify-center">
-              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10 rounded-full text-sm">
-                <Sparkles className="w-4 h-4 text-gradient-from" />
-                <span>Generative AI</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10 rounded-full text-sm">
-                <Cog className="w-4 h-4 text-gradient-from" />
-                <span>Agentic AI</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10 rounded-full text-sm">
-                <Brain className="w-4 h-4 text-gradient-from" />
-                <span>Synthetic AI</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10 rounded-full text-sm">
-                <TrendingUp className="w-4 h-4 text-gradient-to" />
-                <span>Superintelligence</span>
-              </div>
-              <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10 rounded-full text-sm">
-                <MessageCircle className="w-4 h-4 text-gradient-to" />
-                <span>Vibecoding</span>
-              </div>
-            </div>
-            <Button
-              onClick={() => setStarted(true)}
-              className="w-full bg-gradient-to-r from-gradient-from to-gradient-to hover:opacity-90"
-              size="lg"
-              data-testid="button-start-assessment"
-            >
-              Start Assessment
-            </Button>
-          </CardContent>
-        </Card>
+          </motion.div>
+        </div>
       </div>
     );
   }
@@ -537,145 +504,170 @@ export default function PromptingIntelligenceQuiz() {
     const IconComponent = result.icon;
 
     return (
-      <div className="min-h-screen p-4 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10">
-        <div className="max-w-2xl mx-auto space-y-6 py-8">
-          <Card className="px-4">
-            <CardHeader className="text-center space-y-4">
-              <div className="flex justify-center">
-                <div className="p-4 bg-gradient-to-br from-gradient-from to-gradient-to rounded-full">
-                  <IconComponent className="w-12 h-12 text-white" />
-                </div>
-              </div>
-              {/* <div>
-                <p className="text-4xl mb-2">{result.emoji}</p>
-                <CardTitle className="text-3xl font-bold">
-                  {result.title}
-                </CardTitle>
-                <p className="text-lg font-semibold bg-gradient-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent mt-2">
-                  {result.subtitle}
-                </p>
-                <p className="text-muted-foreground">
-                  SUCCESS PATHWAY: {result.pathway}
-                </p>
-              </div> */}
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* <p className="text-center text-lg">{result.description}</p> */}
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50 relative overflow-hidden">
+        {/* Background Asset */}
+        <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
+          <img
+            src={generatedImage}
+            alt="Background"
+            className="w-full h-full object-cover opacity-50 blur-2xl"
+          />
+        </div>
 
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold">YOUR SCORES:</h3>
-                <div className="grid gap-3">
-                  {(["generative", "agentic", "synthetic"] as const).map(
-                    (lane) => (
-                      <div key={lane} className="space-y-1">
-                        <div className="flex justify-between text-sm">
-                          <span className="capitalize">
-                            {lane === "agentic"
-                              ? "Agentic AI"
-                              : lane === "generative"
-                                ? "Generative AI"
-                                : "Synthetic AI"}
-                          </span>
-                          <span className="font-semibold">
-                            {scores[lane]}/30 –{" "}
-                            {getScoreLevel(scores[lane], 30)}
-                          </span>
-                        </div>
-                        <Progress
-                          value={(scores[lane] / 30) * 100}
-                          className="h-2"
-                          indicatorClassName={getIndicatorClassName(scores[lane], 30)}
-                        />
-                      </div>
-                    ),
-                  )}
-                  {(["superintelligence", "vibecoding"] as const).map(
-                    (lane) => (
-                      <div key={lane} className="space-y-1">
-                        <div className="flex justify-between text-sm">
-                          <span className="capitalize">{lane}</span>
-                          <span className="font-semibold">
-                            {scores[lane]}/20 –{" "}
-                            {getScoreLevel(scores[lane], 20)}
-                          </span>
-                        </div>
-                        <Progress
-                          value={(scores[lane] / 20) * 100}
-                          className="h-2"
-                          indicatorClassName={getIndicatorClassName(scores[lane])}
-                        />
-                      </div>
-                    ),
-                  )}
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold">HERE'S THE GAP:</h3>
-                <ul className="space-y-2">
-                  {result.gaps.map((gap, idx) => (
-                    <li key={idx} className="flex gap-2">
-                      <span className="text-destructive">•</span>
-                      <span>{gap}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-3">
-                <h3 className="text-xl font-semibold">
-                  WHAT YOU NEED TO LEARN:
-                </h3>
-                <ul className="space-y-2">
-                  {result.learningPoints.map((point, idx) => (
-                    <li key={idx} className="flex gap-2">
-                      <span className="text-primary">✓</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-3 pt-4">
-                <h3 className="text-xl font-semibold">NEXT STEP:</h3>
-                <p>
-                  Join <strong>Prompting Basics this Saturday</strong> with Jeni
-                  — close your gaps in one session.
-                </p>
-                <p>
-                  Then level up to <strong>Vibecoding Saturdays</strong> with
-                  Stan and master tone, influence, and advanced communication.
-                </p>
-                <Button
-                  size="lg"
-                  className="w-full bg-gradient-to-r from-gradient-from to-gradient-to hover:opacity-90"
-                  data-testid="button-join-workshop"
-                >
-                  Spots filling now: Join TrainingX.Ai
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="text-center">
-            <Button
-              variant="outline"
-              onClick={() => {
-                setStarted(false);
-                setCurrentQuestion(0);
-                setScores({
-                  generative: 0,
-                  agentic: 0,
-                  synthetic: 0,
-                  superintelligence: 0,
-                  vibecoding: 0,
-                });
-                setCompleted(false);
-              }}
-              data-testid="button-retake-quiz"
+        <div className="z-10 w-full p-4 h-full overflow-y-auto">
+          <div className="max-w-2xl mx-auto space-y-6 py-8">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white/80 backdrop-blur-xl rounded-3xl border-2 border-white shadow-xl overflow-hidden"
             >
-              Retake Assessment
-            </Button>
+              <div className="p-6 md:p-8 space-y-6">
+                <div className="text-center space-y-4">
+                  <div className="flex justify-center">
+                    <div className="p-4 bg-linear-to-br from-[var(--gradient-from)] to-[var(--gradient-to)] rounded-full shadow-lg shadow-[var(--gradient-from)]/20">
+                      <IconComponent className="w-12 h-12 text-white" />
+                    </div>
+                  </div>
+                  {/* Title and subtitle kept as comments in original, keeping them commented here too or omitted as per original code structure which seemed to rely on inner sections */}
+                </div>
+
+                <div className="space-y-6">
+                  {/* Scores Section */}
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-extrabold text-slate-900 font-heading">
+                      YOUR SCORES:
+                    </h3>
+                    <div className="grid gap-4">
+                      {(["generative", "agentic", "synthetic"] as const).map(
+                        (lane) => (
+                          <div key={lane} className="space-y-2">
+                            <div className="flex justify-between text-sm">
+                              <span className="capitalize font-medium text-slate-700">
+                                {lane === "agentic"
+                                  ? "Agentic AI"
+                                  : lane === "generative"
+                                    ? "Generative AI"
+                                    : "Synthetic AI"}
+                              </span>
+                              <span className="font-bold text-slate-700">
+                                {scores[lane]}/30 –{" "}
+                                {getScoreLevel(scores[lane], 30)}
+                              </span>
+                            </div>
+                            <Progress
+                              value={(scores[lane] / 30) * 100}
+                              className="h-3 bg-slate-100"
+                              indicatorClassName={getIndicatorClassName(
+                                scores[lane],
+                                30
+                              )}
+                            />
+                          </div>
+                        )
+                      )}
+                      {(["superintelligence", "vibecoding"] as const).map(
+                        (lane) => (
+                          <div key={lane} className="space-y-2">
+                            <div className="flex justify-between text-sm">
+                              <span className="capitalize font-medium text-slate-700">
+                                {lane}
+                              </span>
+                              <span className="font-bold text-slate-700">
+                                {scores[lane]}/20 –{" "}
+                                {getScoreLevel(scores[lane], 20)}
+                              </span>
+                            </div>
+                            <Progress
+                              value={(scores[lane] / 20) * 100}
+                              className="h-3 bg-slate-100"
+                              indicatorClassName={getIndicatorClassName(
+                                scores[lane]
+                              )}
+                            />
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Magnetic Pitch Section */}
+                  <div className="space-y-4 p-5 bg-gradient-to-br from-[var(--gradient-from)]/10 to-[var(--gradient-to)]/10 rounded-2xl border border-[var(--gradient-from)]/20">
+                    <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--gradient-from)] to-[var(--gradient-to)] font-heading flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-[var(--gradient-from)]" />
+                      UNLOCK YOUR SUPERPOWERS:
+                    </h3>
+                    <ul className="space-y-3">
+                      {result.magneticPitch.map((point, idx) => (
+                        <li
+                          key={idx}
+                          className="flex gap-3 text-slate-700 font-medium items-start"
+                        >
+                          <CheckCircle2 className="w-5 h-5 text-[var(--gradient-from)] shrink-0 mt-0.5" />
+                          <span className="leading-tight">{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* CTA Section */}
+                  <div className="space-y-4 pt-4 border-t border-slate-100">
+                    {/* <h3 className="text-xl font-bold text-slate-700 font-heading">
+                      NEXT STEP:
+                    </h3>
+                    <div className="text-slate-600 space-y-2">
+                      <p>
+                        Join{" "}
+                        <strong className="text-slate-900">
+                          Prompting Basics this Saturday
+                        </strong>{" "}
+                        with Jeni — close your gaps in one session.
+                      </p>
+                      <p>
+                        Then level up to{" "}
+                        <strong className="text-slate-900">
+                          Vibecoding Saturdays
+                        </strong>{" "}
+                        with Stan and master tone, influence, and advanced
+                        communication.
+                      </p>
+                    </div> */}
+                    <Button
+                      size="lg"
+                      onClick={() => router.push("/dashboard")}
+                      className="w-full h-14 text-lg bg-linear-to-r from-[var(--gradient-from)] to-[var(--gradient-to)] hover:opacity-90 shadow-lg shadow-[var(--gradient-from)]/20 rounded-xl"
+                      data-testid="button-join-workshop"
+                    >
+                      Start Your AI Journey Now for Free
+                    </Button>
+                    <div className="text-sm text-center text-slate-500">
+                      7 days free trial - no credit card required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* <div className="text-center">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setStarted(false);
+                  setCurrentQuestion(0);
+                  setScores({
+                    generative: 0,
+                    agentic: 0,
+                    synthetic: 0,
+                    superintelligence: 0,
+                    vibecoding: 0,
+                  });
+                  setCompleted(false);
+                }}
+                className="text-slate-500 hover:text-slate-900"
+                data-testid="button-retake-quiz"
+              >
+                Retake Assessment
+              </Button>
+            </div> */}
           </div>
         </div>
       </div>
@@ -685,39 +677,119 @@ export default function PromptingIntelligenceQuiz() {
   const question = questions[currentQuestion];
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gradient-from/10 to-gradient-to/10">
-      <div className="w-full max-w-3xl space-y-6">
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>
-              Question {currentQuestion + 1} of {questions.length}
-            </span>
-            <span>{Math.round(progress)}% Complete</span>
-          </div>
-          <Progress value={progress} className="h-2" />
-        </div>
+    <div className="min-h-screen w-full flex flex-col relative overflow-hidden bg-slate-50">
+      {/* Background Asset */}
+      <div className="fixed inset-0 z-0 opacity-30 pointer-events-none">
+        <img
+          src={generatedImage}
+          alt="Background"
+          className="w-full h-full object-cover opacity-50 blur-2xl"
+        />
+      </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl md:text-2xl">
-              {question.text}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {question.answers.map((answer, idx) => (
-              <Button
-                key={idx}
-                variant="outline"
-                className="w-full justify-start text-left h-auto py-4 px-6"
-                onClick={() => handleAnswer(answer)}
-                data-testid={`button-answer-${idx}`}
-              >
-                <span className="flex-1">{answer.text}</span>
-              </Button>
-            ))}
-          </CardContent>
-        </Card>
+      <div className="w-full h-2 bg-slate-200 z-20">
+        <motion.div
+          className="h-full bg-linear-to-r from-[var(--gradient-from)] to-[var(--gradient-to)]"
+          initial={{ width: 0 }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.5 }}
+        />
+      </div>
+
+      <div className="flex-1 flex flex-col items-center justify-center p-6 z-10">
+        <div className="w-full max-w-4xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={question.id}
+              initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
+              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="space-y-8"
+            >
+              <div className="space-y-2 text-center">
+                <span className="text-sm font-medium text-primary/80 tracking-wider uppercase">
+                  Question {currentQuestion + 1} of {questions.length}
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-700 font-heading leading-tight max-w-3xl mx-auto">
+                  {question.text}
+                </h2>
+              </div>
+
+              <div className="grid gap-4 pt-8 grid-cols-1 md:grid-cols-2">
+                {question.answers.map((answer, idx) => (
+                  <OptionCard
+                    key={idx}
+                    label={answer.text}
+                    onClick={() => handleAnswer(answer)}
+                    isSelected={false} // No persistent selection in this flow, it moves to next immediately
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
+  );
+}
+
+function OptionCard({
+  label,
+  onClick,
+  isSelected,
+  icon: Icon,
+}: {
+  label: string;
+  onClick: () => void;
+  isSelected: boolean;
+  icon?: React.ElementType;
+}) {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.02, y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className={`
+        relative group flex flex-col items-center justify-center gap-4 p-8 rounded-3xl border-2 text-center transition-all duration-300 w-full h-full min-h-[200px]
+        ${
+          isSelected
+            ? "border-[var(--gradient-from)] bg-[var(--gradient-from)]/5 shadow-lg shadow-[var(--gradient-from)]/10"
+            : "border-white bg-white/80 hover:border-[var(--gradient-from)] hover:bg-[var(--gradient-from)]/5 hover:shadow-lg hover:shadow-[var(--gradient-from)]/10"
+        }
+      `}
+    >
+      {Icon && (
+        <div
+          className={`
+          p-4 rounded-2xl transition-colors duration-300
+          ${
+            isSelected
+              ? "bg-linear-to-r from-[var(--gradient-from)] to-[var(--gradient-to)] text-white"
+              : "bg-slate-100 text-slate-600 group-hover:bg-linear-to-r group-hover:from-[var(--gradient-from)] group-hover:to-[var(--gradient-to)] group-hover:text-white"
+          }
+        `}
+        >
+          {/* @ts-ignore */}
+          <Icon className="w-8 h-8" />
+        </div>
+      )}
+
+      <div className="space-y-2">
+        <span className="text-xl font-semibold text-slate-800 font-heading block">
+          {label}
+        </span>
+      </div>
+
+      {isSelected && (
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="absolute top-4 right-4 text-[var(--gradient-from)]"
+        >
+          <CheckCircle2 className="w-6 h-6 fill-[var(--gradient-from)]/20" />
+        </motion.div>
+      )}
+    </motion.button>
   );
 }

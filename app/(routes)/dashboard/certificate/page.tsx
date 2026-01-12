@@ -46,8 +46,9 @@ let html2canvasColorPatched = false;
 const patchHtml2canvasColorParser = async () => {
   if (html2canvasColorPatched) return;
 
-  const colorModule =
-    (await import("html2canvas/dist/lib/css/types/color")) as Html2CanvasColorModule;
+  const colorModule = (await import(
+    "html2canvas/dist/lib/css/types/color"
+  )) as Html2CanvasColorModule;
   const originalParse = colorModule.color.parse;
 
   colorModule.color.parse = (context, value) => {
@@ -105,8 +106,7 @@ const replaceUnsupportedColors = (value: string) => {
 
   let result = "";
   let index = 0;
-  const regex =
-    /\b(?:oklch|oklab|lch|lab|color-mix|color-contrast|color)\(/gi;
+  const regex = /\b(?:oklch|oklab|lch|lab|color-mix|color-contrast|color)\(/gi;
 
   while (index < value.length) {
     regex.lastIndex = index;
@@ -244,7 +244,10 @@ export default function CertificatePage() {
     pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
 
     // Download
-    pdf.save(`TrainingX-AI-Certificate-${certificate.certificateId}.pdf`);
+    const sanitizedName = certificate.userName.replace(/[^a-z0-9]/gi, "_");
+    pdf.save(
+      `TrainingX-AI_Certificate_${sanitizedName}_${certificate.certificateId}.pdf`
+    );
   }, [certificate]);
 
   const copyTemplate = async (template: string, id: string) => {

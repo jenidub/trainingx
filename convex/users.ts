@@ -8,7 +8,48 @@ export const viewer = query({
   args: {},
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
-    return userId !== null ? ctx.db.get(userId) : null;
+    if (userId === null) return null;
+    const user = await ctx.db.get(userId);
+    if (!user) return null;
+    if (user.customImageId) {
+      const url = await ctx.storage.getUrl(user.customImageId);
+      if (url) return { ...user, image: url };
+    }
+    return user;
+  },
+});
+
+export const generateUploadUrl = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
+});
+
+export const updateImage = mutation({
+  args: { storageId: v.id("_storage") },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+
+    // Get old image to delete
+    const user = await ctx.db.get(userId);
+    if (user?.customImageId) {
+      await ctx.storage.delete(user.customImageId);
+    }
+
+    await ctx.db.patch(userId, { customImageId: args.storageId });
+  },
+});
+
+export const removeImage = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthenticated");
+
+    const user = await ctx.db.get(userId);
+    if (user?.customImageId) {
+      await ctx.storage.delete(user.customImageId);
+      await ctx.db.patch(userId, { customImageId: undefined });
+    }
   },
 });
 
@@ -374,5 +415,37 @@ export const updateSkills = mutation({
     });
 
     return stats._id;
+  },
+});
+
+// Update user name
+export const updateName = mutation({
+  args: { name: v.string() },
+  handler: async (ctx, { name }) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+    await ctx.db.patch(userId, { name });
+  },
+});
+
+// Delete user account
+export const deleteAccount = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+
+    // Delete user stats first
+    const stats = await ctx.db
+      .query("userStats")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .first();
+
+    if (stats) {
+      await ctx.db.delete(stats._id);
+    }
+
+    // Delete user record
+    await ctx.db.delete(userId);
   },
 });

@@ -30,7 +30,7 @@ export default function ComparisonSection() {
         />
 
         <div className="text-center mb-12 md:mb-20 ">
-          <div className="inline-flex items-center justify-center p-3 mb-4 rounded-full bg-blue-50 text-blue-600">
+          <div className="inline-flex items-center justify-center p-3 mb-4 rounded-full bg-gradient-from/10 text-gradient-from">
             <Swords className="w-6 h-6" />
           </div>
           <motion.h2
@@ -39,14 +39,17 @@ export default function ComparisonSection() {
             viewport={{ once: true }}
             className="text-3xl md:text-5xl font-bold text-slate-900 mb-4"
           >
-            What Makes Us <span className="text-blue-600">Different</span>
+            What Makes Us{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-gradient-from to-gradient-to">
+              Different
+            </span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="h-1.5 w-24 bg-linear-to-r from-blue-400 to-emerald-400 rounded-full mx-auto mb-8"
+            className="h-1.5 w-24 bg-linear-to-r from-gradient-from to-gradient-to rounded-full mx-auto mb-8"
           />
         </div>
 

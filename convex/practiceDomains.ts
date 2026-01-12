@@ -44,12 +44,13 @@ export const listWithUnlockStatus = query({
       .withIndex("by_user", (q) => q.eq("userId", args.userId))
       .collect();
 
-    const unlockedDomainIds = new Set(unlocks.map(u => u.domainId));
+    const unlockedDomainIds = new Set(unlocks.map((u) => u.domainId));
 
     // Map domains with unlock status
-    const domainsWithStatus = domains.map(domain => ({
+    // Map domains with unlock status
+    const domainsWithStatus = domains.map((domain) => ({
       ...domain,
-      isUnlocked: domain.isStarter || unlockedDomainIds.has(domain._id),
+      isUnlocked: true, // Always unlocked as per user request
     }));
 
     return domainsWithStatus.sort((a, b) => a.order - b.order);
@@ -63,19 +64,7 @@ export const isUnlocked = query({
     domainId: v.id("practiceDomains"),
   },
   handler: async (ctx, args) => {
-    // Check if it's the starter domain
-    const domain = await ctx.db.get(args.domainId);
-    if (domain?.isStarter) return true;
-
-    // Check if user has unlocked it
-    const unlock = await ctx.db
-      .query("userDomainUnlocks")
-      .withIndex("by_user_domain", (q) => 
-        q.eq("userId", args.userId).eq("domainId", args.domainId)
-      )
-      .first();
-
-    return !!unlock;
+    return true; // Always unlocked as per user request
   },
 });
 
@@ -90,7 +79,7 @@ export const unlock = mutation({
     // Check if already unlocked
     const existing = await ctx.db
       .query("userDomainUnlocks")
-      .withIndex("by_user_domain", (q) => 
+      .withIndex("by_user_domain", (q) =>
         q.eq("userId", args.userId).eq("domainId", args.domainId)
       )
       .first();
@@ -124,14 +113,14 @@ export const unlockAllSpecialized = mutation({
       .withIndex("by_status", (q) => q.eq("status", "live"))
       .collect();
 
-    const specializedDomains = domains.filter(d => !d.isStarter);
+    const specializedDomains = domains.filter((d) => !d.isStarter);
 
     // Unlock each one
     const unlocked = [];
     for (const domain of specializedDomains) {
       const existing = await ctx.db
         .query("userDomainUnlocks")
-        .withIndex("by_user_domain", (q) => 
+        .withIndex("by_user_domain", (q) =>
           q.eq("userId", args.userId).eq("domainId", domain._id)
         )
         .first();
@@ -147,8 +136,8 @@ export const unlockAllSpecialized = mutation({
       }
     }
 
-    return { 
-      success: true, 
+    return {
+      success: true,
       unlockedCount: unlocked.length,
       unlockedDomains: unlocked,
     };
@@ -164,12 +153,12 @@ export const clearAll = mutation({
     const levels = await ctx.db.query("practiceLevels").collect();
     const tracks = await ctx.db.query("practiceTracks").collect();
     const domains = await ctx.db.query("practiceDomains").collect();
-    
+
     for (const item of items) await ctx.db.delete(item._id);
     for (const level of levels) await ctx.db.delete(level._id);
     for (const track of tracks) await ctx.db.delete(track._id);
     for (const domain of domains) await ctx.db.delete(domain._id);
-    
+
     return {
       success: true,
       deleted: {

@@ -101,9 +101,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
         <CardContent className="p-12 text-center">
           <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <p className="text-gray-600 mb-4">Duel not found</p>
-          <Button onClick={() => router.push("/duels")}>
-            Back to Arena
-          </Button>
+          <Button onClick={() => router.push("/duels")}>Back to League</Button>
         </CardContent>
       </Card>
     );
@@ -112,8 +110,8 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
   const { room: duel, attempts, items, participants } = duelDetails;
 
   // Derive challenger and opponent from participants
-  const challenger = participants.find(p => p._id === duel.challengerId);
-  const opponent = participants.find(p => p._id === duel.opponentId);
+  const challenger = participants.find((p) => p._id === duel.challengerId);
+  const opponent = participants.find((p) => p._id === duel.opponentId);
 
   // Check if user is participant
   const isChallenger = duel.challengerId === user._id;
@@ -125,10 +123,10 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
       <Card>
         <CardContent className="p-12 text-center">
           <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <p className="text-gray-600 mb-4">You are not a participant in this duel</p>
-          <Button onClick={() => router.push("/duels")}>
-            Back to Arena
-          </Button>
+          <p className="text-gray-600 mb-4">
+            You are not a participant in this duel
+          </p>
+          <Button onClick={() => router.push("/duels")}>Back to League</Button>
         </CardContent>
       </Card>
     );
@@ -164,7 +162,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
   // Handle answer submission
   const handleSubmitAnswer = async () => {
     if (!currentItem || submitting) return;
-    
+
     // Allow timeout submission even without selection
     const answerIndex = selectedAnswer !== null ? selectedAnswer : -1;
 
@@ -188,7 +186,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
 
       setIsCorrect(correct || false);
       setShowFeedback(true);
-      
+
       // Update streak
       if (correct) {
         setStreak((s) => s + 1);
@@ -220,10 +218,18 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
 
   // Calculate stats for victory screen
   const userCorrect = userAttempts.filter((a) => a.correct).length;
-  const accuracy = userAttempts.length > 0 ? Math.round((userCorrect / userAttempts.length) * 100) : 0;
-  const avgTime = userAttempts.length > 0 
-    ? Math.round(userAttempts.reduce((sum, a) => sum + a.timeMs, 0) / userAttempts.length / 1000) 
-    : 0;
+  const accuracy =
+    userAttempts.length > 0
+      ? Math.round((userCorrect / userAttempts.length) * 100)
+      : 0;
+  const avgTime =
+    userAttempts.length > 0
+      ? Math.round(
+          userAttempts.reduce((sum, a) => sum + a.timeMs, 0) /
+            userAttempts.length /
+            1000
+        )
+      : 0;
   const isWinner = duelCompleted && duel.winnerId === user._id;
 
   // If user completed, show completion screen
@@ -293,7 +299,12 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                     {duel.challengerScore}
                   </p>
                   <p className="text-sm text-gray-500 mt-2">
-                    {userAttempts.filter((a) => a.userId === duel.challengerId && a.correct).length}/{duel.itemIds.length} correct
+                    {
+                      userAttempts.filter(
+                        (a) => a.userId === duel.challengerId && a.correct
+                      ).length
+                    }
+                    /{duel.itemIds.length} correct
                   </p>
                 </motion.div>
 
@@ -316,7 +327,8 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                     {duel.opponentScore || 0}
                   </p>
                   <p className="text-sm text-gray-500 mt-2">
-                    {opponentAttempts.filter((a) => a.correct).length}/{duel.itemIds.length} correct
+                    {opponentAttempts.filter((a) => a.correct).length}/
+                    {duel.itemIds.length} correct
                   </p>
                 </motion.div>
               </div>
@@ -339,7 +351,9 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                   </div>
                   <div className="bg-gray-50 rounded-lg p-4">
                     <p className="text-gray-600 mb-1">Correct</p>
-                    <p className="text-2xl font-bold">{userCorrect}/{userAttempts.length}</p>
+                    <p className="text-2xl font-bold">
+                      {userCorrect}/{userAttempts.length}
+                    </p>
                   </div>
                 </motion.div>
               )}
@@ -352,10 +366,14 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                   transition={{ delay: 0.7, type: "spring" }}
                   className="bg-amber-50 border-2 border-amber-500 rounded-lg p-4 mb-6"
                 >
-                  <p className="font-bold text-amber-900 mb-2">Rewards Earned!</p>
+                  <p className="font-bold text-amber-900 mb-2">
+                    Rewards Earned!
+                  </p>
                   <div className="flex justify-center gap-4">
                     <Badge className="bg-amber-500 text-white">+100 XP</Badge>
-                    <Badge className="bg-purple-500 text-white">Duel Master</Badge>
+                    <Badge className="bg-purple-500 text-white">
+                      Duel Master
+                    </Badge>
                   </div>
                 </motion.div>
               )}
@@ -367,7 +385,8 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                     <Clock className="h-5 w-5 text-blue-600 animate-pulse" />
                     <div>
                       <p className="font-medium text-blue-900">
-                        Opponent Progress: {opponentAttempts.length}/{duel.itemIds.length}
+                        Opponent Progress: {opponentAttempts.length}/
+                        {duel.itemIds.length}
                       </p>
                     </div>
                   </div>
@@ -426,7 +445,10 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
     const nextUnattemptedIndex = items.findIndex(
       (item) => !userAttempts.some((a) => a.itemId === item._id)
     );
-    if (nextUnattemptedIndex !== -1 && nextUnattemptedIndex !== currentItemIndex) {
+    if (
+      nextUnattemptedIndex !== -1 &&
+      nextUnattemptedIndex !== currentItemIndex
+    ) {
       setCurrentItemIndex(nextUnattemptedIndex);
       return null;
     }
@@ -438,9 +460,7 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
         <CardContent className="p-12 text-center">
           <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <p className="text-gray-600 mb-4">Item not found</p>
-          <Button onClick={() => router.push("/duels")}>
-            Back to Arena
-          </Button>
+          <Button onClick={() => router.push("/duels")}>Back to League</Button>
         </CardContent>
       </Card>
     );
@@ -470,13 +490,15 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
             <div className="text-center">
               <Avatar className="h-16 w-16 mx-auto mb-2 border-2 border-green-400">
                 <AvatarFallback className="bg-green-500 text-white text-xl">
-                  {(isChallenger ? challenger?.name : opponent?.name || "You")[0].toUpperCase()}
+                  {(isChallenger
+                    ? challenger?.name
+                    : opponent?.name || "You")[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <p className="font-bold text-sm mb-1">You</p>
               <p className="text-4xl font-bold text-green-400">{userScore}</p>
-              <Progress 
-                value={(userAttempts.length / items.length) * 100} 
+              <Progress
+                value={(userAttempts.length / items.length) * 100}
                 className="mt-2 h-2 bg-gray-700"
               />
               <p className="text-xs text-gray-400 mt-1">
@@ -488,16 +510,18 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
             <div className="text-center">
               <Swords className="h-10 w-10 mx-auto text-red-500 mb-2" />
               <p className="text-sm text-gray-300">
-                {userScore > opponentScore 
-                  ? "You're Winning! 🔥" 
-                  : userScore < opponentScore 
+                {userScore > opponentScore
+                  ? "You're Winning! 🔥"
+                  : userScore < opponentScore
                     ? "Catch Up! 💪"
                     : "It's a Tie! ⚔️"}
               </p>
               {streak > 1 && (
                 <div className="flex items-center justify-center gap-1 mt-2">
                   <Flame className="h-4 w-4 text-orange-500" />
-                  <span className="text-orange-500 font-bold">{streak} Streak!</span>
+                  <span className="text-orange-500 font-bold">
+                    {streak} Streak!
+                  </span>
                 </div>
               )}
             </div>
@@ -506,15 +530,21 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
             <div className="text-center">
               <Avatar className="h-16 w-16 mx-auto mb-2 border-2 border-blue-400">
                 <AvatarFallback className="bg-blue-500 text-white text-xl">
-                  {(isChallenger ? opponent?.name : challenger?.name || "Opponent")[0].toUpperCase()}
+                  {(isChallenger
+                    ? opponent?.name
+                    : challenger?.name || "Opponent")[0].toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <p className="font-bold text-sm mb-1">
-                {isChallenger ? opponent?.name || "Opponent" : challenger?.name || "Challenger"}
+                {isChallenger
+                  ? opponent?.name || "Opponent"
+                  : challenger?.name || "Challenger"}
               </p>
-              <p className="text-4xl font-bold text-blue-400">{opponentScore}</p>
-              <Progress 
-                value={(opponentAttempts.length / items.length) * 100} 
+              <p className="text-4xl font-bold text-blue-400">
+                {opponentScore}
+              </p>
+              <Progress
+                value={(opponentAttempts.length / items.length) * 100}
                 className="mt-2 h-2 bg-gray-700"
               />
               <p className="text-xs text-gray-400 mt-1">
@@ -534,13 +564,13 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
             </Badge>
             <div className="flex items-center gap-3">
               <Clock className="h-5 w-5" />
-              <span 
+              <span
                 className={`font-mono text-2xl font-bold ${
-                  timeLeft < 10 
-                    ? 'text-red-300 animate-pulse' 
-                    : timeLeft < 30 
-                      ? 'text-yellow-300' 
-                      : 'text-white'
+                  timeLeft < 10
+                    ? "text-red-300 animate-pulse"
+                    : timeLeft < 30
+                      ? "text-yellow-300"
+                      : "text-white"
                 }`}
               >
                 {timeLeft}s
@@ -552,7 +582,10 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
               {currentItem.difficultyBand}
             </Badge>
             {currentItem.tags.slice(0, 2).map((tag) => (
-              <Badge key={tag} className="bg-white/20 text-white border-white/30">
+              <Badge
+                key={tag}
+                className="bg-white/20 text-white border-white/30"
+              >
                 {tag}
               </Badge>
             ))}
@@ -574,7 +607,8 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
               const isSelected = selectedAnswer === index;
               const isCorrectOption = option.quality === "good";
               const showCorrect = showFeedback && isCorrectOption;
-              const showIncorrect = showFeedback && isSelected && !isCorrectOption;
+              const showIncorrect =
+                showFeedback && isSelected && !isCorrectOption;
 
               return (
                 <motion.button
@@ -616,11 +650,13 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                     </div>
                     <div className="flex-1">
                       <p className="text-gray-900 font-medium">{option.text}</p>
-                      {showFeedback && (isSelected || isCorrectOption) && option.explanation && (
-                        <p className="text-sm text-gray-600 mt-2">
-                          {option.explanation}
-                        </p>
-                      )}
+                      {showFeedback &&
+                        (isSelected || isCorrectOption) &&
+                        option.explanation && (
+                          <p className="text-sm text-gray-600 mt-2">
+                            {option.explanation}
+                          </p>
+                        )}
                     </div>
                   </div>
                 </motion.button>
@@ -643,12 +679,16 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", duration: 0.5 }}
                 >
-                  <Card className={`p-8 ${isCorrect ? 'border-green-500 border-4' : 'border-red-500 border-4'} shadow-2xl`}>
+                  <Card
+                    className={`p-8 ${isCorrect ? "border-green-500 border-4" : "border-red-500 border-4"} shadow-2xl`}
+                  >
                     <CardContent className="text-center">
                       {isCorrect ? (
                         <>
                           <CheckCircle2 className="h-24 w-24 text-green-500 mx-auto mb-4" />
-                          <h2 className="text-4xl font-bold text-green-600 mb-2">Correct!</h2>
+                          <h2 className="text-4xl font-bold text-green-600 mb-2">
+                            Correct!
+                          </h2>
                           <p className="text-2xl text-gray-700">+100 points</p>
                           {streak > 1 && (
                             <div className="flex items-center justify-center gap-2 mt-3">
@@ -662,7 +702,9 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                       ) : (
                         <>
                           <XCircle className="h-24 w-24 text-red-500 mx-auto mb-4" />
-                          <h2 className="text-4xl font-bold text-red-600 mb-2">Incorrect</h2>
+                          <h2 className="text-4xl font-bold text-red-600 mb-2">
+                            Incorrect
+                          </h2>
                           <p className="text-gray-700">Keep trying!</p>
                         </>
                       )}
@@ -722,15 +764,20 @@ export function DuelGameplay({ duelId }: DuelGameplayProps) {
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">
                     <AvatarFallback className="bg-blue-500 text-white">
-                      {(isChallenger ? opponent?.name : challenger?.name || "O")[0].toUpperCase()}
+                      {(isChallenger
+                        ? opponent?.name
+                        : challenger?.name || "O")[0].toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="text-sm font-medium text-blue-900">
-                      {isChallenger ? opponent?.name || "Opponent" : challenger?.name || "Challenger"}
+                      {isChallenger
+                        ? opponent?.name || "Opponent"
+                        : challenger?.name || "Challenger"}
                     </p>
                     <p className="text-xs text-blue-700">
-                      {opponentAttempts.length}/{items.length} completed · {opponentScore} points
+                      {opponentAttempts.length}/{items.length} completed ·{" "}
+                      {opponentScore} points
                     </p>
                   </div>
                 </div>

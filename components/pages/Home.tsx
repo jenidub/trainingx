@@ -30,6 +30,10 @@ const ComparisonSection = dynamic(
   () => import("@/components/landing/ComparisonSection"),
   { ssr: false }
 );
+const PricingSection = dynamic(
+  () => import("@/components/landing/PricingSection"),
+  { ssr: false }
+);
 const AffiliateProgram = dynamic(
   () => import("@/components/landing/AffiliateProgram"),
   { ssr: false }
@@ -49,7 +53,7 @@ export default function HomePage() {
         <Hero />
         <HowItWorks />
         <WhyThisMatters />
-        <TweetSlider />
+        {/* <TweetSlider /> */}
 
         {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 space-y-32 md:space-y-40"> */}
         <TimelineSection />
@@ -59,6 +63,7 @@ export default function HomePage() {
         <ComparisonSection />
         {/* </div> */}
 
+        <PricingSection />
         <AffiliateProgram />
 
         <FinalCTA />

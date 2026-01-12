@@ -52,7 +52,7 @@ export function PracticeCard({
         <div
           className={`w-full h-full bg-blue-500 rounded-2xl p-1 shadow-sm border-2 border-b-[6px] border-blue-600 transition-all hover:border-blue-500 hover:translate-y-[2px] active:border-b-2 active:translate-y-[6px] ${isAnswered && "opacity-60"}`}
         >
-          <div className="w-full h-full rounded-xl bg-blue-400 flex items-center justify-center p-4 relative overflow-hidden">
+          <div className="w-full h-full rounded-xl bg-blue-400 flex flex-col items-center justify-center p-4 relative overflow-hidden text-white">
             {/* Pattern background */}
             <div
               className="absolute inset-0 opacity-10"
@@ -62,6 +62,16 @@ export function PracticeCard({
                 backgroundSize: "12px 12px",
               }}
             />
+
+            {/* Card Content or Placeholder */}
+            {/* {card.params?.scenario ? (
+              <div className="relative z-10 text-center space-y-2">
+                <div className="text-4xl">📝</div>
+                <div className="text-sm font-medium line-clamp-3 leading-snug opacity-90">
+                  {card.params.scenario}
+                </div>
+              </div>
+            ) : ( */}
             <div className="text-center relative z-10">
               <div className="grid grid-cols-3 gap-2 opacity-80">
                 {[...Array(9)].map((_, i) => (
@@ -72,6 +82,7 @@ export function PracticeCard({
                 ))}
               </div>
             </div>
+            {/* )} */}
           </div>
         </div>
 

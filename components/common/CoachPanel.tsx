@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { TrendingDown, TrendingUp, Target, BookOpen, Zap } from "lucide-react";
 import Link from "next/link";
 import { Id } from "convex/_generated/dataModel";
+import { JuicyButton } from "../ui/juicy-button";
 
 type CoachPanelProps = {
   userId: Id<"users">;
@@ -34,7 +35,7 @@ export function CoachPanel({ userId }: CoachPanelProps) {
   const hasSkillData = skillRatings.length > 0;
 
   return (
-    <Card className="border-2 border-blue-200 bg-linear-to-br from-blue-50 to-white">
+    <Card id="onborda-coach" className="border-2 border-blue-200 bg-linear-to-br from-blue-50 to-white">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Target className="h-5 w-5 text-blue-600" />
@@ -44,15 +45,15 @@ export function CoachPanel({ userId }: CoachPanelProps) {
           Personalized recommendations based on your performance
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-0">
         {!hasSkillData ? (
-          <div className="text-center py-4">
+          <div className="text-center">
             <p className="text-sm text-gray-600 mb-4">
               Complete some practice items to get personalized recommendations!
             </p>
-            <Button asChild>
+            <JuicyButton asChild>
               <Link href="/practice">Start Practicing</Link>
-            </Button>
+            </JuicyButton>
           </div>
         ) : (
           <>

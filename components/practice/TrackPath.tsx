@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { StarRating, calculateStars } from "@/components/ui/StarRating";
-import { Lock, CheckCircle, Play, Crown, ChevronRight } from "lucide-react";
+import { CheckCircle, Play, Crown, ChevronRight, Lock } from "lucide-react";
 import { Id } from "convex/_generated/dataModel";
 
 interface TrackNode {
@@ -110,40 +110,33 @@ function TrackNodeComponent({
   index: number;
   onClick: () => void;
 }) {
-  const isLocked = track.isLocked;
-
   return (
     <motion.button
       onClick={onClick}
-      disabled={isLocked}
-      whileHover={!isLocked ? { scale: 1.05 } : {}}
-      whileTap={!isLocked ? { scale: 0.98 } : {}}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
       className={cn(
         "relative flex items-center gap-4 p-4 rounded-2xl border-2 border-b-4 transition-all min-w-[280px] sm:min-w-[320px]",
         "focus:outline-none focus:ring-2 focus:ring-offset-2",
-        isLocked
-          ? "bg-slate-100 border-slate-200 cursor-not-allowed opacity-60"
-          : isCompleted
-            ? "bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 hover:border-green-300 focus:ring-green-500"
-            : hasProgress
-              ? "bg-blue-50 border-blue-200 hover:border-blue-300 focus:ring-blue-500"
-              : "bg-white border-slate-200 hover:border-slate-300 focus:ring-slate-500"
+        isCompleted
+          ? "bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 hover:border-green-300 focus:ring-green-500"
+          : hasProgress
+            ? "bg-blue-50 border-blue-200 hover:border-blue-300 focus:ring-blue-500"
+            : "bg-white border-slate-200 hover:border-slate-300 focus:ring-slate-500"
       )}
     >
       {/* Icon circle */}
       <div
         className={cn(
           "flex items-center justify-center w-14 h-14 rounded-xl text-3xl transition-colors",
-          isLocked
-            ? "bg-slate-200"
-            : isCompleted
-              ? "bg-green-100 border-2 border-green-200"
-              : hasProgress
-                ? "bg-blue-100 border-2 border-blue-200"
-                : "bg-slate-100 border-2 border-slate-200"
+          isCompleted
+            ? "bg-green-100 border-2 border-green-200"
+            : hasProgress
+              ? "bg-blue-100 border-2 border-blue-200"
+              : "bg-slate-100 border-2 border-slate-200"
         )}
       >
-        {isLocked ? <Lock className="w-6 h-6 text-slate-400" /> : track.icon}
+        {track.icon}
       </div>
 
       {/* Content */}
@@ -151,11 +144,7 @@ function TrackNodeComponent({
         <h3
           className={cn(
             "font-bold text-lg leading-tight",
-            isLocked
-              ? "text-slate-400"
-              : isCompleted
-                ? "text-green-900"
-                : "text-slate-800"
+            isCompleted ? "text-green-900" : "text-slate-800"
           )}
         >
           {track.title}
@@ -185,29 +174,25 @@ function TrackNodeComponent({
               />
             </div>
           </div>
-        ) : !isLocked ? (
+        ) : (
           <span className="text-xs text-slate-500 font-medium mt-1 block">
             Not started
           </span>
-        ) : null}
+        )}
       </div>
 
       {/* Action indicator */}
       <div
         className={cn(
           "flex items-center justify-center w-10 h-10 rounded-xl transition-colors",
-          isLocked
-            ? "bg-slate-200 text-slate-400"
-            : isCompleted
-              ? "bg-green-200 text-green-700"
-              : hasProgress
-                ? "bg-blue-500 text-white"
-                : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+          isCompleted
+            ? "bg-green-200 text-green-700"
+            : hasProgress
+              ? "bg-blue-500 text-white"
+              : "bg-slate-200 text-slate-600 hover:bg-slate-300"
         )}
       >
-        {isLocked ? (
-          <Lock className="w-4 h-4" />
-        ) : isCompleted ? (
+        {isCompleted ? (
           <CheckCircle className="w-5 h-5" />
         ) : hasProgress ? (
           <Play className="w-4 h-4 fill-current" />
@@ -230,42 +215,33 @@ function AssessmentNodeComponent({
   return (
     <motion.button
       onClick={onClick}
-      disabled={!assessment.isUnlocked}
-      whileHover={assessment.isUnlocked ? { scale: 1.05 } : {}}
-      whileTap={assessment.isUnlocked ? { scale: 0.98 } : {}}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.98 }}
       className={cn(
         "relative flex items-center gap-4 p-5 rounded-2xl border-2 border-b-4 transition-all min-w-[280px] sm:min-w-[320px]",
         "focus:outline-none focus:ring-2 focus:ring-offset-2",
-        !assessment.isUnlocked
-          ? "bg-slate-100 border-slate-300 cursor-not-allowed"
-          : assessment.hasPassed
-            ? "bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-300 hover:border-yellow-400 focus:ring-yellow-500"
-            : "bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-300 hover:border-purple-400 focus:ring-purple-500"
+        assessment.hasPassed
+          ? "bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-300 hover:border-yellow-400 focus:ring-yellow-500"
+          : "bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-300 hover:border-purple-400 focus:ring-purple-500"
       )}
     >
       {/* Crown icon */}
       <div
         className={cn(
           "flex items-center justify-center w-14 h-14 rounded-xl",
-          !assessment.isUnlocked
-            ? "bg-slate-200"
-            : assessment.hasPassed
-              ? "bg-yellow-100 border-2 border-yellow-200"
-              : "bg-purple-100 border-2 border-purple-200"
+          assessment.hasPassed
+            ? "bg-yellow-100 border-2 border-yellow-200"
+            : "bg-purple-100 border-2 border-purple-200"
         )}
       >
-        {!assessment.isUnlocked ? (
-          <Lock className="w-6 h-6 text-slate-400" />
-        ) : (
-          <Crown
-            className={cn(
-              "w-7 h-7",
-              assessment.hasPassed
-                ? "text-yellow-600 fill-yellow-400"
-                : "text-purple-600"
-            )}
-          />
-        )}
+        <Crown
+          className={cn(
+            "w-7 h-7",
+            assessment.hasPassed
+              ? "text-yellow-600 fill-yellow-400"
+              : "text-purple-600"
+          )}
+        />
       </div>
 
       {/* Content */}
@@ -273,22 +249,13 @@ function AssessmentNodeComponent({
         <h3
           className={cn(
             "font-extrabold text-lg",
-            !assessment.isUnlocked
-              ? "text-slate-400"
-              : assessment.hasPassed
-                ? "text-yellow-900"
-                : "text-purple-900"
+            assessment.hasPassed ? "text-yellow-900" : "text-purple-900"
           )}
         >
           Domain Assessment
         </h3>
 
-        {!assessment.isUnlocked ? (
-          <span className="text-xs text-slate-500 font-medium block mt-1">
-            Complete {assessment.tracksRemaining} more track
-            {assessment.tracksRemaining !== 1 ? "s" : ""} to unlock
-          </span>
-        ) : assessment.hasPassed ? (
+        {assessment.hasPassed ? (
           <div className="flex items-center gap-2 mt-1">
             <StarRating stars={3} size="sm" />
             <span className="text-xs font-semibold text-yellow-700">
@@ -306,16 +273,12 @@ function AssessmentNodeComponent({
       <div
         className={cn(
           "flex items-center justify-center w-10 h-10 rounded-xl",
-          !assessment.isUnlocked
-            ? "bg-slate-200 text-slate-400"
-            : assessment.hasPassed
-              ? "bg-yellow-200 text-yellow-700"
-              : "bg-purple-500 text-white"
+          assessment.hasPassed
+            ? "bg-yellow-200 text-yellow-700"
+            : "bg-purple-500 text-white"
         )}
       >
-        {!assessment.isUnlocked ? (
-          <Lock className="w-4 h-4" />
-        ) : assessment.hasPassed ? (
+        {assessment.hasPassed ? (
           <CheckCircle className="w-5 h-5" />
         ) : (
           <ChevronRight className="w-5 h-5" />

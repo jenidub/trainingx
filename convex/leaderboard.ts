@@ -5,7 +5,10 @@ import type { Doc } from "./_generated/dataModel";
 const MAX_LIMIT = 200;
 
 type SortBy = "promptScore" | "totalScore" | "communityScore";
-type LeaderboardIndex = "by_promptScore" | "by_totalScore" | "by_communityScore";
+type LeaderboardIndex =
+  | "by_promptScore"
+  | "by_totalScore"
+  | "by_communityScore";
 
 // Get leaderboard with sorting options
 export const getLeaderboard = query({
@@ -35,12 +38,19 @@ export const getLeaderboard = query({
           record.communityScore ??
           record.communityActivity?.communityScore ??
           0;
-        const totalScore = record.totalScore ?? record.promptScore + communityScore;
+        const totalScore =
+          record.totalScore ?? record.promptScore + communityScore;
+
+        let imageUrl = user?.image;
+        if (user?.customImageId) {
+          const url = await ctx.storage.getUrl(user.customImageId);
+          if (url) imageUrl = url;
+        }
 
         return {
           userId: record.userId,
           userName: user?.name || "Anonymous",
-          userImage: user?.image,
+          userImage: imageUrl,
           promptScore: record.promptScore,
           communityScore,
           totalScore,
@@ -83,9 +93,7 @@ export const getUserRank = query({
     const indexName = getIndexName(sortBy);
     const higherScores = await ctx.db
       .query("userStats")
-      .withIndex(indexName, (q) =>
-        q.gt(getFieldName(sortBy), comparisonScore)
-      )
+      .withIndex(indexName, (q) => q.gt(getFieldName(sortBy), comparisonScore))
       .collect();
 
     return {
@@ -111,21 +119,14 @@ function getFieldName(sortBy: SortBy) {
   return "totalScore";
 }
 
-function getScoreForSort(
-  stats: Doc<"userStats">,
-  sortBy: SortBy
-) {
+function getScoreForSort(stats: Doc<"userStats">, sortBy: SortBy) {
   if (sortBy === "promptScore") {
     return stats.promptScore ?? 0;
   }
   if (sortBy === "communityScore") {
-    return stats.communityScore ??
-      stats.communityActivity?.communityScore ??
-      0;
+    return stats.communityScore ?? stats.communityActivity?.communityScore ?? 0;
   }
   const communityScore =
-    stats.communityScore ??
-    stats.communityActivity?.communityScore ??
-    0;
+    stats.communityScore ?? stats.communityActivity?.communityScore ?? 0;
   return stats.totalScore ?? stats.promptScore + communityScore;
 }

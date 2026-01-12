@@ -1,19 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "convex/_generated/api";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  Lock,
   ArrowRight,
   Sparkles,
   Zap,
   Target,
   Star,
   Trophy,
+  Plus,
+  Trash2,
+  Wand2,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Id } from "convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import {
@@ -22,6 +26,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface DomainSelectionProps {
   userId: Id<"users">;
@@ -32,9 +47,28 @@ export function DomainSelection({
   userId,
   onSelectDomain,
 }: DomainSelectionProps) {
+  const router = useRouter();
+  const [deletingId, setDeletingId] = useState<Id<"practiceDomains"> | null>(
+    null
+  );
+
   const domains = useQuery(api.practiceDomains.listWithUnlockStatus, {
     userId,
   }) as any;
+
+  const customDomains = useQuery(api.customDomains.listMyCustomDomains) as any;
+  const deleteCustomDomain = useMutation(api.customDomains.deleteCustomDomain);
+
+  const handleDelete = async (domainId: Id<"practiceDomains">) => {
+    setDeletingId(domainId);
+    try {
+      await deleteCustomDomain({ domainId });
+    } catch (e: any) {
+      alert(e.message);
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   if (!domains) {
     return (
@@ -50,13 +84,12 @@ export function DomainSelection({
   }
 
   const starterDomain = domains.find((d: any) => d.isStarter);
-  const specializedDomains = domains.filter((d: any) => !d.isStarter);
-  const hasUnlockedSpecialized = specializedDomains.some(
-    (d: any) => d.isUnlocked
+  // Filter out user-generated domains from specialized list (they'll be shown separately)
+  const specializedDomains = domains.filter(
+    (d: any) => !d.isStarter && !d.isUserGenerated
   );
-  const unlockedCount = specializedDomains.filter(
-    (d: any) => d.isUnlocked
-  ).length;
+  // All domains are always unlocked
+  const unlockedCount = specializedDomains.length;
 
   return (
     <div className="min-h-full bg-slate-50 pb-12">
@@ -67,7 +100,7 @@ export function DomainSelection({
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <div className="text-center mb-8">
+          <div id="onborda-practice-header" className="text-center mb-8">
             <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
               Practice Zone
             </h1>
@@ -77,7 +110,7 @@ export function DomainSelection({
           </div>
 
           {/* Progress Indicator */}
-          <div className="max-w-md mx-auto">
+          {/* <div className="max-w-md mx-auto">
             <div className="rounded-2xl border-2 border-b-4 border-slate-200 bg-white p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-yellow-100 text-yellow-600">
@@ -96,12 +129,13 @@ export function DomainSelection({
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
         </motion.div>
 
         {/* Starter Domain */}
         {starterDomain && (
           <motion.div
+            id="onborda-starter-domain"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -112,7 +146,7 @@ export function DomainSelection({
                 <Star className="h-6 w-6 stroke-[3px]" />
               </div>
               <h2 className="text-2xl font-extrabold text-slate-700">
-                {hasUnlockedSpecialized ? "Continue Learning" : "Start Here"}
+                Continue Learning
               </h2>
             </div>
 
@@ -178,29 +212,19 @@ export function DomainSelection({
         )}
 
         {/* Specialized Domains */}
-        <div className="mb-8">
+        <div id="onborda-specialized-domains" className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-500">
                 <Trophy className="h-6 w-6 stroke-[3px]" />
               </div>
               <h2 className="text-2xl font-extrabold text-slate-700">
-                {hasUnlockedSpecialized
-                  ? "Specialized Domains"
-                  : "Unlock Specialized Domains"}
+                Specialized Domains
               </h2>
             </div>
-            {!hasUnlockedSpecialized && (
-              <Badge
-                variant="outline"
-                className="text-slate-500 border-slate-300 bg-slate-100 font-bold px-3 py-1"
-              >
-                Complete Level 1 to unlock
-              </Badge>
-            )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             <TooltipProvider>
               {specializedDomains.map((domain: any, index: number) => (
                 <motion.div
@@ -208,52 +232,25 @@ export function DomainSelection({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + index * 0.05 }}
-                  whileHover={domain.isUnlocked ? { scale: 1.02, y: -4 } : {}}
+                  whileHover={{ scale: 1.02, y: -4 }}
                 >
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Card
-                        className={cn(
-                          "h-full transition-all border-2 border-b-[6px] rounded-3xl relative overflow-hidden",
-                          domain.isUnlocked
-                            ? "bg-white border-slate-200 hover:border-purple-200 hover:shadow-lg cursor-pointer group"
-                            : "bg-slate-50 border-slate-200 opacity-70 cursor-not-allowed"
-                        )}
-                        onClick={() =>
-                          domain.isUnlocked &&
-                          onSelectDomain(domain._id, domain.slug)
-                        }
+                        className="h-full transition-all border-2 border-b-[6px] rounded-3xl relative overflow-hidden bg-white border-slate-200 hover:border-purple-200 hover:shadow-lg cursor-pointer group"
+                        onClick={() => onSelectDomain(domain._id, domain.slug)}
                       >
-                        <CardContent className="px-6 py-6 font-medium">
+                        <CardContent className="px-6 py-6 font-medium flex flex-col h-full">
                           <div className="flex items-start justify-between mb-4">
-                            <motion.span
-                              className={cn(
-                                "text-5xl p-3 rounded-2xl border-2 transition-colors",
-                                domain.isUnlocked
-                                  ? "bg-purple-50 border-purple-100 text-purple-600 group-hover:scale-110 duration-200"
-                                  : "bg-slate-100 border-slate-200 grayscale"
-                              )}
-                            >
+                            <motion.span className="text-5xl p-3 rounded-2xl border-2 transition-colors bg-purple-50 border-purple-100 text-purple-600 group-hover:scale-110 duration-200">
                               {domain.icon}
                             </motion.span>
-                            {!domain.isUnlocked && (
-                              <div className="bg-slate-200 p-2 rounded-xl">
-                                <Lock className="w-5 h-5 text-slate-400" />
-                              </div>
-                            )}
                           </div>
 
                           <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight">
                             {domain.title}
                           </h3>
-                          <p
-                            className={cn(
-                              "text-sm mb-6 leading-relaxed font-semibold",
-                              domain.isUnlocked
-                                ? "text-slate-500"
-                                : "text-slate-400"
-                            )}
-                          >
+                          <p className="text-sm mb-6 leading-relaxed font-semibold text-slate-500">
                             {domain.description}
                           </p>
 
@@ -264,40 +261,171 @@ export function DomainSelection({
                             >
                               {domain.trackCount} tracks
                             </Badge>
-                            {domain.isUnlocked && (
-                              <Badge
-                                variant="secondary"
-                                className="bg-green-100 text-green-700 border-green-200 font-bold"
-                              >
-                                Unlocked
-                              </Badge>
-                            )}
                           </div>
 
-                          {domain.isUnlocked && (
-                            <div className="mt-auto">
-                              <div
-                                className="w-full py-3 rounded-xl bg-purple-100/50 border-2 border-purple-100 text-purple-700 font-extrabold text-center uppercase tracking-wide text-xs
-                                  group-hover:bg-purple-500 group-hover:border-purple-500 group-hover:text-white transition-all shadow-sm"
-                              >
-                                Start Practice
-                              </div>
+                          <div className="mt-auto w-full">
+                            <div className="w-full py-4 rounded-xl bg-blue-500 text-white font-extrabold text-center uppercase tracking-wide text-xs shadow-[0_4px_0_0_#2563eb] hover:bg-blue-600 active:shadow-none active:translate-y-[4px] transition-all">
+                              Start Practice
                             </div>
-                          )}
+                          </div>
                         </CardContent>
                       </Card>
                     </TooltipTrigger>
-                    {!domain.isUnlocked && (
-                      <TooltipContent className="bg-slate-800 text-white border-slate-700">
-                        <p className="font-bold">Complete Level 1 to unlock</p>
-                      </TooltipContent>
-                    )}
                   </Tooltip>
                 </motion.div>
               ))}
+
+              {/* Unlock Custom Domains Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Card
+                      className="h-full border-2 rounded-3xl transition-all group bg-slate-50 border-dashed border-slate-300 hover:border-slate-400 hover:bg-slate-100 cursor-pointer"
+                      onClick={() => router.push("/practice/custom/create")}
+                    >
+                      <CardContent className="px-6 py-6 font-medium h-full flex flex-col items-center justify-center text-center gap-4">
+                        <div className="w-16 h-16 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center transition-transform group-hover:scale-110">
+                          <Plus className="w-8 h-8 text-slate-400" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-slate-700">
+                            Create Custom Domain
+                          </h3>
+                          <p className="text-slate-500 font-medium mt-2">
+                            Build your own course
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TooltipTrigger>
+                </Tooltip>
+              </motion.div>
             </TooltipProvider>
           </div>
         </div>
+
+        {/* Custom Domains Section */}
+        {customDomains && customDomains.length > 0 && (
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-100 text-indigo-500">
+                  <Wand2 className="h-6 w-6 stroke-[3px]" />
+                </div>
+                <h2 className="text-2xl font-extrabold text-slate-700">
+                  Your Custom Domains
+                </h2>
+              </div>
+              <Badge
+                variant="secondary"
+                className="bg-indigo-100 text-indigo-700 border-indigo-200 font-bold px-3 py-1"
+              >
+                {customDomains.length} created
+              </Badge>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {customDomains.map((domain: any, index: number) => (
+                <motion.div
+                  key={domain._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                >
+                  <Card className="h-full transition-all border-2 border-b-[6px] rounded-3xl relative overflow-hidden bg-white border-slate-200 hover:border-indigo-200 hover:shadow-lg group">
+                    <CardContent className="px-6 py-6 font-medium">
+                      <div className="flex items-start justify-between mb-4">
+                        <motion.span
+                          className="text-5xl p-3 rounded-2xl border-2 transition-colors bg-indigo-50 border-indigo-100 text-indigo-600"
+                          whileHover={{ scale: 1.1 }}
+                        >
+                          {domain.icon}
+                        </motion.span>
+
+                        {/* Delete Button */}
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <button
+                              className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-500 hover:text-red-600 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                              disabled={deletingId === domain._id}
+                            >
+                              {deletingId === domain._id ? (
+                                <div className="w-5 h-5 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+                              ) : (
+                                <Trash2 className="w-5 h-5" />
+                              )}
+                            </button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Delete Custom Domain?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This will permanently delete "{domain.title}"
+                                and all its tracks, levels, and practice items.
+                                This action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => handleDelete(domain._id)}
+                                className="bg-red-500 hover:bg-red-600"
+                              >
+                                Delete
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+
+                      <h3 className="text-2xl font-extrabold text-slate-800 mb-2 leading-tight">
+                        {domain.title}
+                      </h3>
+                      <p className="text-sm mb-6 leading-relaxed font-semibold text-slate-500">
+                        {domain.description}
+                      </p>
+
+                      <div className="flex items-center gap-2 mb-4">
+                        <Badge
+                          variant="secondary"
+                          className="bg-slate-100 text-slate-600 border-slate-200 font-bold"
+                        >
+                          {domain.trackCount} tracks
+                        </Badge>
+                        <Badge
+                          variant="secondary"
+                          className="bg-indigo-100 text-indigo-700 border-indigo-200 font-bold"
+                        >
+                          Custom
+                        </Badge>
+                      </div>
+
+                      <div
+                        className="mt-auto cursor-pointer"
+                        onClick={() => onSelectDomain(domain._id, domain.slug)}
+                      >
+                        <div
+                          className="w-full py-3 rounded-xl bg-indigo-100/50 border-2 border-indigo-100 text-indigo-700 font-extrabold text-center uppercase tracking-wide text-xs
+                            hover:bg-indigo-500 hover:border-indigo-500 hover:text-white transition-all shadow-sm"
+                        >
+                          Start Practice
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

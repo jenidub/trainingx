@@ -88,10 +88,7 @@ export const canTake = query({
     assessmentId: v.id("domainAssessments"),
   },
   handler: async (ctx, args) => {
-    const assessment = await ctx.db.get(args.assessmentId);
-    if (!assessment) return { canTake: false, reason: "Assessment not found" };
-
-    // Get user's attempts
+    // Always allow taking assessment (unlocked mode)
     const attempts = await ctx.db
       .query("domainAssessmentAttempts")
       .withIndex("by_user_assessment", (q) =>
@@ -99,38 +96,10 @@ export const canTake = query({
       )
       .collect();
 
-    // Check if already passed
-    const passed = attempts.some((a) => a.passed);
-    if (passed) {
-      return { canTake: false, reason: "Already passed", passed: true };
-    }
-
-    // Check max attempts
-    if (attempts.length >= assessment.maxAttempts) {
-      return { canTake: false, reason: "Max attempts reached" };
-    }
-
-    // Check cooldown
-    const lastAttempt = attempts.sort((a, b) => b.startedAt - a.startedAt)[0];
-    if (lastAttempt) {
-      const cooldownMs = assessment.cooldownHours * 60 * 60 * 1000;
-      const timeSinceLastAttempt = Date.now() - lastAttempt.startedAt;
-      if (timeSinceLastAttempt < cooldownMs) {
-        const hoursRemaining = Math.ceil(
-          (cooldownMs - timeSinceLastAttempt) / (60 * 60 * 1000)
-        );
-        return {
-          canTake: false,
-          reason: `Cooldown active. ${hoursRemaining}h remaining`,
-          cooldownEndsAt: lastAttempt.startedAt + cooldownMs,
-        };
-      }
-    }
-
     return {
       canTake: true,
       attemptNumber: attempts.length + 1,
-      attemptsRemaining: assessment.maxAttempts - attempts.length,
+      attemptsRemaining: 999, // Infinite attempts
     };
   },
 });
@@ -142,51 +111,7 @@ export const isUnlocked = query({
     domainId: v.id("practiceDomains"),
   },
   handler: async (ctx, args) => {
-    // DEV BYPASS - Remove this in production!
-    const DEV_BYPASS = true;
-    if (DEV_BYPASS) {
-      return { isUnlocked: true };
-    }
-
-    // Get all tracks in domain
-    const tracks = await ctx.db
-      .query("practiceTracks")
-      .withIndex("by_domain", (q) => q.eq("domainId", args.domainId))
-      .filter((q) => q.eq(q.field("status"), "live"))
-      .collect();
-
-    if (tracks.length === 0) {
-      return { isUnlocked: false, reason: "No tracks in domain" };
-    }
-
-    // Check user progress for each track
-    const incompleteTracksCount = await Promise.all(
-      tracks.map(async (track) => {
-        const progress = await ctx.db
-          .query("userTrackProgress")
-          .withIndex("by_user_track", (q) =>
-            q.eq("userId", args.userId).eq("trackId", track._id)
-          )
-          .first();
-
-        return !progress || progress.percentComplete < 100 ? 1 : 0;
-      })
-    );
-
-    const incomplete = incompleteTracksCount.reduce(
-      (sum: number, val) => sum + val,
-      0 as number
-    );
-
-    if (incomplete > 0) {
-      return {
-        isUnlocked: false,
-        reason: `Complete ${incomplete} more track${incomplete > 1 ? "s" : ""} to unlock`,
-        tracksRemaining: incomplete,
-        totalTracks: tracks.length,
-      };
-    }
-
+    // Simplified: Always return unlocked
     return { isUnlocked: true };
   },
 });
@@ -400,7 +325,21 @@ async function generateCertificateId(ctx: any): Promise<string> {
   }
 
   // Format: TX-AI-2025-00001
-  return `TX-AI-${year}-${String(nextNumber).padStart(5, "0")}`;
+  const id = `TX-AI-${year}-${String(nextNumber).padStart(5, "0")}`;
+
+  // Double check uniqueness (safety net)
+  const existing = await ctx.db
+    .query("domainCertificates")
+    .withIndex("by_certificate_id", (q: any) => q.eq("certificateId", id))
+    .first();
+
+  if (existing) {
+    // This should logically never happen due to transactional counters,
+    // but if manual data entry mess ups occurred, we can recurse (safe in convex mutation)
+    return generateCertificateId(ctx);
+  }
+
+  return id;
 }
 
 // ===== ANTI-CHEAT =====

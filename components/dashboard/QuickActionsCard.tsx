@@ -4,7 +4,7 @@ import { JuicyButton } from "@/components/ui/juicy-button";
 
 export function QuickActionsCard() {
   return (
-    <div className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
+    <div id="onborda-quick-actions" className="rounded-3xl border-2 border-b-[6px] border-slate-200 bg-white p-6">
       <div className="flex items-center gap-3 mb-6">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
           <Zap className="h-6 w-6 stroke-3" />

@@ -1,8 +1,8 @@
-export type Rubric = { 
-  clarity: number; 
-  constraints: number; 
-  iteration: number; 
-  tool: number 
+export type Rubric = {
+  clarity: number;
+  constraints: number;
+  iteration: number;
+  tool: number;
 };
 
 export type SkillSignals = {
@@ -24,14 +24,17 @@ export function clamp(n: number): number {
 }
 
 export function computePromptScore(r: Rubric): number {
-  const total = clamp(r.clarity) + clamp(r.constraints) + clamp(r.iteration) + clamp(r.tool);
-  return Math.round(total);
+  // Normalized for 3 dimensions (Clarity/Intuition, Constraints/Control, Tool/Fluency)
+  // Max raw score is 75 (25 * 3), so we scale to 100.
+  const total = clamp(r.clarity) + clamp(r.constraints) + clamp(r.tool);
+  return Math.round((total / 75) * 100);
 }
 
 export function computeSkillSignals(r: Rubric): SkillSignals {
   const c = clamp(r.clarity);
   const k = clamp(r.constraints);
-  const i = clamp(r.iteration);
+  // Backfill Iteration (Intuition) using Clarity (Intuition) for backward compatibility
+  const i = clamp(r.iteration) || c;
   const t = clamp(r.tool);
 
   return {
@@ -45,6 +48,6 @@ export function computeSkillSignals(r: Rubric): SkillSignals {
     planning: Math.round((k * 0.7 + t * 0.3) * 4),
     analysis: Math.round((t * 0.7 + c * 0.3) * 4),
     creativity: Math.round((i * 0.7 + c * 0.3) * 4),
-    collaboration: Math.round((c * 0.5 + i * 0.5) * 4)
+    collaboration: Math.round((c * 0.5 + i * 0.5) * 4),
   };
 }

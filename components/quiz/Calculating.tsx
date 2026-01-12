@@ -15,7 +15,7 @@ const steps = [
     color: "text-blue-400",
   },
   {
-    text: "Scanning 2025 AI market opportunities...",
+    text: "Scanning 2026 AI market opportunities...",
     icon: Search,
     color: "text-purple-400",
   },

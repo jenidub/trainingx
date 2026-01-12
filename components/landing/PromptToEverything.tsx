@@ -146,7 +146,7 @@ export default function PromptToEverything() {
             </span>
           </h2>
           <p className="text-lg md:text-xl text-[hsl(215,20%,65%)] font-light max-w-2xl mx-auto leading-relaxed">
-            In 2025, the barrier between idea and reality is a single sentence.
+            In 2026, the barrier between idea and reality is a single sentence.
             Experience the unified engine that powers apps, movies, ads, and
             more.
           </p>

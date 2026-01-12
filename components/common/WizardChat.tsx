@@ -76,7 +76,7 @@ export function WizardChat() {
   if (!mounted) return null;
 
   // Don't show wizard on assessment and quiz pages
-  if (location.includes("/assessment") || location.includes("/quiz")) return null;
+  if (location.includes("/quiz")) return null;
 
   return createPortal(
     <>
@@ -119,7 +119,7 @@ export function WizardChat() {
                   Hi! I'm the Wizard
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Ask me anything about TrainingX.Ai! I can help you understand
+                  Ask me anything about TrainingX.AI! I can help you understand
                   the platform, explain features, or provide prompting tips.
                 </p>
               </div>
@@ -187,6 +187,6 @@ export function WizardChat() {
         </Card>
       )}
     </>,
-    document.body,
+    document.body
   );
 }

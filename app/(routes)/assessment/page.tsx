@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
@@ -11,9 +12,10 @@ import { useAuth } from "@/contexts/AuthContextProvider";
 import { WelcomeScreen } from "@/components/assessment/WelcomeScreen";
 import { QuestionCard } from "@/components/assessment/QuestionCard";
 import { ResultsScreen } from "@/components/assessment/ResultsScreen";
+import { CalculatingScreen } from "@/components/assessment/CalculatingScreen";
 import { calculateAssessmentResults } from "@/lib/assessmentUtils";
 
-type AssessmentStep = "welcome" | "questions" | "results";
+type AssessmentStep = "welcome" | "questions" | "calculating" | "results";
 
 export default function AssessmentLite() {
   const router = useRouter();
@@ -25,7 +27,6 @@ export default function AssessmentLite() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [showFeedback, setShowFeedback] = useState(false);
 
-  // Skip welcome screen if user is authenticated
   useEffect(() => {
     if (isAuthenticated && user) {
       setUserName(user.name || "User");
@@ -61,8 +62,12 @@ export default function AssessmentLite() {
         name: userName,
         email: userEmail,
       });
-      setStep("results");
+      setStep("calculating");
     }
+  };
+
+  const handleCalculatingComplete = () => {
+    setStep("results");
   };
 
   const calculateResults = () => {
@@ -83,12 +88,14 @@ export default function AssessmentLite() {
     router.push("/enter");
   };
 
-  // Welcome Screen
   if (step === "welcome") {
     return <WelcomeScreen onStart={handleStartAssessment} />;
   }
 
-  // Results Screen
+  if (step === "calculating") {
+    return <CalculatingScreen onComplete={handleCalculatingComplete} />;
+  }
+
   if (step === "results") {
     const results = calculateResults();
     const feedback = getFeedbackByScore(results.promptScore, userName);
@@ -107,7 +114,6 @@ export default function AssessmentLite() {
     );
   }
 
-  // Questions Screen
   const currentQ = questions[currentQuestion];
 
   if (currentQ.type !== "multiple-choice") {

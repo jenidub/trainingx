@@ -1,103 +1,145 @@
+import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
 
 export const getProjects = query({
   args: {
     category: v.optional(v.string()),
-    difficulty: v.optional(v.string()),
+    difficultyLevel: v.optional(v.number()),
     limit: v.optional(v.number()),
-    isPublished: v.optional(v.boolean())
   },
   handler: async (ctx, args) => {
-    let projects = await ctx.db.query("projects").collect();
+    let tasks = await ctx.db.query("projects").collect();
 
-    // Apply filters
-    if (args.category) {
-      projects = projects.filter(p => p.category === args.category);
-    }
-    if (args.difficulty) {
-      projects = projects.filter(p => p.difficulty === args.difficulty);
-    }
-    if (args.isPublished !== undefined) {
-      projects = projects.filter(p => p.isPublished === args.isPublished);
-    }
-    if (args.limit && args.limit > 0) {
-      projects = projects.slice(0, args.limit);
+    // Filter in memory for now as some fields might be optional/missing in old data
+    if (args.category && args.category !== "All") {
+      tasks = tasks.filter((t) => t.category === args.category);
     }
 
-    // Sort by creation date (newest first)
-    projects.sort((a, b) => b._creationTime - a._creationTime);
+    if (args.difficultyLevel) {
+      tasks = tasks.filter((t) => t.difficultyLevel === args.difficultyLevel);
+    }
 
-    return projects;
+    if (args.limit) {
+      tasks = tasks.slice(0, args.limit);
+    }
+
+    return tasks;
+  },
+});
+
+export const getProjectBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const project = await ctx.db
+      .query("projects")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    return project;
+  },
+});
+
+export const seedProjects = mutation({
+  args: {},
+  handler: async (ctx) => {
+    // Check if we already have seeded projects matching our slugs
+    const existing = await ctx.db
+      .query("projects")
+      .filter((q) => q.eq(q.field("slug"), "dentist-landing-page"))
+      .first();
+    if (existing) {
+      console.log(
+        "Project 'dentist-landing-page' already exists. Skipping seed."
+      );
+      return;
+    }
+
+    const projects = [
+      {
+        title: "Dentist Landing Page",
+        description:
+          "Build a high-converting landing page for a local dentist office. Focus on accessibility and CTA placement.",
+        difficulty: "Beginner",
+        difficultyLevel: 1,
+        category: "Web",
+        estimatedHours: 4,
+        tags: ["HTML", "CSS", "Responsive"],
+        techStack: ["Next.js", "TailwindCSS"],
+        xpReward: 100,
+        slug: "dentist-landing-page",
+        imageUrl: "/images/projects/dentist.webp",
+        isPublished: true,
+        steps: [],
+        requirements: ["Responsive Design", "Booking Form"],
+        learningObjectives: ["CSS Grid", "Forms"],
+      },
+      {
+        title: "AI Voice Agent for Restaurant",
+        description:
+          "Create a voice bot that takes reservations for a busy Italian restaurant using ElevenLabs and Vapi.",
+        difficulty: "Advanced",
+        difficultyLevel: 5,
+        category: "AI",
+        estimatedHours: 12,
+        tags: ["Voice AI", "Python", "API"],
+        techStack: ["Vapi", "OpenAI", "Python"],
+        xpReward: 500,
+        slug: "restaurant-voice-agent",
+        imageUrl: "/images/projects/voice-agent.webp",
+        isPublished: true,
+        steps: [],
+        requirements: ["Low Latency", "Context Awareness"],
+        learningObjectives: ["Voice VAD", "LLM Prompting"],
+      },
+      {
+        title: "Retro Space Shooter",
+        description:
+          "A browser-based arcade shooter using HTML Canvas and JavaScript.",
+        difficulty: "Intermediate",
+        difficultyLevel: 3,
+        category: "Game",
+        estimatedHours: 8,
+        tags: ["Game Dev", "Spritework"],
+        techStack: ["HTML Canvas", "JS"],
+        xpReward: 300,
+        slug: "space-shooter",
+        imageUrl: "/images/projects/space-shooter.webp",
+        isPublished: true,
+        steps: [],
+        requirements: ["Score System", "Collision Detection"],
+        learningObjectives: ["Game Loop", "Physics"],
+      },
+    ];
+
+    // Fetch a fallback user ID.
+    const user = await ctx.db.query("users").first();
+
+    if (!user) {
+      console.log("No user found to assign project authorship. Seed aborted.");
+      // Create a critical error log or duplicate
+      return;
+    }
+
+    const fallbackId = user._id;
+    console.log(`Assigning projects to author: ${fallbackId}`);
+
+    for (const p of projects) {
+      await ctx.db.insert("projects", { ...p, authorId: fallbackId });
+      console.log(`Seeded project: ${p.title}`);
+    }
+  },
+});
+
+export const deleteProject = mutation({
+  args: { id: v.id("projects") },
+  handler: async (ctx, args) => {
+    await ctx.db.delete(args.id);
   },
 });
 
 export const getProject = query({
   args: { projectId: v.id("projects") },
-  handler: async (ctx, { projectId }) => {
-    const project = await ctx.db.get(projectId);
-    return project;
-  },
-});
-
-export const createProject = mutation({
-  args: {
-    title: v.string(),
-    description: v.string(),
-    difficulty: v.string(),
-    category: v.string(),
-    estimatedHours: v.number(),
-    tags: v.array(v.string()),
-    authorId: v.id("users"),
-    isPublished: v.boolean(),
-    steps: v.array(v.object({
-      title: v.string(),
-      content: v.string(),
-      codeExample: v.optional(v.string()),
-      resources: v.array(v.string()),
-      order: v.number()
-    })),
-    requirements: v.array(v.string()),
-    learningObjectives: v.array(v.string())
-  },
   handler: async (ctx, args) => {
-    const projectId = await ctx.db.insert("projects", args);
-    return projectId;
-  },
-});
-
-export const updateProject = mutation({
-  args: {
-    projectId: v.id("projects"),
-    title: v.optional(v.string()),
-    description: v.optional(v.string()),
-    difficulty: v.optional(v.string()),
-    category: v.optional(v.string()),
-    estimatedHours: v.optional(v.number()),
-    tags: v.optional(v.array(v.string())),
-    isPublished: v.optional(v.boolean()),
-    steps: v.optional(v.array(v.object({
-      title: v.string(),
-      content: v.string(),
-      codeExample: v.optional(v.string()),
-      resources: v.array(v.string()),
-      order: v.number()
-    }))),
-    requirements: v.optional(v.array(v.string())),
-    learningObjectives: v.optional(v.array(v.string()))
-  },
-  handler: async (ctx, { projectId, ...updates }) => {
-    const project = await ctx.db.get(projectId);
-    if (!project) {
-      throw new Error("Project not found");
-    }
-
-    // Remove undefined values
-    const filteredUpdates = Object.fromEntries(
-      Object.entries(updates).filter(([_, value]) => value !== undefined)
-    );
-
-    await ctx.db.patch(projectId, filteredUpdates);
-    return projectId;
+    return await ctx.db.get(args.projectId);
   },
 });

@@ -500,3 +500,483 @@ export const getAICostStats = query({
     };
   },
 });
+
+// ============================================
+// COMMUNITY MODERATION STATS
+// ============================================
+
+export const getModerationStats = query({
+  args: { days: v.optional(v.number()) },
+  handler: async (ctx, { days = 7 }) => {
+    const hasAccess = await requireAdmin(ctx);
+    if (!hasAccess) return null;
+
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+
+    // Get moderation audit logs
+    const logs = await ctx.db
+      .query("moderationAuditLog")
+      .withIndex("by_date")
+      .filter((q) => q.gte(q.field("createdAt"), cutoff))
+      .collect();
+
+    // Get pending reviews from queue
+    const pendingReviews = await ctx.db
+      .query("moderationQueue")
+      .withIndex("by_status", (q) => q.eq("status", "pending"))
+      .collect();
+
+    // Calculate stats
+    const approved = logs.filter((l) => l.finalDecision === "approved").length;
+    const rejected = logs.filter((l) => l.finalDecision === "rejected").length;
+    const escalated = logs.filter(
+      (l) => l.finalDecision === "escalated"
+    ).length;
+
+    const avgLatency =
+      logs.length > 0
+        ? logs.reduce((sum, l) => sum + l.totalLatencyMs, 0) / logs.length
+        : 0;
+
+    const totalCost = logs.reduce((sum, l) => sum + l.estimatedCost, 0);
+
+    // Moderation by day
+    const byDay: Record<
+      string,
+      { approved: number; rejected: number; escalated: number }
+    > = {};
+    for (const log of logs) {
+      const date = new Date(log.createdAt).toISOString().split("T")[0];
+      if (!byDay[date])
+        byDay[date] = { approved: 0, rejected: 0, escalated: 0 };
+      if (log.finalDecision === "approved") byDay[date].approved++;
+      if (log.finalDecision === "rejected") byDay[date].rejected++;
+      if (log.finalDecision === "escalated") byDay[date].escalated++;
+    }
+
+    const moderationByDay = Object.entries(byDay)
+      .map(([date, counts]) => ({ date, ...counts }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    // Top flagged categories (from rejected posts)
+    const categoryCount: Record<string, number> = {};
+    for (const log of logs) {
+      if (log.textResult?.flaggedCategories) {
+        for (const cat of log.textResult.flaggedCategories) {
+          categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+        }
+      }
+    }
+
+    const topCategories = Object.entries(categoryCount)
+      .map(([category, count]) => ({ category, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    return {
+      total: logs.length,
+      approved,
+      rejected,
+      escalated,
+      pendingReviews: pendingReviews.length,
+      avgLatencyMs: Math.round(avgLatency),
+      totalCost: Math.round(totalCost * 100) / 100,
+      approvalRate:
+        logs.length > 0 ? Math.round((approved / logs.length) * 100) : 100,
+      moderationByDay,
+      topCategories,
+    };
+  },
+});
+
+// ============================================
+// ENHANCED USER ANALYTICS (for Admin Panel v2)
+// ============================================
+
+// Get cohort-wide statistics for percentile calculations
+export const getCohortStats = query({
+  args: {},
+  handler: async (ctx) => {
+    const hasAccess = await requireAdmin(ctx);
+    if (!hasAccess) return null;
+
+    const allStats = await ctx.db.query("userStats").collect();
+
+    if (allStats.length === 0) {
+      return {
+        promptScores: [],
+        totalScores: [],
+        streaks: [],
+        count: 0,
+      };
+    }
+
+    // Collect all values for percentile calculations
+    const promptScores = allStats
+      .map((s) => s.promptScore || 0)
+      .sort((a, b) => a - b);
+    const totalScores = allStats
+      .map((s) => s.totalScore || 0)
+      .sort((a, b) => a - b);
+    const streaks = allStats.map((s) => s.streak || 0).sort((a, b) => a - b);
+
+    return {
+      promptScores,
+      totalScores,
+      streaks,
+      count: allStats.length,
+      averagePromptScore:
+        promptScores.reduce((a, b) => a + b, 0) / promptScores.length,
+      averageStreak: streaks.reduce((a, b) => a + b, 0) / streaks.length,
+    };
+  },
+});
+
+// Enhanced user detail with full dashboard data
+export const getEnhancedUserDetail = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, { userId }) => {
+    const hasAccess = await requireAdmin(ctx);
+    if (!hasAccess) return null;
+
+    const user = await ctx.db.get(userId);
+    if (!user) throw new Error("User not found");
+
+    // Get user stats
+    const stats = await ctx.db
+      .query("userStats")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .first();
+
+    // Get skills display (Elo to 0-100 scale)
+    const userSkills = await ctx.db
+      .query("practiceUserSkills")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+
+    const skillsDisplay: Record<string, number> = {};
+    for (const skill of userSkills) {
+      // Convert rating to 0-100 display (1000 = 50, range 600-1400 -> 0-100)
+      const displayValue = Math.max(
+        0,
+        Math.min(100, Math.round((skill.rating - 600) / 8))
+      );
+      skillsDisplay[skill.skillId] = displayValue;
+    }
+
+    // Get activity counts
+    const attempts = await ctx.db
+      .query("practiceAttempts")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+
+    const duels = await ctx.db
+      .query("practiceDuels")
+      .filter((q) =>
+        q.or(
+          q.eq(q.field("hostId"), userId),
+          q.eq(q.field("challengerId"), userId),
+          q.eq(q.field("opponentId"), userId)
+        )
+      )
+      .collect();
+
+    const posts = await ctx.db
+      .query("posts")
+      .withIndex("by_author", (q) => q.eq("authorId", userId))
+      .collect();
+
+    const creatorDrafts = await ctx.db
+      .query("creatorDrafts")
+      .withIndex("by_creator", (q) => q.eq("creatorId", userId))
+      .collect();
+
+    // Get user progress for projects
+    const userProgress = await ctx.db
+      .query("userProgress")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+
+    // Get projects count
+    const projects = await ctx.db.query("projects").collect();
+    const completedProjectIds = userProgress.map((p) =>
+      p.projectId?.toString()
+    );
+
+    // Calculate engagement metrics
+    const now = Date.now();
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+    const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
+
+    const recentAttempts = attempts.filter(
+      (a) => a.completedAt && a.completedAt >= sevenDaysAgo
+    );
+    const monthlyAttempts = attempts.filter(
+      (a) => a.completedAt && a.completedAt >= thirtyDaysAgo
+    );
+
+    // Get streak info
+    const streakData = await ctx.db
+      .query("practiceStreaks")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .first();
+
+    return {
+      user: {
+        _id: user._id,
+        name: user.name || "Anonymous",
+        email: user.email,
+        image: user.image,
+        createdAt: user._creationTime,
+      },
+      stats: stats
+        ? {
+            promptScore: stats.promptScore || 0,
+            totalScore: stats.totalScore || 0,
+            communityScore: stats.communityScore || 0,
+            streak: stats.streak || 0,
+            lastActiveDate: stats.lastActiveDate,
+            assessmentComplete: stats.assessmentComplete || false,
+            badges: stats.badges || [],
+            completedProjects: stats.completedProjects || [],
+            skills: stats.skills || {},
+            rubric: stats.rubric,
+            previousPromptScore: stats.previousPromptScore,
+            previousSkills: stats.previousSkills,
+            assessmentHistory: stats.assessmentHistory || [],
+          }
+        : null,
+      skillsDisplay,
+      activity: {
+        practiceAttempts: attempts.length,
+        duelsPlayed: duels.length,
+        postsCreated: posts.length,
+        contentCreated: creatorDrafts.length,
+        recentAttempts: recentAttempts.length,
+        monthlyAttempts: monthlyAttempts.length,
+      },
+      projects: {
+        completed: userProgress.length,
+        available: projects.length - userProgress.length,
+        total: projects.length,
+      },
+      streak: streakData
+        ? {
+            currentStreak: streakData.currentStreak || 0,
+            longestStreak: streakData.longestStreak || 0,
+            repairTokens: streakData.repairTokens || 0,
+            lastPracticeDate: streakData.lastPracticeDate,
+          }
+        : null,
+    };
+  },
+});
+
+// Calculate user risk status and engagement health
+export const getUserRiskStatus = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, { userId }) => {
+    const hasAccess = await requireAdmin(ctx);
+    if (!hasAccess) return null;
+
+    const stats = await ctx.db
+      .query("userStats")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .first();
+
+    const streakData = await ctx.db
+      .query("practiceStreaks")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .first();
+
+    const now = Date.now();
+    const oneDayAgo = now - 24 * 60 * 60 * 1000;
+    const threeDaysAgo = now - 3 * 24 * 60 * 60 * 1000;
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+
+    const riskFactors: string[] = [];
+    let riskLevel: "healthy" | "at-risk" | "inactive" = "healthy";
+
+    if (!stats) {
+      return {
+        riskLevel: "inactive" as const,
+        riskFactors: ["No activity data"],
+        lastActive: null,
+        daysSinceActive: null,
+      };
+    }
+
+    const lastActive = stats.lastActiveDate || 0;
+    const daysSinceActive = Math.floor(
+      (now - lastActive) / (24 * 60 * 60 * 1000)
+    );
+
+    // Check for inactivity
+    if (lastActive < sevenDaysAgo) {
+      riskLevel = "inactive";
+      riskFactors.push(`Inactive for ${daysSinceActive} days`);
+    } else if (lastActive < threeDaysAgo) {
+      riskLevel = "at-risk";
+      riskFactors.push(`No activity for ${daysSinceActive} days`);
+    }
+
+    // Check for broken streak
+    if (
+      streakData &&
+      streakData.currentStreak === 0 &&
+      streakData.longestStreak > 3
+    ) {
+      if (riskLevel === "healthy") riskLevel = "at-risk";
+      riskFactors.push("Lost streak");
+    }
+
+    // Check for declining scores
+    if (
+      stats.previousPromptScore &&
+      stats.promptScore < stats.previousPromptScore
+    ) {
+      if (riskLevel === "healthy") riskLevel = "at-risk";
+      riskFactors.push(
+        `Score dropped ${stats.previousPromptScore - stats.promptScore} pts`
+      );
+    }
+
+    // Check if never completed assessment
+    if (!stats.assessmentComplete) {
+      if (riskLevel === "healthy") riskLevel = "at-risk";
+      riskFactors.push("Never completed assessment");
+    }
+
+    return {
+      riskLevel,
+      riskFactors,
+      lastActive,
+      daysSinceActive,
+    };
+  },
+});
+
+// Get all users with their risk status for the list view
+export const listUsersWithStatus = query({
+  args: {
+    search: v.optional(v.string()),
+    sortBy: v.optional(v.string()),
+    statusFilter: v.optional(v.string()),
+    limit: v.optional(v.number()),
+    offset: v.optional(v.number()),
+  },
+  handler: async (
+    ctx,
+    { search, sortBy = "recent", statusFilter, limit = 50, offset = 0 }
+  ) => {
+    const hasAccess = await requireAdmin(ctx);
+    if (!hasAccess) return null;
+
+    let users = await ctx.db.query("users").collect();
+
+    // Search filter
+    if (search) {
+      const searchLower = search.toLowerCase();
+      users = users.filter(
+        (u) =>
+          u.name?.toLowerCase().includes(searchLower) ||
+          u.email?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Get stats for all users
+    const allStats = await ctx.db.query("userStats").collect();
+    const statsMap = new Map(allStats.map((s) => [s.userId.toString(), s]));
+
+    // Get streak data for all users
+    const allStreaks = await ctx.db.query("practiceStreaks").collect();
+    const streakMap = new Map(allStreaks.map((s) => [s.userId.toString(), s]));
+
+    const now = Date.now();
+    const threeDaysAgo = now - 3 * 24 * 60 * 60 * 1000;
+    const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
+
+    // Combine users with stats and calculate risk
+    let combined = users.map((user) => {
+      const stats = statsMap.get(user._id.toString());
+      const streak = streakMap.get(user._id.toString());
+
+      const lastActive = stats?.lastActiveDate || user._creationTime;
+      let riskLevel: "healthy" | "at-risk" | "inactive" = "healthy";
+
+      if (!stats || lastActive < sevenDaysAgo) {
+        riskLevel = "inactive";
+      } else if (lastActive < threeDaysAgo) {
+        riskLevel = "at-risk";
+      } else if (
+        stats.previousPromptScore &&
+        stats.promptScore < stats.previousPromptScore
+      ) {
+        riskLevel = "at-risk";
+      } else if (
+        streak &&
+        streak.currentStreak === 0 &&
+        streak.longestStreak > 3
+      ) {
+        riskLevel = "at-risk";
+      }
+
+      return {
+        _id: user._id,
+        name: user.name || "Anonymous",
+        email: user.email || "",
+        image: user.image,
+        createdAt: user._creationTime,
+        promptScore: stats?.promptScore || 0,
+        totalScore: stats?.totalScore || 0,
+        streak: stats?.streak || 0,
+        lastActive,
+        assessmentComplete: stats?.assessmentComplete || false,
+        badgesCount: stats?.badges?.length || 0,
+        completedProjectsCount: stats?.completedProjects?.length || 0,
+        riskLevel,
+        topSkills: stats?.skills
+          ? Object.entries(stats.skills as Record<string, number>)
+              .sort(([, a], [, b]) => b - a)
+              .slice(0, 3)
+              .map(([skill]) => skill)
+          : [],
+      };
+    });
+
+    // Status filter
+    if (statusFilter && statusFilter !== "all") {
+      combined = combined.filter((u) => u.riskLevel === statusFilter);
+    }
+
+    // Sort
+    switch (sortBy) {
+      case "score":
+        combined.sort((a, b) => b.promptScore - a.promptScore);
+        break;
+      case "active":
+        combined.sort((a, b) => b.lastActive - a.lastActive);
+        break;
+      case "streak":
+        combined.sort((a, b) => b.streak - a.streak);
+        break;
+      case "recent":
+      default:
+        combined.sort((a, b) => b.createdAt - a.createdAt);
+    }
+
+    // Calculate status counts before pagination
+    const statusCounts = {
+      all: combined.length,
+      healthy: combined.filter((u) => u.riskLevel === "healthy").length,
+      "at-risk": combined.filter((u) => u.riskLevel === "at-risk").length,
+      inactive: combined.filter((u) => u.riskLevel === "inactive").length,
+    };
+
+    // Paginate
+    const total = combined.length;
+    combined = combined.slice(offset, offset + limit);
+
+    return { users: combined, total, statusCounts };
+  },
+});

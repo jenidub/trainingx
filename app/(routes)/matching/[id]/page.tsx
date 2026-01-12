@@ -36,6 +36,7 @@ import {
   Globe,
   PlayCircle,
   Flag,
+  Bot,
 } from "lucide-react";
 
 import { SidebarLayout } from "@/components/layout/SidebarLayout";
@@ -528,17 +529,7 @@ export default function OpportunityDetailsPage() {
             </Button>
 
             <div className="flex items-center gap-3">
-              {matchMeta?.isUnlocked ? (
-                <div className="flex items-center gap-2 rounded-xl border-2 border-b-4 border-yellow-500 bg-yellow-400 px-3 py-1.5 text-yellow-950">
-                  <Zap className="h-5 w-5 fill-current" />
-                  <span className="font-black text-sm">+{xpReward} XP</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 rounded-xl border-2 border-b-4 border-slate-300 bg-slate-200 px-3 py-1.5 text-slate-500">
-                  <Lock className="h-5 w-5" />
-                  <span className="font-black text-sm">Locked</span>
-                </div>
-              )}
+              {/* XP/Locked badges removed - gamification cleanup */}
             </div>
           </div>
         </div>
@@ -597,6 +588,7 @@ export default function OpportunityDetailsPage() {
                         {opportunity.remotePolicy}
                       </span>
                     )}
+                    {/* Match percentage badge - commented out during gamification cleanup
                     {matchMeta && (
                       <span
                         className={`inline-flex items-center gap-1 rounded-xl border-2 border-b-4 px-3 py-1.5 text-xs font-bold uppercase tracking-wide ${
@@ -611,6 +603,7 @@ export default function OpportunityDetailsPage() {
                         {Math.round(matchMeta.matchScore)}% Match
                       </span>
                     )}
+                    */}
                   </div>
                 </div>
               </div>
@@ -698,57 +691,19 @@ export default function OpportunityDetailsPage() {
                       Required Skills
                     </h2>
                     <div className="flex flex-wrap gap-2">
-                      {opportunity.requiredSkills.map((skill) => {
-                        const isMatched = matchMeta?.matched.includes(skill);
-                        const isGap = matchMeta?.gaps.includes(skill);
-                        return (
-                          <span
-                            key={skill}
-                            className={`inline-flex items-center gap-1.5 rounded-xl border-2 px-4 py-2 text-sm font-semibold ${
-                              isMatched
-                                ? "bg-green-50 border-green-200 text-green-700"
-                                : isGap
-                                  ? "bg-amber-50 border-amber-200 text-amber-700"
-                                  : "bg-slate-50 border-slate-200 text-slate-700"
-                            }`}
-                          >
-                            {isMatched && (
-                              <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            )}
-                            {isGap && (
-                              <Lock className="h-3.5 w-3.5 text-amber-500" />
-                            )}
-                            {skill.replace(/_/g, " ")}
-                          </span>
-                        );
-                      })}
+                      {opportunity.requiredSkills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center rounded-xl border-2 px-4 py-2 text-sm font-semibold bg-slate-50 border-slate-200 text-slate-700"
+                        >
+                          {skill.replace(/_/g, " ")}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 )}
 
-              {/* Skill Gaps Warning */}
-              {matchMeta && matchMeta.gaps.length > 0 && (
-                <div className="rounded-2xl bg-amber-50 border border-amber-200 p-6">
-                  <h2 className="text-lg font-bold text-amber-800 mb-3 flex items-center gap-2">
-                    <Lock className="h-5 w-5" />
-                    Skills to Unlock This Opportunity
-                  </h2>
-                  <p className="text-amber-700 mb-4">
-                    Develop these skills to fully unlock this opportunity and
-                    earn {xpReward} XP:
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {matchMeta.gaps.map((gap) => (
-                      <span
-                        key={gap}
-                        className="inline-flex items-center rounded-xl bg-white border border-amber-300 px-4 py-2 text-sm font-semibold text-amber-800"
-                      >
-                        {gap.replace(/_/g, " ")}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* Skills to Unlock warning - removed during gamification cleanup */}
 
               {/* Next Steps */}
               {opportunity.nextSteps && (
@@ -816,7 +771,7 @@ export default function OpportunityDetailsPage() {
           </motion.div>
 
           {/* Learning Roadmap Section */}
-          <motion.div
+          {/* <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
@@ -833,7 +788,7 @@ export default function OpportunityDetailsPage() {
               </p>
             </div>
 
-            <AnimatePresence mode="wait">
+           <AnimatePresence mode="wait">
               {!storedRoadmap && !isGeneratingRoadmap ? (
                 <motion.div
                   key="generate"
@@ -883,9 +838,9 @@ export default function OpportunityDetailsPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="space-y-6"
-                >
-                  {/* Roadmap Header */}
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                > */}
+          {/* Roadmap Header */}
+          {/* <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
                     <div>
                       <h3 className="font-bold text-slate-800">
                         {storedRoadmap.goalTitle}
@@ -909,10 +864,10 @@ export default function OpportunityDetailsPage() {
                         </Button>
                       </Link>
                     )}
-                  </div>
+                  </div> */}
 
-                  {/* Phases */}
-                  <div className="space-y-6">
+          {/* Phases */}
+          {/* <div className="space-y-6">
                     {storedRoadmap.phases.map((phase, index) => (
                       <RoadmapNode
                         key={phase.id}
@@ -922,10 +877,10 @@ export default function OpportunityDetailsPage() {
                         onStepClick={handleStepClick}
                       />
                     ))}
-                  </div>
+                  </div> */}
 
-                  {/* Final Goal */}
-                  <div className="mt-8 rounded-3xl border-2 border-b-[6px] border-yellow-500 bg-yellow-400 p-8 text-center">
+          {/* Final Goal */}
+          {/* <div className="mt-8 rounded-3xl border-2 border-b-[6px] border-yellow-500 bg-yellow-400 p-8 text-center">
                     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20">
                       <Trophy className="h-8 w-8 text-yellow-950" />
                     </div>
@@ -935,11 +890,11 @@ export default function OpportunityDetailsPage() {
                     <p className="font-bold text-yellow-900/80">
                       Land the Job & Earn {xpReward} XP
                     </p>
-                  </div>
-                </motion.div>
+                  </div> */}
+          {/* </motion.div>
               ) : null}
             </AnimatePresence>
-          </motion.div>
+          </motion.div> */}
 
           {/* Action Buttons */}
           <motion.div
@@ -948,13 +903,21 @@ export default function OpportunityDetailsPage() {
             transition={{ delay: 0.2 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <Button
+            {/* <Button
               size="lg"
               className="flex-1 h-14 text-lg font-bold rounded-2xl border-b-4 border-primary/30 hover:border-primary/20 shadow-lg"
               onClick={() => router.push("/practice")}
             >
               <Rocket className="h-5 w-5 mr-2" />
               Start Learning Path
+            </Button> */}
+            <Button
+              size="lg"
+              className="flex-1 h-14 text-lg font-bold rounded-2xl border-b-4 border-blue-600 bg-blue-500 text-white hover:bg-blue-400 hover:border-blue-500 shadow-lg"
+              onClick={() => router.push(`/matching/${matchId}/ai-coach`)}
+            >
+              <Bot className="h-5 w-5 mr-2" />
+              Ask Career Coach
             </Button>
             <Button
               size="lg"

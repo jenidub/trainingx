@@ -11,9 +11,12 @@ export default defineSchema({
     emailVerificationTime: v.optional(v.number()),
     phone: v.optional(v.string()),
     phoneVerificationTime: v.optional(v.number()),
+    age: v.optional(v.number()),
+    gender: v.optional(v.string()),
     isAnonymous: v.optional(v.boolean()),
     // Custom field.
     favoriteColor: v.optional(v.string()),
+    customImageId: v.optional(v.id("_storage")),
   })
     .index("email", ["email"])
     .index("phone", ["phone"]),
@@ -44,9 +47,14 @@ export default defineSchema({
     title: v.string(),
     description: v.string(),
     difficulty: v.string(),
+    difficultyLevel: v.optional(v.number()), // 1-5 scale for "Flames"
     category: v.string(),
     estimatedHours: v.number(),
     tags: v.array(v.string()),
+    techStack: v.optional(v.array(v.string())),
+    xpReward: v.optional(v.number()),
+    slug: v.optional(v.string()), // Made optional to avoid breaking existing without migration, but we should make it required for new ones.
+    imageUrl: v.optional(v.string()),
     authorId: v.id("users"),
     isPublished: v.boolean(),
     steps: v.array(
@@ -60,7 +68,9 @@ export default defineSchema({
     ),
     requirements: v.array(v.string()),
     learningObjectives: v.array(v.string()),
+    starterPrompt: v.optional(v.string()), // Basic prompt to get started
   })
+    .index("by_slug", ["slug"])
     .index("by_category", ["category"])
     .index("by_difficulty", ["difficulty"]),
 
@@ -335,10 +345,27 @@ export default defineSchema({
     downvotes: v.number(),
     viewCount: v.number(),
     replyCount: v.number(),
+    bookmarks: v.optional(v.number()),
     isPinned: v.boolean(),
     isLocked: v.boolean(),
     createdAt: v.number(),
     updatedAt: v.number(),
+    // Media attachments (images or videos)
+    media: v.optional(
+      v.array(
+        v.object({
+          storageId: v.id("_storage"),
+          url: v.string(),
+          type: v.union(v.literal("image"), v.literal("video")),
+          name: v.optional(v.string()),
+          sizeMb: v.optional(v.number()),
+          duration: v.optional(v.number()), // For videos, duration in seconds
+        })
+      )
+    ),
+    // Moderation status
+    moderationStatus: v.optional(v.string()), // "pending" | "approved" | "rejected"
+    moderationId: v.optional(v.id("moderationQueue")),
   })
     .index("by_category", ["category"])
     .index("by_author", ["authorId"])
@@ -573,6 +600,16 @@ export default defineSchema({
     .index("by_post", ["postId"])
     .index("by_user_post", ["userId", "postId"]),
 
+  // User bookmarks for posts
+  userBookmarks: defineTable({
+    userId: v.id("users"),
+    postId: v.id("posts"),
+    createdAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_post", ["postId"])
+    .index("by_user_post", ["userId", "postId"]),
+
   // Quiz results storage
   quizResults: defineTable({
     userId: v.id("users"),
@@ -587,6 +624,21 @@ export default defineSchema({
 
   // ===== PHASE 1: NEW NORMALIZED SCHEMA (FEATURE FLAGGED) =====
 
+  // Custom Domain Requests (The "Fabrication" process)
+  customDomainRequests: defineTable({
+    userId: v.id("users"),
+    manifesto: v.string(),
+    status: v.string(), // "queued" | "researching" | "generating" | "completed" | "failed"
+    progress: v.number(),
+    logs: v.array(v.string()),
+    domainId: v.optional(v.id("practiceDomains")),
+    error: v.optional(v.string()),
+    createdAt: v.number(),
+    completedAt: v.optional(v.number()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_status", ["status"]),
+
   // Practice Domains (Top-level categories)
   practiceDomains: defineTable({
     slug: v.string(),
@@ -598,6 +650,9 @@ export default defineSchema({
     trackCount: v.number(),
     isStarter: v.boolean(), // True for "General AI Skills"
     status: v.string(), // "draft" | "live" | "archived"
+    // Custom Domain Fields
+    createdBy: v.optional(v.id("users")),
+    isUserGenerated: v.optional(v.boolean()),
   })
     .index("by_slug", ["slug"])
     .index("by_order", ["order"])
@@ -618,6 +673,9 @@ export default defineSchema({
     prerequisites: v.array(v.string()), // Track slugs
     tags: v.array(v.string()),
     status: v.string(), // "draft" | "live" | "archived"
+    // Custom Domain Fields
+    createdBy: v.optional(v.id("users")),
+    isUserGenerated: v.optional(v.boolean()),
   })
     .index("by_slug", ["slug"])
     .index("by_domain", ["domainId"])
@@ -637,6 +695,9 @@ export default defineSchema({
       max: v.number(),
     }),
     status: v.string(), // "draft" | "live" | "archived"
+    // Custom Domain Fields
+    createdBy: v.optional(v.id("users")),
+    isUserGenerated: v.optional(v.boolean()),
   })
     .index("by_track", ["trackId"])
     .index("by_track_level", ["trackId", "levelNumber"]),
@@ -759,6 +820,9 @@ export default defineSchema({
     createdBy: v.id("users"),
     createdAt: v.number(),
     status: v.string(), // "live" | "retired" | "experimental"
+    // Custom Domain Fields
+    isUserGenerated: v.optional(v.boolean()),
+    generationRequestId: v.optional(v.id("customDomainRequests")),
   })
     .index("by_level", ["levelId"])
     .index("by_template", ["templateId"])
@@ -1418,4 +1482,94 @@ export default defineSchema({
     createdAt: v.number(),
     updatedAt: v.number(),
   }).index("by_user", ["userId"]),
+
+  // ===== COMMUNITY CONTENT MODERATION =====
+
+  // Content moderation queue for manual review
+  moderationQueue: defineTable({
+    contentType: v.string(), // "post" | "comment"
+    contentId: v.optional(v.id("posts")),
+    commentId: v.optional(v.id("comments")),
+    authorId: v.id("users"),
+
+    // Content snapshot for review
+    text: v.string(),
+    mediaStorageIds: v.optional(v.array(v.id("_storage"))),
+
+    // Moderation results
+    textModerationResult: v.optional(
+      v.object({
+        approved: v.boolean(),
+        categories: v.array(v.string()), // ["harassment", "hate", "violence", etc.]
+        scores: v.any(), // Raw scores from GPT
+        reasoning: v.optional(v.string()),
+      })
+    ),
+    mediaModerationResult: v.optional(
+      v.object({
+        approved: v.boolean(),
+        flaggedMedia: v.array(
+          v.object({
+            storageId: v.id("_storage"),
+            reason: v.string(),
+            score: v.number(),
+          })
+        ),
+      })
+    ),
+
+    // Status
+    status: v.string(), // "pending" | "approved" | "rejected" | "manual_review"
+    processedAt: v.optional(v.number()),
+    reviewedBy: v.optional(v.id("users")), // If manual review
+    reviewNotes: v.optional(v.string()),
+
+    createdAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_author", ["authorId"])
+    .index("by_content", ["contentId"]),
+
+  // Moderation audit log for compliance and analytics
+  moderationAuditLog: defineTable({
+    action: v.string(), // "auto_approve" | "auto_reject" | "manual_approve" | "manual_reject"
+    contentType: v.string(),
+    contentId: v.optional(v.id("posts")),
+    commentId: v.optional(v.id("comments")),
+    authorId: v.id("users"),
+
+    // What was checked
+    textChecked: v.boolean(),
+    mediaChecked: v.boolean(),
+
+    // Results
+    textResult: v.optional(
+      v.object({
+        approved: v.boolean(),
+        flaggedCategories: v.array(v.string()),
+        model: v.string(),
+        tokensUsed: v.number(),
+        latencyMs: v.number(),
+      })
+    ),
+    mediaResult: v.optional(
+      v.object({
+        approved: v.boolean(),
+        framesChecked: v.number(),
+        flaggedFrames: v.number(),
+      })
+    ),
+
+    finalDecision: v.string(), // "approved" | "rejected" | "escalated"
+    reasoning: v.optional(v.string()),
+
+    // Performance
+    totalLatencyMs: v.number(),
+    estimatedCost: v.number(),
+
+    createdAt: v.number(),
+  })
+    .index("by_date", ["createdAt"])
+    .index("by_author", ["authorId"])
+    .index("by_decision", ["finalDecision"]),
 });

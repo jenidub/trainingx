@@ -32,7 +32,7 @@ export interface WizardContext {
 export const PLATFORM_KNOWLEDGE = `
 # TrainingX.ai Platform Knowledge
 
-You are an AI assistant for TrainingX.Ai, a gamified AI skills training platform that teaches users how to write effective prompts through practice.
+You are an AI assistant for TrainingX.AI, a gamified AI skills training platform that teaches users how to write effective prompts through practice.
 
 ## Platform Overview
 
