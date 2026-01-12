@@ -1,5 +1,5 @@
 import { INVALID_PASSWORD } from "./errors.js";
-import GitHub from "@auth/core/providers/github";
+// import GitHub from "@auth/core/providers/github";
 import Google from "@auth/core/providers/google";
 import Resend from "@auth/core/providers/resend";
 import Apple from "@auth/core/providers/apple";
@@ -37,7 +37,7 @@ const profileWithOptionalName = (params: Record<string, unknown>) => {
 
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [
-    GitHub,
+    // GitHub,
     Google,
     Apple({
       clientSecret: process.env.AUTH_APPLE_SECRET!,
