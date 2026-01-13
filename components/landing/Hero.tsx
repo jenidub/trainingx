@@ -229,13 +229,13 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="flex flex-col lg:flex-row gap-4 justify-center items-center pt-8">
-            <Link href="/quiz" className={"w-full lg:w-auto"}>
+            <Link href="/discover" className={"w-full lg:w-auto"}>
               <Button
                 size="lg"
                 className="bg-white text-black border border-white font-semibold py-6 w-full lg:w-[300px] hover:bg-white/90"
                 data-testid="button-take-assessment"
               >
-                Take Free AI Assessment
+                Discover Your Path
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>

@@ -11,6 +11,8 @@ import { ResendOTP } from "./otp/ResendOTP.js";
 import { TwilioOTP } from "./otp/TwilioOTP.js";
 import { TwilioVerify } from "./otp/TwilioVerify.js";
 import { ResendOTPPasswordReset } from "./passwordReset/ResendOTPPasswordReset.js";
+import { NodemailerOTP } from "./otp/NodemailerOTP.js";
+import { NodemailerOTPPasswordReset } from "./passwordReset/NodemailerOTPPasswordReset.js";
 import { DataModel } from "./_generated/dataModel.js";
 
 const profileWithOptionalName = (params: Record<string, unknown>) => {
@@ -21,8 +23,8 @@ const profileWithOptionalName = (params: Record<string, unknown>) => {
     typeof ageParam === "number"
       ? ageParam
       : typeof ageParam === "string"
-        ? Number.parseInt(ageParam.trim(), 10)
-        : undefined;
+      ? Number.parseInt(ageParam.trim(), 10)
+      : undefined;
   const age =
     typeof ageValue === "number" && Number.isFinite(ageValue) && ageValue > 0
       ? ageValue
@@ -96,6 +98,13 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     Password<DataModel>({
       id: "password-link",
       verify: Resend,
+      profile: profileWithOptionalName,
+    }),
+    // Email verification via Nodemailer (primary provider)
+    Password<DataModel>({
+      id: "password-nodemailer",
+      reset: NodemailerOTPPasswordReset,
+      verify: NodemailerOTP,
       profile: profileWithOptionalName,
     }),
     Anonymous,

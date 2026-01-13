@@ -4,24 +4,33 @@ import { ResetPasswordWithEmailCode } from "@/components/auth/ResetPasswordWithE
 import { SignInMethodDivider } from "@/components/auth/SignInMethodDivider";
 import { SignInWithGoogle } from "@/components/auth/oauth/SignInWithGoogle";
 import { SignInWithPassword } from "@/components/auth/SignInWithPassword";
+import { CodeInput } from "@/components/auth/CodeInput";
+import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/toaster";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContextProvider";
 import { useLocation } from "wouter";
+import { useAuthActions } from "@convex-dev/auth/react";
+import toast from "react-hot-toast";
 
 export default function AuthPage() {
-  const [step, setStep] = useState<"signIn" | "forgot">("signIn");
+  const [step, setStep] = useState<"signIn" | { email: string } | "forgot">(
+    "signIn"
+  );
   const { isAuthenticated, isLoading } = useAuth();
   const [, setLocation] = useLocation();
+  const { signIn } = useAuthActions();
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      console.log('Auth page: User is authenticated, redirecting...');
-      const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/dashboard';
-      sessionStorage.removeItem('redirectAfterLogin');
+      console.log("Auth page: User is authenticated, redirecting...");
+      const redirectTo =
+        sessionStorage.getItem("redirectAfterLogin") || "/dashboard";
+      sessionStorage.removeItem("redirectAfterLogin");
       // Small delay to ensure auth state is fully propagated
       setTimeout(() => {
-        console.log('Auth page: Redirecting to', redirectTo);
+        console.log("Auth page: Redirecting to", redirectTo);
         setLocation(redirectTo);
       }, 100);
     }
@@ -48,15 +57,58 @@ export default function AuthPage() {
             <SignInWithGoogle />
             <SignInMethodDivider />
             <SignInWithPassword
-              provider="password-with-reset"
+              provider="password-nodemailer"
+              handleSent={(email) => setStep({ email })}
               handlePasswordReset={() => setStep("forgot")}
             />
           </>
-        ) : (
+        ) : step === "forgot" ? (
           <ResetPasswordWithEmailCode
-            provider="password-with-reset"
+            provider="password-nodemailer"
             handleCancel={() => setStep("signIn")}
           />
+        ) : (
+          <>
+            <h2 className="font-semibold text-2xl tracking-tight">
+              Check your email
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              Enter the 8-digit code we sent to your email address to verify
+              your account.
+            </p>
+            <form
+              className="flex flex-col"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setSubmitting(true);
+                const formData = new FormData(event.currentTarget);
+                signIn("password-nodemailer", formData)
+                  .then(() => {
+                    toast.success("Email verified! You're signed in.");
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                    toast.error("Code could not be verified, try again");
+                    setSubmitting(false);
+                  });
+              }}
+            >
+              <label htmlFor="code">Verification Code</label>
+              <CodeInput />
+              <input name="email" value={step.email} type="hidden" />
+              <input name="flow" value="email-verification" type="hidden" />
+              <Button type="submit" disabled={submitting} className="mt-4">
+                Verify Email
+              </Button>
+              <Button
+                type="button"
+                variant="link"
+                onClick={() => setStep("signIn")}
+              >
+                Cancel
+              </Button>
+            </form>
+          </>
         )}
         <Toaster />
       </div>
