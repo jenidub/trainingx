@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, LogOut } from "lucide-react";
 import Link from "next/link";
@@ -10,15 +10,10 @@ import { useAuthActions } from "@convex-dev/auth/react";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const { signOut } = useAuthActions();
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isLoggedIn = mounted ? isAuthenticated : false;
+  const isLoggedIn = isAuthenticated;
 
   const navItems = isLoggedIn
     ? [
@@ -64,7 +59,9 @@ export default function Navigation() {
                   key={item.label}
                   href={item.href}
                   className="text-gray-100 hover:text-gray-50 transition-colors"
-                  data-testid={`link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                  data-testid={`link-${item.label
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
                 >
                   {item.label}
                 </a>
@@ -72,7 +69,9 @@ export default function Navigation() {
                 <Link key={item.label} href={item.href}>
                   <span
                     className="text-gray-100 hover:text-gray-50 transition-colors cursor-pointer"
-                    data-testid={`link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    data-testid={`link-${item.label
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
                   >
                     {item.label}
                   </span>
@@ -82,18 +81,18 @@ export default function Navigation() {
           </div>
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            {!isLoggedIn && (
+            {isLoading ? (
+              <div className="h-10 w-24 bg-gray-700/50 rounded-md animate-pulse" />
+            ) : !isLoggedIn ? (
               <Link href="/auth">
                 <Button
                   className="bg-gradient-to-r from-gradient-from to-gradient-to"
                   data-testid="button-get-started"
                 >
-                  {/* Get Started */}
                   Get Started
                 </Button>
               </Link>
-            )}
-            {isLoggedIn && (
+            ) : (
               <Button
                 variant="outline"
                 onClick={() => void signOut()}
@@ -137,7 +136,9 @@ export default function Navigation() {
                     href={item.href}
                     className="text-gray-100 hover:text-gray-50 transition-colors px-2 py-1"
                     onClick={() => setIsMenuOpen(false)}
-                    data-testid={`mobile-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    data-testid={`mobile-link-${item.label
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
                   >
                     {item.label}
                   </a>
@@ -146,14 +147,20 @@ export default function Navigation() {
                     <span
                       className="text-gray-100 hover:text-gray-50 transition-colors px-2 py-1 cursor-pointer block"
                       onClick={() => setIsMenuOpen(false)}
-                      data-testid={`mobile-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                      data-testid={`mobile-link-${item.label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                     >
                       {item.label}
                     </span>
                   </Link>
                 )
               )}
-              {!isLoggedIn && (
+              {isLoading ? (
+                <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
+                  <div className="h-10 w-full bg-gray-700/50 rounded-md animate-pulse" />
+                </div>
+              ) : !isLoggedIn ? (
                 <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
                   <Link href="/auth">
                     <Button
@@ -164,8 +171,7 @@ export default function Navigation() {
                     </Button>
                   </Link>
                 </div>
-              )}
-              {isLoggedIn && (
+              ) : (
                 <div className="flex flex-col space-y-2 pt-4 border-t border-white/10">
                   <Button
                     variant="outline"

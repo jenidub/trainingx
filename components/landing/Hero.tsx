@@ -182,9 +182,11 @@ export default function Hero() {
           </div>
 
           <h1 className="text-[45px] text-5xl md:text-6xl lg:text-7xl font-bold leading-12 md:leading-18 tracking-tight">
-            Learn & Practice AI Skills{" "}
+            {/* Learn & Practice AI Skills{" "} */}
+            Universal Prompting for
             <span className="bg-linear-to-r from-gradient-from to-gradient-to bg-clip-text text-transparent tracking-tight inline-block pb-2">
-              the Right Way{" "}
+              {/* the Right Way{" "} */}
+              the 21st Century
             </span>{" "}
           </h1>
 

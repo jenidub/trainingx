@@ -17,6 +17,7 @@ import {
   Rocket,
   PanelLeftClose,
   PanelLeft,
+  Home,
 } from "lucide-react";
 import {
   Sidebar,
@@ -42,6 +43,7 @@ type SidebarItem = {
 };
 
 const mainItems: SidebarItem[] = [
+  { title: "Home", url: "/", icon: Home },
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   {
     title: "Practice Zone",
@@ -101,14 +103,20 @@ export function AppSidebar() {
 
   const renderItems = (items: SidebarItem[]) => {
     return items.map((item) => {
-      const isActive = location === item.url;
+      // For home ("/"), use exact match; for other routes, use startsWith to handle child routes
+      const isActive =
+        item.url === "/"
+          ? location === "/"
+          : location === item.url || location.startsWith(item.url + "/");
       return (
         <SidebarMenuItem key={item.title}>
           <SidebarMenuButton
             asChild
             isActive={isActive}
             id={item.onbordaId}
-            data-testid={`sidebar-link-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+            data-testid={`sidebar-link-${item.title
+              .toLowerCase()
+              .replace(/\s+/g, "-")}`}
             className={cn(
               "h-10 px-2 transition-all duration-200 rounded-xl border-2 border-transparent",
               "hover:bg-slate-100 hover:border-slate-200 font-semibold",
