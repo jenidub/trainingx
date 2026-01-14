@@ -110,6 +110,22 @@ export default function DiscoverPage() {
     });
   };
 
+  const handleBack = () => {
+    if (state.currentQuestionIndex > 0) {
+      // Go to previous question
+      updateState({
+        currentQuestionIndex: state.currentQuestionIndex - 1,
+      });
+    } else {
+      // At first question, go back to age/adult-type selection
+      if (state.ageGroup === "adult") {
+        updateState({ step: "adult-type" });
+      } else {
+        updateState({ step: "age" });
+      }
+    }
+  };
+
   const handleAnswer = async (questionId: string, answer: string) => {
     const newAnswers = { ...state.answers, [questionId]: answer };
     const isLastQuestion =
@@ -247,16 +263,24 @@ export default function DiscoverPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col relative overflow-hidden bg-slate-50">
-      {/* Background */}
-      <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-indigo-100/50" />
+      {/* Background with subtle dot pattern */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0074b9]/5 via-transparent to-[#46bc61]/5" />
+        {/* Subtle dot grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.4]"
+          style={{
+            backgroundImage: `radial-gradient(circle, #94a3b8 1px, transparent 1px)`,
+            backgroundSize: "24px 24px",
+          }}
+        />
       </div>
 
       {/* Progress Bar (only during quiz) */}
       {state.step === "quiz" && (
         <div className="w-full h-2 bg-slate-200 z-20">
           <div
-            className="h-full bg-gradient-to-r from-primary to-indigo-500 transition-all duration-500"
+            className="h-full theme-gradient-r transition-all duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -287,6 +311,8 @@ export default function DiscoverPage() {
               totalQuestions={currentQuestions.length}
               isYouth={state.ageGroup === "youth"}
               onAnswer={(answer) => handleAnswer(currentQuestion.id, answer)}
+              onBack={handleBack}
+              canGoBack={true}
               isCalculating={isCalculating}
             />
           )}

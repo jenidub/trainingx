@@ -22,7 +22,7 @@ export function AgeSelection({ onSelect }: AgeSelectionProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-sm font-semibold text-primary uppercase tracking-wider"
+          className="text-sm font-semibold text-[var(--gradient-from)] uppercase tracking-wider"
         >
           Let&apos;s personalize this for you
         </motion.p>
@@ -43,7 +43,8 @@ export function AgeSelection({ onSelect }: AgeSelectionProps) {
           icon={User}
           delay={0.3}
           onClick={() => onSelect("youth")}
-          color="from-blue-500 to-cyan-500"
+          gradientFrom="var(--gradient-from)"
+          gradientTo="var(--gradient-to)"
         />
         <AgeCard
           title="I'm 18 or Older"
@@ -51,7 +52,8 @@ export function AgeSelection({ onSelect }: AgeSelectionProps) {
           icon={Users}
           delay={0.4}
           onClick={() => onSelect("adult")}
-          color="from-purple-500 to-pink-500"
+          gradientFrom="var(--gradient-to)"
+          gradientTo="var(--gradient-from)"
         />
       </div>
     </motion.div>
@@ -64,7 +66,8 @@ interface AgeCardProps {
   icon: LucideIcon;
   delay: number;
   onClick: () => void;
-  color: string;
+  gradientFrom: string;
+  gradientTo: string;
 }
 
 function AgeCard({
@@ -73,7 +76,8 @@ function AgeCard({
   icon: Icon,
   delay,
   onClick,
-  color,
+  gradientFrom,
+  gradientTo,
 }: AgeCardProps) {
   return (
     <motion.button
@@ -83,11 +87,14 @@ function AgeCard({
       whileHover={{ scale: 1.02, y: -4 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className="group relative flex flex-col items-center justify-center gap-4 p-8 rounded-3xl border-2 border-white bg-white/80 backdrop-blur-sm text-center transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10"
+      className="group relative flex flex-col items-center justify-center gap-4 p-8 rounded-3xl border-2 border-white bg-white/80 backdrop-blur-sm text-center transition-all duration-300 hover:border-[var(--gradient-from)]/30 hover:shadow-xl hover:shadow-[var(--gradient-from)]/10"
     >
       {/* Icon */}
       <div
-        className={`p-4 rounded-2xl bg-gradient-to-br ${color} text-white shadow-lg`}
+        className="p-4 rounded-2xl text-white shadow-lg"
+        style={{
+          background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`,
+        }}
       >
         <Icon className="w-8 h-8" />
       </div>

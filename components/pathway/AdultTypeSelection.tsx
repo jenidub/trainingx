@@ -22,7 +22,7 @@ export function AdultTypeSelection({ onSelect }: AdultTypeSelectionProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="text-sm font-semibold text-primary uppercase tracking-wider"
+          className="text-sm font-semibold text-[var(--gradient-from)] uppercase tracking-wider"
         >
           One more thing
         </motion.p>
@@ -43,7 +43,8 @@ export function AdultTypeSelection({ onSelect }: AdultTypeSelectionProps) {
           icon={GraduationCap}
           delay={0.3}
           onClick={() => onSelect("student")}
-          color="from-emerald-500 to-teal-500"
+          gradientFrom="var(--gradient-to)"
+          gradientTo="var(--gradient-from)"
         />
         <TypeCard
           title="I'm a Professional"
@@ -51,7 +52,8 @@ export function AdultTypeSelection({ onSelect }: AdultTypeSelectionProps) {
           icon={Briefcase}
           delay={0.4}
           onClick={() => onSelect("professional")}
-          color="from-amber-500 to-orange-500"
+          gradientFrom="var(--gradient-from)"
+          gradientTo="var(--gradient-to)"
         />
       </div>
     </motion.div>
@@ -64,7 +66,8 @@ interface TypeCardProps {
   icon: LucideIcon;
   delay: number;
   onClick: () => void;
-  color: string;
+  gradientFrom: string;
+  gradientTo: string;
 }
 
 function TypeCard({
@@ -73,7 +76,8 @@ function TypeCard({
   icon: Icon,
   delay,
   onClick,
-  color,
+  gradientFrom,
+  gradientTo,
 }: TypeCardProps) {
   return (
     <motion.button
@@ -83,11 +87,14 @@ function TypeCard({
       whileHover={{ scale: 1.02, y: -4 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className="group relative flex flex-col items-center justify-center gap-4 p-8 rounded-3xl border-2 border-white bg-white/80 backdrop-blur-sm text-center transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10"
+      className="group relative flex flex-col items-center justify-center gap-4 p-8 rounded-3xl border-2 border-white bg-white/80 backdrop-blur-sm text-center transition-all duration-300 hover:border-[var(--gradient-from)]/30 hover:shadow-xl hover:shadow-[var(--gradient-from)]/10"
     >
       {/* Icon */}
       <div
-        className={`p-4 rounded-2xl bg-gradient-to-br ${color} text-white shadow-lg`}
+        className="p-4 rounded-2xl text-white shadow-lg"
+        style={{
+          background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`,
+        }}
       >
         <Icon className="w-8 h-8" />
       </div>

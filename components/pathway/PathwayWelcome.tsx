@@ -35,7 +35,7 @@ export function PathwayWelcome({ onStart }: PathwayWelcomeProps) {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-        className="mx-auto w-24 h-24 rounded-3xl bg-gradient-to-br from-primary to-indigo-600 flex items-center justify-center shadow-xl shadow-primary/20"
+        className="mx-auto w-24 h-24 rounded-3xl theme-gradient flex items-center justify-center shadow-xl shadow-[var(--gradient-from)]/20"
       >
         <Rocket className="h-12 w-12 text-white" />
       </motion.div>
@@ -49,7 +49,7 @@ export function PathwayWelcome({ onStart }: PathwayWelcomeProps) {
       >
         <h1 className="text-4xl md:text-5xl font-bold text-slate-900 leading-tight">
           Welcome to Your{" "}
-          <span className="bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[var(--gradient-from)] to-[var(--gradient-to)] bg-clip-text text-transparent">
             21st Century
           </span>{" "}
           Success Pathway
@@ -95,7 +95,7 @@ export function PathwayWelcome({ onStart }: PathwayWelcomeProps) {
         <Button
           size="lg"
           onClick={onStart}
-          className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-primary to-indigo-600 hover:from-primary/90 hover:to-indigo-600/90 shadow-xl shadow-primary/20 group"
+          className="h-14 px-8 text-lg font-semibold theme-gradient-r hover:opacity-90 text-white shadow-xl shadow-[var(--gradient-from)]/20 group"
         >
           Start Assessment
           <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
