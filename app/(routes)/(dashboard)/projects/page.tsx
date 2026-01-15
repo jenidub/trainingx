@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
 import { ProjectCard } from "@/components/projects/project-card";
@@ -15,8 +15,11 @@ export default function ProjectsPage() {
   const [status, setStatus] = useState("all");
   const [search, setSearch] = useState("");
 
-  const [isFormOpen, setIsFormOpen] = useState(true);
+  const [isFormOpen, setIsFormOpen] = useState(false); // Don't auto-open
+  const [isGenerating, setIsGenerating] = useState(false);
+  /* eslint-disable @typescript-eslint/no-unused-vars */
   const [formFilters, setFormFilters] = useState<any>(null);
+  const createProject = useMutation(api.projects.createProject);
 
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const durationMap: Record<string, { min?: number; max?: number }> = {
@@ -25,20 +28,10 @@ export default function ProjectsPage() {
     "Deep Dive": { min: 12 },
   };
 
+  // Show ALL user projects - no filtering by form inputs
   const projects = useQuery(api.projects.getProjects, {
     category: category === "All" ? undefined : category,
     status: status === "all" ? undefined : status,
-    difficulty: formFilters?.difficulty,
-    minHours: formFilters?.duration
-      ? durationMap[formFilters.duration]?.min
-      : undefined,
-    maxHours: formFilters?.duration
-      ? durationMap[formFilters.duration]?.max
-      : undefined,
-    keywords:
-      formFilters?.interests && formFilters.interests.trim() !== ""
-        ? `${formFilters.interests} ${formFilters.customDetails}`
-        : undefined,
   });
 
   const filteredProjects = projects?.filter(
@@ -71,6 +64,7 @@ export default function ProjectsPage() {
               </motion.p>
             </div>
 
+            {/* Always show Create button */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -78,9 +72,10 @@ export default function ProjectsPage() {
             >
               <Button
                 onClick={() => setIsFormOpen(true)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg rounded-xl h-12 px-6 font-bold text-lg"
+                disabled={isGenerating}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg px-8 py-5 rounded-2xl shadow-lg border-b-4 border-blue-600 active:border-b-0 active:translate-y-[4px] transition-all"
               >
-                ✨ New Projects
+                {isGenerating ? "✨ Generating..." : "✨ New Project"}
               </Button>
             </motion.div>
           </div>
@@ -88,10 +83,28 @@ export default function ProjectsPage() {
           <ProjectFormModal
             isOpen={isFormOpen}
             onOpenChange={setIsFormOpen}
-            onSubmit={(filters) => {
+            onSubmit={async (filters) => {
               setFormFilters(filters);
-              // In the future this will likely trigger a backend mutation or update query args
-              console.log("Filters applied:", filters);
+              setIsFormOpen(false); // Close modal immediately
+              setIsGenerating(true); // Show loading state
+              try {
+                const result = await createProject({
+                  difficulty: filters.difficulty,
+                  duration: filters.duration,
+                  keywords: `${filters.interests} ${filters.customDetails}`,
+                });
+                console.log("✅ Project generation started:", result);
+              } catch (error) {
+                console.error("❌ Failed to create project:", error);
+                alert(
+                  `Error: ${
+                    error instanceof Error ? error.message : "Unknown error"
+                  }`
+                );
+              }
+              // Project will appear when AI finishes (Convex auto-refreshes)
+              // Keep loading for 3s to give AI time to generate
+              setTimeout(() => setIsGenerating(false), 3000);
             }}
           />
 
@@ -125,12 +138,23 @@ export default function ProjectsPage() {
 
           {/* Empty State */}
           {filteredProjects?.length === 0 && (
-            <div className="mt-20 flex flex-col items-center justify-center text-slate-400">
-              <div className="text-6xl mb-4">👾</div>
-              <h3 className="text-lg font-bold text-slate-600">
-                No projects found
+            <div className="mt-20 flex flex-col items-center justify-center text-center max-w-md mx-auto">
+              <div className="w-32 h-32 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                <span className="text-6xl">🚀</span>
+              </div>
+              <h3 className="text-2xl font-extrabold text-slate-800 mb-3">
+                Your Project Board is Empty
               </h3>
-              <p>Try adjusting your search filters.</p>
+              <p className="text-slate-500 mb-8 text-lg">
+                Ready to build something active? Generate your first project to
+                start earning XP!
+              </p>
+              <Button
+                onClick={() => setIsFormOpen(true)}
+                className="bg-green-500 hover:bg-green-600 text-white font-bold text-xl px-8 py-6 rounded-2xl shadow-lg transform transition hover:scale-105 active:scale-95 border-b-4 border-green-600 active:border-b-0"
+              >
+                Start a Project
+              </Button>
             </div>
           )}
         </div>

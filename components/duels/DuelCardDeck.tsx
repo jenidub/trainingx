@@ -155,8 +155,8 @@ export function DuelCardDeck({ roomId }: DuelCardDeckProps) {
     const startTime = Date.now() - timer * 1000;
 
     // Determine card type (Legacy vs New)
-    const task = selectedCard.tasks?.[0]; // New structure has tasks
-    const legacyParams = selectedCard.params; // Legacy structure
+    const task = (selectedCard as any).tasks?.[0]; // New structure has tasks
+    const legacyParams = (selectedCard as any).params; // Legacy structure
 
     const isRateType =
       task?.type === "rate" || // New

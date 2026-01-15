@@ -128,10 +128,7 @@ function DashboardContent() {
       badges: userStatsData.badges,
       streak: userStatsData.streak,
       assessmentComplete: userStatsData.assessmentComplete,
-      previousPromptScore:
-        practiceScoreMeta.source === "legacy"
-          ? userStatsData.previousPromptScore
-          : undefined,
+      previousPromptScore: undefined,
       previousSkills: userStatsData.previousSkills,
     };
   }, [

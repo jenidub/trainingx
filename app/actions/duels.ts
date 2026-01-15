@@ -20,8 +20,11 @@ export async function createDuelRoom(
   try {
     // 1. Load questions from local files
     // We default to intermediate for duels generally, or mix them
-    // For now, let's load what's requested
-    const allQuestions = await getQuestionsForTrack(trackSlug, difficulty);
+    // For now, let's load what's requested (default to adult questions for duels)
+    const allQuestions = await getQuestionsForTrack(
+      trackSlug as any,
+      18 // Default to adult age for duels
+    );
 
     if (!allQuestions || allQuestions.length < itemCount) {
       throw new Error(`Not enough questions found for track ${trackSlug}`);

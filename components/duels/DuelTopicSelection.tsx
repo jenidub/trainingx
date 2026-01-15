@@ -5,7 +5,7 @@ import { Id } from "convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Shuffle } from "lucide-react";
-import { DOMAINS, TRACKS } from "@/lib/practice/types";
+import { TRACKS } from "@/lib/practice/types";
 
 interface DuelTopicSelectionProps {
   userId: Id<"users">;
@@ -21,8 +21,15 @@ export function DuelTopicSelection({
   const [selectedDomainId, setSelectedDomainId] = useState<string | null>(null);
 
   // Use local constants
+  const DOMAINS = [
+    { slug: "prompt-engineering", title: "General Skills", icon: "✨" },
+  ];
+
   const domains = DOMAINS;
-  const tracks = TRACKS;
+  const tracks = Object.values(TRACKS).map((t) => ({
+    ...t,
+    domainId: "prompt-engineering",
+  }));
 
   // Random mix option
   const handleRandomMix = () => {

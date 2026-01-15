@@ -29,8 +29,8 @@ export function GameCardModal({
   // For duel mode: ALWAYS use rate type UI (Bad/Almost/Good) to match Practice Zone
   // For practice mode: check actual item type
   // Determine card type properly (Legacy vs New)
-  const task = card.tasks?.[0];
-  const legacyParams = card.params;
+  const task = (card as any).tasks?.[0];
+  const legacyParams = (card as any).params;
 
   const isRateType =
     mode === "duel"
@@ -123,12 +123,12 @@ function CardFront({
   onAnswerSelect,
 }: CardFrontProps) {
   // Get scenario, prompt, and options from params OR new task structure
-  const task = card.tasks?.[0]; // New structure
-  const legacyParams = card.params; // Legacy structure
+  const task = (card as any).tasks?.[0]; // New structure
+  const legacyParams = (card as any).params; // Legacy structure
 
   const scenario =
     task?.scenario ||
-    card.scenario ||
+    (card as any).scenario ||
     legacyParams?.scenario ||
     (card as any).scenario;
 

@@ -1,6 +1,13 @@
-import { query, mutation } from "./_generated/server";
+import {
+  query,
+  mutation,
+  internalAction,
+  internalMutation,
+} from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { callAI } from "./lib/ai";
 
 export const getProjectCount = query({
   args: {},
@@ -24,6 +31,18 @@ export const getProjects = query({
     const userId = await getAuthUserId(ctx);
     let tasks = await ctx.db.query("projects").collect();
 
+    // START: User-Specific Filter (Only show own projects or global templates if we had them)
+    // For now, we only show projects created by the user (authorId).
+    // If we want to show generic ones, we'd need a flag like "isTemplate".
+    if (userId) {
+      tasks = tasks.filter(
+        (t) => t.authorId === userId /* || t.isPublicTemplate */
+      );
+    } else {
+      return []; // No public projects for guests yet
+    }
+    // END: User-Specific Filter
+
     // Filter by options
     if (args.category && args.category !== "All") {
       tasks = tasks.filter((t) => t.category === args.category);
@@ -35,23 +54,34 @@ export const getProjects = query({
 
     if (args.minHours !== undefined && args.maxHours !== undefined) {
       tasks = tasks.filter(
-        (t) => t.estimatedHours >= args.minHours! && t.estimatedHours <= args.maxHours!
+        (t) =>
+          t.estimatedHours >= args.minHours! &&
+          t.estimatedHours <= args.maxHours!
       );
     } else if (args.minHours !== undefined) {
       tasks = tasks.filter((t) => t.estimatedHours >= args.minHours!);
     } else if (args.maxHours !== undefined) {
       tasks = tasks.filter((t) => t.estimatedHours <= args.maxHours!);
     }
-    
+
     // Keyword Search (Naive implementation for now)
     if (args.keywords && args.keywords.trim() !== "") {
-       const terms = args.keywords.toLowerCase().split(/\s+/).filter(t => t.length > 2);
-       if (terms.length > 0) {
-          tasks = tasks.filter(t => {
-             const content = (t.title + " " + t.description + " " + t.tags.join(" ")).toLowerCase();
-             return terms.some(term => content.includes(term));
-          });
-       }
+      const terms = args.keywords
+        .toLowerCase()
+        .split(/\s+/)
+        .filter((t) => t.length > 2);
+      if (terms.length > 0) {
+        tasks = tasks.filter((t) => {
+          const content = (
+            t.title +
+            " " +
+            t.description +
+            " " +
+            t.tags.join(" ")
+          ).toLowerCase();
+          return terms.some((term) => content.includes(term));
+        });
+      }
     }
 
     // Determine completion status
@@ -121,92 +151,45 @@ export const getProjectBySlug = query({
 
 export const seedProjects = mutation({
   args: {},
+  handler: async () => {
+    // Seeding disabled to enforce user-generated content
+    console.log("Seeding disabled.");
+  },
+});
+
+/**
+ * Cleanup mutation to delete all projects for a user (fresh start)
+ */
+export const clearMyProjects = mutation({
+  args: {},
   handler: async (ctx) => {
-    // Check if we already have seeded projects matching our slugs
-    const existing = await ctx.db
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthorized");
+
+    const projects = await ctx.db
       .query("projects")
-      .filter((q) => q.eq(q.field("slug"), "dentist-landing-page"))
-      .first();
-    if (existing) {
-      console.log(
-        "Project 'dentist-landing-page' already exists. Skipping seed."
-      );
-      return;
+      .filter((q) => q.eq(q.field("authorId"), userId))
+      .collect();
+
+    for (const project of projects) {
+      await ctx.db.delete(project._id);
     }
 
-    const projects = [
-      {
-        title: "Dentist Landing Page",
-        description:
-          "Build a high-converting landing page for a local dentist office. Focus on accessibility and CTA placement.",
-        difficulty: "Beginner",
-        difficultyLevel: 1,
-        category: "Web",
-        estimatedHours: 4,
-        tags: ["HTML", "CSS", "Responsive"],
-        techStack: ["Next.js", "TailwindCSS"],
-        xpReward: 100,
-        slug: "dentist-landing-page",
-        imageUrl: "/images/projects/dentist.webp",
-        isPublished: true,
-        steps: [],
-        requirements: ["Responsive Design", "Booking Form"],
-        learningObjectives: ["CSS Grid", "Forms"],
-      },
-      {
-        title: "AI Voice Agent for Restaurant",
-        description:
-          "Create a voice bot that takes reservations for a busy Italian restaurant using ElevenLabs and Vapi.",
-        difficulty: "Advanced",
-        difficultyLevel: 5,
-        category: "AI",
-        estimatedHours: 12,
-        tags: ["Voice AI", "Python", "API"],
-        techStack: ["Vapi", "OpenAI", "Python"],
-        xpReward: 500,
-        slug: "restaurant-voice-agent",
-        imageUrl: "/images/projects/voice-agent.webp",
-        isPublished: true,
-        steps: [],
-        requirements: ["Low Latency", "Context Awareness"],
-        learningObjectives: ["Voice VAD", "LLM Prompting"],
-      },
-      {
-        title: "Retro Space Shooter",
-        description:
-          "A browser-based arcade shooter using HTML Canvas and JavaScript.",
-        difficulty: "Intermediate",
-        difficultyLevel: 3,
-        category: "Game",
-        estimatedHours: 8,
-        tags: ["Game Dev", "Spritework"],
-        techStack: ["HTML Canvas", "JS"],
-        xpReward: 300,
-        slug: "space-shooter",
-        imageUrl: "/images/projects/space-shooter.webp",
-        isPublished: true,
-        steps: [],
-        requirements: ["Score System", "Collision Detection"],
-        learningObjectives: ["Game Loop", "Physics"],
-      },
-    ];
+    return { deleted: projects.length };
+  },
+});
 
-    // Fetch a fallback user ID.
-    const user = await ctx.db.query("users").first();
-
-    if (!user) {
-      console.log("No user found to assign project authorship. Seed aborted.");
-      // Create a critical error log or duplicate
-      return;
+/**
+ * ADMIN: Delete ALL projects in the database (use with caution!)
+ */
+export const _clearAllProjects = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const projects = await ctx.db.query("projects").collect();
+    for (const project of projects) {
+      await ctx.db.delete(project._id);
     }
-
-    const fallbackId = user._id;
-    console.log(`Assigning projects to author: ${fallbackId}`);
-
-    for (const p of projects) {
-      await ctx.db.insert("projects", { ...p, authorId: fallbackId });
-      console.log(`Seeded project: ${p.title}`);
-    }
+    return { deleted: projects.length };
   },
 });
 
@@ -281,5 +264,146 @@ export const getProject = query({
     }
 
     return { ...project, isCompleted };
+  },
+});
+
+export const createProject = mutation({
+  args: {
+    difficulty: v.string(),
+    duration: v.string(),
+    keywords: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Unauthorized");
+
+    // Schedule the AI generation action
+    await ctx.scheduler.runAfter(0, internal.projects.generateProjectWithAI, {
+      userId,
+      difficulty: args.difficulty,
+      duration: args.duration,
+      keywords: args.keywords ?? "",
+    });
+
+    return { status: "generating" };
+  },
+});
+
+/**
+ * Internal action to generate a project using AI
+ */
+export const generateProjectWithAI = internalAction({
+  args: {
+    userId: v.id("users"),
+    difficulty: v.string(),
+    duration: v.string(),
+    keywords: v.string(),
+  },
+  handler: async (ctx, args) => {
+    try {
+      // Generate project using AI
+      const prompt = `
+        You are a creative project architect for a NO-CODE / VIBE CODING platform.
+        Users don't write code - they use AI tools to build projects with prompts.
+        
+        User preferences:
+        - Difficulty: ${args.difficulty}
+        - Duration: ${
+          args.duration
+        } (Quick = <4h, Weekend = 4-12h, Deep Dive = 12h+)
+        - Interests/Keywords: ${args.keywords || "general web apps"}
+        
+        Generate a unique, fun, and creative project idea.
+        Focus on WHAT they will build, not HOW (no coding skills needed).
+        
+        Return JSON:
+        {
+          "title": "Catchy project name (max 5 words)",
+          "description": "Exciting 1-2 sentence description of what they will create (focus on end result)",
+          "category": "Web" or "AI" or "Game" or "Creative",
+          "estimatedHours": number matching the duration preference,
+          "tags": ["tag1", "tag2", "tag3"],
+          "techStack": ["AI Tool 1", "AI Tool 2"],
+          "xpReward": number (100 for Beginner, 300 for Intermediate, 500 for Advanced),
+          "starterPrompt": "A helpful AI prompt to get the user started on this project"
+        }
+      `;
+
+      const response = await callAI(ctx, {
+        feature: "project_generation",
+        userId: args.userId,
+        messages: [{ role: "user", content: prompt }],
+        jsonMode: true,
+        maxTokens: 1000,
+      });
+
+      const projectData = response.data as any;
+
+      // Map difficulty to difficultyLevel
+      const difficultyMap: Record<string, number> = {
+        Beginner: 1,
+        Intermediate: 3,
+        Advanced: 5,
+      };
+
+      // Insert the project
+      await ctx.runMutation(internal.projects.insertGeneratedProject, {
+        userId: args.userId,
+        title: projectData.title,
+        description: projectData.description,
+        difficulty: args.difficulty,
+        difficultyLevel: difficultyMap[args.difficulty] || 3,
+        category: projectData.category || "Web",
+        estimatedHours: projectData.estimatedHours || 4,
+        tags: projectData.tags || [],
+        techStack: projectData.techStack || [],
+        xpReward: projectData.xpReward || 100,
+        starterPrompt: projectData.starterPrompt || "",
+      });
+
+      console.log("✅ AI Project generated:", projectData.title);
+    } catch (error) {
+      console.error("❌ AI Project generation failed:", error);
+    }
+  },
+});
+
+/**
+ * Internal mutation to insert the generated project
+ */
+export const insertGeneratedProject = internalMutation({
+  args: {
+    userId: v.id("users"),
+    title: v.string(),
+    description: v.string(),
+    difficulty: v.string(),
+    difficultyLevel: v.number(),
+    category: v.string(),
+    estimatedHours: v.number(),
+    tags: v.array(v.string()),
+    techStack: v.array(v.string()),
+    xpReward: v.number(),
+    starterPrompt: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.insert("projects", {
+      title: args.title,
+      description: args.description,
+      difficulty: args.difficulty,
+      difficultyLevel: args.difficultyLevel,
+      category: args.category,
+      estimatedHours: args.estimatedHours,
+      tags: args.tags,
+      techStack: args.techStack,
+      xpReward: args.xpReward,
+      slug: `project-${Date.now()}`,
+      imageUrl: "/images/projects/default.webp",
+      authorId: args.userId,
+      isPublished: true,
+      steps: [],
+      requirements: [],
+      learningObjectives: [],
+      starterPrompt: args.starterPrompt,
+    });
   },
 });
