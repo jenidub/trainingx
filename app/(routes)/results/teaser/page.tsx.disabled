@@ -13,7 +13,7 @@ export default function ResultsTeaserPage() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   
-  const currentUser = useQuery(api.users.getCurrentUser);
+  const currentUser = useQuery(api.users.viewer);
   const latestAssessment = useQuery(
     api.assessments.getLatestAssessment,
     currentUser ? { userId: currentUser._id } : "skip"
@@ -24,10 +24,12 @@ export default function ResultsTeaserPage() {
     currentUser ? { userId: currentUser._id } : "skip"
   );
   
-  const topPathway = useQuery(
-    api.pathways.getTopPathwayMatch,
-    thumbprint ? { thumbprintId: thumbprint._id, limit: 1 } : "skip"
-  );
+  // TODO: Re-enable when pathways table is added to schema
+  // const topPathway = useQuery(
+  //   api.pathways.getTopPathwayMatch,
+  //   thumbprint ? { thumbprintId: thumbprint._id, limit: 1 } : "skip"
+  // );
+  const topPathway = null;
 
   useEffect(() => {
     setMounted(true);
